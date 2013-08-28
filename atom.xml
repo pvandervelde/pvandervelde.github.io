@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Mind Vortex</title>
+    <link href="http://pvandervelde.github.io//atom.xml" rel="self"/>
+    <link href="http://pvandervelde.github.io/"/>
+    <updated>2013-08-28T09:27:39.236Z</updated>
+    <id>http://pvandervelde.github.io/</id>
+    <author>
+        <name>Petrik van der Velde</name>
+        <email></email>
+    </author>
+
+    
+</feed>

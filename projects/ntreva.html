@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head> 
+    <!-- Standard Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Site Properities -->
+    <title>nTreva | Mind Vortex</title>
+    <meta name="description" content="nTreva is an application that creates an XML file containing license information from installed NuGet packages." />
+    <meta name="keywords" content="patrick van der velde, nuclei, sherlock, nAnicitus, nAdoni, nTreva, open source, github" />
+    <meta name="author" content="Petrik van der Velde" />
+
+    <!-- DocPad Meta -->
+    <meta http-equiv="X-Powered-By" content="DocPad v6.50.0"/>
+
+    <!-- DocPad Styles + Our Own -->
+    <style >html.wait {
+	cursor: wait !important;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}</style><link  rel="stylesheet" href="/vendor/normalize.css" /><link  rel="stylesheet" href="/vendor/h5bp.css" /><link  rel="stylesheet" href="/styles/style.css" /><link  rel="stylesheet" href="/styles/github.css" />
+
+    <!-- Icons -->
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/icons/favicon.ico" />
+</head>
+<body>
+    <!--[if lt IE 7]>
+        <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+    <![endif]-->
+    
+    <div id="header" class="container">
+        <div id="logo">
+            <h1><a href="/">Mind Vortex</a></h1>
+        </div>
+        <div id="menu">
+            <ul>
+                
+                    <li class="inactive">
+                        <a href="/index.html">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="inactive">
+                        <a href="/projects.html">
+                            Projects
+                        </a>
+                    </li>
+                
+                    <li class="inactive">
+                        <a href="/about.html">
+                            About
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <div id="page" class="container">
+        <div id="sidebar">
+            <div id="sbox1">
+                <h2>Patrick van der Velde</h2>
+<p><img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"> </p>
+<p>Dutch software developer, living, working and playing in New Zealand. 
+Rock climber, and future paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock">Sherlock</a>, 
+<a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects</p>
+<p><a href="/about.html">More ...</a></p>
+
+            </div>
+            <div id="sbox2">
+                <h2>Recent</h2>
+                <ul>
+                    
+                        <li><a href="/projects/ntreva.html">nTreva</a></li>
+                    
+                        <li><a href="/projects/nadoni.html">nAdoni</a></li>
+                    
+                        <li><a href="/projects/sherlock.html">Sherlock</a></li>
+                    
+                        <li><a href="/projects/nuclei.html">Nuclei</a></li>
+                    
+                </ul>
+            </div>
+            <div id="sbox3">
+                <h2>Tags</h2>
+                
+            </div>
+        </div>
+        <div id="content">
+            <div class="project">
+    <h2>nTreva</h2>
+    <div>
+        <p><a href="https://github.com/pvandervelde/nTreva">nTreva</a> is an application that creates an XML file containing license information from installed NuGet packages. To run nTreva use the following command line.</p>
+<pre class="highlighted"><code class="xml">nTreva.exe -p <span class="tag">&lt;<span class="title">Directory_With_Installed_Packages</span>&gt;</span> -o <span class="tag">&lt;<span class="title">Output_File</span>&gt;</span> -c <span class="tag">&lt;<span class="title">PackageConfigFile1</span>&gt;</span> -c <span class="tag">&lt;<span class="title">PackageConfigFile2</span>&gt;</span> ... -c <span class="tag">&lt;<span class="title">PackageConfigFileN</span>&gt;</span></code></pre>
+<p>The output will be an file containing information about the installed packages (found in the different package.config files), their project URL and their license URL. If no project or license 
+URL is found a default google search URL is generated. An example section as taken from the output file obtained by running nTreva on it&#39;s own workspace:</p>
+<pre class="highlighted"><code class="xml"><span class="pi">&lt;?xml version="1.0" encoding="utf-8" ?&gt;</span>
+<span class="tag">&lt;<span class="title">packages</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">package</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">id</span>&gt;</span>Lokad.Shared<span class="tag">&lt;/<span class="title">id</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.5.181.0<span class="tag">&lt;/<span class="title">version</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://www.google.com/search?q=Lokad.Shared<span class="tag">&lt;/<span class="title">url</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">licenseurl</span>&gt;</span>http://www.opensource.org/licenses/bsd-license.php<span class="tag">&lt;/<span class="title">licenseurl</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">package</span>&gt;</span>
+
+  <span class="tag">&lt;<span class="title">package</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">id</span>&gt;</span>Nuclei<span class="tag">&lt;/<span class="title">id</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">version</span>&gt;</span>0.6.0.0<span class="tag">&lt;/<span class="title">version</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">url</span>&gt;</span>https://github.com/pvandervelde/Nuclei<span class="tag">&lt;/<span class="title">url</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">licenseurl</span>&gt;</span>http://www.apache.org/licenses/LICENSE-2.0<span class="tag">&lt;/<span class="title">licenseurl</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">package</span>&gt;</span>
+
+  <span class="tag">&lt;<span class="title">package</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">id</span>&gt;</span>Nuclei.Build<span class="tag">&lt;/<span class="title">id</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">version</span>&gt;</span>0.6.0.0<span class="tag">&lt;/<span class="title">version</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">url</span>&gt;</span>https://github.com/pvandervelde/Nuclei<span class="tag">&lt;/<span class="title">url</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">licenseurl</span>&gt;</span>http://www.apache.org/licenses/LICENSE-2.0<span class="tag">&lt;/<span class="title">licenseurl</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">package</span>&gt;</span>
+
+  <span class="tag">&lt;<span class="title">package</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">id</span>&gt;</span>Nuget.Core<span class="tag">&lt;/<span class="title">id</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">version</span>&gt;</span>2.1.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://nuget.codeplex.com/<span class="tag">&lt;/<span class="title">url</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">licenseurl</span>&gt;</span>http://nuget.codeplex.com/license<span class="tag">&lt;/<span class="title">licenseurl</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">package</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="title">packages</span>&gt;</span></code></pre>
+
+    </div>
+    <div>
+        <div id="project-linkedposts">
+    <h3>Posts referencing nTreva</h3>
+    <ul>
+        
+    </ul>
+</div>
+    </div>
+</div>
+        </div>
+    </div>
+    <div id="footer" class="container">
+        <div id="fbox1">
+            <h2>Related</h2>
+
+<ul>
+    <li id="first"><a href="https://github.com/pvandervelde">GitHub</a></li>
+    <li><a href="http://www.linkedin.com/profile/view?id=33950311">LinkedIn</a></li>
+    <li><a href="http://stackoverflow.com/users/539846/petrik">StackOverflow</a></li>
+    <li><a href="http://careers.stackoverflow.com/pvandervelde">StackOverflow Careers</a></li>
+</ul>
+        </div>
+        <div id="fbox2">
+            <h2>Copyright</h2>
+<p>Copyright (c) 2013 <a href="http://pvandervelde.github.io/">http://pvandervelde.github.io/</a>. All rights reserved.</p>
+<h2>Disclaimer</h2>
+<p>The opinions expressed herein are my own personal opinions and do not represent my employer&#39;s view in any way.</p>
+
+        </div>
+        <div id="fbox3">
+            <h2>Media</h2>
+<p><a href="/atom.xml"><img src="/images/feed.png" alt="Atom feed"></a></p>
+
+        </div>
+    </div>
+    <div id="copyright" class="container">
+        <p>
+            Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design 
+            by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>. Feed icon by <a href="http://www.icojam.com/">Icojam</a>.
+        </p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Wednesday, August 28, 2013.</p>
+    </div>
+
+    <!-- jQuery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/vendor/jquery.js"><\/script>')</script>
+
+    <!-- DocPad Scripts + Our Own -->
+    <script >(function(){
+	/* Did we just livereload? */
+var log = !!(localStorage && console && console.log && true);
+if ( log && localStorage.getItem('/docpad-livereload/reloaded') === 'yes' ) {
+	localStorage.removeItem('/docpad-livereload/reloaded');
+	console.log('LiveReload completed at', new Date())
+}
+
+/* Listen for the regenerated event and perform a reload of the page when the event occurs */
+var listen = function(){
+	var primus = new Primus('/docpad-livereload');
+	primus.on('data', function(data){
+		if ( data && data.message ) {
+			if ( data.message === 'generateBefore' ) {
+				if ( log ) {
+					console.log('LiveReload started at', new Date());
+				}
+				if ( typeof document.getElementsByTagName !== 'undefined' ) {
+	document.getElementsByTagName('html')[0].className += ' wait';
+}
+			}
+			else if ( data.message === 'generateAfter' ) {
+				if ( log ) {
+					localStorage.setItem('/docpad-livereload/reloaded', 'yes');
+				}
+				document.location.reload();
+			}
+		}
+	});
+};
+	/* Inject socket into our page */
+var inject = function(){
+	var t = document.createElement('script');
+	t.type = 'text/javascript';
+	t.async = 'async';
+	t.src = '/primus/primus.js';
+	t.onload = listen;
+	var s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(t, s);
+};
+	if ( typeof Primus !== 'undefined' ) {
+		listen();
+	} else {
+		inject();
+	}
+})();</script><script defer="defer"  src="/vendor/log.js"></script><script defer="defer"  src="/vendor/modernizr.js"></script><script defer="defer"  src="/scripts/script.js"></script>
+</body>
+</html>
