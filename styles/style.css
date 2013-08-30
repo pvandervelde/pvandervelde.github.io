@@ -31,7 +31,7 @@ strong {
 }
 
 a {
-    color: #0000FF;
+    color: #0091E6;
     text-decoration: none;
 }
 
@@ -143,18 +143,8 @@ hr {
     padding: 60px 0px 0px 0px;
     list-style: none;
     line-height: normal;
-}
-
-#menu li {
-    float: left;
-    margin-left: 2em;
-}
-
-#menu a {
     display: block;
-    padding: 10px 15px;
     letter-spacing: 2px;
-    text-decoration: none;
     text-transform: uppercase;
     font-family: 'Archivo Narrow', sans-serif;
     font-size: 1.10em;
@@ -162,7 +152,18 @@ hr {
     color: #B6B6B6;
 }
 
-#menu .active a
+#menu li {
+    float: left;
+    margin-left: 2em;
+    padding: 10px 15px;
+}
+
+#menu a {
+    text-decoration: none;
+    color: #B6B6B6;
+}
+
+#menu .active
 {
     background: #0091E6;
     border-radius: 5px;
@@ -186,13 +187,11 @@ hr {
 #page h2
 {
     margin-bottom: 10px;
-    /*color: #0091E6;*/
 }
 
 #page h3
 {
     margin-bottom: 5px;
-    color: #0091E6;
 }
 
 

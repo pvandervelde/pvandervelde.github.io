@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>Mind Vortex</title>
-    <link href="http://pvandervelde.github.io//atom.xml" rel="self"/>
-    <link href="http://pvandervelde.github.io/"/>
-    <updated>2013-08-28T09:27:39.236Z</updated>
-    <id>http://pvandervelde.github.io/</id>
+    <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
+    <link href="http://pvandervelde.github.io"/>
+    <updated>2013-08-30T03:40:47.691Z</updated>
+    <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>Why this blog was created</title>
+            <link href="http://pvandervelde.github.io/posts/2013-08-30_Why-this-blog-was-created.html"/>
+            <updated>2013-08-30T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-08-30_Why-this-blog-was-created.html</id>
+            <content type="html"></content>
+        </entry>
     
 </feed>
