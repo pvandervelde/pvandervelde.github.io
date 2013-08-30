@@ -7,7 +7,7 @@ html, body {
 body {
     margin: 0px;
     padding: 0px;
-    background: #080808 url(images/main-bg.png) repeat;
+    background: #080808 url(/images/main-bg.png) repeat;
     font-family: 'Open Sans', sans-serif;
     font-size: 13px;
     color: #2B2B2B;
@@ -103,7 +103,7 @@ hr {
     width: 900px;
     height: 150px;
     padding: 0px 50px;
-    background: url(images/gradient-bg.png) no-repeat center top;
+    background: url(/images/gradient-bg.png) no-repeat center top;
 }
 
 /** LOGO */
@@ -282,23 +282,9 @@ hr {
     padding-bottom: 3em;
 }
 
-/** PROJECTS */
-
-#project {
-}
-
-#project-linkedposts h3{
-    color: #AAAAAA;
-    padding-top: 3em;
-}
-
-#project-linkedposts ul{
-    list-style: none;
-}
-
 /** COMMENTS */
 
-#comment {
+#post-comment {
     background-color: transparent;
     border-color: #CACACA;
     border-style: solid;
@@ -311,7 +297,7 @@ hr {
     width: 100%;
   }
 
-#comment  #comment-header {
+#post-comment  #post-comment-header {
   border-bottom-color: #CACACA;
   border-bottom-style: solid;
   border-bottom-width: 1px;
@@ -338,7 +324,7 @@ hr {
   width: 100%;
 }
 
-#comment #comment-header #comment-gravatar {
+#post-comment #post-comment-header #post-comment-gravatar {
   background-attachment: scroll;
   background-clip: border-box;
   background-color: white;
@@ -370,15 +356,15 @@ hr {
   width: 20px;
 }
 
-#comment  #comment-header a:link {
+#post-comment  #post-comment-header a:link {
   text-decoration: none;
 }
 
-#comment #comment-header a:hover {
+#post-comment #post-comment-header a:hover {
   border-bottom:1px solid;
 }
 
-#comment #comment-header #comment-user {
+#post-comment #post-comment-header #vcomment-user {
   background-color: transparent;
   color: black;
   display: inline;
@@ -401,7 +387,7 @@ hr {
   width: 0px;
 }
 
-#comment #comment-header #comment-date {
+#post-comment #post-comment-header #post-comment-date {
   background-color: transparent;
   color: #777;
   display: inline;
@@ -423,7 +409,7 @@ hr {
   width: 20em;
 }
 
-#comment #comment-body {
+#post-comment #post-comment-body {
   background-attachment: scroll;
   background-clip: border-box;
   background-color: transparent;
@@ -443,28 +429,42 @@ hr {
   word-wrap: break-word;
 }
 
-#comment #comment-body p {
+#post-comment #post-comment-body p {
   margin-bottom: 0.5em;
   margin-top: 0.5em;
   margin-left: 0em;
   margin-right: 0em;
 }
 
-#comment #comment-body pre {
+#post-comment #post-comment-body pre {
   border: 0px solid #ddd;
   background-color: #eef;
   padding: 0 .4em;
 }
 
-#comment #comment-body pre code {
+#post-comment #post-comment-body pre code {
   border: 0px solid #ddd;
 }
 
-#comment #comment-body code {
+#post-comment #post-comment-body code {
   border: 1px solid #ddd;
   background-color: #eef;
   font-size: 85%;
   padding: 0 .2em;
+}
+
+/** PROJECTS */
+
+#project {
+}
+
+#project-linkedposts h3{
+    color: #AAAAAA;
+    padding-top: 3em;
+}
+
+#project-linkedposts ul{
+    list-style: none;
 }
 
 /** SIDEBAR */
