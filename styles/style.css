@@ -225,6 +225,14 @@ hr {
     text-decoration: underline;
 }
 
+#content p img {
+    /*float: left; */
+    padding-left: 2em;
+    padding-top: 1em;
+    padding-right: 2em;
+    padding-bottom: 1em;
+}
+
 /** POST */
 #post {
 }
