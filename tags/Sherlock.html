@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>Nuclei | Mind Vortex</title>
-    <meta name="description" content="Nuclei is a collection of libraries containing classes and functions for inter-application interaction via a command mechanism, diagnostics, configuration handling, exception handling and assembly location and loading." />
+    <title>Mind Vortex</title>
+    <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, Fluid dynamics, CFD, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
 
@@ -123,42 +123,42 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
             </div>
         </div>
         <div id="content">
-            <div class="project">
-    <h2>Nuclei</h2>
-    <div>
-        <p><a href="https://github.com/pvandervelde/Nuclei">Nuclei</a> is a collection of libraries containing classes and functions for inter-application interaction via a command mechanism, diagnostics, configuration handling, 
-exception handling and assembly location and loading.</p>
-<p>The capabilities in Nuclei are currently divided as follows:</p>
+            <div id="posts">
+    <h3 id="post-tags-header">Posts tagged with: Sherlock</h3>
+    
+        <div id="post-spacer">
+            <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-09-08_Sherlock-Release-v0401.html'>Sherlock release - V0.4.0.1</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Sunday, September 08, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/Sherlock.html">Sherlock</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.0.1">V0.4.0.1</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release adds two new features and one improvement.</p>
+<p>The new features are:</p>
 <ul>
-<li><strong>Nuclei</strong> - Base classes and interfaces, mostly used by the other libraries.</li>
-<li><strong>Nuclei.Build</strong> - Assembly attributes which can be used at build time to embed information about the specific build into an assembly, e.g. time and date of build or information describing the version control revision of the source code that was used to create the assembly.</li>
-<li><strong>Nuclei.Communication</strong> - Provides classes, interfaces and delegates used to provide a means of interacting between two or more applications through one or more command interfaces (similar to a Remote Procedure Call (RPC)). Capabilities include:<ul>
-<li>Based on WCF. Currently implemented methods for using TCP and named-pipes as base network layers.</li>
-<li>Discovery of communication sources on the local machine and the local network (using WS discovery).</li>
-<li>Automatic exchange of connection parameters between endpoints, if endpoints desired to communicate on the same topics (i.e. using an API that is familiar to both).</li>
-<li>User provides command and notification interfaces which provide asynchronous methods which can be called by remote endpoints. Command parameters and return data are transported over via a message based mechanism.</li>
+<li>The ability to continue with a test sequence after a test step has failed. The test step should indicate that the failure mode is &#39;continue&#39;. Other option is &#39;stop&#39;</li>
+<li>Added a test step that allows executing a console application with a set of input parameters</li>
 </ul>
-</li>
-<li><strong>Nuclei.Configuration</strong> - Provides an abstraction of a configuration. Build-in support for configuration via an application config file.</li>
-<li><strong>Nuclei.Diagnostics</strong> - Provides classes for logging (using NLog) and and in-application measuring of performance.</li>
-<li><p><strong>Nuclei.Nunit.Extensions</strong> - Contains a simple implementation of contract verification for NUnit. Ideas based on the 
-<a href="http://interfacingreality.blogspot.co.nz/2009/03/contract-verifiers-in-mbunit-v307.html">contract verifiers in MbUnit</a>. Currently only has verifiers for hashcode and equality.</p>
-</li>
-<li><p><strong>Nuclei.AppDomains</strong> - Provides classes for the creation of AppDomains with pre-set assembly resolve and exception handlers.</p>
-</li>
-<li><strong>Nuclei.ExceptionHandling</strong> - Provides exception filters for use in top level exception recording.</li>
-<li><strong>Nuclei.Fusion</strong> - Provides methods for assembly resolve requests.</li>
-</ul>
+<p>The following gist gives an overview of what the configuration for the new console test step looks like</p>
+<script src='https://gist.github.com/6483292.js'></script>
 
+<p>The improvement is in the HTML output report which is has been overhauled to improve the layout and readability.</p>
+ 
     </div>
-    <div>
-        <div id="project-linkedposts">
-    <h3>Posts referencing Nuclei</h3>
-    <ul>
-        
-    </ul>
 </div>
-    </div>
+        </div>
+    
 </div>
         </div>
     </div>
