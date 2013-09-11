@@ -3,13 +3,24 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2013-09-08T09:37:39.633Z</updated>
+    <updated>2013-09-11T09:54:43.370Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>Sherlock release - V0.4.2.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-09-11_Sherlock-Release-v0420.html"/>
+            <updated>2013-09-11T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-09-11_Sherlock-Release-v0420.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.2.0&quot;&gt;V0.4.2.0&lt;/a&gt; of the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release adds one bug fix and one improvement.&lt;/p&gt;
+&lt;p&gt;The bug fix is a change to the &lt;code&gt;IsHyperVMachine&lt;/code&gt; and &lt;code&gt;IsPhysicalMachine&lt;/code&gt; stored procedures in order to make them easier to use correctly.&lt;/p&gt;
+&lt;p&gt;The improvement is the addition of build steps that package the web projects into a ZIP file for easier deployment. These zip files can now also be retrieved from the &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.2.0&quot;&gt;release note&lt;/a&gt;&lt;/p&gt;
+</content>
+        </entry>
     
         <entry>
             <title>Sherlock release - V0.4.0.1</title>
