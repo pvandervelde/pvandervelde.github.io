@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>Home | Mind Vortex</title>
+    <title>Sherlock release - V0.4.3.0 | Mind Vortex</title>
     <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, Fluid dynamics, CFD, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
@@ -43,9 +43,9 @@
         <div id="menu">
             <ul>
                 
-                    <li class="active">
+                    <li class="inactive">
                         
-                            Home
+                            <a href="/index.html">Home</a>
                         
                     </li>
                 
@@ -127,13 +127,15 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
             </div>
         </div>
         <div id="content">
-            
-    <div id="post-spacer">
+            <!--
+    Commenting is based on: http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html
+-->
+<div id="post">
     <div id="post">
     <div id="post-header">
         <h2>
             
-                <a href='/posts/2013-09-14_Sherlock-Release-v0430.html'>Sherlock release - V0.4.3.0</a>
+                Sherlock release - V0.4.3.0
             
         </h2>
         <div id="post-meta">
@@ -155,147 +157,59 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
  
     </div>
 </div>
-    </div>
-
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-09-11_Sherlock-Release-v0420.html'>Sherlock release - V0.4.2.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, September 11, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/Sherlock.html">Sherlock</a>
-                
-            </p>
+    <div id="post-footer">
+        <div>
+            <div class="navlinks">
+  <a href="/posts/2013-09-11_Sherlock-Release-v0420.html" title="Previous Post: Sherlock release - V0.4.2.0" class="navlinks-prev">&laquo; Sherlock release - V0.4.2.0</a>
+  
+</div>
         </div>
     </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.2.0">V0.4.2.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release adds one bug fix and one improvement.</p>
-<p>The bug fix is a change to the <code>IsHyperVMachine</code> and <code>IsPhysicalMachine</code> stored procedures in order to make them easier to use correctly.</p>
-<p>The improvement is the addition of build steps that package the web projects into a ZIP file for easier deployment. These zip files can now also be retrieved from the <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.2.0">release note</a></p>
- 
-    </div>
-</div>
-    </div>
+    
+    <script type="text/javascript" src="http://datejs.googlecode.com/svn/trunk/build/date-en-US.js"></script>
 
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-09-08_Sherlock-Release-v0401.html'>Sherlock release - V0.4.0.1</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Sunday, September 08, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/Sherlock.html">Sherlock</a>
-                
-            </p>
+    <script type="text/javascript">
+      $("#post p").each( function(index) {
+        if (index > 0 && $.trim($(this).text()).length > 0) {
+          $(this).attr("id", "par" + index.toString());
+          var html = $(this).html();
+          $(this).html(html + " <a href='#par" + index.toString() + "'>#</a>");
+        }
+      });
+    </script>
+    
+    <div id="post-comments">
+        <h3>Comments</h3>
+        <div id="post-comment-header">
+            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/5"> this post's issue page on 
+            GitHub</a> (you'll need a GitHub account).
         </div>
     </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.0.1">V0.4.0.1</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release adds two new features and one improvement.</p>
-<p>The new features are:</p>
-<ul>
-<li>The ability to continue with a test sequence after a test step has failed. The test step should indicate that the failure mode is &#39;continue&#39;. Other option is &#39;stop&#39;</li>
-<li>Added a test step that allows executing a console application with a set of input parameters</li>
-</ul>
-<p>The following gist gives an overview of what the configuration for the new console test step looks like</p>
-<script src='https://gist.github.com/6483292.js'></script>
+    
+    <script type="text/javascript">
 
-<p>The improvement is in the HTML output report which is has been overhauled to improve the layout and readability.</p>
- 
-    </div>
+      function loadComments(data) {
+        for (var i=0; i<data.length; i++) {
+          var cuser = data[i].user.login;
+          var cuserlink = "https://www.github.com/" + data[i].user.login;
+          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/5#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
+          var cbody = data[i].body_html;
+          var cavatarlink = data[i].user.avatar_url;
+          var cdate = Date.parse(data[i].created_at).toString("yyyy-MM-dd HH:mm:ss");
+
+          $("#post-comments").append("<div id='post-comment'><div id='post-comment-header'><div id='post-comment-gravatar'>" + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + "</div><a id='post-comment-user' href=\""+ cuserlink + "\">" + cuser + "</a><a id='post-comment-date' href=\"" + clink + "\">" + cdate + "</a></div><div id='post-comment-body'>" + cbody + "</div></div>");
+        }
+      }
+
+      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/5/comments", {
+        headers: {Accept: "application/vnd.github.full+json"},
+        dataType: "json",
+        success: function(msg){
+          loadComments(msg);
+       }
+      });
+    </script>
 </div>
-    </div>
-
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-09-03_First-time-paragliding.html'>First time paragliding</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Tuesday, September 03, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/Paragliding.html">Paragliding</a>
-                
-                    <a id="post-category" href="/tags/PG2.html">PG2</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>A little while ago I signed up for a <a href="http://paraglidingnewzealand.com/information/learning-to-fly">PG2</a> paragliding course 
-with <a href="http://wingsandwaves.co.nz">Wings and Waves</a>. Unfortunately I signed up just before winter crept in and made it impossible to fly. As
-we are moving towards spring the weather has been getting better and last Sunday the weather was good enough for us (my girlfriend and me) to
-have our first shot at flying a paraglider.</p>
-<p><img align="left" alt="Casey ground handling the old glider" src="/images/paragliding/paraglide_0001.JPG" /></p>
-<p>So on Sunday morning we met up with the Wings and Waves crew and drove over to a nice, if some what soggy, hill somewhere around Pukemore, south of the Bombay hills for the first steps of our training. </p>
-<p>The first part consisted of learning how to ground handle a paraglider. Ground handling is the art of controlling the paraglider while on the ground. This turns out to be harder than it first looks. In the air the pilot will normally be centred underneath the paraglider. On the ground however the pilot may not be directly below the paraglider which means the pilot needs to actively move around to keep the paraglider above them.</p>
-<p><img align="right" alt="Me doing a forward start with the old glider" src="/images/paragliding/paraglide_0002.JPG" /> </p>
-<p>Once we got the hang of the ground handling we started learning forwards starts, or alpine starts. With this method of starting you face forward with the glider behind you. Once you have sorted out the lines you move forwards until the lines are tensioned and then you run at a constant pace. The first glider we used was the really old one we used in ground handling. Given that it was not very large it was pretty easy to run with, and running we did, lots of it.</p>
-<p>Once we got a few good runs in with the old glider the instructor found us a more modern paraglider to play with. This one was considerably larger and far more interesting. Over the remainder of the day we slowly worked our way up the hill, starting from a higher position each time, and being rewarded with a little more flight time and a little more height each time.</p>
-<p><img align="left" alt="Casey having a little flight with the newer glider" src="/images/paragliding/paraglide_0003.JPG" /></p>
-<p>In the beginning both my girl friend and me got to use the same glider but it turns out I&#39;ve got a big fat ass and so I had to upgrade to bigger gliders a few more times. Each time being reminded that bigger gliders also mean more backwards pull on start and higher flights. </p>
-<p>In all it was a good day flying. I still have a lot of work to do on all parts of my launching and flying skills (obviously given that this is the first time), but the one thing I really noticed I need to work on is distance estimation and flare timing. I got that wrong a few times and it was fortunate that the landing area was soggy because it made for nice, if what splashy, landings even if I miscalculated my flare timing. </p>
-<p>All in all a good time was had by all and we are definitely keen for more flying. Hopefully with less running and more flying next time.</p>
- 
-    </div>
-</div>
-    </div>
-
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-08-30_Why-this-blog-was-created.html'>Why this blog was created</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Friday, August 30, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/Blog.html">Blog</a>
-                
-                    <a id="post-category" href="/tags/Writing.html">Writing</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>A couple of years ago I had a blog on Blogger but that never got further than a few posts, mainly because I ran out of interesting topics to write about. That
-and my <a href="/about.html">studies</a> started interfering with life in general ... it seems research does that to ones life. In any case the old blog stalled and no
-more posts were written.</p>
-<p>Recently I have been wanting to improve my writing skills, you see, as software engineer I&#39;m reasonably good at writing instructions for a three year
-old, eh I mean a computer, but I am not particularly good at writing concise human-friendly text. I have written two dissertations, one for my master degree
-and one for my PhD, but neither of those qualify as either concise or human-friendly.</p>
-<p>Given that the only way to get better at writing is to practise, practise and practise some more, I thought writing posts about things that interest me
-would be a good way to improve my writing skills. And on top of that it may help me improve my skills in explaining technical constructs as well. Double win.</p>
-<p>The only thing left to answer is what shall I be writing about. Well obviously those things that interest me, mostly being:</p>
-<ul>
-<li>My open source <a href="/projects.html">projects</a>. All of them could do with some additional documentation and maybe even some examples. I guess having a 
-blog is just an additional reason to finally write those</li>
-<li>All the (exciting) things I get up to when rock climbing or paragliding.</li>
-<li>And if things progress nicely I might write some articles describing some work I am doing at the moment that is a continuation of the software
-development I did for my PhD.</li>
-</ul>
- 
-    </div>
-</div>
-    </div>
-
         </div>
     </div>
     <div id="footer" class="container">
