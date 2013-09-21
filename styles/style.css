@@ -466,9 +466,18 @@ hr {
 #project {
 }
 
+#project-linkedposts {
+    padding-top: 1.5em;
+    padding-bottom: 3em;
+}
+
 #project-linkedposts h3{
     color: #AAAAAA;
-    padding-top: 3em;
+}
+
+#project-linkedposts-more{
+    color: #AAAAAA;
+    padding: 0 3em;
 }
 
 #project-linkedposts ul{
