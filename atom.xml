@@ -3,13 +3,26 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2013-09-25T05:49:27.780Z</updated>
+    <updated>2013-09-25T09:44:25.746Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>nRefs release - V0.1.0.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-09-25_nRefs-Release-v0100.html"/>
+            <updated>2013-09-25T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-09-25_nRefs-Release-v0100.html</id>
+            <content type="html">&lt;p&gt;The &lt;a href=&quot;https://github.com/pvandervelde/nRefs/releases/tag/v0.1.0.0&quot;&gt;first release&lt;/a&gt; of the &lt;a href=&quot;/projects/nRefs.html&quot;&gt;nRefs&lt;/a&gt; assembly reference extraction application has been released. This release&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The test output now includes an XML report with all the messages and an indication of test success or failure.&lt;/li&gt;
+&lt;li&gt;Removed the Test data directory settings from the web service because test packages are now always dropped in the App_Data directory&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        </entry>
     
         <entry>
             <title>How this blog was created</title>

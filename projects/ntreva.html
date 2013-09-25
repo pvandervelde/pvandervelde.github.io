@@ -79,6 +79,12 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/projects/nrefs.html">nRefs</a></li>
+                    
+                        <li><a href="/projects/ntreva.html">nTreva</a></li>
+                    
+                        <li><a href="/posts/2013-09-25_nRefs-Release-v0100.html">nRefs release - V0.1.0.0</a></li>
+                    
                         <li><a href="/posts/2013-09-25_How-this-blog-was-created.html">How this blog was created</a></li>
                     
                         <li><a href="/posts/2013-09-21_Sherlock-Release-v0440.html">Sherlock release - V0.4.4.0</a></li>
@@ -92,12 +98,6 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         <li><a href="/posts/2013-09-08_Sherlock-Release-v0401.html">Sherlock release - V0.4.0.1</a></li>
                     
                         <li><a href="/posts/2013-09-03_First-time-paragliding.html">First time paragliding</a></li>
-                    
-                        <li><a href="/posts/2013-08-30_Why-this-blog-was-created.html">Why this blog was created</a></li>
-                    
-                        <li><a href="/projects/nanicitus.html">nAnicitus</a></li>
-                    
-                        <li><a href="/projects/ntreva.html">nTreva</a></li>
                     
                 </ul>
             </div>
@@ -132,47 +132,17 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         GitHub
                     </a>
                 
+                    <a href="/tags/nRefs.html" style="font-size: 100%">
+                        nRefs
+                    </a>
+                
             </div>
         </div>
         <div id="content">
             <div class="project">
     <h2>nTreva</h2>
     <div>
-        <p><a href="https://github.com/pvandervelde/nTreva">nTreva</a> is an application that creates an XML file containing license information from installed NuGet packages. To run nTreva use the following command line.</p>
-<pre class="highlighted"><code class="xml">nTreva.exe -p <span class="tag">&lt;<span class="title">Directory_With_Installed_Packages</span>&gt;</span> -o <span class="tag">&lt;<span class="title">Output_File</span>&gt;</span> -c <span class="tag">&lt;<span class="title">PackageConfigFile1</span>&gt;</span> -c <span class="tag">&lt;<span class="title">PackageConfigFile2</span>&gt;</span> ... -c <span class="tag">&lt;<span class="title">PackageConfigFileN</span>&gt;</span></code></pre>
-<p>The output will be an file containing information about the installed packages (found in the different package.config files), their project URL and their license URL. If no project or license 
-URL is found a default google search URL is generated. An example section as taken from the output file obtained by running nTreva on it&#39;s own workspace:</p>
-<pre class="highlighted"><code class="xml"><span class="pi">&lt;?xml version="1.0" encoding="utf-8" ?&gt;</span>
-<span class="tag">&lt;<span class="title">packages</span>&gt;</span>
-  <span class="tag">&lt;<span class="title">package</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">id</span>&gt;</span>Lokad.Shared<span class="tag">&lt;/<span class="title">id</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.5.181.0<span class="tag">&lt;/<span class="title">version</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://www.google.com/search?q=Lokad.Shared<span class="tag">&lt;/<span class="title">url</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">licenseurl</span>&gt;</span>http://www.opensource.org/licenses/bsd-license.php<span class="tag">&lt;/<span class="title">licenseurl</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">package</span>&gt;</span>
-
-  <span class="tag">&lt;<span class="title">package</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">id</span>&gt;</span>Nuclei<span class="tag">&lt;/<span class="title">id</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">version</span>&gt;</span>0.6.0.0<span class="tag">&lt;/<span class="title">version</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">url</span>&gt;</span>https://github.com/pvandervelde/Nuclei<span class="tag">&lt;/<span class="title">url</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">licenseurl</span>&gt;</span>http://www.apache.org/licenses/LICENSE-2.0<span class="tag">&lt;/<span class="title">licenseurl</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">package</span>&gt;</span>
-
-  <span class="tag">&lt;<span class="title">package</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">id</span>&gt;</span>Nuclei.Build<span class="tag">&lt;/<span class="title">id</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">version</span>&gt;</span>0.6.0.0<span class="tag">&lt;/<span class="title">version</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">url</span>&gt;</span>https://github.com/pvandervelde/Nuclei<span class="tag">&lt;/<span class="title">url</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">licenseurl</span>&gt;</span>http://www.apache.org/licenses/LICENSE-2.0<span class="tag">&lt;/<span class="title">licenseurl</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">package</span>&gt;</span>
-
-  <span class="tag">&lt;<span class="title">package</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">id</span>&gt;</span>Nuget.Core<span class="tag">&lt;/<span class="title">id</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">version</span>&gt;</span>2.1.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://nuget.codeplex.com/<span class="tag">&lt;/<span class="title">url</span>&gt;</span>
-    <span class="tag">&lt;<span class="title">licenseurl</span>&gt;</span>http://nuget.codeplex.com/license<span class="tag">&lt;/<span class="title">licenseurl</span>&gt;</span>
-  <span class="tag">&lt;/<span class="title">package</span>&gt;</span>
-
-<span class="tag">&lt;/<span class="title">packages</span>&gt;</span></code></pre>
+        <p><a href="https://github.com/pvandervelde/nTreva">nTreva</a> is an application that creates an XML file containing license information from installed NuGet packages. nTreva outputs a file containing information about the installed packages (found in the different package.config files), their project URL and their license URL. If no project or license URL is found a default google search URL is generated.</p>
 
     </div>
     <div>
