@@ -3,13 +3,82 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2013-09-21T06:13:00.197Z</updated>
+    <updated>2013-09-25T05:49:27.780Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>How this blog was created</title>
+            <link href="http://pvandervelde.github.io/posts/2013-09-25_How-this-blog-was-created.html"/>
+            <updated>2013-09-25T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-09-25_How-this-blog-was-created.html</id>
+            <content type="html">&lt;p&gt;A long time ago, in a location far, far, far away there was a hero in search for a quest ... &lt;/p&gt;
+&lt;p&gt;And he searched ...&lt;/p&gt;
+&lt;p&gt;And he searched .... &lt;/p&gt;
+&lt;p&gt;And .. oh never mind, our hero he is not the object of this current post, thus we shall be leaving him in some weird limbo looking for his quest... oh well. The topic of this post is how this blog / website was build. It turns out that building anything in HTML, CSS, Node.js and all the other cool web technologies isn&amp;#39;t really my strong suit. However I&amp;#39;m hoping that the description of how I build this site may be useful to somebody at some point in time, if only to have a good laugh at my lack of CSS skills.&lt;/p&gt;
+&lt;p&gt;As much as I love writing code, the idea of writing my content in an angle bracket language didn&amp;#39;t really attract me so the plan was hatched (it came out of a purple egg, by the way) to write (nearly) all content in &lt;a href=&quot;http://daringfireball.net/projects/markdown/&quot;&gt;Markdown&lt;/a&gt; by using &lt;a href=&quot;http://docpad.org&quot;&gt;Docpad&lt;/a&gt;. Given that I&amp;#39;ve recently started using &lt;a href=&quot;http://github.com&quot;&gt;GitHub&lt;/a&gt; for my open source projects why not use it for version control and GitHub pages to serve my website. &lt;/p&gt;
+&lt;p&gt;I won&amp;#39;t bore you with the details on how to install Docpad, the Docpad website has an excellent introduction to all those things. Once the initial install is done Docpad allows you to create a skeleton website by executing the following command&lt;/p&gt;
+&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;dos&quot;&gt;Docpad run&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;At which point Docpad presents a list of possible skeletons to use. In my case I selected the &lt;a href=&quot;http://html5boilerplate.com/&quot;&gt;HTML5 boilerplate template&lt;/a&gt;. In order to get a nice layout quickly I also used the &lt;a href=&quot;http://www.freecsstemplates.org/previews/opentools/&quot;&gt;Open tools&lt;/a&gt; template. &lt;/p&gt;
+&lt;p&gt;Once I had the basic site layout sorted it was time to focus creating my own sections. Fortunately Docpad has a large number of plugins that provide useful additions to the generation process. For the generation of this site the following plugins are used:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/grassator/docpad-plugin-datefromfilename&quot;&gt;datefromfilename&lt;/a&gt; - Extracts the date of a post from the file name.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://docpad.org/plugin/gist/&quot;&gt;gist&lt;/a&gt; - Adds &lt;a href=&quot;https://gist.github.com/&quot;&gt;GitHub gists&lt;/a&gt; to a page.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://docpad.org/plugin/highlightjs/&quot;&gt;highlightjs&lt;/a&gt; - Provides syntax highlighting for code samples. My current plan is to use this for the smaller samples and use GitHub gists for the larger ones.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/lucor/docpad-plugin-navlinks&quot;&gt;navlinks&lt;/a&gt; - Adds navigation links to the bottom of each post, pointing at the previous and next post.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://docpad.org/plugin/related/&quot;&gt;related&lt;/a&gt; - Allows you to find all related documents based on a given set of tags.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rantecki/docpad-plugin-tagging&quot;&gt;tagging&lt;/a&gt; - Generates the tag cloud for the sidebar.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With all the toys sorted it was time to integrate them in the templates.&lt;/p&gt;
+&lt;h3&gt;Menu&lt;/h3&gt;
+&lt;p&gt;The top level menu is based on a collection which contains all pages that have their &lt;code&gt;isPage&lt;/code&gt; flag set to &lt;code&gt;true&lt;/code&gt;. Note that we also assume that these pages have 
+the default layout. One thing to note is that the docpad.coffee configuration file seems to be sensitive to the type of whitespace you use. Either use spaces or tabs, but don&amp;#39;t mix them, otherwise you may get some weird errors.&lt;/p&gt;
+&lt;script src='https://gist.github.com/6375681.js?file=collections.pages.docpad.coffee'&gt;&lt;/script&gt;
+
+&lt;p&gt;Once the collection has been filled with pages it is used to create an unordered list with an additional highlight placed on the currently active page&lt;/p&gt;
+&lt;script src='https://gist.github.com/6375681.js?file=menu.default.html'&gt;&lt;/script&gt;
+
+&lt;h3&gt;Sidebar&lt;/h3&gt;
+&lt;p&gt;The sidebar contains three different sections. The first section is the about section which is nothing special. The &lt;em&gt;recent&lt;/em&gt; and &lt;em&gt;tags&lt;/em&gt; sections are more interesting from a website construction perspective. The &lt;em&gt;recent&lt;/em&gt; section based on the &lt;em&gt;frontpage&lt;/em&gt; collection which grabs all items from the posts and 
+projects subdirectories and then sorts them by date. The &lt;em&gt;recent&lt;/em&gt; section only display the last 10 items in that collection.&lt;/p&gt;
+&lt;script src='https://gist.github.com/6375681.js?file=recent.default.html'&gt;&lt;/script&gt;
+
+&lt;p&gt;The &lt;em&gt;tags&lt;/em&gt; section is based on a collection provided by the tagging plugin. The font-size of the tag is based on the weight assigned to the tag by the tagging plugin. &lt;/p&gt;
+&lt;script src='https://gist.github.com/6375681.js?file=tags.default.html'&gt;&lt;/script&gt; 
+
+&lt;p&gt;Each tag links to a page that contains all the posts that contain that tag.&lt;/p&gt;
+&lt;h3&gt;Projects, tag indexes and posts&lt;/h3&gt;
+&lt;p&gt;The project pages all have a shared layout which provides them with a title and a section that lists all the posts tagged with the name of the project&lt;/p&gt;
+&lt;script src='https://gist.github.com/6375681.js?file=project-linkedposts.html'&gt;&lt;/script&gt;
+
+&lt;p&gt;Posts are displayed in three different places: &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The home page&lt;/li&gt;
+&lt;li&gt;The tag index page, containing all posts with a given tag&lt;/li&gt;
+&lt;li&gt;The post page&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All pages use the same partial layout file in order to display the post.&lt;/p&gt;
+&lt;script src='https://gist.github.com/6375681.js?file=post-content.html'&gt;&lt;/script&gt; 
+
+&lt;p&gt;The only difference between the post page and the other pages is that the post page will display all the comments. The comment system is based on
+&lt;a href=&quot;http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html&quot;&gt;comments on a GitHub issue&lt;/a&gt; and uses a small amount of Javascript to pull the comments across into the comment list.&lt;/p&gt;
+&lt;script src='https://gist.github.com/6375681.js?file=post.html'&gt;&lt;/script&gt;
+
+
+&lt;h3&gt;Acknowledgements:&lt;/h3&gt;
+&lt;p&gt;Finally there some people that have provided some descriptions of how their own blogs were created with Docpad (or other static generators). Below are the posts that I used to assemble my own blog. A big thank you to the original posters!&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html&quot;&gt;Ivan Zuzak&lt;/a&gt; for his post describing how to use GitHub issues as a way to provide comments on a blog post.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://takitapart.com&quot;&gt;takitapart&lt;/a&gt; provided an &lt;a href=&quot;http://takitapart.com/posts/organizing-docpad/&quot;&gt;excellent&lt;/a&gt; post describing how to organise content in a Docpad website.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://lucor.github.io&quot;&gt;Luca&amp;#39;s forge&lt;/a&gt; provided a good start to using Docpad in his &lt;a href=&quot;http://lucor.github.io/post/migrating-from-octopress-to-docpad/&quot;&gt;migration&lt;/a&gt; post. This site also provides some very nice ideas around the way posts and tags should look.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.delarre.net&quot;&gt;Ben Delarre&lt;/a&gt; provided a nice &lt;a href=&quot;http://www.delarre.net/posts/blogging-with-docpad/&quot;&gt;summary&lt;/a&gt; of his own Docpad setup.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        </entry>
     
         <entry>
             <title>Sherlock release - V0.4.4.0</title>

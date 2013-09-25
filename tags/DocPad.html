@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>First time paragliding | Mind Vortex</title>
+    <title>Mind Vortex</title>
     <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, Fluid dynamics, CFD, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
@@ -135,98 +135,97 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
             </div>
         </div>
         <div id="content">
-            <!--
-    Commenting is based on: http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html
--->
-<div id="post">
-    <div id="post">
+            <div id="posts">
+    <h3 id="post-tags-header">Posts tagged with: DocPad</h3>
+    
+        <div id="post-spacer">
+            <div id="post">
     <div id="post-header">
         <h2>
             
-                First time paragliding
+                <a href='/posts/2013-09-25_How-this-blog-was-created.html'>How this blog was created</a>
             
         </h2>
         <div id="post-meta">
             <p>
-                Tuesday, September 03, 2013 | Posted in
+                Wednesday, September 25, 2013 | Posted in
                 
-                    <a id="post-category" href="/tags/Paragliding.html">Paragliding</a>
+                    <a id="post-category" href="/tags/Blog.html">Blog</a>
                 
-                    <a id="post-category" href="/tags/PG2.html">PG2</a>
+                    <a id="post-category" href="/tags/DocPad.html">DocPad</a>
+                
+                    <a id="post-category" href="/tags/GitHub.html">GitHub</a>
                 
             </p>
         </div>
     </div>
     <div id="post-content">
-        <p>A little while ago I signed up for a <a href="http://paraglidingnewzealand.com/information/learning-to-fly">PG2</a> paragliding course 
-with <a href="http://wingsandwaves.co.nz">Wings and Waves</a>. Unfortunately I signed up just before winter crept in and made it impossible to fly. As
-we are moving towards spring the weather has been getting better and last Sunday the weather was good enough for us (my girlfriend and me) to
-have our first shot at flying a paraglider.</p>
-<p><img align="left" alt="Casey ground handling the old glider" src="/images/paragliding/paraglide_0001.JPG" /></p>
-<p>So on Sunday morning we met up with the Wings and Waves crew and drove over to a nice, if some what soggy, hill somewhere around Pukemore, south of the Bombay hills for the first steps of our training. </p>
-<p>The first part consisted of learning how to ground handle a paraglider. Ground handling is the art of controlling the paraglider while on the ground. This turns out to be harder than it first looks. In the air the pilot will normally be centred underneath the paraglider. On the ground however the pilot may not be directly below the paraglider which means the pilot needs to actively move around to keep the paraglider above them.</p>
-<p><img align="right" alt="Me doing a forward start with the old glider" src="/images/paragliding/paraglide_0002.JPG" /> </p>
-<p>Once we got the hang of the ground handling we started learning forwards starts, or alpine starts. With this method of starting you face forward with the glider behind you. Once you have sorted out the lines you move forwards until the lines are tensioned and then you run at a constant pace. The first glider we used was the really old one we used in ground handling. Given that it was not very large it was pretty easy to run with, and running we did, lots of it.</p>
-<p>Once we got a few good runs in with the old glider the instructor found us a more modern paraglider to play with. This one was considerably larger and far more interesting. Over the remainder of the day we slowly worked our way up the hill, starting from a higher position each time, and being rewarded with a little more flight time and a little more height each time.</p>
-<p><img align="left" alt="Casey having a little flight with the newer glider" src="/images/paragliding/paraglide_0003.JPG" /></p>
-<p>In the beginning both my girl friend and me got to use the same glider but it turns out I&#39;ve got a big fat ass and so I had to upgrade to bigger gliders a few more times. Each time being reminded that bigger gliders also mean more backwards pull on start and higher flights. </p>
-<p>In all it was a good day flying. I still have a lot of work to do on all parts of my launching and flying skills (obviously given that this is the first time), but the one thing I really noticed I need to work on is distance estimation and flare timing. I got that wrong a few times and it was fortunate that the landing area was soggy because it made for nice, if what splashy, landings even if I miscalculated my flare timing. </p>
-<p>All in all a good time was had by all and we are definitely keen for more flying. Hopefully with less running and more flying next time.</p>
+        <p>A long time ago, in a location far, far, far away there was a hero in search for a quest ... </p>
+<p>And he searched ...</p>
+<p>And he searched .... </p>
+<p>And .. oh never mind, our hero he is not the object of this current post, thus we shall be leaving him in some weird limbo looking for his quest... oh well. The topic of this post is how this blog / website was build. It turns out that building anything in HTML, CSS, Node.js and all the other cool web technologies isn&#39;t really my strong suit. However I&#39;m hoping that the description of how I build this site may be useful to somebody at some point in time, if only to have a good laugh at my lack of CSS skills.</p>
+<p>As much as I love writing code, the idea of writing my content in an angle bracket language didn&#39;t really attract me so the plan was hatched (it came out of a purple egg, by the way) to write (nearly) all content in <a href="http://daringfireball.net/projects/markdown/">Markdown</a> by using <a href="http://docpad.org">Docpad</a>. Given that I&#39;ve recently started using <a href="http://github.com">GitHub</a> for my open source projects why not use it for version control and GitHub pages to serve my website. </p>
+<p>I won&#39;t bore you with the details on how to install Docpad, the Docpad website has an excellent introduction to all those things. Once the initial install is done Docpad allows you to create a skeleton website by executing the following command</p>
+<pre class="highlighted"><code class="dos">Docpad run</code></pre>
+<p>At which point Docpad presents a list of possible skeletons to use. In my case I selected the <a href="http://html5boilerplate.com/">HTML5 boilerplate template</a>. In order to get a nice layout quickly I also used the <a href="http://www.freecsstemplates.org/previews/opentools/">Open tools</a> template. </p>
+<p>Once I had the basic site layout sorted it was time to focus creating my own sections. Fortunately Docpad has a large number of plugins that provide useful additions to the generation process. For the generation of this site the following plugins are used:</p>
+<ul>
+<li><a href="https://github.com/grassator/docpad-plugin-datefromfilename">datefromfilename</a> - Extracts the date of a post from the file name.</li>
+<li><a href="http://docpad.org/plugin/gist/">gist</a> - Adds <a href="https://gist.github.com/">GitHub gists</a> to a page.</li>
+<li><a href="http://docpad.org/plugin/highlightjs/">highlightjs</a> - Provides syntax highlighting for code samples. My current plan is to use this for the smaller samples and use GitHub gists for the larger ones.</li>
+<li><a href="https://github.com/lucor/docpad-plugin-navlinks">navlinks</a> - Adds navigation links to the bottom of each post, pointing at the previous and next post.</li>
+<li><a href="http://docpad.org/plugin/related/">related</a> - Allows you to find all related documents based on a given set of tags.</li>
+<li><a href="https://github.com/rantecki/docpad-plugin-tagging">tagging</a> - Generates the tag cloud for the sidebar.</li>
+</ul>
+<p>With all the toys sorted it was time to integrate them in the templates.</p>
+<h3>Menu</h3>
+<p>The top level menu is based on a collection which contains all pages that have their <code>isPage</code> flag set to <code>true</code>. Note that we also assume that these pages have 
+the default layout. One thing to note is that the docpad.coffee configuration file seems to be sensitive to the type of whitespace you use. Either use spaces or tabs, but don&#39;t mix them, otherwise you may get some weird errors.</p>
+<script src='https://gist.github.com/6375681.js?file=collections.pages.docpad.coffee'></script>
+
+<p>Once the collection has been filled with pages it is used to create an unordered list with an additional highlight placed on the currently active page</p>
+<script src='https://gist.github.com/6375681.js?file=menu.default.html'></script>
+
+<h3>Sidebar</h3>
+<p>The sidebar contains three different sections. The first section is the about section which is nothing special. The <em>recent</em> and <em>tags</em> sections are more interesting from a website construction perspective. The <em>recent</em> section based on the <em>frontpage</em> collection which grabs all items from the posts and 
+projects subdirectories and then sorts them by date. The <em>recent</em> section only display the last 10 items in that collection.</p>
+<script src='https://gist.github.com/6375681.js?file=recent.default.html'></script>
+
+<p>The <em>tags</em> section is based on a collection provided by the tagging plugin. The font-size of the tag is based on the weight assigned to the tag by the tagging plugin. </p>
+<script src='https://gist.github.com/6375681.js?file=tags.default.html'></script> 
+
+<p>Each tag links to a page that contains all the posts that contain that tag.</p>
+<h3>Projects, tag indexes and posts</h3>
+<p>The project pages all have a shared layout which provides them with a title and a section that lists all the posts tagged with the name of the project</p>
+<script src='https://gist.github.com/6375681.js?file=project-linkedposts.html'></script>
+
+<p>Posts are displayed in three different places: </p>
+<ul>
+<li>The home page</li>
+<li>The tag index page, containing all posts with a given tag</li>
+<li>The post page</li>
+</ul>
+<p>All pages use the same partial layout file in order to display the post.</p>
+<script src='https://gist.github.com/6375681.js?file=post-content.html'></script> 
+
+<p>The only difference between the post page and the other pages is that the post page will display all the comments. The comment system is based on
+<a href="http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html">comments on a GitHub issue</a> and uses a small amount of Javascript to pull the comments across into the comment list.</p>
+<script src='https://gist.github.com/6375681.js?file=post.html'></script>
+
+
+<h3>Acknowledgements:</h3>
+<p>Finally there some people that have provided some descriptions of how their own blogs were created with Docpad (or other static generators). Below are the posts that I used to assemble my own blog. A big thank you to the original posters!</p>
+<ul>
+<li><a href="http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html">Ivan Zuzak</a> for his post describing how to use GitHub issues as a way to provide comments on a blog post.</li>
+<li><a href="http://takitapart.com">takitapart</a> provided an <a href="http://takitapart.com/posts/organizing-docpad/">excellent</a> post describing how to organise content in a Docpad website.</li>
+<li><a href="http://lucor.github.io">Luca&#39;s forge</a> provided a good start to using Docpad in his <a href="http://lucor.github.io/post/migrating-from-octopress-to-docpad/">migration</a> post. This site also provides some very nice ideas around the way posts and tags should look.</li>
+<li><a href="http://www.delarre.net">Ben Delarre</a> provided a nice <a href="http://www.delarre.net/posts/blogging-with-docpad/">summary</a> of his own Docpad setup.</li>
+</ul>
  
     </div>
 </div>
-    <div id="post-footer">
-        <div>
-            <div class="navlinks">
-  <a href="/posts/2013-08-30_Why-this-blog-was-created.html" title="Previous Post: Why this blog was created" class="navlinks-prev">&laquo; Why this blog was created</a>
-  <a href="/posts/2013-09-08_Sherlock-Release-v0401.html" title="Next Post: Sherlock release - V0.4.0.1" class="navlinks-next">Sherlock release - V0.4.0.1 &raquo;</a>
-</div>
         </div>
-    </div>
     
-    <script type="text/javascript" src="http://datejs.googlecode.com/svn/trunk/build/date-en-US.js"></script>
-
-    <script type="text/javascript">
-      $("#post p").each( function(index) {
-        if (index > 0 && $.trim($(this).text()).length > 0) {
-          $(this).attr("id", "par" + index.toString());
-          var html = $(this).html();
-          $(this).html(html + " <a href='#par" + index.toString() + "'>#</a>");
-        }
-      });
-    </script>
-    
-    <div id="post-comments">
-        <h3>Comments</h3>
-        <div id="post-comment-header">
-            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/2"> this post's issue page on 
-            GitHub</a> (you'll need a GitHub account).
-        </div>
-    </div>
-    
-    <script type="text/javascript">
-
-      function loadComments(data) {
-        for (var i=0; i<data.length; i++) {
-          var cuser = data[i].user.login;
-          var cuserlink = "https://www.github.com/" + data[i].user.login;
-          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/2#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
-          var cbody = data[i].body_html;
-          var cavatarlink = data[i].user.avatar_url;
-          var cdate = Date.parse(data[i].created_at).toString("yyyy-MM-dd HH:mm:ss");
-
-          $("#post-comments").append("<div id='post-comment'><div id='post-comment-header'><div id='post-comment-gravatar'>" + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + "</div><a id='post-comment-user' href=\""+ cuserlink + "\">" + cuser + "</a><a id='post-comment-date' href=\"" + clink + "\">" + cdate + "</a></div><div id='post-comment-body'>" + cbody + "</div></div>");
-        }
-      }
-
-      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/2/comments", {
-        headers: {Accept: "application/vnd.github.full+json"},
-        dataType: "json",
-        success: function(msg){
-          loadComments(msg);
-       }
-      });
-    </script>
 </div>
         </div>
     </div>
