@@ -3,13 +3,47 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2013-09-25T09:44:25.746Z</updated>
+    <updated>2013-09-26T10:36:15.757Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>Nuclei release - V0.6.5.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-09-26_Nuclei-Release-v0650.html"/>
+            <updated>2013-09-26T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-09-26_Nuclei-Release-v0650.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.5.0&quot;&gt;V0.6.5.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release adds an option to allow the user to select which
+types of channels the communication layer is allowed to use. The communication layer can be allowed to use TCP/IP channels, named pipe channels or both.&lt;/p&gt;
+&lt;p&gt;In the previous versions in the constructor of the &lt;code&gt;CommunicationModule&lt;/code&gt; needed to be provided with a 
+list of &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/wiki/Nuclei.Communication#communicationsubject&quot;&gt;communication subjects&lt;/a&gt; and a flag indicating if &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/wiki/Nuclei.Communication#endpoints-and-their-discovery&quot;&gt;channel discovery&lt;/a&gt; was allowed.&lt;/p&gt;
+&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; builder = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ContainerBuilder(); 
+builder.RegisterModule(
+    &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; CommunicationModule(
+        &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; List&amp;lt;CommunicationSubject&amp;gt;
+            {
+                CommunicationSubjects.Dataset,
+            },
+        &lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt;));&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In V0.6.5.0 an extra parameter needs to be provided which indicates which types of channel the communication layer is allowed to use to communicate with other instances. The allowable options are &lt;code&gt;ChannelType.NamedPipe&lt;/code&gt; and &lt;code&gt;ChannelType.TcpIP&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; builder = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ContainerBuilder();
+builder.RegisterModule(
+    &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; CommunicationModule(
+        &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; List&amp;lt;CommunicationSubject&amp;gt;
+            {
+                CommunicationSubjects.Dataset,
+            },
+        &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt;[]
+            {
+                ChannelType.NamedPipe,
+                ChannelType.TcpIP,
+            }, 
+        &lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt;));&lt;/code&gt;&lt;/pre&gt;
+</content>
+        </entry>
     
         <entry>
             <title>nRefs release - V0.1.0.0</title>
