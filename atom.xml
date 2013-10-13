@@ -3,13 +3,49 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2013-09-26T10:36:15.757Z</updated>
+    <updated>2013-10-13T00:50:53.951Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>PG2 - Spending a weekend in the air</title>
+            <link href="http://pvandervelde.github.io/posts/2013-10-13_PG2-Spending-a-weekend-in-the-air.html"/>
+            <updated>2013-10-13T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-10-13_PG2-Spending-a-weekend-in-the-air.html</id>
+            <content type="html">&lt;p&gt;Last weekend another episode in my &lt;a href=&quot;/tags/PG2.html&quot;&gt;PG2 course&lt;/a&gt; took place with flights happening on both Saturday &lt;em&gt;and&lt;/em&gt; Sunday. Both days started with an off shore breeze but as the day progressed the sea breeze brought six to seven knots of wind from the South-West and we were good to go.&lt;/p&gt;
+&lt;p&gt;This time we flew from the high launch at at &lt;a href=&quot;http://en.wikipedia.org/wiki/Kariotahi_Beach&quot;&gt;Kariotahi&lt;/a&gt; which has the lowest point of the launch at about 90m above the beach. The walk up follows a narrow, relatively steep, sandy and muddy path which increased everybody&amp;#39;s desire to top land. Fortunately for us our excellent instructor always managed to get us into a position where top landings were possible, in spite of the sometimes lacking wind strength. &lt;/p&gt;
+&lt;p&gt;&lt;img align=&quot;left&quot; alt=&quot;Cruising around on my Gin Atlas&quot; src=&quot;/images/paragliding/paraglide_0006.JPG&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;The main learning point for this weekend was the &lt;a href=&quot;http://en.wikipedia.org/wiki/Paragliding#Reverse_launch&quot;&gt;reverse launch&lt;/a&gt;. The technique I am being taught has, in some places, been called the &lt;a href=&quot;http://sydneyparagliding.com/flying-techniques/the-effortless-reverse-launch-technique/&quot;&gt;Mitsos reverse launch&lt;/a&gt;. The reverse launch method provides a lot more control over the glider while it is on the ground than the forward launch method, not in the least because one can actually see what the glider is doing. &lt;/p&gt;
+&lt;p&gt;For me the hardest part of the reverse launch method so far is controlling the glider as it rises above my head. The launch will go well as long as the glider rises evenly, but as soon as it slides to the right or left side it is hard to get it back to the middle. The second area to focus on is coordinating the turn and the drive when actually launching. Normally I can execute the turn without too much trouble but I don&amp;#39;t always drive correctly so a lot more practise is in order. Fortunately the instructors have given me an old harness and an old glider that I can use to practise my ground handling on days that we&amp;#39;re not flying. In fact I would be doing that right now if there wasn&amp;#39;t a near gale force wind outside ...&lt;/p&gt;
+&lt;p&gt;Over the course of the two days I managed to do:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Six flights of differing lengths with one flight of 30 minutes and others between five and ten minutes long.&lt;/li&gt;
+&lt;li&gt;Four top landings and two landings near the car park. In all cases the instructor guided me on my landing spot selection and approach paths.&lt;/li&gt;
+&lt;li&gt;One forwards launch and five reverse launches which all went well except for one reverse launch where I bounced up and down due to a lacking acceleration run.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And finally I have to say that the Gin Atlas is an amazing glider. I am by no means a good pilot, after all I&amp;#39;m just learning to fly but the Atlas consistently lets me fly higher than nearly all other gliders, save for some of the super high performance gliders. During the weekend all the other gliders had to, at one point or another, work quite hard to stay at the height of the launch site, or even to scratch their way back up to the launch height. The Atlas just only dropped down to the height of the launch a few times, and each time it did a minor puff of wind allowed it to gain more than sufficient height again.&lt;/p&gt;
+</content>
+        </entry>
+    
+        <entry>
+            <title>Nuclei release - V0.6.5.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-10-12_Nuclei-Release-V0660.html"/>
+            <updated>2013-10-12T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-10-12_Nuclei-Release-V0660.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.6.0&quot;&gt;V0.6.6.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release adds the ability to specify the name and version of the application in the log file. If no application name or version is specified then the information from &lt;code&gt;Assembly.GetEntryAssembly()&lt;/code&gt; is used. &lt;/p&gt;
+&lt;p&gt;The application name and version can be specified when creating a new logger via the &lt;code&gt;LoggerBuilder&lt;/code&gt; like so:&lt;/p&gt;
+&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;cs&quot;&gt;IConfiguration configuration = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; MyConfiguration();
+&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; logger = LoggerBuilder.ForFile(
+    &lt;span class=&quot;string&quot;&gt;@&quot;c:\mylogfile.txt&quot;&lt;/span&gt;,
+    &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DebugLogTemplate(configuration, () =&amp;gt; DateTimeOffset.Now),
+    applicationName,
+    applicationVersion);&lt;/code&gt;&lt;/pre&gt;
+</content>
+        </entry>
     
         <entry>
             <title>Nuclei release - V0.6.5.0</title>
