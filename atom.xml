@@ -3,13 +3,38 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2013-10-13T00:50:53.951Z</updated>
+    <updated>2013-10-23T06:00:22.045Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>Nuclei release - V0.6.7.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-10-23_Nuclei-Release-V0670.html"/>
+            <updated>2013-10-23T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-10-23_Nuclei-Release-V0670.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.7.0&quot;&gt;V0.6.7.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release fixes a bug in the processing of &lt;code&gt;ICommandSet&lt;/code&gt; return tasks which caused the processor to throw an exception if the return task was a &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ee372288.aspx&quot;&gt;continuation task&lt;/a&gt;. This bug fix means it is now possible to chain tasks and return the final task from an &lt;code&gt;ICommandSet&lt;/code&gt; object. An example of this behaviour is given in the following section of code.&lt;/p&gt;
+&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;interface&lt;/span&gt; IMyCommandSet : ICommandSet
+{
+    Task DoSomethingAwesome();
+}
+
+&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;sealed&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; MyCommand : IMyCommandSet
+{
+    &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; Task DoSomethingAwesome()
+    {
+        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; firstTask = Task.Factory.StartNew(
+            () =&amp;gt; Thread.Sleep(&lt;span class=&quot;number&quot;&gt;1000&lt;/span&gt;));
+        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; secondTask = firstTask.ContinueWith(
+            t =&amp;gt; Console.WriteLine(&lt;span class=&quot;string&quot;&gt;&quot;Awesome sauce&quot;&lt;/span&gt;)); 
+        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; secondTask
+    }
+}&lt;/code&gt;&lt;/pre&gt;
+</content>
+        </entry>
     
         <entry>
             <title>PG2 - Spending a weekend in the air</title>
