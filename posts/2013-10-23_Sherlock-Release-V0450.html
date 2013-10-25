@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>Mind Vortex</title>
+    <title>Sherlock release - V0.4.5.0 | Mind Vortex</title>
     <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, Fluid dynamics, CFD, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
@@ -143,50 +143,87 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
             </div>
         </div>
         <div id="content">
-            <div id="posts">
-    <h3 id="post-tags-header">Posts tagged with: Writing</h3>
-    
-        <div id="post-spacer">
-            <div id="post">
+            <!--
+    Commenting is based on: http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html
+-->
+<div id="post">
+    <div id="post">
     <div id="post-header">
         <h2>
             
-                <a href='/posts/2013-08-30_Why-this-blog-was-created.html'>Why this blog was created</a>
+                Sherlock release - V0.4.5.0
             
         </h2>
         <div id="post-meta">
             <p>
-                Friday, August 30, 2013 | Posted in
+                Wednesday, October 23, 2013 | Posted in
                 
-                    <a id="post-category" href="/tags/Blog.html">Blog</a>
-                
-                    <a id="post-category" href="/tags/Writing.html">Writing</a>
+                    <a id="post-category" href="/tags/Sherlock.html">Sherlock</a>
                 
             </p>
         </div>
     </div>
     <div id="post-content">
-        <p>A couple of years ago I had a blog on Blogger but that never got further than a few posts, mainly because I ran out of interesting topics to write about. That
-and my <a href="/about.html">studies</a> started interfering with life in general ... it seems research does that to ones life. In any case the old blog stalled and no
-more posts were written.</p>
-<p>Recently I have been wanting to improve my writing skills, you see, as software engineer I&#39;m reasonably good at writing instructions for a three year
-old, eh I mean a computer, but I am not particularly good at writing concise human-friendly text. I have written two dissertations, one for my master degree
-and one for my PhD, but neither of those qualify as either concise or human-friendly.</p>
-<p>Given that the only way to get better at writing is to practise, practise and practise some more, I thought writing posts about things that interest me
-would be a good way to improve my writing skills. And on top of that it may help me improve my skills in explaining technical constructs as well. Double win.</p>
-<p>The only thing left to answer is what shall I be writing about. Well obviously those things that interest me, mostly being:</p>
+        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.5.0">V0.4.5.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides one improvement and one bug fix:</p>
 <ul>
-<li>My open source <a href="/projects.html">projects</a>. All of them could do with some additional documentation and maybe even some examples. I guess having a 
-blog is just an additional reason to finally write those</li>
-<li>All the (exciting) things I get up to when rock climbing or paragliding.</li>
-<li>And if things progress nicely I might write some articles describing some work I am doing at the moment that is a continuation of the software
-development I did for my PhD.</li>
+<li>The test report can now include files generated during the test (<a href="https://github.com/pvandervelde/Sherlock/issues/5">issue #5</a>)</li>
+<li>Sherlock.Service no longer includes a manifest signing key, instead the key is obtained via a configuration setting (<a href="https://github.com/pvandervelde/Sherlock/issues/8">issue #8</a>)</li>
 </ul>
  
     </div>
 </div>
+    <div id="post-footer">
+        <div>
+            <div class="navlinks">
+  <a href="/posts/2013-10-23_Nuclei-Release-V0670.html" title="Previous Post: Nuclei release - V0.6.7.0" class="navlinks-prev">&laquo; Nuclei release - V0.6.7.0</a>
+  <a href="/posts/2013-10-24_Sherlock-Release-V0460.html" title="Next Post: Sherlock release - V0.4.6.0" class="navlinks-next">Sherlock release - V0.4.6.0 &raquo;</a>
+</div>
         </div>
+    </div>
     
+    <script type="text/javascript" src="http://datejs.googlecode.com/svn/trunk/build/date-en-US.js"></script>
+
+    <script type="text/javascript">
+      $("#post p").each( function(index) {
+        if (index > 0 && $.trim($(this).text()).length > 0) {
+          $(this).attr("id", "par" + index.toString());
+          var html = $(this).html();
+          $(this).html(html + " <a href='#par" + index.toString() + "'>#</a>");
+        }
+      });
+    </script>
+    
+    <div id="post-comments">
+        <h3>Comments</h3>
+        <div id="post-comment-header">
+            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/14"> this post's issue page on 
+            GitHub</a> (you'll need a GitHub account).
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+
+      function loadComments(data) {
+        for (var i=0; i<data.length; i++) {
+          var cuser = data[i].user.login;
+          var cuserlink = "https://www.github.com/" + data[i].user.login;
+          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/14#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
+          var cbody = data[i].body_html;
+          var cavatarlink = data[i].user.avatar_url;
+          var cdate = Date.parse(data[i].created_at).toString("yyyy-MM-dd HH:mm:ss");
+
+          $("#post-comments").append("<div id='post-comment'><div id='post-comment-header'><div id='post-comment-gravatar'>" + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + "</div><a id='post-comment-user' href=\""+ cuserlink + "\">" + cuser + "</a><a id='post-comment-date' href=\"" + clink + "\">" + cdate + "</a></div><div id='post-comment-body'>" + cbody + "</div></div>");
+        }
+      }
+
+      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/14/comments", {
+        headers: {Accept: "application/vnd.github.full+json"},
+        dataType: "json",
+        success: function(msg){
+          loadComments(msg);
+       }
+      });
+    </script>
 </div>
         </div>
     </div>
