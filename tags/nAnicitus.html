@@ -156,123 +156,27 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
         <div id="content">
             <div id="posts">
-    <h3 id="post-tags-header">Posts tagged with: Nuclei</h3>
+    <h3 id="post-tags-header">Posts tagged with: nAnicitus</h3>
     
         <div id="post-spacer">
             <div id="post">
     <div id="post-header">
         <h2>
             
-                <a href='/posts/2013-10-23_Nuclei-Release-V0670.html'>Nuclei release - V0.6.7.0</a>
+                <a href='/posts/2013-10-31_nAnicitus-Release-V0130.html'>nAnicitus release - V0.1.3.0</a>
             
         </h2>
         <div id="post-meta">
             <p>
-                Wednesday, October 23, 2013 | Posted in
+                Thursday, October 31, 2013 | Posted in
                 
-                    <a id="post-category" href="/tags/Nuclei.html">Nuclei</a>
+                    <a id="post-category" href="/tags/nAnicitus.html">nAnicitus</a>
                 
             </p>
         </div>
     </div>
     <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.7.0">V0.6.7.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release fixes a bug in the processing of <code>ICommandSet</code> return tasks which caused the processor to throw an exception if the return task was a <a href="http://msdn.microsoft.com/en-us/library/ee372288.aspx">continuation task</a>. This bug fix means it is now possible to chain tasks and return the final task from an <code>ICommandSet</code> object. An example of this behaviour is given in the following section of code.</p>
-<pre class="highlighted"><code class="cs"><span class="keyword">public</span> <span class="keyword">interface</span> IMyCommandSet : ICommandSet
-{
-    Task DoSomethingAwesome();
-}
-
-<span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> MyCommand : IMyCommandSet
-{
-    <span class="keyword">public</span> Task DoSomethingAwesome()
-    {
-        <span class="keyword">var</span> firstTask = Task.Factory.StartNew(
-            () =&gt; Thread.Sleep(<span class="number">1000</span>));
-        <span class="keyword">var</span> secondTask = firstTask.ContinueWith(
-            t =&gt; Console.WriteLine(<span class="string">"Awesome sauce"</span>)); 
-        <span class="keyword">return</span> secondTask
-    }
-}</code></pre>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-10-12_Nuclei-Release-V0660.html'>Nuclei release - V0.6.5.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Saturday, October 12, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/Nuclei.html">Nuclei</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.6.0">V0.6.6.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release adds the ability to specify the name and version of the application in the log file. If no application name or version is specified then the information from <code>Assembly.GetEntryAssembly()</code> is used. </p>
-<p>The application name and version can be specified when creating a new logger via the <code>LoggerBuilder</code> like so:</p>
-<pre class="highlighted"><code class="cs">IConfiguration configuration = <span class="keyword">new</span> MyConfiguration();
-<span class="keyword">var</span> logger = LoggerBuilder.ForFile(
-    <span class="string">@"c:\mylogfile.txt"</span>,
-    <span class="keyword">new</span> DebugLogTemplate(configuration, () =&gt; DateTimeOffset.Now),
-    applicationName,
-    applicationVersion);</code></pre>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-09-26_Nuclei-Release-v0650.html'>Nuclei release - V0.6.5.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Thursday, September 26, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/Nuclei.html">Nuclei</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.5.0">V0.6.5.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release adds an option to allow the user to select which
-types of channels the communication layer is allowed to use. The communication layer can be allowed to use TCP/IP channels, named pipe channels or both.</p>
-<p>In the previous versions in the constructor of the <code>CommunicationModule</code> needed to be provided with a 
-list of <a href="https://github.com/pvandervelde/Nuclei/wiki/Nuclei.Communication#communicationsubject">communication subjects</a> and a flag indicating if <a href="https://github.com/pvandervelde/Nuclei/wiki/Nuclei.Communication#endpoints-and-their-discovery">channel discovery</a> was allowed.</p>
-<pre class="highlighted"><code class="cs"><span class="keyword">var</span> builder = <span class="keyword">new</span> ContainerBuilder(); 
-builder.RegisterModule(
-    <span class="keyword">new</span> CommunicationModule(
-        <span class="keyword">new</span> List&lt;CommunicationSubject&gt;
-            {
-                CommunicationSubjects.Dataset,
-            },
-        <span class="keyword">false</span>));</code></pre>
-<p>In V0.6.5.0 an extra parameter needs to be provided which indicates which types of channel the communication layer is allowed to use to communicate with other instances. The allowable options are <code>ChannelType.NamedPipe</code> and <code>ChannelType.TcpIP</code>.</p>
-<pre class="highlighted"><code class="cs"><span class="keyword">var</span> builder = <span class="keyword">new</span> ContainerBuilder();
-builder.RegisterModule(
-    <span class="keyword">new</span> CommunicationModule(
-        <span class="keyword">new</span> List&lt;CommunicationSubject&gt;
-            {
-                CommunicationSubjects.Dataset,
-            },
-        <span class="keyword">new</span>[]
-            {
-                ChannelType.NamedPipe,
-                ChannelType.TcpIP,
-            }, 
-        <span class="keyword">false</span>));</code></pre>
+        <p>Version <a href="https://github.com/pvandervelde/nAnicitus/releases/tag/V0.1.3.0">V0.1.3.0</a> of the <a href="/projects/nanicitus.html">nAnicitus</a> symbol store application has been released. This release adds additional logging and improves the handling of unexpected situations during processing of symbol packages.</p>
  
     </div>
 </div>

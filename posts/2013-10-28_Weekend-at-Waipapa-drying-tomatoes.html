@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>Mind Vortex</title>
+    <title>Weekend at Waipapa - Drying tomatoes | Mind Vortex</title>
     <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, Fluid dynamics, CFD, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
@@ -155,129 +155,90 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
             </div>
         </div>
         <div id="content">
-            <div id="posts">
-    <h3 id="post-tags-header">Posts tagged with: Nuclei</h3>
-    
-        <div id="post-spacer">
-            <div id="post">
+            <!--
+    Commenting is based on: http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html
+-->
+<div id="post">
+    <div id="post">
     <div id="post-header">
         <h2>
             
-                <a href='/posts/2013-10-23_Nuclei-Release-V0670.html'>Nuclei release - V0.6.7.0</a>
+                Weekend at Waipapa - Drying tomatoes
             
         </h2>
         <div id="post-meta">
             <p>
-                Wednesday, October 23, 2013 | Posted in
+                Monday, October 28, 2013 | Posted in
                 
-                    <a id="post-category" href="/tags/Nuclei.html">Nuclei</a>
+                    <a id="post-category" href="/tags/Climbing.html">Climbing</a>
+                
+                    <a id="post-category" href="/tags/Waipapa.html">Waipapa</a>
                 
             </p>
         </div>
     </div>
     <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.7.0">V0.6.7.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release fixes a bug in the processing of <code>ICommandSet</code> return tasks which caused the processor to throw an exception if the return task was a <a href="http://msdn.microsoft.com/en-us/library/ee372288.aspx">continuation task</a>. This bug fix means it is now possible to chain tasks and return the final task from an <code>ICommandSet</code> object. An example of this behaviour is given in the following section of code.</p>
-<pre class="highlighted"><code class="cs"><span class="keyword">public</span> <span class="keyword">interface</span> IMyCommandSet : ICommandSet
-{
-    Task DoSomethingAwesome();
-}
+        <p>On the <a href="http://en.wikipedia.org/wiki/Labour_Day#New_Zealand">long weekend</a> my friend Chris organised a climbing trip to <a href="http://www.freeclimb.co.nz/wharepapa.html">lake Waipapa</a>, a climbing area with many delicate slab climbs.</p>
+<p>We spend both days at the main wall working on some of the climbs. For Chris his climb of the weekend was &#39;Millennium madness&#39;, an amazing corner <a href="http://en.wikipedia.org/wiki/Traditional_climbing">trad</a> climb which is rated <a href="http://en.wikipedia.org/wiki/Grade_%28climbing%29#Ewbank">18</a>. From the trad gear side you have to make sure that your rack has several finger size pieces of gear so that you can use some at the start of the climb and some near the middle. The crux of the climb is the first 5 or so meters where you have to figure out how to switch between the different foot placements that are available. The climber starts out bridging between a set of small ledges and then transitions to using the crack to foot-jam and then to using some small indentations on the main face. The tricky bit is getting the transition between the different types of foot placements correct. </p>
+<p>On saturday Chris had two attempts at cleaning &#39;Millennium Madness&#39; but didn&#39;t quite get it right. It seems that the first time climbing in Waipapa after winter is always tricky as you are trying to re-acquire the correct climbing techniques for the delicate Waipapa climbs. </p>
+<p>For me the plan was to work my long time project called &#39;Sun dried tomatoes&#39;, a delicate <a href="http://en.wikipedia.org/wiki/Sport_climbing">sport</a> 22. For this climb the main focus is balance and once again foot placements, however unlike &#39;Millennium madness&#39; where there are many features that can serve as hand holds, &#39;sun dried tomatoes&#39; has sections where hand holds are very sparse.</p>
+<p>Over the last two years or so I&#39;ve semi-seriously tried this climb a bunch of times but until this weekend I never found the motivation to put a continuous focus on the climb. During both days I put a top-rope on the climb and worked the moves a number of times. This helped me figure out where the correct foot placements were, where the clipping holds were and in which locations a rest would be possible. In the end I climbed it on top rope four times, eventually working out the moves. And each day I ended the day with a lead attempt. On Saturday I failed to clean it because my head space wasn&#39;t in the right spot, however on Sunday I managed to push through the hard bits and got to the top clean. So that&#39;s another tick in the books and another sweet climb done.</p>
+<p>On to other projects it is now ...</p>
+ 
+    </div>
+</div>
+    <div id="post-footer">
+        <div>
+            <div class="navlinks">
+  <a href="/posts/2013-10-25_PG2-At-the-top-of-the-stack.html" title="Previous Post: PG2 - At the top of the stack" class="navlinks-prev">&laquo; PG2 - At the top of the stack</a>
+  <a href="/posts/2013-10-30_Sherlock-Release-V0470.html" title="Next Post: Sherlock release - V0.4.7.0" class="navlinks-next">Sherlock release - V0.4.7.0 &raquo;</a>
+</div>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="http://datejs.googlecode.com/svn/trunk/build/date-en-US.js"></script>
 
-<span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> MyCommand : IMyCommandSet
-{
-    <span class="keyword">public</span> Task DoSomethingAwesome()
-    {
-        <span class="keyword">var</span> firstTask = Task.Factory.StartNew(
-            () =&gt; Thread.Sleep(<span class="number">1000</span>));
-        <span class="keyword">var</span> secondTask = firstTask.ContinueWith(
-            t =&gt; Console.WriteLine(<span class="string">"Awesome sauce"</span>)); 
-        <span class="keyword">return</span> secondTask
-    }
-}</code></pre>
- 
-    </div>
-</div>
-        </div>
+    <script type="text/javascript">
+      $("#post p").each( function(index) {
+        if (index > 0 && $.trim($(this).text()).length > 0) {
+          $(this).attr("id", "par" + index.toString());
+          var html = $(this).html();
+          $(this).html(html + " <a href='#par" + index.toString() + "'>#</a>");
+        }
+      });
+    </script>
     
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-10-12_Nuclei-Release-V0660.html'>Nuclei release - V0.6.5.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Saturday, October 12, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/Nuclei.html">Nuclei</a>
-                
-            </p>
+    <div id="post-comments">
+        <h3>Comments</h3>
+        <div id="post-comment-header">
+            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/17"> this post's issue page on 
+            GitHub</a> (you'll need a GitHub account).
         </div>
     </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.6.0">V0.6.6.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release adds the ability to specify the name and version of the application in the log file. If no application name or version is specified then the information from <code>Assembly.GetEntryAssembly()</code> is used. </p>
-<p>The application name and version can be specified when creating a new logger via the <code>LoggerBuilder</code> like so:</p>
-<pre class="highlighted"><code class="cs">IConfiguration configuration = <span class="keyword">new</span> MyConfiguration();
-<span class="keyword">var</span> logger = LoggerBuilder.ForFile(
-    <span class="string">@"c:\mylogfile.txt"</span>,
-    <span class="keyword">new</span> DebugLogTemplate(configuration, () =&gt; DateTimeOffset.Now),
-    applicationName,
-    applicationVersion);</code></pre>
- 
-    </div>
-</div>
-        </div>
     
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-09-26_Nuclei-Release-v0650.html'>Nuclei release - V0.6.5.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Thursday, September 26, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/Nuclei.html">Nuclei</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.5.0">V0.6.5.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release adds an option to allow the user to select which
-types of channels the communication layer is allowed to use. The communication layer can be allowed to use TCP/IP channels, named pipe channels or both.</p>
-<p>In the previous versions in the constructor of the <code>CommunicationModule</code> needed to be provided with a 
-list of <a href="https://github.com/pvandervelde/Nuclei/wiki/Nuclei.Communication#communicationsubject">communication subjects</a> and a flag indicating if <a href="https://github.com/pvandervelde/Nuclei/wiki/Nuclei.Communication#endpoints-and-their-discovery">channel discovery</a> was allowed.</p>
-<pre class="highlighted"><code class="cs"><span class="keyword">var</span> builder = <span class="keyword">new</span> ContainerBuilder(); 
-builder.RegisterModule(
-    <span class="keyword">new</span> CommunicationModule(
-        <span class="keyword">new</span> List&lt;CommunicationSubject&gt;
-            {
-                CommunicationSubjects.Dataset,
-            },
-        <span class="keyword">false</span>));</code></pre>
-<p>In V0.6.5.0 an extra parameter needs to be provided which indicates which types of channel the communication layer is allowed to use to communicate with other instances. The allowable options are <code>ChannelType.NamedPipe</code> and <code>ChannelType.TcpIP</code>.</p>
-<pre class="highlighted"><code class="cs"><span class="keyword">var</span> builder = <span class="keyword">new</span> ContainerBuilder();
-builder.RegisterModule(
-    <span class="keyword">new</span> CommunicationModule(
-        <span class="keyword">new</span> List&lt;CommunicationSubject&gt;
-            {
-                CommunicationSubjects.Dataset,
-            },
-        <span class="keyword">new</span>[]
-            {
-                ChannelType.NamedPipe,
-                ChannelType.TcpIP,
-            }, 
-        <span class="keyword">false</span>));</code></pre>
- 
-    </div>
-</div>
-        </div>
-    
+    <script type="text/javascript">
+
+      function loadComments(data) {
+        for (var i=0; i<data.length; i++) {
+          var cuser = data[i].user.login;
+          var cuserlink = "https://www.github.com/" + data[i].user.login;
+          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/17#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
+          var cbody = data[i].body_html;
+          var cavatarlink = data[i].user.avatar_url;
+          var cdate = Date.parse(data[i].created_at).toString("yyyy-MM-dd HH:mm:ss");
+
+          $("#post-comments").append("<div id='post-comment'><div id='post-comment-header'><div id='post-comment-gravatar'>" + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + "</div><a id='post-comment-user' href=\""+ cuserlink + "\">" + cuser + "</a><a id='post-comment-date' href=\"" + clink + "\">" + cdate + "</a></div><div id='post-comment-body'>" + cbody + "</div></div>");
+        }
+      }
+
+      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/17/comments", {
+        headers: {Accept: "application/vnd.github.full+json"},
+        dataType: "json",
+        success: function(msg){
+          loadComments(msg);
+       }
+      });
+    </script>
 </div>
         </div>
     </div>

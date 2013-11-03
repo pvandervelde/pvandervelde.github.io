@@ -79,6 +79,12 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2013-10-31_nAnicitus-Release-V0130.html">nAnicitus release - V0.1.3.0</a></li>
+                    
+                        <li><a href="/posts/2013-10-30_Sherlock-Release-V0470.html">Sherlock release - V0.4.7.0</a></li>
+                    
+                        <li><a href="/posts/2013-10-28_Weekend-at-Waipapa-drying-tomatoes.html">Weekend at Waipapa - Drying tomatoes</a></li>
+                    
                         <li><a href="/posts/2013-10-25_PG2-At-the-top-of-the-stack.html">PG2 - At the top of the stack</a></li>
                     
                         <li><a href="/posts/2013-10-24_Sherlock-Release-V0460.html">Sherlock release - V0.4.6.0</a></li>
@@ -93,18 +99,24 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2013-09-26_Nuclei-Release-v0650.html">Nuclei release - V0.6.5.0</a></li>
                     
-                        <li><a href="/projects/nrefs.html">nRefs</a></li>
-                    
-                        <li><a href="/projects/ntreva.html">nTreva</a></li>
-                    
-                        <li><a href="/posts/2013-09-25_nRefs-Release-v0100.html">nRefs release - V0.1.0.0</a></li>
-                    
                 </ul>
             </div>
             <div id="sbox3">
                 <h2>Tags</h2>
                 
-                    <a href="/tags/Blog.html" style="font-size: 109.67132018086355%">
+                    <a href="/tags/Climbing.html" style="font-size: 100%">
+                        Climbing
+                    </a>
+                
+                    <a href="/tags/Waipapa.html" style="font-size: 100%">
+                        Waipapa
+                    </a>
+                
+                    <a href="/tags/Sherlock.html" style="font-size: 125%">
+                        Sherlock
+                    </a>
+                
+                    <a href="/tags/Blog.html" style="font-size: 108.90517967770056%">
                         Blog
                     </a>
                 
@@ -112,15 +124,19 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Writing
                     </a>
                 
-                    <a href="/tags/Sherlock.html" style="font-size: 125%">
-                        Sherlock
+                    <a href="/tags/Nuclei.html" style="font-size: 114.11437585133949%">
+                        Nuclei
                     </a>
                 
-                    <a href="/tags/Paragliding.html" style="font-size: 119.34264036172708%">
+                    <a href="/tags/nRefs.html" style="font-size: 100%">
+                        nRefs
+                    </a>
+                
+                    <a href="/tags/Paragliding.html" style="font-size: 117.8103593554011%">
                         Paragliding
                     </a>
                 
-                    <a href="/tags/PG2.html" style="font-size: 119.34264036172708%">
+                    <a href="/tags/PG2.html" style="font-size: 117.8103593554011%">
                         PG2
                     </a>
                 
@@ -132,18 +148,96 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         GitHub
                     </a>
                 
-                    <a href="/tags/nRefs.html" style="font-size: 100%">
-                        nRefs
-                    </a>
-                
-                    <a href="/tags/Nuclei.html" style="font-size: 115.32867981913647%">
-                        Nuclei
+                    <a href="/tags/nAnicitus.html" style="font-size: 100%">
+                        nAnicitus
                     </a>
                 
             </div>
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-10-31_nAnicitus-Release-V0130.html'>nAnicitus release - V0.1.3.0</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Thursday, October 31, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/nAnicitus.html">nAnicitus</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Version <a href="https://github.com/pvandervelde/nAnicitus/releases/tag/V0.1.3.0">V0.1.3.0</a> of the <a href="/projects/nanicitus.html">nAnicitus</a> symbol store application has been released. This release adds additional logging and improves the handling of unexpected situations during processing of symbol packages.</p>
+ 
+    </div>
+</div>
+    </div>
+
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-10-30_Sherlock-Release-V0470.html'>Sherlock release - V0.4.7.0</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Wednesday, October 30, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/Sherlock.html">Sherlock</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.7.0">V0.4.7.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides one bug fix:</p>
+<ul>
+<li>The Windows job object created by the Sherlock service to ensure termination of the Sherlock.Service.Master and Sherlock.Service.Executor applications is now set to only include direct children (i.e. Sherlock.Service.Master / Sherlock.Service.Executor) in the job and not the indirect children. This allows the application under test to create its own job objects even on Windows 7 (which does not allow nesting of job objects) (<a href="https://github.com/pvandervelde/Sherlock/issues/11">issue #11</a>).</li>
+</ul>
+ 
+    </div>
+</div>
+    </div>
+
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-10-28_Weekend-at-Waipapa-drying-tomatoes.html'>Weekend at Waipapa - Drying tomatoes</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Monday, October 28, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/Climbing.html">Climbing</a>
+                
+                    <a id="post-category" href="/tags/Waipapa.html">Waipapa</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>On the <a href="http://en.wikipedia.org/wiki/Labour_Day#New_Zealand">long weekend</a> my friend Chris organised a climbing trip to <a href="http://www.freeclimb.co.nz/wharepapa.html">lake Waipapa</a>, a climbing area with many delicate slab climbs.</p>
+<p>We spend both days at the main wall working on some of the climbs. For Chris his climb of the weekend was &#39;Millennium madness&#39;, an amazing corner <a href="http://en.wikipedia.org/wiki/Traditional_climbing">trad</a> climb which is rated <a href="http://en.wikipedia.org/wiki/Grade_%28climbing%29#Ewbank">18</a>. From the trad gear side you have to make sure that your rack has several finger size pieces of gear so that you can use some at the start of the climb and some near the middle. The crux of the climb is the first 5 or so meters where you have to figure out how to switch between the different foot placements that are available. The climber starts out bridging between a set of small ledges and then transitions to using the crack to foot-jam and then to using some small indentations on the main face. The tricky bit is getting the transition between the different types of foot placements correct. </p>
+<p>On saturday Chris had two attempts at cleaning &#39;Millennium Madness&#39; but didn&#39;t quite get it right. It seems that the first time climbing in Waipapa after winter is always tricky as you are trying to re-acquire the correct climbing techniques for the delicate Waipapa climbs. </p>
+<p>For me the plan was to work my long time project called &#39;Sun dried tomatoes&#39;, a delicate <a href="http://en.wikipedia.org/wiki/Sport_climbing">sport</a> 22. For this climb the main focus is balance and once again foot placements, however unlike &#39;Millennium madness&#39; where there are many features that can serve as hand holds, &#39;sun dried tomatoes&#39; has sections where hand holds are very sparse.</p>
+<p>Over the last two years or so I&#39;ve semi-seriously tried this climb a bunch of times but until this weekend I never found the motivation to put a continuous focus on the climb. During both days I put a top-rope on the climb and worked the moves a number of times. This helped me figure out where the correct foot placements were, where the clipping holds were and in which locations a rest would be possible. In the end I climbed it on top rope four times, eventually working out the moves. And each day I ended the day with a lead attempt. On Saturday I failed to clean it because my head space wasn&#39;t in the right spot, however on Sunday I managed to push through the hard bits and got to the top clean. So that&#39;s another tick in the books and another sweet climb done.</p>
+<p>On to other projects it is now ...</p>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -168,7 +262,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
 <p>The next day was a different story. The wind died down just enough and the sun stayed, all in all a perfect day for flying. Because there were a large number of people the group was split into two, the absolute beginners and the people who had flown before. The latter group immediately set up for their first flights while the former group started with ground handling exercises. I was with the group of people who got to prepare for their first flights immediately. </p>
 <p>Over the day I managed to get three flights in, all with varying levels of success. On the first flight of the day I too rushed and stuffed several things up. First of all I was too enthusiastic with the initial launch which lead to the glider pulling me off my feet and then over flying me. We both ended lying on the ground. Fortunately only my ego was damaged so another attempt was made. On the second start I was more controlled but still kinda jittery during the launch and the run. To top it off I managed to twist the brake line around the rises. So in the end I just fly a circuit down to the ground and landed. No harm done and lots of lessons learned.</p>
 <p>The second flight was a lot better, much more controlled, although my launch still needs work. I&#39;m not checking the canopy before commencing my launch run and during the run I need to remember to have no pressure on the brakes. During the flight I practised using the speed bar, which is a lot harder to push than I thought, and flying with big ears and speed bar. Turns out on the Atlas the big ears go in very easily (make sure you are really only pulling the outer A&#39;s) but it takes a bit of time for them to come out.</p>
-<p>While the first two flights provided plenty of good (and safe) learning moments, neither flight was very special. However the third flight was one of those magic flights. After checking that the airspace was empty I started my launch, which went smoothly, but then somebody flew too close to the start place for me to continue. The instructor told me to keep my position with the glider above my head while the other paraglider flew by, but my limited skill was no match for the strong desire of my glider to fly and slowly we drifted towards the end of the cliff. A little bit of left brake allowed me to fly away from the other paraglider and then the soaring started. The Atlas climbs and climbs and keeps climbing, going higher and higher. Eventually, mostly thanks to the amazing Atlas, I ended up at the top of the stack looking down onto the start field with its tiny people, a whole bunch of other gliders and looking over the hills to the neighbouring towns. Later on I determined, from looking at the height topo&#39;s online, that I must have been somewhere between 100m and 120m above the beach! That to me was a magic moment. </p>
+<p>While the first two flights provided plenty of good (and safe) learning moments, neither flight was very special. However the third flight was one of those magic flights. After checking that the airspace was empty I started my launch, which went smoothly, but then somebody flew too close to the start place for me to continue. The instructor told me to keep my position with the glider above my head while the other paraglider flew by, but my limited skill was no match for the strong desire of my glider to fly and slowly we drifted towards the end of the cliff. A little bit of left brake allowed me to fly away from the other paraglider and then the soaring started. The Atlas climbs and climbs and keeps climbing, going higher and higher. Eventually, mostly thanks to the amazing Atlas, I ended up at the top of the stack looking down onto the start field with its tiny people, a whole bunch of other gliders and looking over the hills to the neighbouring towns. Later on I determined, from looking at the height topo&#39;s online, that I must have been somewhere between 100m and 120m above the beach! That to me was a magic moment.</p>
 <p>Unfortunately all magic moments must end, otherwise they wouldn&#39;t be magic anymore, and in this case it was ended by my instructor who thought it would be wise for me to come down while the wind was still behaving so on with the big ears and the speed bar and down I went.</p>
  
     </div>
@@ -193,7 +287,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
     </div>
     <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.6.0">V0.4.6.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides one bug fix:</p>
+        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.6.0">V0.4.6.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides two bug fixes:</p>
 <ul>
 <li>The MSI installer now verifies that all directories exist before writing to them (<a href="https://github.com/pvandervelde/Sherlock/issues/9">issue #9</a>)</li>
 <li>The X-copy installer now verifies that the destination directory exists before copying files to it (<a href="https://github.com/pvandervelde/Sherlock/issues/10">issue #10</a>)</li>
@@ -393,34 +487,6 @@ builder.RegisterModule(
     <div id="post-header">
         <h2>
             
-                <a href='/posts/2013-09-25_nRefs-Release-v0100.html'>nRefs release - V0.1.0.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, September 25, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/nRefs.html">nRefs</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>The <a href="https://github.com/pvandervelde/nRefs/releases/tag/v0.1.0.0">first release</a> of the <a href="/projects/nRefs.html">nRefs</a> assembly reference extraction application has been released. This release</p>
-<ul>
-<li>The test output now includes an XML report with all the messages and an indication of test success or failure.</li>
-<li>Removed the Test data directory settings from the web service because test packages are now always dropped in the App_Data directory</li>
-</ul>
- 
-    </div>
-</div>
-    </div>
-
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
                 <a href='/posts/2013-09-25_How-this-blog-was-created.html'>How this blog was created</a>
             
         </h2>
@@ -498,6 +564,34 @@ projects subdirectories and then sorts them by date. The <em>recent</em> section
 <li><a href="http://takitapart.com">takitapart</a> provided an <a href="http://takitapart.com/posts/organizing-docpad/">excellent</a> post describing how to organise content in a Docpad website.</li>
 <li><a href="http://lucor.github.io">Luca&#39;s forge</a> provided a good start to using Docpad in his <a href="http://lucor.github.io/post/migrating-from-octopress-to-docpad/">migration</a> post. This site also provides some very nice ideas around the way posts and tags should look.</li>
 <li><a href="http://www.delarre.net">Ben Delarre</a> provided a nice <a href="http://www.delarre.net/posts/blogging-with-docpad/">summary</a> of his own Docpad setup.</li>
+</ul>
+ 
+    </div>
+</div>
+    </div>
+
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-09-25_nRefs-Release-v0100.html'>nRefs release - V0.1.0.0</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Wednesday, September 25, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/nRefs.html">nRefs</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>The <a href="https://github.com/pvandervelde/nRefs/releases/tag/v0.1.0.0">first release</a> of the <a href="/projects/nRefs.html">nRefs</a> assembly reference extraction application has been released. This release</p>
+<ul>
+<li>The test output now includes an XML report with all the messages and an indication of test success or failure.</li>
+<li>Removed the Test data directory settings from the web service because test packages are now always dropped in the App_Data directory</li>
 </ul>
  
     </div>
@@ -771,7 +865,7 @@ development I did for my PhD.</li>
             Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design 
             by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>. Feed icon by <a href="http://www.icojam.com/">Icojam</a>.
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Friday, October 25, 2013.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Sunday, November 03, 2013.</p>
     </div>
 
     <!-- jQuery -->
