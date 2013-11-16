@@ -3,13 +3,45 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2013-11-03T05:48:19.649Z</updated>
+    <updated>2013-11-16T00:10:35.397Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>nAdoni release - V0.2.1.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-11-13_NAdoni-Release-V0210.html"/>
+            <updated>2013-11-13T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-11-13_NAdoni-Release-V0210.html</id>
+            <content type="html">&lt;p&gt;In my haste to release the new &lt;a href=&quot;2013-11-13_NAdoni-Release-V0200.html&quot;&gt;KeyGenerator&lt;/a&gt; functionality I completely forgot to add the packaging of said KeyGenerator. Hence I hereby present Version &lt;a href=&quot;https://github.com/pvandervelde/nAdoni/releases/tag/V0.2.1.0&quot;&gt;V0.2.1.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nadoni.html&quot;&gt;nAdoni&lt;/a&gt; update manifest builder project which adds the ZIP archive containing the &lt;code&gt;nAdoni.KeyGenerator&lt;/code&gt; console application.&lt;/p&gt;
+</content>
+        </entry>
+    
+        <entry>
+            <title>nAdoni release - V0.2.0.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-11-13_NAdoni-Release-V0200.html"/>
+            <updated>2013-11-13T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-11-13_NAdoni-Release-V0200.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/nAdoni/releases/tag/V0.2.0.0&quot;&gt;V0.2.0.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nadoni.html&quot;&gt;nAdoni&lt;/a&gt; update manifest builder project has been released. This release adds the &lt;code&gt;nAdoni.KeyGenerator&lt;/code&gt; console application to the project. This application can be used to generate the RSA key files which are necessary in order to build the manifest files.&lt;/p&gt;
+</content>
+        </entry>
+    
+        <entry>
+            <title>PG2 - Up and down the coast</title>
+            <link href="http://pvandervelde.github.io/posts/2013-11-11_PG2-Up-and-down-the-coast.html"/>
+            <updated>2013-11-11T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-11-11_PG2-Up-and-down-the-coast.html</id>
+            <content type="html">&lt;p&gt;Last weekend once again the wind was suitable for flying at &lt;a href=&quot;http://en.wikipedia.org/wiki/Kariotahi_Beach&quot;&gt;Kario&lt;/a&gt; and so more flying was had. The weather forecast indicated that the wind was going to be pretty strong and as we arrived on the beach that was confirmed by the general feel and the wind socks. &lt;/p&gt;
+&lt;p&gt;The first thing I had to deal with was the fact that launching was tricky due to the strong winds. The first launch went off without problems but on the second one I got picked up as the glider rose above my head, causing me to fall on my back (yay for back protectors) and the glider to overshoot and collapse. The conclusion was too much brake and not enough moving towards the glider.
+At that point Eva taught me how to do sideways launch where you lay the glider out at an angle to the wind, pull one end up first and then use brake on the high side to stabilize the glider above your head. Using this method the glider generates less pull and is relatively easy to control during the launching phase. Unlike the reverse launch however you need to be much more aggressive in pulling up the glider because if you are not, you give the low side time to catch up which defeats the entire purpose of using this method. In fact you want the whole thing to come up on an angle so that you can control the inflation speed.
+It took me several attempts at getting the sideways launch right but in the end I got the hang of it well enough to start using them as my launch technique for the day.&lt;/p&gt;
+&lt;p&gt;Because the wind was so strong it was easy to get up high it was possible for me to practise big ears again without having to worry about being forced to land. I also got to try a 360 degree turn which looks strange as you look at the ground track because while you are turning through 360 degrees, the ground track is making a rather deformed curl shape. At the end of the turn it even feels like you snap into place.&lt;/p&gt;
+&lt;p&gt;Finally at the end of the day we flew back to the car park from the launch site, a flight of about 6 or so kilometres. All in all once again a good days flying.&lt;/p&gt;
+</content>
+        </entry>
     
         <entry>
             <title>nAnicitus release - V0.1.3.0</title>
@@ -132,7 +164,7 @@
         </entry>
     
         <entry>
-            <title>Nuclei release - V0.6.5.0</title>
+            <title>Nuclei release - V0.6.6.0</title>
             <link href="http://pvandervelde.github.io/posts/2013-10-12_Nuclei-Release-V0660.html"/>
             <updated>2013-10-12T00:00:00.000Z</updated>
             <id>http://pvandervelde.github.io/posts/2013-10-12_Nuclei-Release-V0660.html</id>
@@ -178,6 +210,19 @@ builder.RegisterModule(
                 ChannelType.TcpIP,
             }, 
         &lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt;));&lt;/code&gt;&lt;/pre&gt;
+</content>
+        </entry>
+    
+        <entry>
+            <title>nRefs release - V0.1.0.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-09-25_nRefs-Release-v0100.html"/>
+            <updated>2013-09-25T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-09-25_nRefs-Release-v0100.html</id>
+            <content type="html">&lt;p&gt;The &lt;a href=&quot;https://github.com/pvandervelde/nRefs/releases/tag/v0.1.0.0&quot;&gt;first release&lt;/a&gt; of the &lt;a href=&quot;/projects/nRefs.html&quot;&gt;nRefs&lt;/a&gt; assembly reference extraction application has been released. This release&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The test output now includes an XML report with all the messages and an indication of test success or failure.&lt;/li&gt;
+&lt;li&gt;Removed the Test data directory settings from the web service because test packages are now always dropped in the App_Data directory&lt;/li&gt;
+&lt;/ul&gt;
 </content>
         </entry>
     
@@ -246,19 +291,6 @@ projects subdirectories and then sorts them by date. The &lt;em&gt;recent&lt;/em
 &lt;li&gt;&lt;a href=&quot;http://takitapart.com&quot;&gt;takitapart&lt;/a&gt; provided an &lt;a href=&quot;http://takitapart.com/posts/organizing-docpad/&quot;&gt;excellent&lt;/a&gt; post describing how to organise content in a Docpad website.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://lucor.github.io&quot;&gt;Luca&amp;#39;s forge&lt;/a&gt; provided a good start to using Docpad in his &lt;a href=&quot;http://lucor.github.io/post/migrating-from-octopress-to-docpad/&quot;&gt;migration&lt;/a&gt; post. This site also provides some very nice ideas around the way posts and tags should look.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://www.delarre.net&quot;&gt;Ben Delarre&lt;/a&gt; provided a nice &lt;a href=&quot;http://www.delarre.net/posts/blogging-with-docpad/&quot;&gt;summary&lt;/a&gt; of his own Docpad setup.&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-        </entry>
-    
-        <entry>
-            <title>nRefs release - V0.1.0.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-09-25_nRefs-Release-v0100.html"/>
-            <updated>2013-09-25T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-09-25_nRefs-Release-v0100.html</id>
-            <content type="html">&lt;p&gt;The &lt;a href=&quot;https://github.com/pvandervelde/nRefs/releases/tag/v0.1.0.0&quot;&gt;first release&lt;/a&gt; of the &lt;a href=&quot;/projects/nRefs.html&quot;&gt;nRefs&lt;/a&gt; assembly reference extraction application has been released. This release&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The test output now includes an XML report with all the messages and an indication of test success or failure.&lt;/li&gt;
-&lt;li&gt;Removed the Test data directory settings from the web service because test packages are now always dropped in the App_Data directory&lt;/li&gt;
 &lt;/ul&gt;
 </content>
         </entry>
