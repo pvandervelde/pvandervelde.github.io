@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>Sherlock release - V0.4.2.0 | Mind Vortex</title>
-    <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
+    <title>Apollo | Mind Vortex</title>
+    <meta name="description" content="Apollo is the code name for an engineering simulation and design application." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, Fluid dynamics, CFD, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
 
@@ -159,85 +159,25 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
             </div>
         </div>
         <div id="content">
-            <!--
-    Commenting is based on: http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html
--->
-<div id="post">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                Sherlock release - V0.4.2.0
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, September 11, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/Sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
+            <div class="project">
+    <h2>Apollo</h2>
+    <div>
+        <p>Apollo is the code name for an application that provides engineering and design simulation capabilities, e.g. <a href="http://en.wikipedia.org/wiki/Computational_fluid_dynamics">fluid</a>, <a href="http://en.wikipedia.org/wiki/Solid_mechanics">structural</a> or <a href="http://en.wikipedia.org/wiki/Product_optimization">optimization</a> calculations, for users who aren&#39;t highly skilled in the use of modern day simulation tools. The goal for Apollo is to provide the users with a high level abstraction of the simulation so that they can focus on the engineering design while the software handles the underlying simulation details.</p>
+<p>Apollo will not provide any geometry manipulation capabilities from itself, but it will instead by tightly integrated into one or more <a href="http://en.wikipedia.org/wiki/Computer-aided_design">CAD</a> applications so that users can execute simulations directly from their CAD applications. For starters Apollo will only be integrated with <a href="http://www.rhino3d.com/">Rhino 3D</a>.</p>
+<p>To allow users to run large computations the application is capable of distributing the processing over multiple CPU cores and onto other computers on the local network.</p>
+
     </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.2.0">V0.4.2.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release adds one bug fix and one improvement.</p>
-<p>The bug fix is a change to the <code>IsHyperVMachine</code> and <code>IsPhysicalMachine</code> stored procedures in order to make them easier to use correctly.</p>
-<p>The improvement is the addition of build steps that package the web projects into a ZIP file for easier deployment. These zip files can now also be retrieved from the <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.2.0">release note</a></p>
- 
+    <div>
+        <div id="project-linkedposts">
+    <h3>Recent posts referencing Apollo</h3>
+    <ul>
+        
+    </ul>
+    <div id="project-linkedposts-more">
+        More posts referencing <a href="">Apollo</a>
     </div>
 </div>
-    <div id="post-footer">
-        <div>
-            <div class="navlinks">
-  <a href="/posts/2013-09-08_Sherlock-Release-v0401.html" title="Previous Post: Sherlock release - V0.4.0.1" class="navlinks-prev">&laquo; Sherlock release - V0.4.0.1</a>
-  <a href="/posts/2013-09-14_Sherlock-Release-v0430.html" title="Next Post: Sherlock release - V0.4.3.0" class="navlinks-next">Sherlock release - V0.4.3.0 &raquo;</a>
-</div>
-        </div>
     </div>
-    
-    <script type="text/javascript" src="http://datejs.googlecode.com/svn/trunk/build/date-en-US.js"></script>
-
-    <script type="text/javascript">
-      $("#post p").each( function(index) {
-        if (index > 0 && $.trim($(this).text()).length > 0) {
-          $(this).attr("id", "par" + index.toString());
-          var html = $(this).html();
-          $(this).html(html + " <a href='#par" + index.toString() + "'>#</a>");
-        }
-      });
-    </script>
-    
-    <div id="post-comments">
-        <h3>Comments</h3>
-        <div id="post-comment-header">
-            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/4"> this post's issue page on 
-            GitHub</a> (you'll need a GitHub account).
-        </div>
-    </div>
-    
-    <script type="text/javascript">
-
-      function loadComments(data) {
-        for (var i=0; i<data.length; i++) {
-          var cuser = data[i].user.login;
-          var cuserlink = "https://www.github.com/" + data[i].user.login;
-          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/4#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
-          var cbody = data[i].body_html;
-          var cavatarlink = data[i].user.avatar_url;
-          var cdate = Date.parse(data[i].created_at).toString("yyyy-MM-dd HH:mm:ss");
-
-          $("#post-comments").append("<div id='post-comment'><div id='post-comment-header'><div id='post-comment-gravatar'>" + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + "</div><a id='post-comment-user' href=\""+ cuserlink + "\">" + cuser + "</a><a id='post-comment-date' href=\"" + clink + "\">" + cdate + "</a></div><div id='post-comment-body'>" + cbody + "</div></div>");
-        }
-      }
-
-      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/4/comments", {
-        headers: {Accept: "application/vnd.github.full+json"},
-        dataType: "json",
-        success: function(msg){
-          loadComments(msg);
-       }
-      });
-    </script>
 </div>
         </div>
     </div>
