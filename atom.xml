@@ -3,13 +3,54 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2013-11-21T20:03:18.282Z</updated>
+    <updated>2013-12-03T02:24:40.389Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>Setting up nAnicitus</title>
+            <link href="http://pvandervelde.github.io/posts/2013-12-03_Setting-up-nAnicitus.html"/>
+            <updated>2013-12-03T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-12-03_Setting-up-nAnicitus.html</id>
+            <content type="html">&lt;p&gt;In this post I will explain how to install and configure the nAnicitus windows service. nAnicitus is a windows service that acts as a gatekeeper for the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx&quot;&gt;SymStore&lt;/a&gt; application. SymStore provides a relatively simple way to create a local / private &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/desktop/ms680693%28v=vs.85%29.aspx&quot;&gt;symbol server&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This statement should bring up a few questions, cunning questions like:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Why would a development team even need a symbol server?&lt;ul&gt;
+&lt;li&gt;The PDB files which are produced as the result of a build are just as unique as assemblies or executables. Each assembly has &lt;a href=&quot;http://www.wintellect.com/blogs/jrobbins/pdb-files-what-every-developer-must-know&quot;&gt;one specific PDB&lt;/a&gt; file to which it is linked via a GUID. Each time an assembly is build a new GUID is embedded, even if the source code has not changed. This means that in order to debug a given assembly for which you don&amp;#39;t have the source code, which can happen if you debug other peoples libraries or if you are debugging a crash dump, then you will need the linked PDB file. Hence in order to enable debugging of releases one has to either place the PDB in the same location as the binaries or one has to store the PDB files in a symbol server.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Why would a development team not use SymStore directly?&lt;ul&gt;
+&lt;li&gt;The disadvantage of SymStore is that it is not capable of processing &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff558851(v=vs.85).aspx&quot;&gt;multiple PDB files at the same time&lt;/a&gt;, i.e. it should really only be called by one user at the time. By providing a windows service that synchronizes the access to the SymStore application it is possible for multiple users to add symbols to the symbol server without having to worry about the integrity of the symbol server files.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Before we continue with the installation of nAnicitus lets have a quick look at how nAnicitus works. &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The user creates a &lt;a href=&quot;http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-symbol-package&quot;&gt;NuGet symbol package&lt;/a&gt; and places that in a pre-configured upload directory.&lt;/li&gt;
+&lt;li&gt;nAnicitus unpacks the symbol package and extracts the PDB files and the source files.&lt;/li&gt;
+&lt;li&gt;For each PDB file it is determined which source files were used to create it. Based on that information a &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/desktop/ms680641%28v=vs.85%29.aspx&quot;&gt;symbol stream&lt;/a&gt; is created and inserted into the PDB file which points to the source server path for the source files belonging to the PDB file.&lt;/li&gt;
+&lt;li&gt;The PDB files are uploaded via &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx&quot;&gt;SymStore&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;The source files are uploaded to the source server path.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Before installing nAnicitus it is necessary to install the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/gg463009.aspx&quot;&gt;debugging tools for windows&lt;/a&gt;. Make sure to install the complete set of tools so that you get all the symbol server tools as well. Once the the debugging tools are installed you can &lt;a href=&quot;https://github.com/pvandervelde/nAnicitus/releases&quot;&gt;download&lt;/a&gt; and unzip the latest version of nAnicitus. &lt;/p&gt;
+&lt;p&gt;The next step is to update the configuration file with the directory and UNC paths:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;DebuggingToolsDirectory:&lt;/strong&gt; The debugging tools directory (e.g. &lt;code&gt;c:\Program Files (x86)\Windows Kits\8.0\Debuggers\x64&lt;/code&gt;). This path may be left out if it is in the default location (as given here).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SourceIndexUncPath:&lt;/strong&gt; The UNC path to the directory where the indexed sources will be placed (e.g. &lt;code&gt;\\MyServer\sources&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SymbolsIndexUncPath:&lt;/strong&gt; The UNC path to the directory where the indexed symbols (i.e. PDBs) will be placed (e.g. &lt;code&gt;\\MyServer\symbols&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ProcessedPackagesPath:&lt;/strong&gt; The directory where the NuGet symbol packages will be dropped after they are processed. The NuGet symbol packages are saved in this directory so that it is possible to reprocess the packages if for instance the location of the source path changes, e.g. after switching to a new server.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;UploadPath:&lt;/strong&gt; The directory where the NuGet symbol packages are placed for nAnicitus to process.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Finally to install the application as a windows service, open a command line window with administrative permissions, navigate to the nAnicitus install directory and execute the following command:&lt;/p&gt;
+&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;profile&quot;&gt;    &lt;span class=&quot;filename&quot;&gt;Nanicitus.Service install&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once the service is installed use the normal windows services control to change the properties of the service.&lt;/p&gt;
+&lt;p&gt;And now you should have a working symbol server!&lt;/p&gt;
+</content>
+        </entry>
     
         <entry>
             <title>PG2 - Bumpy air, smooth air</title>

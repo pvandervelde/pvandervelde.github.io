@@ -79,6 +79,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2013-12-03_Setting-up-nAnicitus.html">Setting up nAnicitus</a></li>
+                    
                         <li><a href="/projects/apollo.html">Apollo</a></li>
                     
                         <li><a href="/posts/2013-11-19_PG2-Bumpy-air-smooth-air.html">PG2 - Bumpy air, smooth air</a></li>
@@ -97,8 +99,6 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2013-10-25_PG2-At-the-top-of-the-stack.html">PG2 - At the top of the stack</a></li>
                     
-                        <li><a href="/posts/2013-10-24_Sherlock-Release-V0460.html">Sherlock release - V0.4.6.0</a></li>
-                    
                 </ul>
             </div>
             <div id="sbox3">
@@ -112,16 +112,16 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Writing
                     </a>
                 
+                    <a href="/tags/Sherlock.html" style="font-size: 125%">
+                        Sherlock
+                    </a>
+                
                     <a href="/tags/Paragliding.html" style="font-size: 123.01955552904005%">
                         Paragliding
                     </a>
                 
                     <a href="/tags/PG2.html" style="font-size: 123.01955552904005%">
                         PG2
-                    </a>
-                
-                    <a href="/tags/Sherlock.html" style="font-size: 125%">
-                        Sherlock
                     </a>
                 
                     <a href="/tags/DocPad.html" style="font-size: 100%">
@@ -132,12 +132,12 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         GitHub
                     </a>
                 
-                    <a href="/tags/nRefs.html" style="font-size: 100%">
-                        nRefs
-                    </a>
-                
                     <a href="/tags/Nuclei.html" style="font-size: 114.11437585133949%">
                         Nuclei
+                    </a>
+                
+                    <a href="/tags/nRefs.html" style="font-size: 100%">
+                        nRefs
                     </a>
                 
                     <a href="/tags/Climbing.html" style="font-size: 100%">
@@ -148,7 +148,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Waipapa
                     </a>
                 
-                    <a href="/tags/nAnicitus.html" style="font-size: 100%">
+                    <a href="/tags/nAnicitus.html" style="font-size: 108.90517967770056%">
                         nAnicitus
                     </a>
                 
@@ -156,11 +156,85 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         nAdoni
                     </a>
                 
+                    <a href="/tags/Symbol-server.html" style="font-size: 100%">
+                        Symbol server
+                    </a>
+                
+                    <a href="/tags/SymStore.html" style="font-size: 100%">
+                        SymStore
+                    </a>
+                
+                    <a href="/tags/PDB.html" style="font-size: 100%">
+                        PDB
+                    </a>
+                
             </div>
         </div>
         <div id="content">
             <div id="posts">
     <h3 id="post-tags-header">Posts tagged with: nAnicitus</h3>
+    
+        <div id="post-spacer">
+            <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-12-03_Setting-up-nAnicitus.html'>Setting up nAnicitus</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Tuesday, December 03, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/nAnicitus.html">nAnicitus</a>
+                
+                    <a id="post-category" href="/tags/Symbol server.html">Symbol server</a>
+                
+                    <a id="post-category" href="/tags/SymStore.html">SymStore</a>
+                
+                    <a id="post-category" href="/tags/PDB.html">PDB</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>In this post I will explain how to install and configure the nAnicitus windows service. nAnicitus is a windows service that acts as a gatekeeper for the <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx">SymStore</a> application. SymStore provides a relatively simple way to create a local / private <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms680693%28v=vs.85%29.aspx">symbol server</a>.</p>
+<p>This statement should bring up a few questions, cunning questions like:</p>
+<ol>
+<li>Why would a development team even need a symbol server?<ul>
+<li>The PDB files which are produced as the result of a build are just as unique as assemblies or executables. Each assembly has <a href="http://www.wintellect.com/blogs/jrobbins/pdb-files-what-every-developer-must-know">one specific PDB</a> file to which it is linked via a GUID. Each time an assembly is build a new GUID is embedded, even if the source code has not changed. This means that in order to debug a given assembly for which you don&#39;t have the source code, which can happen if you debug other peoples libraries or if you are debugging a crash dump, then you will need the linked PDB file. Hence in order to enable debugging of releases one has to either place the PDB in the same location as the binaries or one has to store the PDB files in a symbol server.</li>
+</ul>
+</li>
+<li>Why would a development team not use SymStore directly?<ul>
+<li>The disadvantage of SymStore is that it is not capable of processing <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff558851(v=vs.85).aspx">multiple PDB files at the same time</a>, i.e. it should really only be called by one user at the time. By providing a windows service that synchronizes the access to the SymStore application it is possible for multiple users to add symbols to the symbol server without having to worry about the integrity of the symbol server files.</li>
+</ul>
+</li>
+</ol>
+<p>Before we continue with the installation of nAnicitus lets have a quick look at how nAnicitus works. </p>
+<ol>
+<li>The user creates a <a href="http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-symbol-package">NuGet symbol package</a> and places that in a pre-configured upload directory.</li>
+<li>nAnicitus unpacks the symbol package and extracts the PDB files and the source files.</li>
+<li>For each PDB file it is determined which source files were used to create it. Based on that information a <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms680641%28v=vs.85%29.aspx">symbol stream</a> is created and inserted into the PDB file which points to the source server path for the source files belonging to the PDB file.</li>
+<li>The PDB files are uploaded via <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx">SymStore</a>.</li>
+<li>The source files are uploaded to the source server path.</li>
+</ol>
+<p>Before installing nAnicitus it is necessary to install the <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/gg463009.aspx">debugging tools for windows</a>. Make sure to install the complete set of tools so that you get all the symbol server tools as well. Once the the debugging tools are installed you can <a href="https://github.com/pvandervelde/nAnicitus/releases">download</a> and unzip the latest version of nAnicitus. </p>
+<p>The next step is to update the configuration file with the directory and UNC paths:</p>
+<ul>
+<li><strong>DebuggingToolsDirectory:</strong> The debugging tools directory (e.g. <code>c:\Program Files (x86)\Windows Kits\8.0\Debuggers\x64</code>). This path may be left out if it is in the default location (as given here).</li>
+<li><strong>SourceIndexUncPath:</strong> The UNC path to the directory where the indexed sources will be placed (e.g. <code>\\MyServer\sources</code>).</li>
+<li><strong>SymbolsIndexUncPath:</strong> The UNC path to the directory where the indexed symbols (i.e. PDBs) will be placed (e.g. <code>\\MyServer\symbols</code>).</li>
+<li><strong>ProcessedPackagesPath:</strong> The directory where the NuGet symbol packages will be dropped after they are processed. The NuGet symbol packages are saved in this directory so that it is possible to reprocess the packages if for instance the location of the source path changes, e.g. after switching to a new server.</li>
+<li><strong>UploadPath:</strong> The directory where the NuGet symbol packages are placed for nAnicitus to process.</li>
+</ul>
+<p>Finally to install the application as a windows service, open a command line window with administrative permissions, navigate to the nAnicitus install directory and execute the following command:</p>
+<pre class="highlighted"><code class="profile">    <span class="filename">Nanicitus.Service install</code></pre>
+<p>Once the service is installed use the normal windows services control to change the properties of the service.</p>
+<p>And now you should have a working symbol server!</p>
+ 
+    </div>
+</div>
+        </div>
     
         <div id="post-spacer">
             <div id="post">
@@ -218,7 +292,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
             Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design 
             by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>. Feed icon by <a href="http://www.icojam.com/">Icojam</a>.
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Friday, November 22, 2013.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Tuesday, December 03, 2013.</p>
     </div>
 
     <!-- jQuery -->
