@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>Weekend at Waipapa - Drying tomatoes | Mind Vortex</title>
+    <title>Nuclei release - V0.7.0.0 | Mind Vortex</title>
     <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, Fluid dynamics, CFD, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
@@ -183,35 +183,46 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-header">
         <h2>
             
-                Weekend at Waipapa - Drying tomatoes
+                Nuclei release - V0.7.0.0
             
         </h2>
         <div id="post-meta">
             <p>
-                Monday, October 28, 2013 | Posted in
+                Wednesday, December 04, 2013 | Posted in
                 
-                    <a id="post-category" href="/tags/Climbing.html">Climbing</a>
-                
-                    <a id="post-category" href="/tags/Waipapa.html">Waipapa</a>
+                    <a id="post-category" href="/tags/Nuclei.html">Nuclei</a>
                 
             </p>
         </div>
     </div>
     <div id="post-content">
-        <p>On the <a href="http://en.wikipedia.org/wiki/Labour_Day#New_Zealand">long weekend</a> my friend Chris organised a climbing trip to <a href="http://www.freeclimb.co.nz/wharepapa.html">lake Waipapa</a>, a climbing area with many delicate slab climbs.</p>
-<p>We spend both days at the main wall working on some of the climbs. For Chris his climb of the weekend was &#39;Millennium madness&#39;, an amazing corner <a href="http://en.wikipedia.org/wiki/Traditional_climbing">trad</a> climb which is rated <a href="http://en.wikipedia.org/wiki/Grade_%28climbing%29#Ewbank">18</a>. From the trad gear side you have to make sure that your rack has several finger size pieces of gear so that you can use some at the start of the climb and some near the middle. The crux of the climb is the first 5 or so meters where you have to figure out how to switch between the different foot placements that are available. The climber starts out bridging between a set of small ledges and then transitions to using the crack to foot-jam and then to using some small indentations on the main face. The tricky bit is getting the transition between the different types of foot placements correct. </p>
-<p>On saturday Chris had two attempts at cleaning &#39;Millennium Madness&#39; but didn&#39;t quite get it right. It seems that the first time climbing in Waipapa after winter is always tricky as you are trying to re-acquire the correct climbing techniques for the delicate Waipapa climbs. </p>
-<p>For me the plan was to work my long time project called &#39;Sun dried tomatoes&#39;, a delicate <a href="http://en.wikipedia.org/wiki/Sport_climbing">sport</a> 22. For this climb the main focus is balance and once again foot placements, however unlike &#39;Millennium madness&#39; where there are many features that can serve as hand holds, &#39;sun dried tomatoes&#39; has sections where hand holds are very sparse.</p>
-<p>Over the last two years or so I&#39;ve semi-seriously tried this climb a bunch of times but until this weekend I never found the motivation to put a continuous focus on the climb. During both days I put a top-rope on the climb and worked the moves a number of times. This helped me figure out where the correct foot placements were, where the clipping holds were and in which locations a rest would be possible. In the end I climbed it on top rope four times, eventually working out the moves. And each day I ended the day with a lead attempt. On Saturday I failed to clean it because my head space wasn&#39;t in the right spot, however on Sunday I managed to push through the hard bits and got to the top clean. So that&#39;s another tick in the books and another sweet climb done.</p>
-<p>On to other projects it is now ...</p>
+        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.0.0">V0.7.0.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release adds support for grouping timing results based on their logical area.</p>
+<pre class="highlighted"><code class="cs"><span class="keyword">var</span> group1 = <span class="keyword">new</span> TimingGroup();
+<span class="keyword">using</span> (Profiler.Measure(group1, <span class="string">"My first timing group"</span>))
+{
+    <span class="keyword">var</span> group2 = <span class="keyword">new</span> TimingGroup();
+    <span class="keyword">using</span> (Profiler.Measure(
+        group2, 
+        <span class="string">"This timing is not a child of the first one"</span>))
+    {
+        <span class="comment">// Do stuff here ...</span>
+    }
+
+    <span class="keyword">using</span> (Profiler.Measure(
+        group1, 
+        <span class="string">"This timing is a child of the first one"</span>))
+    {
+        <span class="comment">// Do stuff here ...</span>
+    }
+}</code></pre>
  
     </div>
 </div>
     <div id="post-footer">
         <div>
             <div class="navlinks">
-  <a href="/posts/2013-10-25_PG2-At-the-top-of-the-stack.html" title="Previous Post: PG2 - At the top of the stack" class="navlinks-prev">&laquo; PG2 - At the top of the stack</a>
-  <a href="/posts/2013-10-30_Sherlock-Release-V0470.html" title="Next Post: Sherlock release - V0.4.7.0" class="navlinks-next">Sherlock release - V0.4.7.0 &raquo;</a>
+  <a href="/posts/2013-12-03_Setting-up-nAnicitus.html" title="Previous Post: Setting up nAnicitus" class="navlinks-prev">&laquo; Setting up nAnicitus</a>
+  <a href="/posts/2013-12-04_Regression-testing-with-Sherlock.html" title="Next Post: Regression testing with Sherlock" class="navlinks-next">Regression testing with Sherlock &raquo;</a>
 </div>
         </div>
     </div>
@@ -231,7 +242,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-comments">
         <h3>Comments</h3>
         <div id="post-comment-header">
-            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/17"> this post's issue page on 
+            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/26"> this post's issue page on 
             GitHub</a> (you'll need a GitHub account).
         </div>
     </div>
@@ -242,7 +253,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         for (var i=0; i<data.length; i++) {
           var cuser = data[i].user.login;
           var cuserlink = "https://www.github.com/" + data[i].user.login;
-          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/17#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
+          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/26#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
           var cbody = data[i].body_html;
           var cavatarlink = data[i].user.avatar_url;
           var cdate = Date.parse(data[i].created_at).toString("yyyy-MM-dd HH:mm:ss");
@@ -251,7 +262,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         }
       }
 
-      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/17/comments", {
+      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/26/comments", {
         headers: {Accept: "application/vnd.github.full+json"},
         dataType: "json",
         success: function(msg){
