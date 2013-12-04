@@ -79,6 +79,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2013-12-04_Regression-testing-with-Sherlock.html">Regression testing with Sherlock</a></li>
+                    
                         <li><a href="/posts/2013-12-03_Setting-up-nAnicitus.html">Setting up nAnicitus</a></li>
                     
                         <li><a href="/projects/apollo.html">Apollo</a></li>
@@ -97,14 +99,12 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2013-10-28_Weekend-at-Waipapa-drying-tomatoes.html">Weekend at Waipapa - Drying tomatoes</a></li>
                     
-                        <li><a href="/posts/2013-10-25_PG2-At-the-top-of-the-stack.html">PG2 - At the top of the stack</a></li>
-                    
                 </ul>
             </div>
             <div id="sbox3">
                 <h2>Tags</h2>
                 
-                    <a href="/tags/Blog.html" style="font-size: 108.90517967770056%">
+                    <a href="/tags/Blog.html" style="font-size: 108.33333333333333%">
                         Blog
                     </a>
                 
@@ -112,16 +112,16 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Writing
                     </a>
                 
-                    <a href="/tags/Sherlock.html" style="font-size: 125%">
-                        Sherlock
-                    </a>
-                
-                    <a href="/tags/Paragliding.html" style="font-size: 123.01955552904005%">
+                    <a href="/tags/Paragliding.html" style="font-size: 121.54135417267631%">
                         Paragliding
                     </a>
                 
-                    <a href="/tags/PG2.html" style="font-size: 123.01955552904005%">
+                    <a href="/tags/PG2.html" style="font-size: 121.54135417267631%">
                         PG2
+                    </a>
+                
+                    <a href="/tags/Sherlock.html" style="font-size: 125%">
+                        Sherlock
                     </a>
                 
                     <a href="/tags/DocPad.html" style="font-size: 100%">
@@ -132,12 +132,12 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         GitHub
                     </a>
                 
-                    <a href="/tags/Nuclei.html" style="font-size: 114.11437585133949%">
-                        Nuclei
-                    </a>
-                
                     <a href="/tags/nRefs.html" style="font-size: 100%">
                         nRefs
+                    </a>
+                
+                    <a href="/tags/Nuclei.html" style="font-size: 113.20802083934296%">
+                        Nuclei
                     </a>
                 
                     <a href="/tags/Climbing.html" style="font-size: 100%">
@@ -148,11 +148,11 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Waipapa
                     </a>
                 
-                    <a href="/tags/nAnicitus.html" style="font-size: 108.90517967770056%">
+                    <a href="/tags/nAnicitus.html" style="font-size: 108.33333333333333%">
                         nAnicitus
                     </a>
                 
-                    <a href="/tags/nAdoni.html" style="font-size: 108.90517967770056%">
+                    <a href="/tags/nAdoni.html" style="font-size: 108.33333333333333%">
                         nAdoni
                     </a>
                 
@@ -168,10 +168,80 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         PDB
                     </a>
                 
+                    <a href="/tags/Regression-test.html" style="font-size: 100%">
+                        Regression test
+                    </a>
+                
             </div>
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-12-04_Regression-testing-with-Sherlock.html'>Regression testing with Sherlock</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Wednesday, December 04, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/Sherlock.html">Sherlock</a>
+                
+                    <a id="post-category" href="/tags/Regression test.html">Regression test</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Over a series of posts I hope to explain how to set up and use the <a href="/projects/sherlock.html">Sherlock</a> test environment system. The idea is to follow the set up procedure I used both at home for the <a href="/projects/apollo.html">Apollo</a> project and the proof of concept I am working on at my work place. But first lets start with a short explanation of what Sherlock is and what it does. </p>
+<h3>What is Sherlock</h3>
+<p>Sherlock consists of a set of applications and services that provide test environment organisation and automatic execution of a set of tests on one or more test environments. The organisation part consists of:</p>
+<ul>
+<li>Keeping track of which environments exist, which are available for testing and which are not, e.g. for maintenance reasons.</li>
+<li>What operating system is loaded onto each environment.</li>
+<li>Which applications are pre-loaded onto each environment.</li>
+<li>Relationships between virtual machines and their (physical) host machine. </li>
+</ul>
+<p>The test execution part consists of:</p>
+<ul>
+<li>Selection of the most suitable environment for a test based on the desired combination of operating system and available applications.</li>
+<li>Preparing of the environment for test. This includes loading test environments, i.e. waking up physical test environments through the <a href="http://en.wikipedia.org/wiki/Wake-on-LAN">Wake-on-LAN</a> approach and starting virtual machines, and sending over the test data, e.g. installer files.</li>
+<li>Triggering test execution on the active test environment.</li>
+<li>Processing test status and test report information.</li>
+<li>Post test environment clean-up. This currently only includes resetting virtual machine disks back to the pre-test state.</li>
+<li>Accumulation of test events and generation of the final test report.</li>
+</ul>
+<p>In general the Sherlock system will consist of at least one <a href="http://en.wikipedia.org/wiki/Hyper-V">Hyper-V</a> host machine and a set of one or more Hyper-V virtual machines. In this arrangement the host machine handles the test organisation and part of the test execution, while the virtual machines serve as test environments. </p>
+<p>While it is possible for Sherlock to execute tests on physical machines it is advised to only execute on virtual machines because of the inability to reset a physical machine back to the pre-test state. Virtual machines on the other hand can easily be restored to the pre-test state through the use of snapshots.</p>
+<h3>The life of a test</h3>
+<p>When executing a test with Sherlock the following steps are present: </p>
+<ol>
+<li>The user creates a test configuration file which describes all requirements for the test environment, which steps should be executed and where the report should be placed.</li>
+<li>The user registers the test with Sherlock via the console application.</li>
+<li>Some time after the registration of the test completed the Sherlock host service loads test information and selects one or more suitable environments to execute the test steps on. The time between the completion of the test registration and the starting of the test execution depends on whether suitable test environments are available and how busy they are.</li>
+<li>The selected test environments are prepared for the test execution. This preparation includes activating the environment and transferring the test data for each environment (e.g. installer files etc.).</li>
+<li>Each environment executes the desired test steps and reports back on the success or failure of each test step.</li>
+<li>Once an environment has completed its test steps it will report the completion the test, upon which the host service will terminate the environment and restore it to the original state.</li>
+<li>Once all environments have completed their test steps the test is marked as completed and the test report is compiled and placed in the predetermined location.  </li>
+</ol>
+<h3>Planned posts:</h3>
+<p>The next following posts will describe:</p>
+<ol>
+<li>How to set up the Hyper-V host machine.</li>
+<li>How to prepare a virtual machine for use as a testing environment.</li>
+<li>How to verify that all the environments have been configured correctly.</li>
+<li>How to integrate with a build server. This will discuss build jobs, build scripts and test configuration.</li>
+<li>A description on how I used Sherlock to perform integration tests on the console application of Apollo.</li>
+<li>And a description on how I used Sherlock to perform integration tests on a WPF application of Apollo.</li>
+</ol>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -228,7 +298,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
 <p>Finally to install the application as a windows service, open a command line window with administrative permissions, navigate to the nAnicitus install directory and execute the following command:</p>
 <pre class="highlighted"><code class="profile">    <span class="filename">Nanicitus.Service install</code></pre>
 <p>Once the service is installed use the normal windows services control to change the properties of the service.</p>
-<p>And now you should have a working symbol server!</p>
+<p>And now you should have a working symbol server! </p>
  
     </div>
 </div>
@@ -1051,7 +1121,7 @@ development I did for my PhD.</li>
             Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design 
             by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>. Feed icon by <a href="http://www.icojam.com/">Icojam</a>.
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Tuesday, December 03, 2013.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Wednesday, December 04, 2013.</p>
     </div>
 
     <!-- jQuery -->

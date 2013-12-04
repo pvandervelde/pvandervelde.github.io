@@ -3,13 +3,62 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2013-12-03T02:24:40.389Z</updated>
+    <updated>2013-12-04T01:20:11.086Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>Regression testing with Sherlock</title>
+            <link href="http://pvandervelde.github.io/posts/2013-12-04_Regression-testing-with-Sherlock.html"/>
+            <updated>2013-12-04T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-12-04_Regression-testing-with-Sherlock.html</id>
+            <content type="html">&lt;p&gt;Over a series of posts I hope to explain how to set up and use the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; test environment system. The idea is to follow the set up procedure I used both at home for the &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt; project and the proof of concept I am working on at my work place. But first lets start with a short explanation of what Sherlock is and what it does. &lt;/p&gt;
+&lt;h3&gt;What is Sherlock&lt;/h3&gt;
+&lt;p&gt;Sherlock consists of a set of applications and services that provide test environment organisation and automatic execution of a set of tests on one or more test environments. The organisation part consists of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Keeping track of which environments exist, which are available for testing and which are not, e.g. for maintenance reasons.&lt;/li&gt;
+&lt;li&gt;What operating system is loaded onto each environment.&lt;/li&gt;
+&lt;li&gt;Which applications are pre-loaded onto each environment.&lt;/li&gt;
+&lt;li&gt;Relationships between virtual machines and their (physical) host machine. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The test execution part consists of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Selection of the most suitable environment for a test based on the desired combination of operating system and available applications.&lt;/li&gt;
+&lt;li&gt;Preparing of the environment for test. This includes loading test environments, i.e. waking up physical test environments through the &lt;a href=&quot;http://en.wikipedia.org/wiki/Wake-on-LAN&quot;&gt;Wake-on-LAN&lt;/a&gt; approach and starting virtual machines, and sending over the test data, e.g. installer files.&lt;/li&gt;
+&lt;li&gt;Triggering test execution on the active test environment.&lt;/li&gt;
+&lt;li&gt;Processing test status and test report information.&lt;/li&gt;
+&lt;li&gt;Post test environment clean-up. This currently only includes resetting virtual machine disks back to the pre-test state.&lt;/li&gt;
+&lt;li&gt;Accumulation of test events and generation of the final test report.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In general the Sherlock system will consist of at least one &lt;a href=&quot;http://en.wikipedia.org/wiki/Hyper-V&quot;&gt;Hyper-V&lt;/a&gt; host machine and a set of one or more Hyper-V virtual machines. In this arrangement the host machine handles the test organisation and part of the test execution, while the virtual machines serve as test environments. &lt;/p&gt;
+&lt;p&gt;While it is possible for Sherlock to execute tests on physical machines it is advised to only execute on virtual machines because of the inability to reset a physical machine back to the pre-test state. Virtual machines on the other hand can easily be restored to the pre-test state through the use of snapshots.&lt;/p&gt;
+&lt;h3&gt;The life of a test&lt;/h3&gt;
+&lt;p&gt;When executing a test with Sherlock the following steps are present: &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The user creates a test configuration file which describes all requirements for the test environment, which steps should be executed and where the report should be placed.&lt;/li&gt;
+&lt;li&gt;The user registers the test with Sherlock via the console application.&lt;/li&gt;
+&lt;li&gt;Some time after the registration of the test completed the Sherlock host service loads test information and selects one or more suitable environments to execute the test steps on. The time between the completion of the test registration and the starting of the test execution depends on whether suitable test environments are available and how busy they are.&lt;/li&gt;
+&lt;li&gt;The selected test environments are prepared for the test execution. This preparation includes activating the environment and transferring the test data for each environment (e.g. installer files etc.).&lt;/li&gt;
+&lt;li&gt;Each environment executes the desired test steps and reports back on the success or failure of each test step.&lt;/li&gt;
+&lt;li&gt;Once an environment has completed its test steps it will report the completion the test, upon which the host service will terminate the environment and restore it to the original state.&lt;/li&gt;
+&lt;li&gt;Once all environments have completed their test steps the test is marked as completed and the test report is compiled and placed in the predetermined location.  &lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Planned posts:&lt;/h3&gt;
+&lt;p&gt;The next following posts will describe:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;How to set up the Hyper-V host machine.&lt;/li&gt;
+&lt;li&gt;How to prepare a virtual machine for use as a testing environment.&lt;/li&gt;
+&lt;li&gt;How to verify that all the environments have been configured correctly.&lt;/li&gt;
+&lt;li&gt;How to integrate with a build server. This will discuss build jobs, build scripts and test configuration.&lt;/li&gt;
+&lt;li&gt;A description on how I used Sherlock to perform integration tests on the console application of Apollo.&lt;/li&gt;
+&lt;li&gt;And a description on how I used Sherlock to perform integration tests on a WPF application of Apollo.&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+        </entry>
     
         <entry>
             <title>Setting up nAnicitus</title>
@@ -48,7 +97,7 @@
 &lt;p&gt;Finally to install the application as a windows service, open a command line window with administrative permissions, navigate to the nAnicitus install directory and execute the following command:&lt;/p&gt;
 &lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;profile&quot;&gt;    &lt;span class=&quot;filename&quot;&gt;Nanicitus.Service install&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Once the service is installed use the normal windows services control to change the properties of the service.&lt;/p&gt;
-&lt;p&gt;And now you should have a working symbol server!&lt;/p&gt;
+&lt;p&gt;And now you should have a working symbol server! &lt;/p&gt;
 </content>
         </entry>
     
