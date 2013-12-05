@@ -3,13 +3,26 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2013-12-04T06:31:49.470Z</updated>
+    <updated>2013-12-05T00:42:56.576Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>PG2 - Top landings?</title>
+            <link href="http://pvandervelde.github.io/posts/2013-12-05_PG2-Top-landings.html"/>
+            <updated>2013-12-05T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-12-05_PG2-Top-landings.html</id>
+            <content type="html">&lt;p&gt;Two weeks ago the weather was once again favourable to learn more new skills on my way to my &lt;a href=&quot;/tags/PG2.html&quot;&gt;PG2 license&lt;/a&gt;. When we arrived at Maioro the wind was just enough to soar. Given that the forecast has indicated an increase in wind strength over the afternoon we decided to practise some ground handling first. After about an hour of practising reverse launches and keeping the glider stable above our heads it was time to fly. The wind was still a bit light but with a lot of scratching I still managed to get 40 - 45 minutes of flying in on my first flight, my longest flight until then.&lt;/p&gt;
+&lt;p&gt;As the afternoon progressed the wind strength slowly increased and staying up became easier which resulted in another 45 minute flight.&lt;/p&gt;
+&lt;p&gt;Later in the afternoon the instructor told me it was possible to get a set of short flights with some top landings in. For my first try I launched, gained some height and then turned in for the top landing and completely stuffed it up. As I started moving over to the landing spot everything accelerated and I tried to slow down and turn at the same time, which meant I was not actually doing either of those things so when I got close to the ground I was still moving at a decent speed and hence I face planted. Fortunately there was no actual damage to either me or the glider.
+After recovering from the jitters for a bit I had a second attempt at top landing which took a lot longer to set up and decent but ended in a perfect touch down. The conclusion of all of this is that I need to focus more on flying the glider till the last minute, stay in the harness to maintain the weight shift and focus on the direction of flight more. Oh so much more to learn. &lt;/p&gt;
+&lt;p&gt;The fifth and final flight of the day was flying back to the car park which was quite easy as I only had to fly along the ridges to maintain more than enough height to get to the car park.&lt;/p&gt;
+</content>
+        </entry>
     
         <entry>
             <title>Regression testing with Sherlock</title>
@@ -66,7 +79,7 @@
             <updated>2013-12-04T00:00:00.000Z</updated>
             <id>http://pvandervelde.github.io/posts/2013-12-04_Nuclei-Release-V0700.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.0.0&quot;&gt;V0.7.0.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release adds support for grouping timing results based on their logical area.&lt;/p&gt;
-&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group1 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup();
+&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group1 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup(); 
 &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(group1, &lt;span class=&quot;string&quot;&gt;&quot;My first timing group&quot;&lt;/span&gt;))
 {
     &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group2 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup();
