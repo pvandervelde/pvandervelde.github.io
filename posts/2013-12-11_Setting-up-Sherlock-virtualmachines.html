@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>PG2 - Top landings? | Mind Vortex</title>
+    <title>Sherlock configuration - Virtual machines | Mind Vortex</title>
     <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, Fluid dynamics, CFD, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
@@ -183,34 +183,107 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-header">
         <h2>
             
-                PG2 - Top landings?
+                Sherlock configuration - Virtual machines
             
         </h2>
         <div id="post-meta">
             <p>
-                Thursday, December 05, 2013 | Posted in
+                Wednesday, December 11, 2013 | Posted in
                 
-                    <a id="post-category" href="/tags/Paragliding.html">Paragliding</a>
-                
-                    <a id="post-category" href="/tags/PG2.html">PG2</a>
+                    <a id="post-category" href="/tags/Sherlock.html">Sherlock</a>
                 
             </p>
         </div>
     </div>
     <div id="post-content">
-        <p>Two weeks ago the weather was once again favourable to learn more new skills on my way to my <a href="/tags/PG2.html">PG2 license</a>. When we arrived at Maioro the wind was just enough to soar. Given that the forecast has indicated an increase in wind strength over the afternoon we decided to practise some ground handling first. After about an hour of practising reverse launches and keeping the glider stable above our heads it was time to fly. The wind was still a bit light but with a lot of scratching I still managed to get 40 - 45 minutes of flying in on my first flight, my longest flight until then.</p>
-<p>As the afternoon progressed the wind strength slowly increased and staying up became easier which resulted in another 45 minute flight.</p>
-<p>Later in the afternoon the instructor told me it was possible to get a set of short flights with some top landings in. For my first try I launched, gained some height and then turned in for the top landing and completely stuffed it up. As I started moving over to the landing spot everything accelerated and I tried to slow down and turn at the same time, which meant I was not actually doing either of those things so when I got close to the ground I was still moving at a decent speed and hence I face planted. Fortunately there was no actual damage to either me or the glider.
-After recovering from the jitters for a bit I had a second attempt at top landing which took a lot longer to set up and decent but ended in a perfect touch down. The conclusion of all of this is that I need to focus more on flying the glider till the last minute, stay in the harness to maintain the weight shift and focus on the direction of flight more. Oh so much more to learn. </p>
-<p>The fifth and final flight of the day was flying back to the car park which was quite easy as I only had to fly along the ridges to maintain more than enough height to get to the car park.</p>
+        <p>After <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">setting up the host machine</a> the next step in the <a href="/posts/2013-12-04_Regression-testing-with-Sherlock.html">configuration</a> of Sherlock is to set up one or more virtual machines. Each virtual machine will have the following applications installed:</p>
+<ul>
+<li>The update service which handles the installation of the latest available Sherlock binaries. </li>
+<li>The executor service which handles the communication with the master controller, handles the download and upload of test files and test reports and controls the test execution. </li>
+<li>The application which executes the test steps. This has been separated from the service so that: <ul>
+<li>It is possible to run the application on the desktop while the executor service is running as a Windows service.</li>
+<li>Any fatal errors in the test application don&#39;t affect the service, thereby maintaining communication with the master controller, and thus allowing error reports to be send.</li>
+<li>It is possible to run multiple applications under different accounts (planned in future releases).</li>
+</ul>
+</li>
+</ul>
+<p>The configuration process for a virtual machine consists of the following steps:</p>
+<ul>
+<li>Create a new virtual machine and install the operating system</li>
+<li>Configure the operating system on the virtual machine</li>
+<li>Install and configure the Sherlock applications on the virtual machine</li>
+<li>Store information about the virtual machine in the host database</li>
+</ul>
+<h3 id="preparing-the-virtual-machine">Preparing the virtual machine</h3>
+<p>The first step is to create a <a href="http://technet.microsoft.com/en-us/library/cc772480.aspx">new virtual machine</a> and install the operating system. This should be straight forward but there a few things to look out for:</p>
+<ul>
+<li>The operating system must (currently) support <a href="http://en.wikipedia.org/wiki/.NET_Framework_version_history#.NET_Framework_4.5">.NET 4.5</a> because that is what Sherlock is needs to run on.</li>
+<li>The network for the virtual machine must be set up so that it can at the very least see the host machine and the other virtual machines stored on the same host machine.<ul>
+<li><strong>Note:</strong> Windows networks can <a href="http://www.petri.co.il/working-with-domain-member-virtual-machines-and-snapshots.htm">deny access</a> to the test virtual machines after being used for a while (usually 30 days) due to the fact that the test machine is reset after each test, thereby not allowing it to handle the renewal of network identification keys correctly.</li>
+</ul>
+</li>
+</ul>
+<h3 id="preparing-the-operating-system">Preparing the operating system</h3>
+<p>After the creation of the virtual machine and the installation of the operating system it is necessary to configure the operating system. Some of the changes are necessary for Sherlock to function while others are necessary only from a test perspective.</p>
+<p>Lets first start with the changes required for Sherlock to function. </p>
+<ul>
+<li>If .NET 4.5 is not already installed, then install it. Without it Sherlock won&#39;t run at all.</li>
+<li>Create a new user that will be used to execute the tests. This user needs to be an administrator so that the execution of an MSI install can succeed without the need for elevation (which is <a href="http://stackoverflow.com/questions/5098121/how-can-i-get-elevated-permissions-uac-via-impersonation-under-a-non-interacti">a bit tricky</a> from an application). The user can be either a machine local administrator or a domain user  which is granted administration rights on the machine.<ul>
+<li>Note that there might a difference between a domain user with administrative rights on the computer and a local administrator. If you turn UAC off then in general a local administrator is running all applications elevated while the applications started by the domain user run with no elevation only to be silently elevated if requested to do so. Unfortunately this means that the domain user will not be able to run a silent install from a command line unless that command line is explicitly elevated (which is not possible from an application).</li>
+</ul>
+</li>
+<li>Disable User Access Control (UAC) so that Sherlock can execute MSI installations. <strong>Note:</strong> In some cases corporate network controls and/or group policies override local settings. In those cases talk to the local IT people regarding UAC. Also note that on Windows 8 it is not possible to turn off the UAC by moving the &#39;UAC slider&#39; all the way down. This is because Metro applications require some form of UAC to exist in order for them to work.</li>
+</ul>
+<p>Finally before installing Sherlock a few tweaks should be made to the operating system configuration so that the automated tests can proceed. Note that for all the following changes there may be group policies in place put there by your local IT service. It may be necessary to talk to the IT people about the settings you want to change and the <a href="http://www.brianbondy.com/blog/id/100/">reason</a> you need to change those settings.</p>
+<ul>
+<li><strong>Interactive user:</strong> If you need to run interactive tests, e.g. UI tests, then you need to make sure a user is logged in. Use <a href="http://technet.microsoft.com/en-us/sysinternals/bb963905.aspx">Autologon</a> to automatically log your user in when the computer starts while still maintaining password security.</li>
+<li><strong>Windows 8 switch to desktop:</strong> If you are on Windows 8 you need to make sure that the desktop is <a href="http://www.7tutorials.com/how-boot-desktop-windows-8-skip-start-screen">available</a> for interactive applications to execute on.</li>
+<li><strong>Screen saver:</strong> In order to prevent any interactive tests from failing due to a <a href="http://windows.microsoft.com/en-nz/windows-vista/turn-your-screen-saver-on-or-off">screensaver</a> or the <a href="http://answers.microsoft.com/en-us/windows/forum/windows_7-security/disable-automatic-lock-with-windows-7/daef8f0a-810f-46e8-9420-3c32c4bd6479">automatic locking of the desktop</a> both those features need to be turned off. </li>
+<li><strong>Windows error reporting:</strong> Any tests that run on the desktop may hang eternally if the application under tests fails and displays the Windows Error Reporting (WER) dialog. In order to prevent this from happening <a href="http://4sysops.com/archives/how-to-disable-windows-error-reporting/">WER should be disabled</a>. The most efficient way of doing this is to use the group policy controls to disable the following elements:<ul>
+<li>In <code>Computer Configuration\Administrative Templates\System\Internet Communication Management\Internet Communication settings</code> enable the setting: <code>Turn off Windows Error Reporting</code>.</li>
+<li>In <code>Computer Configuration\Administrative Templates\Windows Components\Windows Error Reporting</code> enable the settings <code>Disable Windows error reporting</code> and <code>Prevent display of the user interface for critical errors</code>, and disable the setting <code>Display error notification</code>.</li>
+</ul>
+</li>
+<li><strong>Automatic updates:</strong> Automatic updates can be disabled because they will never be deployed due to the fact that the machine is reset after each test.</li>
+</ul>
+<h3 id="configuring-sherlock">Configuring Sherlock</h3>
+<p>Once the operating system is configured <a href="https://github.com/pvandervelde/Sherlock/releases">Sherlock</a> can be installed and configured. </p>
+<ul>
+<li>Unzip the <strong>service.zip</strong> package into the <code>c:\sherlock</code> directory.</li>
+<li>Copy the XML file containing the public key used to sign the manifests to the virtual machine and place it in the <code>c:\sherlock</code> directory.</li>
+<li>Open the configuration file (<code>Sherlock.Service.exe.config</code>) and update the following settings:<ul>
+<li><strong>ApplicationName:</strong> The name of the application for which updates should be tracked, in this case that is: <code>Sherlock.Service.Executor.exe</code>.</li>
+<li><strong>UpdateManifestUri:</strong> The URL of the manifest file, in this case: <code>http:\\myhostmachine\appupdate\executorservice.manifest</code></li>
+<li><strong>ManifestPublicKeyFile:</strong> The path to the XML file containing the public key section of the manifest signing key, e.g. <code>C:\sherlock\manifestsigningkey.public.xml</code></li>
+</ul>
+</li>
+<li>Set the update service to start automatically when the computer starts. This can be done as an actual service (in case no interactive tests will be executed) or by automatically starting the application when the user logs on to windows (in case interactive tests need to be executed).</li>
+<li>The last step is to let the executor controller through the firewall. For this create an inbound rule that allows <code>c:\ProgramData\Sherlock\Sherlock.Service.Executor\{VERSION}\Sherlock.Service.Executor.exe</code> to connect to all types of protocols. Normally only Domain and private networks should be sufficient.</li>
+</ul>
+<h3 id="testing">Testing</h3>
+<p>Once the operating system and Sherlock have been configured it is sensible to test the configurations to make sure it all works. In order to do this take the following steps:</p>
+<ul>
+<li>Restart the virtual machine. Once the machine starts up it should (depending on your configuration)<ul>
+<li>Automatically log on the test user</li>
+<li>On windows 8 switch to the desktop</li>
+<li>Start the Sherlock update service. The service should download the latest version of the executor controller and start it. You can verify this by looking at the logs which can be found in <code>c:\programdata\sherlock\sherlock.service\{VERSION}\logs</code> and <code>c:\programdata\sherlock\sherlock.service.executor\{VERSION}\logs</code> for the update service and the executor controller respectively.</li>
+</ul>
+</li>
+<li>After both applications have started stop them both by stopping the update service (<code>Sherlock.Service</code>).</li>
+<li>Once the applications have been stopped remove the data from the directory <code>c:\ProgramData\Sherlock</code>.</li>
+<li>Shut down the machine.</li>
+<li>Take a <a href="http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/16/managing-snapshots-with-hyper-v.aspx">snapshot</a> of the current state of the virtual machine and give it a sensible name.</li>
+</ul>
+<h3 id="host-configuration">Host configuration</h3>
+<p>Finally the last step in the configuration of a new test environment is to register the environment with Sherlock through the management website.</p>
  
     </div>
 </div>
     <div id="post-footer">
         <div>
             <div class="navlinks">
-  <a href="/posts/2013-12-04_Nuclei-Release-V0700.html" title="Previous Post: Nuclei release - V0.7.0.0" class="navlinks-prev">&laquo; Nuclei release - V0.7.0.0</a>
-  <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html" title="Next Post: Sherlock configuration - Server side" class="navlinks-next">Sherlock configuration - Server side &raquo;</a>
+  <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html" title="Previous Post: Sherlock configuration - Server side" class="navlinks-prev">&laquo; Sherlock configuration - Server side</a>
+  
 </div>
         </div>
     </div>
@@ -230,7 +303,7 @@ After recovering from the jitters for a bit I had a second attempt at top landin
     <div id="post-comments">
         <h3>Comments</h3>
         <div id="post-comment-header">
-            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/27"> this post's issue page on 
+            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/29"> this post's issue page on 
             GitHub</a> (you'll need a GitHub account).
         </div>
     </div>
@@ -241,7 +314,7 @@ After recovering from the jitters for a bit I had a second attempt at top landin
         for (var i=0; i<data.length; i++) {
           var cuser = data[i].user.login;
           var cuserlink = "https://www.github.com/" + data[i].user.login;
-          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/27#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
+          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/29#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
           var cbody = data[i].body_html;
           var cavatarlink = data[i].user.avatar_url;
           var cdate = Date.parse(data[i].created_at).toString("yyyy-MM-dd HH:mm:ss");
@@ -250,7 +323,7 @@ After recovering from the jitters for a bit I had a second attempt at top landin
         }
       }
 
-      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/27/comments", {
+      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/29/comments", {
         headers: {Accept: "application/vnd.github.full+json"},
         dataType: "json",
         success: function(msg){

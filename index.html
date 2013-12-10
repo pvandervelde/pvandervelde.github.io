@@ -79,13 +79,15 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html">Sherlock configuration - Virtual machines</a></li>
+                    
                         <li><a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">Sherlock configuration - Server side</a></li>
                     
                         <li><a href="/posts/2013-12-05_PG2-Top-landings.html">PG2 - Top landings?</a></li>
                     
-                        <li><a href="/posts/2013-12-04_Regression-testing-with-Sherlock.html">Regression testing with Sherlock</a></li>
-                    
                         <li><a href="/posts/2013-12-04_Nuclei-Release-V0700.html">Nuclei release - V0.7.0.0</a></li>
+                    
+                        <li><a href="/posts/2013-12-04_Regression-testing-with-Sherlock.html">Regression testing with Sherlock</a></li>
                     
                         <li><a href="/posts/2013-12-03_Setting-up-nAnicitus.html">Setting up nAnicitus</a></li>
                     
@@ -97,14 +99,12 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2013-11-13_NAdoni-Release-V0200.html">nAdoni release - V0.2.0.0</a></li>
                     
-                        <li><a href="/posts/2013-11-11_PG2-Up-and-down-the-coast.html">PG2 - Up and down the coast</a></li>
-                    
                 </ul>
             </div>
             <div id="sbox3">
                 <h2>Tags</h2>
                 
-                    <a href="/tags/Blog.html" style="font-size: 115.77324383928644%">
+                    <a href="/tags/Blog.html" style="font-size: 115.05149978319906%">
                         Blog
                     </a>
                 
@@ -112,11 +112,11 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Writing
                     </a>
                 
-                    <a href="/tags/Paragliding.html" style="font-size: 144.28109372903555%">
+                    <a href="/tags/Paragliding.html" style="font-size: 142.25490200071283%">
                         Paragliding
                     </a>
                 
-                    <a href="/tags/PG2.html" style="font-size: 144.28109372903555%">
+                    <a href="/tags/PG2.html" style="font-size: 142.25490200071283%">
                         PG2
                     </a>
                 
@@ -136,7 +136,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         nRefs
                     </a>
                 
-                    <a href="/tags/Nuclei.html" style="font-size: 131.54648767857287%">
+                    <a href="/tags/Nuclei.html" style="font-size: 130.10299956639813%">
                         Nuclei
                     </a>
                 
@@ -148,11 +148,11 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Waipapa
                     </a>
                 
-                    <a href="/tags/nAnicitus.html" style="font-size: 115.77324383928644%">
+                    <a href="/tags/nAnicitus.html" style="font-size: 115.05149978319906%">
                         nAnicitus
                     </a>
                 
-                    <a href="/tags/nAdoni.html" style="font-size: 115.77324383928644%">
+                    <a href="/tags/nAdoni.html" style="font-size: 115.05149978319906%">
                         nAdoni
                     </a>
                 
@@ -176,6 +176,109 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html'>Sherlock configuration - Virtual machines</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Wednesday, December 11, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/Sherlock.html">Sherlock</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>After <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">setting up the host machine</a> the next step in the <a href="/posts/2013-12-04_Regression-testing-with-Sherlock.html">configuration</a> of Sherlock is to set up one or more virtual machines. Each virtual machine will have the following applications installed:</p>
+<ul>
+<li>The update service which handles the installation of the latest available Sherlock binaries. </li>
+<li>The executor service which handles the communication with the master controller, handles the download and upload of test files and test reports and controls the test execution. </li>
+<li>The application which executes the test steps. This has been separated from the service so that: <ul>
+<li>It is possible to run the application on the desktop while the executor service is running as a Windows service.</li>
+<li>Any fatal errors in the test application don&#39;t affect the service, thereby maintaining communication with the master controller, and thus allowing error reports to be send.</li>
+<li>It is possible to run multiple applications under different accounts (planned in future releases).</li>
+</ul>
+</li>
+</ul>
+<p>The configuration process for a virtual machine consists of the following steps:</p>
+<ul>
+<li>Create a new virtual machine and install the operating system</li>
+<li>Configure the operating system on the virtual machine</li>
+<li>Install and configure the Sherlock applications on the virtual machine</li>
+<li>Store information about the virtual machine in the host database</li>
+</ul>
+<h3 id="preparing-the-virtual-machine">Preparing the virtual machine</h3>
+<p>The first step is to create a <a href="http://technet.microsoft.com/en-us/library/cc772480.aspx">new virtual machine</a> and install the operating system. This should be straight forward but there a few things to look out for:</p>
+<ul>
+<li>The operating system must (currently) support <a href="http://en.wikipedia.org/wiki/.NET_Framework_version_history#.NET_Framework_4.5">.NET 4.5</a> because that is what Sherlock is needs to run on.</li>
+<li>The network for the virtual machine must be set up so that it can at the very least see the host machine and the other virtual machines stored on the same host machine.<ul>
+<li><strong>Note:</strong> Windows networks can <a href="http://www.petri.co.il/working-with-domain-member-virtual-machines-and-snapshots.htm">deny access</a> to the test virtual machines after being used for a while (usually 30 days) due to the fact that the test machine is reset after each test, thereby not allowing it to handle the renewal of network identification keys correctly.</li>
+</ul>
+</li>
+</ul>
+<h3 id="preparing-the-operating-system">Preparing the operating system</h3>
+<p>After the creation of the virtual machine and the installation of the operating system it is necessary to configure the operating system. Some of the changes are necessary for Sherlock to function while others are necessary only from a test perspective.</p>
+<p>Lets first start with the changes required for Sherlock to function. </p>
+<ul>
+<li>If .NET 4.5 is not already installed, then install it. Without it Sherlock won&#39;t run at all.</li>
+<li>Create a new user that will be used to execute the tests. This user needs to be an administrator so that the execution of an MSI install can succeed without the need for elevation (which is <a href="http://stackoverflow.com/questions/5098121/how-can-i-get-elevated-permissions-uac-via-impersonation-under-a-non-interacti">a bit tricky</a> from an application). The user can be either a machine local administrator or a domain user  which is granted administration rights on the machine.<ul>
+<li>Note that there might a difference between a domain user with administrative rights on the computer and a local administrator. If you turn UAC off then in general a local administrator is running all applications elevated while the applications started by the domain user run with no elevation only to be silently elevated if requested to do so. Unfortunately this means that the domain user will not be able to run a silent install from a command line unless that command line is explicitly elevated (which is not possible from an application).</li>
+</ul>
+</li>
+<li>Disable User Access Control (UAC) so that Sherlock can execute MSI installations. <strong>Note:</strong> In some cases corporate network controls and/or group policies override local settings. In those cases talk to the local IT people regarding UAC. Also note that on Windows 8 it is not possible to turn off the UAC by moving the &#39;UAC slider&#39; all the way down. This is because Metro applications require some form of UAC to exist in order for them to work.</li>
+</ul>
+<p>Finally before installing Sherlock a few tweaks should be made to the operating system configuration so that the automated tests can proceed. Note that for all the following changes there may be group policies in place put there by your local IT service. It may be necessary to talk to the IT people about the settings you want to change and the <a href="http://www.brianbondy.com/blog/id/100/">reason</a> you need to change those settings.</p>
+<ul>
+<li><strong>Interactive user:</strong> If you need to run interactive tests, e.g. UI tests, then you need to make sure a user is logged in. Use <a href="http://technet.microsoft.com/en-us/sysinternals/bb963905.aspx">Autologon</a> to automatically log your user in when the computer starts while still maintaining password security.</li>
+<li><strong>Windows 8 switch to desktop:</strong> If you are on Windows 8 you need to make sure that the desktop is <a href="http://www.7tutorials.com/how-boot-desktop-windows-8-skip-start-screen">available</a> for interactive applications to execute on.</li>
+<li><strong>Screen saver:</strong> In order to prevent any interactive tests from failing due to a <a href="http://windows.microsoft.com/en-nz/windows-vista/turn-your-screen-saver-on-or-off">screensaver</a> or the <a href="http://answers.microsoft.com/en-us/windows/forum/windows_7-security/disable-automatic-lock-with-windows-7/daef8f0a-810f-46e8-9420-3c32c4bd6479">automatic locking of the desktop</a> both those features need to be turned off. </li>
+<li><strong>Windows error reporting:</strong> Any tests that run on the desktop may hang eternally if the application under tests fails and displays the Windows Error Reporting (WER) dialog. In order to prevent this from happening <a href="http://4sysops.com/archives/how-to-disable-windows-error-reporting/">WER should be disabled</a>. The most efficient way of doing this is to use the group policy controls to disable the following elements:<ul>
+<li>In <code>Computer Configuration\Administrative Templates\System\Internet Communication Management\Internet Communication settings</code> enable the setting: <code>Turn off Windows Error Reporting</code>.</li>
+<li>In <code>Computer Configuration\Administrative Templates\Windows Components\Windows Error Reporting</code> enable the settings <code>Disable Windows error reporting</code> and <code>Prevent display of the user interface for critical errors</code>, and disable the setting <code>Display error notification</code>.</li>
+</ul>
+</li>
+<li><strong>Automatic updates:</strong> Automatic updates can be disabled because they will never be deployed due to the fact that the machine is reset after each test.</li>
+</ul>
+<h3 id="configuring-sherlock">Configuring Sherlock</h3>
+<p>Once the operating system is configured <a href="https://github.com/pvandervelde/Sherlock/releases">Sherlock</a> can be installed and configured. </p>
+<ul>
+<li>Unzip the <strong>service.zip</strong> package into the <code>c:\sherlock</code> directory.</li>
+<li>Copy the XML file containing the public key used to sign the manifests to the virtual machine and place it in the <code>c:\sherlock</code> directory.</li>
+<li>Open the configuration file (<code>Sherlock.Service.exe.config</code>) and update the following settings:<ul>
+<li><strong>ApplicationName:</strong> The name of the application for which updates should be tracked, in this case that is: <code>Sherlock.Service.Executor.exe</code>.</li>
+<li><strong>UpdateManifestUri:</strong> The URL of the manifest file, in this case: <code>http:\\myhostmachine\appupdate\executorservice.manifest</code></li>
+<li><strong>ManifestPublicKeyFile:</strong> The path to the XML file containing the public key section of the manifest signing key, e.g. <code>C:\sherlock\manifestsigningkey.public.xml</code></li>
+</ul>
+</li>
+<li>Set the update service to start automatically when the computer starts. This can be done as an actual service (in case no interactive tests will be executed) or by automatically starting the application when the user logs on to windows (in case interactive tests need to be executed).</li>
+<li>The last step is to let the executor controller through the firewall. For this create an inbound rule that allows <code>c:\ProgramData\Sherlock\Sherlock.Service.Executor\{VERSION}\Sherlock.Service.Executor.exe</code> to connect to all types of protocols. Normally only Domain and private networks should be sufficient.</li>
+</ul>
+<h3 id="testing">Testing</h3>
+<p>Once the operating system and Sherlock have been configured it is sensible to test the configurations to make sure it all works. In order to do this take the following steps:</p>
+<ul>
+<li>Restart the virtual machine. Once the machine starts up it should (depending on your configuration)<ul>
+<li>Automatically log on the test user</li>
+<li>On windows 8 switch to the desktop</li>
+<li>Start the Sherlock update service. The service should download the latest version of the executor controller and start it. You can verify this by looking at the logs which can be found in <code>c:\programdata\sherlock\sherlock.service\{VERSION}\logs</code> and <code>c:\programdata\sherlock\sherlock.service.executor\{VERSION}\logs</code> for the update service and the executor controller respectively.</li>
+</ul>
+</li>
+<li>After both applications have started stop them both by stopping the update service (<code>Sherlock.Service</code>).</li>
+<li>Once the applications have been stopped remove the data from the directory <code>c:\ProgramData\Sherlock</code>.</li>
+<li>Shut down the machine.</li>
+<li>Take a <a href="http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/16/managing-snapshots-with-hyper-v.aspx">snapshot</a> of the current state of the virtual machine and give it a sensible name.</li>
+</ul>
+<h3 id="host-configuration">Host configuration</h3>
+<p>Finally the last step in the configuration of a new test environment is to register the environment with Sherlock through the management website.</p>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -410,6 +513,48 @@ After recovering from the jitters for a bit I had a second attempt at top landin
     <div id="post-header">
         <h2>
             
+                <a href='/posts/2013-12-04_Nuclei-Release-V0700.html'>Nuclei release - V0.7.0.0</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Wednesday, December 04, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/Nuclei.html">Nuclei</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.0.0">V0.7.0.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release adds support for grouping timing results based on their logical area.</p>
+<pre class="highlighted"><code class="cs"><span class="keyword">var</span> group1 = <span class="keyword">new</span> TimingGroup(); 
+<span class="keyword">using</span> (Profiler.Measure(group1, <span class="string">"My first timing group"</span>))
+{
+    <span class="keyword">var</span> group2 = <span class="keyword">new</span> TimingGroup();
+    <span class="keyword">using</span> (Profiler.Measure(
+        group2, 
+        <span class="string">"This timing is not a child of the first one"</span>))
+    {
+        <span class="comment">// Do stuff here ...</span>
+    }
+
+    <span class="keyword">using</span> (Profiler.Measure(
+        group1, 
+        <span class="string">"This timing is a child of the first one"</span>))
+    {
+        <span class="comment">// Do stuff here ...</span>
+    }
+}</code></pre>
+ 
+    </div>
+</div>
+    </div>
+
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
                 <a href='/posts/2013-12-04_Regression-testing-with-Sherlock.html'>Regression testing with Sherlock</a>
             
         </h2>
@@ -472,54 +617,12 @@ After recovering from the jitters for a bit I had a second attempt at top landin
 <p>The next following posts will describe:</p>
 <ol>
 <li><a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">How to set up the Hyper-V host machine.</a></li>
-<li>How to prepare a virtual machine for use as a testing environment.</li>
+<li><a href="/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html">How to prepare a virtual machine for use as a testing environment.</a></li>
 <li>How to verify that all the environments have been configured correctly.</li>
 <li>How to integrate with a build server. This will discuss build jobs, build scripts and test configuration.</li>
 <li>A description on how I used Sherlock to perform integration tests on the console application of Apollo.</li>
-<li>And a description on how I used Sherlock to perform integration tests on a WPF application of Apollo.</li>
+<li>And a description on how I used Sherlock to perform integration tests on a WPF application of <a href="/projects/apollo.html">Apollo</a>.</li>
 </ol>
- 
-    </div>
-</div>
-    </div>
-
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-12-04_Nuclei-Release-V0700.html'>Nuclei release - V0.7.0.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, December 04, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/Nuclei.html">Nuclei</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.0.0">V0.7.0.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release adds support for grouping timing results based on their logical area.</p>
-<pre class="highlighted"><code class="cs"><span class="keyword">var</span> group1 = <span class="keyword">new</span> TimingGroup(); 
-<span class="keyword">using</span> (Profiler.Measure(group1, <span class="string">"My first timing group"</span>))
-{
-    <span class="keyword">var</span> group2 = <span class="keyword">new</span> TimingGroup();
-    <span class="keyword">using</span> (Profiler.Measure(
-        group2, 
-        <span class="string">"This timing is not a child of the first one"</span>))
-    {
-        <span class="comment">// Do stuff here ...</span>
-    }
-
-    <span class="keyword">using</span> (Profiler.Measure(
-        group1, 
-        <span class="string">"This timing is a child of the first one"</span>))
-    {
-        <span class="comment">// Do stuff here ...</span>
-    }
-}</code></pre>
  
     </div>
 </div>
@@ -621,30 +724,6 @@ After recovering from the jitters for a bit I had a second attempt at top landin
     <div id="post-header">
         <h2>
             
-                <a href='/posts/2013-11-13_NAdoni-Release-V0210.html'>nAdoni release - V0.2.1.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, November 13, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/nAdoni.html">nAdoni</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>In my haste to release the new <a href="2013-11-13_NAdoni-Release-V0200.html">KeyGenerator</a> functionality I completely forgot to add the packaging of said KeyGenerator. Hence I hereby present Version <a href="https://github.com/pvandervelde/nAdoni/releases/tag/V0.2.1.0">V0.2.1.0</a> of the <a href="/projects/nadoni.html">nAdoni</a> update manifest builder project which adds the ZIP archive containing the <code>nAdoni.KeyGenerator</code> console application.</p>
- 
-    </div>
-</div>
-    </div>
-
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
                 <a href='/posts/2013-11-13_NAdoni-Release-V0200.html'>nAdoni release - V0.2.0.0</a>
             
         </h2>
@@ -659,6 +738,30 @@ After recovering from the jitters for a bit I had a second attempt at top landin
     </div>
     <div id="post-content">
         <p>Version <a href="https://github.com/pvandervelde/nAdoni/releases/tag/V0.2.0.0">V0.2.0.0</a> of the <a href="/projects/nadoni.html">nAdoni</a> update manifest builder project has been released. This release adds the <code>nAdoni.KeyGenerator</code> console application to the project. This application can be used to generate the RSA key files which are necessary in order to build the manifest files.</p>
+ 
+    </div>
+</div>
+    </div>
+
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-11-13_NAdoni-Release-V0210.html'>nAdoni release - V0.2.1.0</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Wednesday, November 13, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/nAdoni.html">nAdoni</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>In my haste to release the new <a href="2013-11-13_NAdoni-Release-V0200.html">KeyGenerator</a> functionality I completely forgot to add the packaging of said KeyGenerator. Hence I hereby present Version <a href="https://github.com/pvandervelde/nAdoni/releases/tag/V0.2.1.0">V0.2.1.0</a> of the <a href="/projects/nadoni.html">nAdoni</a> update manifest builder project which adds the ZIP archive containing the <code>nAdoni.KeyGenerator</code> console application.</p>
  
     </div>
 </div>
@@ -841,34 +944,6 @@ It took me several attempts at getting the sideways launch right but in the end 
     <div id="post-header">
         <h2>
             
-                <a href='/posts/2013-10-23_Sherlock-Release-V0450.html'>Sherlock release - V0.4.5.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, October 23, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/Sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.5.0">V0.4.5.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides one improvement and one bug fix:</p>
-<ul>
-<li>The test report can now include files generated during the test (<a href="https://github.com/pvandervelde/Sherlock/issues/5">issue #5</a>)</li>
-<li>Sherlock.Service no longer includes a manifest signing key, instead the key is obtained via a configuration setting (<a href="https://github.com/pvandervelde/Sherlock/issues/8">issue #8</a>)</li>
-</ul>
- 
-    </div>
-</div>
-    </div>
-
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
                 <a href='/posts/2013-10-23_Nuclei-Release-V0670.html'>Nuclei release - V0.6.7.0</a>
             
         </h2>
@@ -899,6 +974,34 @@ It took me several attempts at getting the sideways launch right but in the end 
         <span class="keyword">return</span> secondTask
     }
 }</code></pre>
+ 
+    </div>
+</div>
+    </div>
+
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-10-23_Sherlock-Release-V0450.html'>Sherlock release - V0.4.5.0</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Wednesday, October 23, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/Sherlock.html">Sherlock</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.5.0">V0.4.5.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides one improvement and one bug fix:</p>
+<ul>
+<li>The test report can now include files generated during the test (<a href="https://github.com/pvandervelde/Sherlock/issues/5">issue #5</a>)</li>
+<li>Sherlock.Service no longer includes a manifest signing key, instead the key is obtained via a configuration setting (<a href="https://github.com/pvandervelde/Sherlock/issues/8">issue #8</a>)</li>
+</ul>
  
     </div>
 </div>
@@ -1404,7 +1507,7 @@ development I did for my PhD.</li>
             Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design 
             by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>. Feed icon by <a href="http://www.icojam.com/">Icojam</a>.
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Tuesday, December 10, 2013.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Wednesday, December 11, 2013.</p>
     </div>
 
     <!-- jQuery -->
