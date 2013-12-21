@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>Mind Vortex</title>
+    <title>PG2 - Top landings? | Mind Vortex</title>
     <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, Fluid dynamics, CFD, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
@@ -175,50 +175,89 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
             </div>
         </div>
         <div id="content">
-            <div id="posts">
-    <h3 id="post-tags-header">Posts tagged with: Writing</h3>
-    
-        <div id="post-spacer">
-            <div id="post">
+            <!--
+    Commenting is based on: http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html
+-->
+<div id="post">
+    <div id="post">
     <div id="post-header">
         <h2>
             
-                <a href='/posts/2013-08-30_Why-this-blog-was-created.html'>Why this blog was created</a>
+                PG2 - Top landings?
             
         </h2>
         <div id="post-meta">
             <p>
-                Friday, August 30, 2013 | Posted in
+                Thursday, December 05, 2013 | Posted in
                 
-                    <a id="post-category" href="/tags/Blog.html">Blog</a>
+                    <a id="post-category" href="/tags/Paragliding.html">Paragliding</a>
                 
-                    <a id="post-category" href="/tags/Writing.html">Writing</a>
+                    <a id="post-category" href="/tags/PG2.html">PG2</a>
                 
             </p>
         </div>
     </div>
     <div id="post-content">
-        <p>A couple of years ago I had a blog on Blogger but that never got further than a few posts, mainly because I ran out of interesting topics to write about. That
-and my <a href="/about.html">studies</a> started interfering with life in general ... it seems research does that to ones life. In any case the old blog stalled and no
-more posts were written.</p>
-<p>Recently I have been wanting to improve my writing skills, you see, as software engineer I&#39;m reasonably good at writing instructions for a three year
-old, eh I mean a computer, but I am not particularly good at writing concise human-friendly text. I have written two dissertations, one for my master degree
-and one for my PhD, but neither of those qualify as either concise or human-friendly.</p>
-<p>Given that the only way to get better at writing is to practise, practise and practise some more, I thought writing posts about things that interest me
-would be a good way to improve my writing skills. And on top of that it may help me improve my skills in explaining technical constructs as well. Double win.</p>
-<p>The only thing left to answer is what shall I be writing about. Well obviously those things that interest me, mostly being:</p>
-<ul>
-<li>My open source <a href="/projects.html">projects</a>. All of them could do with some additional documentation and maybe even some examples. I guess having a 
-blog is just an additional reason to finally write those</li>
-<li>All the (exciting) things I get up to when rock climbing or paragliding.</li>
-<li>And if things progress nicely I might write some articles describing some work I am doing at the moment that is a continuation of the software
-development I did for my PhD.</li>
-</ul>
+        <p>Two weeks ago the weather was once again favourable to learn more new skills on my way to my <a href="/tags/PG2.html">PG2 license</a>. When we arrived at Maioro the wind was just enough to soar. Given that the forecast has indicated an increase in wind strength over the afternoon we decided to practise some ground handling first. After about an hour of practising reverse launches and keeping the glider stable above our heads it was time to fly. The wind was still a bit light but with a lot of scratching I still managed to get 40 - 45 minutes of flying in on my first flight, my longest flight until then.</p>
+<p>As the afternoon progressed the wind strength slowly increased and staying up became easier which resulted in another 45 minute flight.</p>
+<p>Later in the afternoon the instructor told me it was possible to get a set of short flights with some top landings in. For my first try I launched, gained some height and then turned in for the top landing and completely stuffed it up. As I started moving over to the landing spot everything accelerated and I tried to slow down and turn at the same time, which meant I was not actually doing either of those things so when I got close to the ground I was still moving at a decent speed and hence I face planted. Fortunately there was no actual damage to either me or the glider.
+After recovering from the jitters for a bit I had a second attempt at top landing which took a lot longer to set up and decent but ended in a perfect touch down. The conclusion of all of this is that I need to focus more on flying the glider till the last minute, stay in the harness to maintain the weight shift and focus on the direction of flight more. Oh so much more to learn. </p>
+<p>The fifth and final flight of the day was flying back to the car park which was quite easy as I only had to fly along the ridges to maintain more than enough height to get to the car park.</p>
  
     </div>
 </div>
+    <div id="post-footer">
+        <div>
+            <div class="navlinks">
+  <a href="/posts/2013-12-04_Regression-testing-with-Sherlock.html" title="Previous Post: Regression testing with Sherlock" class="navlinks-prev">&laquo; Regression testing with Sherlock</a>
+  <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html" title="Next Post: Sherlock configuration - Server side" class="navlinks-next">Sherlock configuration - Server side &raquo;</a>
+</div>
         </div>
+    </div>
     
+    <script type="text/javascript" src="http://datejs.googlecode.com/svn/trunk/build/date-en-US.js"></script>
+
+    <script type="text/javascript">
+      $("#post p").each( function(index) {
+        if (index > 0 && $.trim($(this).text()).length > 0) {
+          $(this).attr("id", "par" + index.toString());
+          var html = $(this).html();
+          $(this).html(html + " <a href='#par" + index.toString() + "'>#</a>");
+        }
+      });
+    </script>
+    
+    <div id="post-comments">
+        <h3>Comments</h3>
+        <div id="post-comment-header">
+            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/27"> this post's issue page on 
+            GitHub</a> (you'll need a GitHub account).
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+
+      function loadComments(data) {
+        for (var i=0; i<data.length; i++) {
+          var cuser = data[i].user.login;
+          var cuserlink = "https://www.github.com/" + data[i].user.login;
+          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/27#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
+          var cbody = data[i].body_html;
+          var cavatarlink = data[i].user.avatar_url;
+          var cdate = Date.parse(data[i].created_at).toString("yyyy-MM-dd HH:mm:ss");
+
+          $("#post-comments").append("<div id='post-comment'><div id='post-comment-header'><div id='post-comment-gravatar'>" + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + "</div><a id='post-comment-user' href=\""+ cuserlink + "\">" + cuser + "</a><a id='post-comment-date' href=\"" + clink + "\">" + cdate + "</a></div><div id='post-comment-body'>" + cbody + "</div></div>");
+        }
+      }
+
+      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/27/comments", {
+        headers: {Accept: "application/vnd.github.full+json"},
+        dataType: "json",
+        success: function(msg){
+          loadComments(msg);
+       }
+      });
+    </script>
 </div>
         </div>
     </div>

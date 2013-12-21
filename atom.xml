@@ -3,7 +3,7 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2013-12-04T06:31:49.470Z</updated>
+    <updated>2013-12-21T06:10:24.836Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
@@ -12,12 +12,306 @@
 
     
         <entry>
+            <title>Nuclei release - V0.7.1.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-12-21_Nuclei-Release-V0710.html"/>
+            <updated>2013-12-21T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-12-21_Nuclei-Release-V0710.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.1.0&quot;&gt;V0.7.1.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release fixes issue &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/issues/9&quot;&gt;#9&lt;/a&gt;.&lt;/p&gt;
+</content>
+        </entry>
+    
+        <entry>
+            <title>Sherlock configuration - Virtual machines</title>
+            <link href="http://pvandervelde.github.io/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html"/>
+            <updated>2013-12-11T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html</id>
+            <content type="html">&lt;p&gt;After &lt;a href=&quot;/posts/2013-12-10_Setting-up-Sherlock-serverside.html&quot;&gt;setting up the host machine&lt;/a&gt; the next step in the &lt;a href=&quot;/posts/2013-12-04_Regression-testing-with-Sherlock.html&quot;&gt;configuration&lt;/a&gt; of Sherlock is to set up one or more virtual machines. Each virtual machine will have the following applications installed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The update service which handles the installation of the latest available Sherlock binaries. &lt;/li&gt;
+&lt;li&gt;The executor service which handles the communication with the master controller, handles the download and upload of test files and test reports and controls the test execution. &lt;/li&gt;
+&lt;li&gt;The application which executes the test steps. This has been separated from the service so that: &lt;ul&gt;
+&lt;li&gt;It is possible to run the application on the desktop while the executor service is running as a Windows service.&lt;/li&gt;
+&lt;li&gt;Any fatal errors in the test application don&amp;#39;t affect the service, thereby maintaining communication with the master controller, and thus allowing error reports to be send.&lt;/li&gt;
+&lt;li&gt;It is possible to run multiple applications under different accounts (planned in future releases).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The configuration process for a virtual machine consists of the following steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Create a new virtual machine and install the operating system&lt;/li&gt;
+&lt;li&gt;Configure the operating system on the virtual machine&lt;/li&gt;
+&lt;li&gt;Install and configure the Sherlock applications on the virtual machine&lt;/li&gt;
+&lt;li&gt;Store information about the virtual machine in the host database&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;preparing-the-virtual-machine&quot;&gt;Preparing the virtual machine&lt;/h3&gt;
+&lt;p&gt;The first step is to create a &lt;a href=&quot;http://technet.microsoft.com/en-us/library/cc772480.aspx&quot;&gt;new virtual machine&lt;/a&gt; and install the operating system. This should be straight forward but there a few things to look out for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The operating system must (currently) support &lt;a href=&quot;http://en.wikipedia.org/wiki/.NET_Framework_version_history#.NET_Framework_4.5&quot;&gt;.NET 4.5&lt;/a&gt; because that is what Sherlock is needs to run on.&lt;/li&gt;
+&lt;li&gt;The network for the virtual machine must be set up so that it can at the very least see the host machine and the other virtual machines stored on the same host machine.&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Note:&lt;/strong&gt; Windows networks can &lt;a href=&quot;http://www.petri.co.il/working-with-domain-member-virtual-machines-and-snapshots.htm&quot;&gt;deny access&lt;/a&gt; to the test virtual machines after being used for a while (usually 30 days) due to the fact that the test machine is reset after each test, thereby not allowing it to handle the renewal of network identification keys correctly.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;preparing-the-operating-system&quot;&gt;Preparing the operating system&lt;/h3&gt;
+&lt;p&gt;After the creation of the virtual machine and the installation of the operating system it is necessary to configure the operating system. Some of the changes are necessary for Sherlock to function while others are necessary only from a test perspective.&lt;/p&gt;
+&lt;p&gt;Lets first start with the changes required for Sherlock to function. &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;If .NET 4.5 is not already installed, then install it. Without it Sherlock won&amp;#39;t run at all.&lt;/li&gt;
+&lt;li&gt;Create a new user that will be used to execute the tests. This user needs to be an administrator so that the execution of an MSI install can succeed without the need for elevation (which is &lt;a href=&quot;http://stackoverflow.com/questions/5098121/how-can-i-get-elevated-permissions-uac-via-impersonation-under-a-non-interacti&quot;&gt;a bit tricky&lt;/a&gt; from an application). The user can be either a machine local administrator or a domain user  which is granted administration rights on the machine.&lt;ul&gt;
+&lt;li&gt;Note that there might a difference between a domain user with administrative rights on the computer and a local administrator. If you turn UAC off then in general a local administrator is running all applications elevated while the applications started by the domain user run with no elevation only to be silently elevated if requested to do so. Unfortunately this means that the domain user will not be able to run a silent install from a command line unless that command line is explicitly elevated (which is not possible from an application).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Disable User Access Control (UAC) so that Sherlock can execute MSI installations. &lt;strong&gt;Note:&lt;/strong&gt; In some cases corporate network controls and/or group policies override local settings. In those cases talk to the local IT people regarding UAC. Also note that on Windows 8 it is not possible to turn off the UAC by moving the &amp;#39;UAC slider&amp;#39; all the way down. This is because Metro applications require some form of UAC to exist in order for them to work.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Finally before installing Sherlock a few tweaks should be made to the operating system configuration so that the automated tests can proceed. Note that for all the following changes there may be group policies in place put there by your local IT service. It may be necessary to talk to the IT people about the settings you want to change and the &lt;a href=&quot;http://www.brianbondy.com/blog/id/100/&quot;&gt;reason&lt;/a&gt; you need to change those settings.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Interactive user:&lt;/strong&gt; If you need to run interactive tests, e.g. UI tests, then you need to make sure a user is logged in. Use &lt;a href=&quot;http://technet.microsoft.com/en-us/sysinternals/bb963905.aspx&quot;&gt;Autologon&lt;/a&gt; to automatically log your user in when the computer starts while still maintaining password security.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Windows 8 switch to desktop:&lt;/strong&gt; If you are on Windows 8 you need to make sure that the desktop is &lt;a href=&quot;http://www.7tutorials.com/how-boot-desktop-windows-8-skip-start-screen&quot;&gt;available&lt;/a&gt; for interactive applications to execute on.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Screen saver:&lt;/strong&gt; In order to prevent any interactive tests from failing due to a &lt;a href=&quot;http://windows.microsoft.com/en-nz/windows-vista/turn-your-screen-saver-on-or-off&quot;&gt;screensaver&lt;/a&gt; or the &lt;a href=&quot;http://answers.microsoft.com/en-us/windows/forum/windows_7-security/disable-automatic-lock-with-windows-7/daef8f0a-810f-46e8-9420-3c32c4bd6479&quot;&gt;automatic locking of the desktop&lt;/a&gt; both those features need to be turned off. &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Windows error reporting:&lt;/strong&gt; Any tests that run on the desktop may hang eternally if the application under tests fails and displays the Windows Error Reporting (WER) dialog. In order to prevent this from happening &lt;a href=&quot;http://4sysops.com/archives/how-to-disable-windows-error-reporting/&quot;&gt;WER should be disabled&lt;/a&gt;. The most efficient way of doing this is to use the group policy controls to disable the following elements:&lt;ul&gt;
+&lt;li&gt;In &lt;code&gt;Computer Configuration\Administrative Templates\System\Internet Communication Management\Internet Communication settings&lt;/code&gt; enable the setting: &lt;code&gt;Turn off Windows Error Reporting&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;In &lt;code&gt;Computer Configuration\Administrative Templates\Windows Components\Windows Error Reporting&lt;/code&gt; enable the settings &lt;code&gt;Disable Windows error reporting&lt;/code&gt; and &lt;code&gt;Prevent display of the user interface for critical errors&lt;/code&gt;, and disable the setting &lt;code&gt;Display error notification&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automatic updates:&lt;/strong&gt; Automatic updates can be disabled because they will never be deployed due to the fact that the machine is reset after each test.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;configuring-sherlock&quot;&gt;Configuring Sherlock&lt;/h3&gt;
+&lt;p&gt;Once the operating system is configured &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases&quot;&gt;Sherlock&lt;/a&gt; can be installed and configured. &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Unzip the &lt;strong&gt;service.zip&lt;/strong&gt; package into the &lt;code&gt;c:\sherlock&lt;/code&gt; directory.&lt;/li&gt;
+&lt;li&gt;Copy the XML file containing the public key used to sign the manifests to the virtual machine and place it in the &lt;code&gt;c:\sherlock&lt;/code&gt; directory.&lt;/li&gt;
+&lt;li&gt;Open the configuration file (&lt;code&gt;Sherlock.Service.exe.config&lt;/code&gt;) and update the following settings:&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ApplicationName:&lt;/strong&gt; The name of the application for which updates should be tracked, in this case that is: &lt;code&gt;Sherlock.Service.Executor.exe&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;UpdateManifestUri:&lt;/strong&gt; The URL of the manifest file, in this case: &lt;code&gt;http:\\myhostmachine\appupdate\executorservice.manifest&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ManifestPublicKeyFile:&lt;/strong&gt; The path to the XML file containing the public key section of the manifest signing key, e.g. &lt;code&gt;C:\sherlock\manifestsigningkey.public.xml&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Set the update service to start automatically when the computer starts. This can be done as an actual service (in case no interactive tests will be executed) or by automatically starting the application when the user logs on to windows (in case interactive tests need to be executed).&lt;/li&gt;
+&lt;li&gt;The last step is to let the executor controller through the firewall. For this create an inbound rule that allows &lt;code&gt;c:\ProgramData\Sherlock\Sherlock.Service.Executor\{VERSION}\Sherlock.Service.Executor.exe&lt;/code&gt; to connect to all types of protocols. Normally only Domain and private networks should be sufficient.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;testing&quot;&gt;Testing&lt;/h3&gt;
+&lt;p&gt;Once the operating system and Sherlock have been configured it is sensible to test the configurations to make sure it all works. In order to do this take the following steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Restart the virtual machine. Once the machine starts up it should (depending on your configuration)&lt;ul&gt;
+&lt;li&gt;Automatically log on the test user&lt;/li&gt;
+&lt;li&gt;On windows 8 switch to the desktop&lt;/li&gt;
+&lt;li&gt;Start the Sherlock update service. The service should download the latest version of the executor controller and start it. You can verify this by looking at the logs which can be found in &lt;code&gt;c:\programdata\sherlock\sherlock.service\{VERSION}\logs&lt;/code&gt; and &lt;code&gt;c:\programdata\sherlock\sherlock.service.executor\{VERSION}\logs&lt;/code&gt; for the update service and the executor controller respectively.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;After both applications have started stop them both by stopping the update service (&lt;code&gt;Sherlock.Service&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Once the applications have been stopped remove the data from the directory &lt;code&gt;c:\ProgramData\Sherlock&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Shut down the machine.&lt;/li&gt;
+&lt;li&gt;Take a &lt;a href=&quot;http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/16/managing-snapshots-with-hyper-v.aspx&quot;&gt;snapshot&lt;/a&gt; of the current state of the virtual machine and give it a sensible name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;host-configuration&quot;&gt;Host configuration&lt;/h3&gt;
+&lt;p&gt;Finally the last step in the configuration of a new test environment is to register the environment with Sherlock through the management website.&lt;/p&gt;
+</content>
+        </entry>
+    
+        <entry>
+            <title>Sherlock configuration - Server side</title>
+            <link href="http://pvandervelde.github.io/posts/2013-12-10_Setting-up-Sherlock-serverside.html"/>
+            <updated>2013-12-10T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-12-10_Setting-up-Sherlock-serverside.html</id>
+            <content type="html">&lt;p&gt;In this post I will explain how to configure the &lt;a href=&quot;https://github.com/pvandervelde/Sherlock&quot;&gt;Sherlock&lt;/a&gt; host services, which handle test registration and selection and control of the test environments for a test. The set-up follows the following steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Preparing the host machine which includes installation of the OS and the required services.&lt;/li&gt;
+&lt;li&gt;Installation of database.&lt;/li&gt;
+&lt;li&gt;Installation of the web parts.&lt;/li&gt;
+&lt;li&gt;Creation of the update files and the update manifests.&lt;/li&gt;
+&lt;li&gt;Installation of the services.&lt;/li&gt;
+&lt;li&gt;Configuration of the firewall.&lt;/li&gt;
+&lt;li&gt;Verification of the configuration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;preparing-the-host-machine&quot;&gt;Preparing the host machine&lt;/h3&gt;
+&lt;p&gt;The first step in the configuration of the host services is to prepare the machine from which the Hyper-V service will be running. Note that Sherlock does not require that all services run on this machine but for the purposes of this post I will assume that this is the case. The configuration of the host machine consists of:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Install the host operating system on the machine. Both the machine and the operating system need to &lt;a href=&quot;http://en.wikipedia.org/wiki/Hyper-V#System_requirements_and_specifications&quot;&gt;support Hyper-V&lt;/a&gt;. On top of that for the very least the master controller service has to be installed on the host machine, which means it is not possible to install the core Hyper-V version of Windows.&lt;/li&gt;
+&lt;li&gt;Create or associate a user which you will use to run the Sherlock services. It is strongly recommended to not run the Sherlock services as local administrator for security reasons. It is more suitable to provide a separate user to run the services. Note that this user will need permissions to run services, but doesn&amp;#39;t need installation permissions etc. For the remainder of this post lets call this user the &lt;em&gt;SherlockUser&lt;/em&gt;. &lt;em&gt;Note:&lt;/em&gt; If you have a specific user that is used for your build server then it makes sense to use that user, although that is not required.&lt;/li&gt;
+&lt;li&gt;Install the &lt;a href=&quot;http://technet.microsoft.com/en-us/library/hh846766.aspx&quot;&gt;Hyper-V role&lt;/a&gt; on the host machine.&lt;/li&gt;
+&lt;li&gt;Grant the &lt;em&gt;SherlockUser&lt;/em&gt; &lt;a href=&quot;http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/17/allowing-non-administrators-to-control-hyper-v.aspx&quot;&gt;permissions&lt;/a&gt; to start, stop and reset Hyper-V virtual machines.&lt;/li&gt;
+&lt;li&gt;Install the &lt;a href=&quot;http://www.iis.net/learn/get-started/whats-new-in-iis-8/installing-iis-8-on-windows-server-2012&quot;&gt;IIS role&lt;/a&gt; on the host machine. &lt;em&gt;Note:&lt;/em&gt; that in theory (i.e. this has not been tested) IIS can be installed on a different machine than the host machine as long as it will be able to reach the database. The IIS install will need to have the following parts installed as a minimum:&lt;ul&gt;
+&lt;li&gt;ASP .NET 4.5&lt;/li&gt;
+&lt;li&gt;Basic authentication&lt;/li&gt;
+&lt;li&gt;Windows Authentication&lt;/li&gt;
+&lt;li&gt;Management tools&lt;/li&gt;
+&lt;li&gt;Http logging and tracing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Install &lt;a href=&quot;http://www.microsoft.com/web/platform/database.aspx&quot;&gt;MSSQL Express 2012&lt;/a&gt; on the host machine. &lt;em&gt;Note:&lt;/em&gt; As with IIS it is again possible to install the database on any machine as long as both IIS and the Hyper-V host can connect to it.&lt;/li&gt;
+&lt;li&gt;Create a directory that will hold all the files related to Sherlock, e.g. &lt;code&gt;c:\testing&lt;/code&gt;. In that directory create the following sub-directories:&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;appupdate&lt;/code&gt; - Contains the application update files and manifests.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;console&lt;/code&gt; - Contains the binary files for the console application which is used by the user to register a test.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;service&lt;/code&gt; - Contains the binaries for the windows service that will run the controller application.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;web.api&lt;/code&gt; - Contains the binaries for the web service that interacts with the database on test registration.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;web.intranet&lt;/code&gt; - Contains the binaries for the management web site.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;reports&lt;/code&gt; - The location where tests can place their generated reports. Note that Sherlock allows placing test reports in any location as long as the service has access to that directory.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;temp&lt;/code&gt; - The temporary directory used for report generation etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Share the &lt;code&gt;reports&lt;/code&gt; and &lt;code&gt;console&lt;/code&gt; directories so that they can be accessed over the network. The &lt;code&gt;console&lt;/code&gt; directory will only need read access, the &lt;code&gt;reports&lt;/code&gt; directory will need read and write access.&lt;/li&gt;
+&lt;li&gt;Install the &lt;a href=&quot;https://github.com/pvandervelde/nAdoni&quot;&gt;nAdoni&lt;/a&gt; manifest signing tool. This application will be used sign the update manifest files.&lt;/li&gt;
+&lt;li&gt;Generate the update keys by executing the following command line (assuming that you installed nadoni in &lt;code&gt;c:\tools\nadoni&lt;/code&gt;):&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;dos&quot;&gt;c:\tools\nadoni\keygenerator\nadoni.keygenerator.exe --private=&amp;lt;PATH_TO_PRIVATE_KEY_FILE&amp;gt; --public=&amp;lt;PATH_TO_PUBLIC_KEY_FILE&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Where &lt;code&gt;&amp;lt;PATH_TO_PRIVATE_KEY_FILE&amp;gt;&lt;/code&gt; points to the XML file that will contain the private and public parts of the manifest signing key and &lt;code&gt;&amp;lt;PATH_TO_PUBLIC_KEY_FILE&amp;gt;&lt;/code&gt; points to the XML file that will contain the public part of the manifest signing key. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;database&quot;&gt;Database&lt;/h3&gt;
+&lt;p&gt;The second step in the installation process is to create the Sherlock database.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Unpack the &lt;em&gt;sql.zip&lt;/em&gt; file that is part of the &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases&quot;&gt;Sherlock release&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Create database called &lt;code&gt;Sherlock&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Apply all the SQL scripts from the &lt;em&gt;sql.zip&lt;/em&gt; file, starting at the V1 script through to the latest upgrade script &lt;em&gt;Sherlock_Upgrade_Vm_To_Vn.sql&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Provide permissions for the user that will be connecting to the database. You can either use the &lt;em&gt;SherlockUser&lt;/em&gt; or you can create an SQL user. Grant this user the following access:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;db_datareader&lt;/li&gt;
+&lt;li&gt;db_datawriter&lt;/li&gt;
+&lt;li&gt;Grant access to stored procedures. This can be done via: &lt;code&gt;GRANT EXEC TO &amp;lt;STORED_PROCEDURE_NAME&amp;gt; TO &amp;lt;SQL_USER&amp;gt;&lt;/code&gt;. Given that Sherlock only accesses the database through stored procedures, there is no direct table access, there are quite a few stored procedures which means it makes sense to create a script in order to grant access to the stored procedures. The following SQL script can be used to generate an access script for the user:&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;operator&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;SELECT&lt;/span&gt;  &lt;span class=&quot;string&quot;&gt;'GRANT EXEC ON '&lt;/span&gt;+ SCHEMA_NAME(schema_id) + &lt;span class=&quot;string&quot;&gt;'.'&lt;/span&gt; + name + &lt;span class=&quot;string&quot;&gt;' TO &amp;lt;SQL_USER&amp;gt;'&lt;/span&gt;
+&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; sys.procedures
+&lt;span class=&quot;keyword&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Set-up a back up for the Sherlock database. &lt;em&gt;Note:&lt;/em&gt; The test data is only useful to Sherlock and then only when tests are either running or haven&amp;#39;t been run yet. In other words there is no useful information for the user describing test results etc.. However the information describing the available test environments should be backed-up.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;iis&quot;&gt;IIS&lt;/h3&gt;
+&lt;p&gt;Step number three for the installation of Sherlock is to configure the web service, web page and the application update location. We&amp;#39;ll start with the application update location:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In IIS Manager create a new virtual directory under the default web site using the following settings &lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Alias:&lt;/strong&gt; AppUpdate&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Path:&lt;/strong&gt; &lt;code&gt;c:\testing\appupdate&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Connect as:&lt;/strong&gt; &lt;em&gt;SherlockUser&lt;/em&gt;. Make sure the &lt;em&gt;SherlockUser&lt;/em&gt; has read permissions for the directory.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Allow directory browsing through the &lt;em&gt;IIS -&amp;gt; Directory Browsing&lt;/em&gt; Feature.&lt;/li&gt;
+&lt;li&gt;Finally test access to this directory via a browser by going to &lt;code&gt;&amp;lt;HOST_ADDRESS&amp;gt;\AppUpdate&lt;/code&gt;. This should display the contents of the directory.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Before configuring the web site and the web service create a new application pool with the following settings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Name:&lt;/strong&gt; SherlockAppPool&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;.NET Framework version:&lt;/strong&gt; V4.0.30319&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Managed pipeline mode:&lt;/strong&gt; Integrated &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The next project to configure is the web site that will be used to manage the testing environments. &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Unzip &lt;strong&gt;Sherlock.Web.Intranet.sql&lt;/strong&gt; to the &lt;code&gt;c:\testing\web.intranet&lt;/code&gt; directory.&lt;/li&gt;
+&lt;li&gt;In IIS Manager create a new application under the default web site using the following settings:&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Alias:&lt;/strong&gt; Sherlock.Intranet&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Application pool:&lt;/strong&gt; SherlockAppPool&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Path:&lt;/strong&gt; &lt;code&gt;c:\testing\web.intranet&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Connect as:&lt;/strong&gt; &lt;em&gt;SherlockUser&lt;/em&gt;. Again make sure that the &lt;em&gt;SherlockUser&lt;/em&gt; has access to the directory containing the web site binaries.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Set the authentication for the web site to be anonymous only.&lt;/li&gt;
+&lt;li&gt;Define the connection string to be as given below:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script src='https://gist.github.com/7866267.js'&gt;&lt;/script&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Remove the following sections from the configuration file&lt;ul&gt;
+&lt;li&gt;System.Web -&amp;gt; Authentication&lt;/li&gt;
+&lt;li&gt;System.Web -&amp;gt; Authorization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The last web project to configure is the web service that will be used to add information about the new tests to the database.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Unzip &lt;strong&gt;Sherlock.Web.Api.zip&lt;/strong&gt; to the &lt;code&gt;c:\testing\web.api&lt;/code&gt; directory.&lt;/li&gt;
+&lt;li&gt;In IIS Manager create a new application under the default web site using the following settings:&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Alias:&lt;/strong&gt; Sherlock.Api&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Application pool:&lt;/strong&gt; SherlockAppPool&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Path:&lt;/strong&gt; &lt;code&gt;c:\testing\web.api&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Connect as:&lt;/strong&gt; &lt;em&gt;SherlockUser&lt;/em&gt;. Again make sure that the &lt;em&gt;SherlockUser&lt;/em&gt; has access to the directory containing the web service binaries.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Define the connection string to be the same as given for the management website.&lt;/li&gt;
+&lt;li&gt;Set the authentication for the web site to be anonymous only. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;update-manifests-and-files&quot;&gt;Update manifests and files&lt;/h3&gt;
+&lt;p&gt;The two main services for Sherlock, the master controller and the executor controller, are not directly installed on either the host machine or the test environments. The Sherlock service probes the &lt;code&gt;AppUpdate&lt;/code&gt; directory for the binaries of these services. This greatly improves the ease with which Sherlock can be upgraded given that an upgrade of Sherlock does not require any changes to the test environments.&lt;/p&gt;
+&lt;p&gt;To create the necessary upgrade files for the Sherlock services it will be necessary to update the configuration file of the master controller which takes the following steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Unzip &lt;strong&gt;Service.Master.zip&lt;/strong&gt; into a temporary directory.&lt;/li&gt;
+&lt;li&gt;Update the configuration file (&lt;code&gt;Sherlock.Service.Master.exe.config&lt;/code&gt;) with the following settings:&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;TestDataDirectory:&lt;/strong&gt; &lt;code&gt;c:\testing\web.api\App_Data&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;TestReportFilesDir:&lt;/strong&gt; &lt;code&gt;c:\testing\temp&lt;/code&gt; &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Define the connection string to be the same as given for the management website. &lt;/li&gt;
+&lt;li&gt;Repackage the binaries into a ZIP archive with the name &lt;strong&gt;Service.Master.zip&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The executor controller does not need any changes to the configuration file and can thus be left untouched.&lt;/p&gt;
+&lt;p&gt;The next step is to create the manifest files that are used by the update service to determine which ZIP archive to use. In order to create the manifests the &lt;a href=&quot;https://github.com/pvandervelde/nAdoni&quot;&gt;nAdoni&lt;/a&gt; application is used. This can be done with the following command lines:&lt;/p&gt;
+&lt;p&gt;For the master controller:&lt;/p&gt;
+&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;dos&quot;&gt;C:\tools\nadoni\manifestbuilder\nAdoni.ManifestBuilder.exe -v=&quot;{VERSION}&quot; -n=&quot;Sherlock.Service.Master.exe&quot; -f=&quot;c:\testing\appupdate\service.master.zip&quot; -u=&quot;http://myhostmachine/appupdate/service.master.zip&quot; -k=&quot;C:\mykeydirectory\manifestsigningkey.private.xml&quot; -o=&quot;c:\testing\appupdate\masterservice.manifest&quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And for the executor controller:&lt;/p&gt;
+&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;dos&quot;&gt;C:\tools\nadoni\manifestbuilder\nAdoni.ManifestBuilder.exe -v=&quot;{VERSION}&quot; -n=&quot;Sherlock.Service.Executor.exe&quot; -f=&quot;c:\testing\appupdate\service.executor.zip&quot; -u=&quot;http://myhostmachine/appupdate/service.executor.zip&quot; -k=&quot;C:\mykeydirectory\manifestsigningkey.private.xml&quot; -o=&quot;c:\testing\appupdate\executorservice.manifest&quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Another way to create the manifest files is through the use of the following Msbuild script: &lt;/p&gt;
+&lt;script src='https://gist.github.com/6521946.js'&gt;&lt;/script&gt;
+
+&lt;p&gt;In this case the following changes must be made to the file:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;${PATH_TO_NADONI_DIRECTORY}$&lt;/code&gt; - The path to the directory in which the nAdoni binaries have been placed.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;${URL_TO_APP_UPDATE}$&lt;/code&gt; - The URL to the &lt;code&gt;AppUpdate&lt;/code&gt; directory, e.g. &lt;code&gt;http://myhostmachine/appupdate&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;${MANIFEST_SIGNING_KEY_PATH}$&lt;/code&gt; - The path to the XML file that contains the private key information.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And the following properties must be specified on the command line:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Version:&lt;/strong&gt; The version of Sherlock for which the manifest files are generated.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;services&quot;&gt;Services&lt;/h3&gt;
+&lt;p&gt;Finally on the host machine two applications need to be configured. These are the console application that will be executed by the user to register a test and the update service that will control the master controller application.&lt;/p&gt;
+&lt;p&gt;To configure the console application take the following steps:  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Unzip the &lt;strong&gt;console.zip&lt;/strong&gt; package into the &lt;code&gt;c:\testing\console&lt;/code&gt; directory.&lt;/li&gt;
+&lt;li&gt;Open the configuration file (&lt;code&gt;Sherlock.Console.exe.config&lt;/code&gt;) and update the following settings:&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;WebServiceUrl:&lt;/strong&gt; Point this to the &lt;em&gt;Sherlock.Api&lt;/em&gt; site, e.g. &lt;code&gt;http://myhostmachine/sherlock.api&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Note that the console needs to be accessed from other machines, e.g.from the build server, so make sure that the directory is shared with read-rights for all users that will need access. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To configure the update service take the following steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Unzip the &lt;strong&gt;service.zip&lt;/strong&gt; package into the &lt;code&gt;c:\testing\service&lt;/code&gt; directory.&lt;/li&gt;
+&lt;li&gt;Open the configuration file (&lt;code&gt;Sherlock.Service.exe.config&lt;/code&gt;) and update the following settings:&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ApplicationName:&lt;/strong&gt; The name of the application for which updates should be tracked, in this case that is: &lt;code&gt;Sherlock.Service.Master.exe&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;UpdateManifestUri:&lt;/strong&gt; The URL of the manifest file, in this case: &lt;code&gt;http:\\myhostmachine\appupdate\masterservice.manifest&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ManifestPublicKeyFile:&lt;/strong&gt; The path to the XML file containing the public key section of the manifest signing key, e.g. &lt;code&gt;C:\mykeydirectory\manifestsigningkey.public.xml&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Install the application as a service by opening an elevated command line and navigating to the &lt;code&gt;c:\testing\service&lt;/code&gt; directory. Then execute the following command line:&lt;/p&gt;
+&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;brainfuck&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;sherlock&lt;/span&gt;.&lt;span class=&quot;comment&quot;&gt;service&lt;/span&gt;.&lt;span class=&quot;comment&quot;&gt;exe&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;username:SherlockUser&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;password:SherlockPassword&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;delayed&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;servicename:Sherlock&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;Go to the Windows services control and start the service. After a short while this will grab the latest version of the master controller binaries, drop them in &lt;code&gt;C:\ProgramData\Sherlock\Sherlock.Service.Master&lt;/code&gt; and then start the master controller application. You can verify that all is well by checking the log files which are located in &lt;code&gt;C:\ProgramData\Sherlock\Sherlock.Service\{VERSION}\logs&lt;/code&gt; and &lt;code&gt;C:\ProgramData\Sherlock\Sherlock.Service.Master\{VERSION}\logs&lt;/code&gt; for the service and the master controller respectively.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;firewall&quot;&gt;Firewall&lt;/h3&gt;
+&lt;p&gt;The last step is to let the master controller through the firewall. For this create an inbound rule that allows &lt;code&gt;Sherlock.Service.Master.exe&lt;/code&gt; to connect to all types of protocols. Normally only Domain and private networks should be sufficient.&lt;/p&gt;
+&lt;p&gt;And with all that done the host machine configuration is completed.&lt;/p&gt;
+</content>
+        </entry>
+    
+        <entry>
+            <title>PG2 - Top landings?</title>
+            <link href="http://pvandervelde.github.io/posts/2013-12-05_PG2-Top-landings.html"/>
+            <updated>2013-12-05T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-12-05_PG2-Top-landings.html</id>
+            <content type="html">&lt;p&gt;Two weeks ago the weather was once again favourable to learn more new skills on my way to my &lt;a href=&quot;/tags/PG2.html&quot;&gt;PG2 license&lt;/a&gt;. When we arrived at Maioro the wind was just enough to soar. Given that the forecast has indicated an increase in wind strength over the afternoon we decided to practise some ground handling first. After about an hour of practising reverse launches and keeping the glider stable above our heads it was time to fly. The wind was still a bit light but with a lot of scratching I still managed to get 40 - 45 minutes of flying in on my first flight, my longest flight until then.&lt;/p&gt;
+&lt;p&gt;As the afternoon progressed the wind strength slowly increased and staying up became easier which resulted in another 45 minute flight.&lt;/p&gt;
+&lt;p&gt;Later in the afternoon the instructor told me it was possible to get a set of short flights with some top landings in. For my first try I launched, gained some height and then turned in for the top landing and completely stuffed it up. As I started moving over to the landing spot everything accelerated and I tried to slow down and turn at the same time, which meant I was not actually doing either of those things so when I got close to the ground I was still moving at a decent speed and hence I face planted. Fortunately there was no actual damage to either me or the glider.
+After recovering from the jitters for a bit I had a second attempt at top landing which took a lot longer to set up and decent but ended in a perfect touch down. The conclusion of all of this is that I need to focus more on flying the glider till the last minute, stay in the harness to maintain the weight shift and focus on the direction of flight more. Oh so much more to learn. &lt;/p&gt;
+&lt;p&gt;The fifth and final flight of the day was flying back to the car park which was quite easy as I only had to fly along the ridges to maintain more than enough height to get to the car park.&lt;/p&gt;
+</content>
+        </entry>
+    
+        <entry>
             <title>Regression testing with Sherlock</title>
             <link href="http://pvandervelde.github.io/posts/2013-12-04_Regression-testing-with-Sherlock.html"/>
             <updated>2013-12-04T00:00:00.000Z</updated>
             <id>http://pvandervelde.github.io/posts/2013-12-04_Regression-testing-with-Sherlock.html</id>
             <content type="html">&lt;p&gt;Over a series of posts I hope to explain how to set up and use the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; test environment system. The idea is to follow the set up procedure I used both at home for the &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt; project and the proof of concept I am working on at my work place. But first lets start with a short explanation of what Sherlock is and what it does. &lt;/p&gt;
-&lt;h3&gt;What is Sherlock&lt;/h3&gt;
+&lt;h3 id=&quot;what-is-sherlock&quot;&gt;What is Sherlock&lt;/h3&gt;
 &lt;p&gt;Sherlock consists of a set of applications and services that provide test environment organisation and automatic execution of a set of tests on one or more test environments. The organisation part consists of:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Keeping track of which environments exist, which are available for testing and which are not, e.g. for maintenance reasons.&lt;/li&gt;
@@ -36,7 +330,7 @@
 &lt;/ul&gt;
 &lt;p&gt;In general the Sherlock system will consist of at least one &lt;a href=&quot;http://en.wikipedia.org/wiki/Hyper-V&quot;&gt;Hyper-V&lt;/a&gt; host machine and a set of one or more Hyper-V virtual machines. In this arrangement the host machine handles the test organisation and part of the test execution, while the virtual machines serve as test environments. &lt;/p&gt;
 &lt;p&gt;While it is possible for Sherlock to execute tests on physical machines it is advised to only execute on virtual machines because of the inability to reset a physical machine back to the pre-test state. Virtual machines on the other hand can easily be restored to the pre-test state through the use of snapshots.&lt;/p&gt;
-&lt;h3&gt;The life of a test&lt;/h3&gt;
+&lt;h3 id=&quot;the-life-of-a-test&quot;&gt;The life of a test&lt;/h3&gt;
 &lt;p&gt;When executing a test with Sherlock the following steps are present: &lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;The user creates a test configuration file which describes all requirements for the test environment, which steps should be executed and where the report should be placed.&lt;/li&gt;
@@ -47,15 +341,27 @@
 &lt;li&gt;Once an environment has completed its test steps it will report the completion the test, upon which the host service will terminate the environment and restore it to the original state.&lt;/li&gt;
 &lt;li&gt;Once all environments have completed their test steps the test is marked as completed and the test report is compiled and placed in the predetermined location.  &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3&gt;Planned posts:&lt;/h3&gt;
+&lt;h3 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h3&gt;
+&lt;p&gt;The first pre-requisite in the configuration is the &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases&quot;&gt;latest release&lt;/a&gt; of sherlock. A release consists of a number of ZIP packages including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;console.zip&lt;/strong&gt; - Contains the binaries and configuration files for the console application which is used to register a test.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;sherlock.web.api.zip&lt;/strong&gt; - The web service that will store information about a new test in the database.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;sherlock.web.intranet.zip&lt;/strong&gt; - The management web site that can be used to add or remove test environments.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;service.zip&lt;/strong&gt; - The windows service that is used to run the &lt;em&gt;master controller&lt;/em&gt; or the &lt;em&gt;executor controller&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;service.master.zip&lt;/strong&gt; - The master controller application which handles the scheduling of tests, loading and unloading of test environments and processing of the test reports. &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;service.executor.zip&lt;/strong&gt; - The executor controller application which controls the execution of a test on a test environment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;sql.zip&lt;/strong&gt; - The SQL change scripts for the database.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The second pre-requisite is the availability of a physical machine on which a Windows version with &lt;a href=&quot;http://en.wikipedia.org/wiki/Hyper-V#System_requirements_and_specifications&quot;&gt;Hyper-V&lt;/a&gt; can be installed.&lt;/p&gt;
+&lt;h3 id=&quot;planned-posts-&quot;&gt;Planned posts:&lt;/h3&gt;
 &lt;p&gt;The next following posts will describe:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;How to set up the Hyper-V host machine.&lt;/li&gt;
-&lt;li&gt;How to prepare a virtual machine for use as a testing environment.&lt;/li&gt;
-&lt;li&gt;How to verify that all the environments have been configured correctly.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/posts/2013-12-10_Setting-up-Sherlock-serverside.html&quot;&gt;How to set up the Hyper-V host machine.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html&quot;&gt;How to prepare a virtual machine for use as a testing environment.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/posts/2014-12-31_Setting-up-Sherlock-verification.html&quot;&gt;How to verify that all the environments have been configured correctly.&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;How to integrate with a build server. This will discuss build jobs, build scripts and test configuration.&lt;/li&gt;
 &lt;li&gt;A description on how I used Sherlock to perform integration tests on the console application of Apollo.&lt;/li&gt;
-&lt;li&gt;And a description on how I used Sherlock to perform integration tests on a WPF application of Apollo.&lt;/li&gt;
+&lt;li&gt;And a description on how I used Sherlock to perform integration tests on a WPF application of &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 </content>
         </entry>
@@ -66,7 +372,7 @@
             <updated>2013-12-04T00:00:00.000Z</updated>
             <id>http://pvandervelde.github.io/posts/2013-12-04_Nuclei-Release-V0700.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.0.0&quot;&gt;V0.7.0.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release adds support for grouping timing results based on their logical area.&lt;/p&gt;
-&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group1 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup();
+&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group1 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup(); 
 &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(group1, &lt;span class=&quot;string&quot;&gt;&quot;My first timing group&quot;&lt;/span&gt;))
 {
     &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group2 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup();
@@ -141,20 +447,20 @@
         </entry>
     
         <entry>
-            <title>nAdoni release - V0.2.1.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-11-13_NAdoni-Release-V0210.html"/>
-            <updated>2013-11-13T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-11-13_NAdoni-Release-V0210.html</id>
-            <content type="html">&lt;p&gt;In my haste to release the new &lt;a href=&quot;2013-11-13_NAdoni-Release-V0200.html&quot;&gt;KeyGenerator&lt;/a&gt; functionality I completely forgot to add the packaging of said KeyGenerator. Hence I hereby present Version &lt;a href=&quot;https://github.com/pvandervelde/nAdoni/releases/tag/V0.2.1.0&quot;&gt;V0.2.1.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nadoni.html&quot;&gt;nAdoni&lt;/a&gt; update manifest builder project which adds the ZIP archive containing the &lt;code&gt;nAdoni.KeyGenerator&lt;/code&gt; console application.&lt;/p&gt;
-</content>
-        </entry>
-    
-        <entry>
             <title>nAdoni release - V0.2.0.0</title>
             <link href="http://pvandervelde.github.io/posts/2013-11-13_NAdoni-Release-V0200.html"/>
             <updated>2013-11-13T00:00:00.000Z</updated>
             <id>http://pvandervelde.github.io/posts/2013-11-13_NAdoni-Release-V0200.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/nAdoni/releases/tag/V0.2.0.0&quot;&gt;V0.2.0.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nadoni.html&quot;&gt;nAdoni&lt;/a&gt; update manifest builder project has been released. This release adds the &lt;code&gt;nAdoni.KeyGenerator&lt;/code&gt; console application to the project. This application can be used to generate the RSA key files which are necessary in order to build the manifest files.&lt;/p&gt;
+</content>
+        </entry>
+    
+        <entry>
+            <title>nAdoni release - V0.2.1.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-11-13_NAdoni-Release-V0210.html"/>
+            <updated>2013-11-13T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-11-13_NAdoni-Release-V0210.html</id>
+            <content type="html">&lt;p&gt;In my haste to release the new &lt;a href=&quot;2013-11-13_NAdoni-Release-V0200.html&quot;&gt;KeyGenerator&lt;/a&gt; functionality I completely forgot to add the packaging of said KeyGenerator. Hence I hereby present Version &lt;a href=&quot;https://github.com/pvandervelde/nAdoni/releases/tag/V0.2.1.0&quot;&gt;V0.2.1.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nadoni.html&quot;&gt;nAdoni&lt;/a&gt; update manifest builder project which adds the ZIP archive containing the &lt;code&gt;nAdoni.KeyGenerator&lt;/code&gt; console application.&lt;/p&gt;
 </content>
         </entry>
     
@@ -235,19 +541,6 @@ It took me several attempts at getting the sideways launch right but in the end 
         </entry>
     
         <entry>
-            <title>Sherlock release - V0.4.5.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-10-23_Sherlock-Release-V0450.html"/>
-            <updated>2013-10-23T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-10-23_Sherlock-Release-V0450.html</id>
-            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.5.0&quot;&gt;V0.4.5.0&lt;/a&gt; of the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release provides one improvement and one bug fix:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The test report can now include files generated during the test (&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/5&quot;&gt;issue #5&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;Sherlock.Service no longer includes a manifest signing key, instead the key is obtained via a configuration setting (&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/8&quot;&gt;issue #8&lt;/a&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-        </entry>
-    
-        <entry>
             <title>Nuclei release - V0.6.7.0</title>
             <link href="http://pvandervelde.github.io/posts/2013-10-23_Nuclei-Release-V0670.html"/>
             <updated>2013-10-23T00:00:00.000Z</updated>
@@ -269,6 +562,19 @@ It took me several attempts at getting the sideways launch right but in the end 
         &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; secondTask
     }
 }&lt;/code&gt;&lt;/pre&gt;
+</content>
+        </entry>
+    
+        <entry>
+            <title>Sherlock release - V0.4.5.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-10-23_Sherlock-Release-V0450.html"/>
+            <updated>2013-10-23T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-10-23_Sherlock-Release-V0450.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.5.0&quot;&gt;V0.4.5.0&lt;/a&gt; of the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release provides one improvement and one bug fix:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The test report can now include files generated during the test (&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/5&quot;&gt;issue #5&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Sherlock.Service no longer includes a manifest signing key, instead the key is obtained via a configuration setting (&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/8&quot;&gt;issue #8&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
 </content>
         </entry>
     
@@ -378,7 +684,7 @@ builder.RegisterModule(
 &lt;li&gt;&lt;a href=&quot;https://github.com/rantecki/docpad-plugin-tagging&quot;&gt;tagging&lt;/a&gt; - Generates the tag cloud for the sidebar.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;With all the toys sorted it was time to integrate them in the templates.&lt;/p&gt;
-&lt;h3&gt;Menu&lt;/h3&gt;
+&lt;h3 id=&quot;menu&quot;&gt;Menu&lt;/h3&gt;
 &lt;p&gt;The top level menu is based on a collection which contains all pages that have their &lt;code&gt;isPage&lt;/code&gt; flag set to &lt;code&gt;true&lt;/code&gt;. Note that we also assume that these pages have 
 the default layout. One thing to note is that the docpad.coffee configuration file seems to be sensitive to the type of whitespace you use. Either use spaces or tabs, but don&amp;#39;t mix them, otherwise you may get some weird errors.&lt;/p&gt;
 &lt;script src='https://gist.github.com/6375681.js?file=collections.pages.docpad.coffee'&gt;&lt;/script&gt;
@@ -386,7 +692,7 @@ the default layout. One thing to note is that the docpad.coffee configuration fi
 &lt;p&gt;Once the collection has been filled with pages it is used to create an unordered list with an additional highlight placed on the currently active page&lt;/p&gt;
 &lt;script src='https://gist.github.com/6375681.js?file=menu.default.html'&gt;&lt;/script&gt;
 
-&lt;h3&gt;Sidebar&lt;/h3&gt;
+&lt;h3 id=&quot;sidebar&quot;&gt;Sidebar&lt;/h3&gt;
 &lt;p&gt;The sidebar contains three different sections. The first section is the about section which is nothing special. The &lt;em&gt;recent&lt;/em&gt; and &lt;em&gt;tags&lt;/em&gt; sections are more interesting from a website construction perspective. The &lt;em&gt;recent&lt;/em&gt; section based on the &lt;em&gt;frontpage&lt;/em&gt; collection which grabs all items from the posts and 
 projects subdirectories and then sorts them by date. The &lt;em&gt;recent&lt;/em&gt; section only display the last 10 items in that collection.&lt;/p&gt;
 &lt;script src='https://gist.github.com/6375681.js?file=recent.default.html'&gt;&lt;/script&gt;
@@ -395,7 +701,7 @@ projects subdirectories and then sorts them by date. The &lt;em&gt;recent&lt;/em
 &lt;script src='https://gist.github.com/6375681.js?file=tags.default.html'&gt;&lt;/script&gt; 
 
 &lt;p&gt;Each tag links to a page that contains all the posts that contain that tag.&lt;/p&gt;
-&lt;h3&gt;Projects, tag indexes and posts&lt;/h3&gt;
+&lt;h3 id=&quot;projects-tag-indexes-and-posts&quot;&gt;Projects, tag indexes and posts&lt;/h3&gt;
 &lt;p&gt;The project pages all have a shared layout which provides them with a title and a section that lists all the posts tagged with the name of the project&lt;/p&gt;
 &lt;script src='https://gist.github.com/6375681.js?file=project-linkedposts.html'&gt;&lt;/script&gt;
 
@@ -413,7 +719,7 @@ projects subdirectories and then sorts them by date. The &lt;em&gt;recent&lt;/em
 &lt;script src='https://gist.github.com/6375681.js?file=post.html'&gt;&lt;/script&gt;
 
 
-&lt;h3&gt;Acknowledgements:&lt;/h3&gt;
+&lt;h3 id=&quot;acknowledgements-&quot;&gt;Acknowledgements:&lt;/h3&gt;
 &lt;p&gt;Finally there some people that have provided some descriptions of how their own blogs were created with Docpad (or other static generators). Below are the posts that I used to assemble my own blog. A big thank you to the original posters!&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html&quot;&gt;Ivan Zuzak&lt;/a&gt; for his post describing how to use GitHub issues as a way to provide comments on a blog post.&lt;/li&gt;
