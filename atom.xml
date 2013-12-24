@@ -3,13 +3,77 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2013-12-22T02:25:41.744Z</updated>
+    <updated>2013-12-24T04:48:04.224Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>Sherlock configuration - Verification</title>
+            <link href="http://pvandervelde.github.io/posts/2013-12-24_Setting-up-Sherlock-verification.html"/>
+            <updated>2013-12-24T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-12-24_Setting-up-Sherlock-verification.html</id>
+            <content type="html">&lt;p&gt;After the configuration of the &lt;a href=&quot;/posts/2013-12-10_Setting-up-Sherlock-serverside.html&quot;&gt;host machine&lt;/a&gt; and the &lt;a href=&quot;/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html&quot;&gt;virtual machines&lt;/a&gt; the final step in the configuration of Sherlock is to verify that everything is configured correctly. This can be done by using the verification package that comes with each &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases&quot;&gt;release&lt;/a&gt; of Sherlock. In order to use the verification package take the following steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Unpack the &lt;strong&gt;verification.zip&lt;/strong&gt; package to a directory somewhere (e.g. &lt;code&gt;c:\temp\sherlock&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Update the configuration file &lt;code&gt;Sherlock.VerificationConfiguration.msbuild&lt;/code&gt; with the following settings:&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ConfigurationReportDirectory:&lt;/strong&gt; The directory where you want the final report to be placed. Note that both the user who requests the test and the user which is used to run the Sherlock services need to have access to this directory. The &lt;code&gt;report&lt;/code&gt; directory that was created on the &lt;a href=&quot;/posts/2013-12-10_Setting-up-Sherlock-serverside.html&quot;&gt;host&lt;/a&gt; machine&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ConfigurationServerUrl:&lt;/strong&gt; The URL of the web service, e.g. &lt;code&gt;http:\\myhostmachine\sherlock.api&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ConfigurationOperatingSystem:&lt;/strong&gt; The operating system name that you want to test with. This needs to match one of the operating systems that has been registered with the management website and which is installed on at least one of your test environments.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ConfigurationOperatingSystemServicePack:&lt;/strong&gt; Can be left empty if the operating system has no service pack. If the operating system has a service pack then it needs to match the service pack name of the operating system as registered with the management web site.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ConfigurationOperatingSystemCulture:&lt;/strong&gt; The &lt;a href=&quot;http://en.wikipedia.org/wiki/IETF_language_tag&quot;&gt;culture&lt;/a&gt; as defined for the registered operating system.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ConfigurationOperatingSystemPointerSize:&lt;/strong&gt; The &amp;#39;bitness&amp;#39; or pointer size for the operating system, either 32 or 64 bits. Should again match the value that was provided when the operating system was registered.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ConfigurationRemotePcWorkingPath:&lt;/strong&gt; A path where the test files will be placed on the test environment, e.g. &lt;code&gt;c:\temp&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ConfigurationSherlockConsoleDirectory:&lt;/strong&gt; The directory where the console application is installed, this may be a UNC path or a normal directory, e.g. &lt;code&gt;\\MyHostMachine\console&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Execute the &lt;code&gt;Sherlock.ExecuteVerificationTests.msbuild&lt;/code&gt; script. This script will prepare the files to be send across (a test application and some test scripts), start the console application, register the test and then wait for the reports to be produced. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note that the reports will come back with some errors. The verification was designed this way on purpose to make it possible to test the error handling. In the end there should be three reports, one for each known test configuration version, i.e. v1.0, v1.1 and v1.2. The reports should show the following errors:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The script execution that executes &lt;code&gt;c:\temp\Sherlock.Verification.Console.exe&lt;/code&gt; with the &lt;code&gt;-f&lt;/code&gt; command line argument. The &lt;code&gt;-f&lt;/code&gt; parameter indicates that the process should &amp;#39;fail&amp;#39; and exit with an exit code of 1.&lt;/li&gt;
+&lt;li&gt;The script execution for &lt;code&gt;c:\temp\Sherlock.Verfication.Console.exe&lt;/code&gt; with parameter &lt;code&gt;-c&lt;/code&gt;. The &lt;code&gt;-c&lt;/code&gt; parameter indicates that the process should exit with an unhandled exception. The exit code for the process should be -532462766.&lt;/li&gt;
+&lt;li&gt;The application execution &lt;code&gt;c:\temp\Sherlock.Verification.Console.exe&lt;/code&gt; with the &lt;code&gt;-f&lt;/code&gt; command line argument. &lt;/li&gt;
+&lt;li&gt;The application execution for &lt;code&gt;c:\temp\Sherlock.Verfication.Console.exe&lt;/code&gt; with parameter &lt;code&gt;-c&lt;/code&gt;. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;troubleshooting&quot;&gt;Troubleshooting&lt;/h3&gt;
+&lt;p&gt;If there are any problems during the verification then the first thing to look at are the debug logs which are written by the different applications. The logs are generally found in &lt;code&gt;c:\ProgramData\Sherlock\&amp;lt;APP_NAME&amp;gt;\&amp;lt;VERSION&amp;gt;\logs&lt;/code&gt;. Notes:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;If there is not enough information in the logs then you can change the log level in the application configuration file under the &lt;code&gt;DefaultLogLevel&lt;/code&gt; configuration option. The available levels are (from most verbose to least verbose):&lt;ul&gt;
+&lt;li&gt;Trace &lt;/li&gt;
+&lt;li&gt;Debug&lt;/li&gt;
+&lt;li&gt;Info&lt;/li&gt;
+&lt;li&gt;Warn&lt;/li&gt;
+&lt;li&gt;Error&lt;/li&gt;
+&lt;li&gt;Fatal&lt;/li&gt;
+&lt;li&gt;None&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The applications running in the test environment also log but those logs may be removed if the test environment is a virtual machine. However version 1.2 of the test configuration file has the possibly to copy the logs back to the host machine for inclusion into the test report. For this to work set the &lt;code&gt;includesystemlog&lt;/code&gt; attribute of the &lt;code&gt;includeinreport&lt;/code&gt; element to &lt;code&gt;true&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Some standard problems that may occur are mentioned below.&lt;/p&gt;
+&lt;h4 id=&quot;console-and-web-service&quot;&gt;Console and web service&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;If the console application fails to connect to the web service because it cannot find the web service then verify that the web service can be reached. The two main problems that could be the root cause of this are either the web service is not running or the user which started the console application has no access rights to the web service.&lt;/li&gt;
+&lt;li&gt;If the console application crashes due to a URL problem (see the log file) then it is most likely that you put a partial URL, e.g. &lt;code&gt;mycoolserver\sherlock.api&lt;/code&gt; instead of &lt;code&gt;http://mycoolserver/sherlock.api&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;If the console successfully manages to go through nearly all the test registration steps but fails on the transfer of the test files then there is quite likely a problem with the web service permissions to write to the &lt;code&gt;App_Data&lt;/code&gt; directory.&lt;/li&gt;
+&lt;li&gt;If the web service fails on the first call then there is quite likely a problem with the database connection. This is most likley either a problem with the connection string or a problem with the permissions. In case of a permission issue check if the user which is running the web service can access the stored procedures in the database.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;update-service&quot;&gt;Update service&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;If the update service is unable to verify the update packages then it is not able to access the public key file. Make sure the configuration file points to the public key file and that this file is reachable by the service.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;master-controller&quot;&gt;Master controller&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;If the master controller fails to connect to the database this could point to either a problem with the connection string or a problem with the permissions. In case of a permissions problem again check that the user running the master controller can access the stored procedures in the database.&lt;/li&gt;
+&lt;li&gt;If the master controller is unable to start a virtual machine then the &lt;em&gt;SherlockUser&lt;/em&gt; may not have &lt;a href=&quot;http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/17/allowing-non-administrators-to-control-hyper-v.aspx&quot;&gt;permissions&lt;/a&gt; to start the virtual machines. The log will show this as an error in the environment loading. Probably a security exception.&lt;/li&gt;
+&lt;li&gt;If the controller is blocked by the firewall, or the firewall on the test environment is blocking, then there will be no communication between the test environment and the host. The log shows this through the fact that the host will wait an excessive amount of time for the remote &amp;#39;endpoint&amp;#39; to connect. A normal start up takes around 2 minutes for a test environment start, operating system load and Sherlock load.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        </entry>
     
         <entry>
             <title>nAnicitus release - V0.1.4.0</title>
@@ -315,33 +379,6 @@ After recovering from the jitters for a bit I had a second attempt at top landin
         </entry>
     
         <entry>
-            <title>Nuclei release - V0.7.0.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-12-04_Nuclei-Release-V0700.html"/>
-            <updated>2013-12-04T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-12-04_Nuclei-Release-V0700.html</id>
-            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.0.0&quot;&gt;V0.7.0.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release adds support for grouping timing results based on their logical area.&lt;/p&gt;
-&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group1 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup(); 
-&lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(group1, &lt;span class=&quot;string&quot;&gt;&quot;My first timing group&quot;&lt;/span&gt;))
-{
-    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group2 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup();
-    &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(
-        group2, 
-        &lt;span class=&quot;string&quot;&gt;&quot;This timing is not a child of the first one&quot;&lt;/span&gt;))
-    {
-        &lt;span class=&quot;comment&quot;&gt;// Do stuff here ...&lt;/span&gt;
-    }
-
-    &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(
-        group1, 
-        &lt;span class=&quot;string&quot;&gt;&quot;This timing is a child of the first one&quot;&lt;/span&gt;))
-    {
-        &lt;span class=&quot;comment&quot;&gt;// Do stuff here ...&lt;/span&gt;
-    }
-}&lt;/code&gt;&lt;/pre&gt;
-</content>
-        </entry>
-    
-        <entry>
             <title>Regression testing with Sherlock</title>
             <link href="http://pvandervelde.github.io/posts/2013-12-04_Regression-testing-with-Sherlock.html"/>
             <updated>2013-12-04T00:00:00.000Z</updated>
@@ -399,6 +436,33 @@ After recovering from the jitters for a bit I had a second attempt at top landin
 &lt;li&gt;A description on how I used Sherlock to perform integration tests on the console application of Apollo.&lt;/li&gt;
 &lt;li&gt;And a description on how I used Sherlock to perform integration tests on a WPF application of &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt;.&lt;/li&gt;
 &lt;/ol&gt;
+</content>
+        </entry>
+    
+        <entry>
+            <title>Nuclei release - V0.7.0.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-12-04_Nuclei-Release-V0700.html"/>
+            <updated>2013-12-04T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-12-04_Nuclei-Release-V0700.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.0.0&quot;&gt;V0.7.0.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release adds support for grouping timing results based on their logical area.&lt;/p&gt;
+&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group1 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup(); 
+&lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(group1, &lt;span class=&quot;string&quot;&gt;&quot;My first timing group&quot;&lt;/span&gt;))
+{
+    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group2 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup();
+    &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(
+        group2, 
+        &lt;span class=&quot;string&quot;&gt;&quot;This timing is not a child of the first one&quot;&lt;/span&gt;))
+    {
+        &lt;span class=&quot;comment&quot;&gt;// Do stuff here ...&lt;/span&gt;
+    }
+
+    &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(
+        group1, 
+        &lt;span class=&quot;string&quot;&gt;&quot;This timing is a child of the first one&quot;&lt;/span&gt;))
+    {
+        &lt;span class=&quot;comment&quot;&gt;// Do stuff here ...&lt;/span&gt;
+    }
+}&lt;/code&gt;&lt;/pre&gt;
 </content>
         </entry>
     

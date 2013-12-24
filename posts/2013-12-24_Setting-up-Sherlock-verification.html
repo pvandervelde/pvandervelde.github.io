@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>Sherlock release - V0.4.6.0 | Mind Vortex</title>
+    <title>Sherlock configuration - Verification | Mind Vortex</title>
     <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, Fluid dynamics, CFD, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
@@ -183,12 +183,12 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-header">
         <h2>
             
-                Sherlock release - V0.4.6.0
+                Sherlock configuration - Verification
             
         </h2>
         <div id="post-meta">
             <p>
-                Thursday, October 24, 2013 | Posted in
+                Tuesday, December 24, 2013 | Posted in
                 
                     <a id="post-category" href="/tags/Sherlock.html">Sherlock</a>
                 
@@ -196,10 +196,61 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
     </div>
     <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.6.0">V0.4.6.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides two bug fixes:</p>
+        <p>After the configuration of the <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">host machine</a> and the <a href="/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html">virtual machines</a> the final step in the configuration of Sherlock is to verify that everything is configured correctly. This can be done by using the verification package that comes with each <a href="https://github.com/pvandervelde/Sherlock/releases">release</a> of Sherlock. In order to use the verification package take the following steps:</p>
 <ul>
-<li>The MSI installer now verifies that all directories exist before writing to them (<a href="https://github.com/pvandervelde/Sherlock/issues/9">issue #9</a>)</li>
-<li>The X-copy installer now verifies that the destination directory exists before copying files to it (<a href="https://github.com/pvandervelde/Sherlock/issues/10">issue #10</a>)</li>
+<li>Unpack the <strong>verification.zip</strong> package to a directory somewhere (e.g. <code>c:\temp\sherlock</code>).</li>
+<li>Update the configuration file <code>Sherlock.VerificationConfiguration.msbuild</code> with the following settings:<ul>
+<li><strong>ConfigurationReportDirectory:</strong> The directory where you want the final report to be placed. Note that both the user who requests the test and the user which is used to run the Sherlock services need to have access to this directory. The <code>report</code> directory that was created on the <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">host</a> machine</li>
+<li><strong>ConfigurationServerUrl:</strong> The URL of the web service, e.g. <code>http:\\myhostmachine\sherlock.api</code></li>
+<li><strong>ConfigurationOperatingSystem:</strong> The operating system name that you want to test with. This needs to match one of the operating systems that has been registered with the management website and which is installed on at least one of your test environments.</li>
+<li><strong>ConfigurationOperatingSystemServicePack:</strong> Can be left empty if the operating system has no service pack. If the operating system has a service pack then it needs to match the service pack name of the operating system as registered with the management web site.</li>
+<li><strong>ConfigurationOperatingSystemCulture:</strong> The <a href="http://en.wikipedia.org/wiki/IETF_language_tag">culture</a> as defined for the registered operating system.</li>
+<li><strong>ConfigurationOperatingSystemPointerSize:</strong> The &#39;bitness&#39; or pointer size for the operating system, either 32 or 64 bits. Should again match the value that was provided when the operating system was registered.</li>
+<li><strong>ConfigurationRemotePcWorkingPath:</strong> A path where the test files will be placed on the test environment, e.g. <code>c:\temp</code>.</li>
+<li><strong>ConfigurationSherlockConsoleDirectory:</strong> The directory where the console application is installed, this may be a UNC path or a normal directory, e.g. <code>\\MyHostMachine\console</code>.</li>
+</ul>
+</li>
+<li>Execute the <code>Sherlock.ExecuteVerificationTests.msbuild</code> script. This script will prepare the files to be send across (a test application and some test scripts), start the console application, register the test and then wait for the reports to be produced. </li>
+</ul>
+<p>Note that the reports will come back with some errors. The verification was designed this way on purpose to make it possible to test the error handling. In the end there should be three reports, one for each known test configuration version, i.e. v1.0, v1.1 and v1.2. The reports should show the following errors:</p>
+<ul>
+<li>The script execution that executes <code>c:\temp\Sherlock.Verification.Console.exe</code> with the <code>-f</code> command line argument. The <code>-f</code> parameter indicates that the process should &#39;fail&#39; and exit with an exit code of 1.</li>
+<li>The script execution for <code>c:\temp\Sherlock.Verfication.Console.exe</code> with parameter <code>-c</code>. The <code>-c</code> parameter indicates that the process should exit with an unhandled exception. The exit code for the process should be -532462766.</li>
+<li>The application execution <code>c:\temp\Sherlock.Verification.Console.exe</code> with the <code>-f</code> command line argument. </li>
+<li>The application execution for <code>c:\temp\Sherlock.Verfication.Console.exe</code> with parameter <code>-c</code>. </li>
+</ul>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p>If there are any problems during the verification then the first thing to look at are the debug logs which are written by the different applications. The logs are generally found in <code>c:\ProgramData\Sherlock\&lt;APP_NAME&gt;\&lt;VERSION&gt;\logs</code>. Notes:</p>
+<ol>
+<li>If there is not enough information in the logs then you can change the log level in the application configuration file under the <code>DefaultLogLevel</code> configuration option. The available levels are (from most verbose to least verbose):<ul>
+<li>Trace </li>
+<li>Debug</li>
+<li>Info</li>
+<li>Warn</li>
+<li>Error</li>
+<li>Fatal</li>
+<li>None</li>
+</ul>
+</li>
+<li>The applications running in the test environment also log but those logs may be removed if the test environment is a virtual machine. However version 1.2 of the test configuration file has the possibly to copy the logs back to the host machine for inclusion into the test report. For this to work set the <code>includesystemlog</code> attribute of the <code>includeinreport</code> element to <code>true</code>.</li>
+</ol>
+<p>Some standard problems that may occur are mentioned below.</p>
+<h4 id="console-and-web-service">Console and web service</h4>
+<ul>
+<li>If the console application fails to connect to the web service because it cannot find the web service then verify that the web service can be reached. The two main problems that could be the root cause of this are either the web service is not running or the user which started the console application has no access rights to the web service.</li>
+<li>If the console application crashes due to a URL problem (see the log file) then it is most likely that you put a partial URL, e.g. <code>mycoolserver\sherlock.api</code> instead of <code>http://mycoolserver/sherlock.api</code>.</li>
+<li>If the console successfully manages to go through nearly all the test registration steps but fails on the transfer of the test files then there is quite likely a problem with the web service permissions to write to the <code>App_Data</code> directory.</li>
+<li>If the web service fails on the first call then there is quite likely a problem with the database connection. This is most likley either a problem with the connection string or a problem with the permissions. In case of a permission issue check if the user which is running the web service can access the stored procedures in the database.</li>
+</ul>
+<h4 id="update-service">Update service</h4>
+<ul>
+<li>If the update service is unable to verify the update packages then it is not able to access the public key file. Make sure the configuration file points to the public key file and that this file is reachable by the service.</li>
+</ul>
+<h4 id="master-controller">Master controller</h4>
+<ul>
+<li>If the master controller fails to connect to the database this could point to either a problem with the connection string or a problem with the permissions. In case of a permissions problem again check that the user running the master controller can access the stored procedures in the database.</li>
+<li>If the master controller is unable to start a virtual machine then the <em>SherlockUser</em> may not have <a href="http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/17/allowing-non-administrators-to-control-hyper-v.aspx">permissions</a> to start the virtual machines. The log will show this as an error in the environment loading. Probably a security exception.</li>
+<li>If the controller is blocked by the firewall, or the firewall on the test environment is blocking, then there will be no communication between the test environment and the host. The log shows this through the fact that the host will wait an excessive amount of time for the remote &#39;endpoint&#39; to connect. A normal start up takes around 2 minutes for a test environment start, operating system load and Sherlock load.</li>
 </ul>
  
     </div>
@@ -207,8 +258,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-footer">
         <div>
             <div class="navlinks">
-  <a href="/posts/2013-10-23_Nuclei-Release-V0670.html" title="Previous Post: Nuclei release - V0.6.7.0" class="navlinks-prev">&laquo; Nuclei release - V0.6.7.0</a>
-  <a href="/posts/2013-10-25_PG2-At-the-top-of-the-stack.html" title="Next Post: PG2 - At the top of the stack" class="navlinks-next">PG2 - At the top of the stack &raquo;</a>
+  <a href="/posts/2013-12-22_nAnicitus-Release-V0140.html" title="Previous Post: nAnicitus release - V0.1.4.0" class="navlinks-prev">&laquo; nAnicitus release - V0.1.4.0</a>
+  
 </div>
         </div>
     </div>
@@ -228,7 +279,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-comments">
         <h3>Comments</h3>
         <div id="post-comment-header">
-            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/15"> this post's issue page on 
+            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/32"> this post's issue page on 
             GitHub</a> (you'll need a GitHub account).
         </div>
     </div>
@@ -239,7 +290,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         for (var i=0; i<data.length; i++) {
           var cuser = data[i].user.login;
           var cuserlink = "https://www.github.com/" + data[i].user.login;
-          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/15#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
+          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/32#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
           var cbody = data[i].body_html;
           var cavatarlink = data[i].user.avatar_url;
           var cdate = Date.parse(data[i].created_at).toString("yyyy-MM-dd HH:mm:ss");
@@ -248,7 +299,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         }
       }
 
-      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/15/comments", {
+      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/32/comments", {
         headers: {Accept: "application/vnd.github.full+json"},
         dataType: "json",
         success: function(msg){
