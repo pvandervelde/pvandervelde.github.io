@@ -3,13 +3,31 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2013-12-24T04:48:04.224Z</updated>
+    <updated>2013-12-27T06:20:35.648Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>Sherlock release - V0.4.8.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-12-27_Sherlock-Release-V0480.html"/>
+            <updated>2013-12-27T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-12-27_Sherlock-Release-V0480.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.8.0&quot;&gt;V0.4.8.0&lt;/a&gt; of the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release provides the following issues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/13&quot;&gt;#13&lt;/a&gt; - Provide setup verification&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/14&quot;&gt;#14&lt;/a&gt; - Add license and readme to all downloadable files&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/15&quot;&gt;#15&lt;/a&gt; - Include test purpose in final test report&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/22&quot;&gt;#22&lt;/a&gt; - Add NuGet symbols package for easy upload to a symbol server&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/23&quot;&gt;#23&lt;/a&gt; - OutOfMemoryException in Sherlock.Service.Master&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/24&quot;&gt;#24&lt;/a&gt; - Hyper-V: If a virtual machine is running when a new test is started terminate the current run&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/26&quot;&gt;#26&lt;/a&gt; - Hyper-V: Handle state change result code&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        </entry>
     
         <entry>
             <title>Sherlock configuration - Verification</title>
@@ -379,6 +397,33 @@ After recovering from the jitters for a bit I had a second attempt at top landin
         </entry>
     
         <entry>
+            <title>Nuclei release - V0.7.0.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-12-04_Nuclei-Release-V0700.html"/>
+            <updated>2013-12-04T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-12-04_Nuclei-Release-V0700.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.0.0&quot;&gt;V0.7.0.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release adds support for grouping timing results based on their logical area.&lt;/p&gt;
+&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group1 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup(); 
+&lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(group1, &lt;span class=&quot;string&quot;&gt;&quot;My first timing group&quot;&lt;/span&gt;))
+{
+    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group2 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup();
+    &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(
+        group2, 
+        &lt;span class=&quot;string&quot;&gt;&quot;This timing is not a child of the first one&quot;&lt;/span&gt;))
+    {
+        &lt;span class=&quot;comment&quot;&gt;// Do stuff here ...&lt;/span&gt;
+    }
+
+    &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(
+        group1, 
+        &lt;span class=&quot;string&quot;&gt;&quot;This timing is a child of the first one&quot;&lt;/span&gt;))
+    {
+        &lt;span class=&quot;comment&quot;&gt;// Do stuff here ...&lt;/span&gt;
+    }
+}&lt;/code&gt;&lt;/pre&gt;
+</content>
+        </entry>
+    
+        <entry>
             <title>Regression testing with Sherlock</title>
             <link href="http://pvandervelde.github.io/posts/2013-12-04_Regression-testing-with-Sherlock.html"/>
             <updated>2013-12-04T00:00:00.000Z</updated>
@@ -436,33 +481,6 @@ After recovering from the jitters for a bit I had a second attempt at top landin
 &lt;li&gt;A description on how I used Sherlock to perform integration tests on the console application of Apollo.&lt;/li&gt;
 &lt;li&gt;And a description on how I used Sherlock to perform integration tests on a WPF application of &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt;.&lt;/li&gt;
 &lt;/ol&gt;
-</content>
-        </entry>
-    
-        <entry>
-            <title>Nuclei release - V0.7.0.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-12-04_Nuclei-Release-V0700.html"/>
-            <updated>2013-12-04T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-12-04_Nuclei-Release-V0700.html</id>
-            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.0.0&quot;&gt;V0.7.0.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release adds support for grouping timing results based on their logical area.&lt;/p&gt;
-&lt;pre class=&quot;highlighted&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group1 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup(); 
-&lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(group1, &lt;span class=&quot;string&quot;&gt;&quot;My first timing group&quot;&lt;/span&gt;))
-{
-    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group2 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup();
-    &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(
-        group2, 
-        &lt;span class=&quot;string&quot;&gt;&quot;This timing is not a child of the first one&quot;&lt;/span&gt;))
-    {
-        &lt;span class=&quot;comment&quot;&gt;// Do stuff here ...&lt;/span&gt;
-    }
-
-    &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(
-        group1, 
-        &lt;span class=&quot;string&quot;&gt;&quot;This timing is a child of the first one&quot;&lt;/span&gt;))
-    {
-        &lt;span class=&quot;comment&quot;&gt;// Do stuff here ...&lt;/span&gt;
-    }
-}&lt;/code&gt;&lt;/pre&gt;
 </content>
         </entry>
     
@@ -614,6 +632,19 @@ It took me several attempts at getting the sideways launch right but in the end 
         </entry>
     
         <entry>
+            <title>Sherlock release - V0.4.5.0</title>
+            <link href="http://pvandervelde.github.io/posts/2013-10-23_Sherlock-Release-V0450.html"/>
+            <updated>2013-10-23T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2013-10-23_Sherlock-Release-V0450.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.5.0&quot;&gt;V0.4.5.0&lt;/a&gt; of the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release provides one improvement and one bug fix:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The test report can now include files generated during the test (&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/5&quot;&gt;issue #5&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Sherlock.Service no longer includes a manifest signing key, instead the key is obtained via a configuration setting (&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/8&quot;&gt;issue #8&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        </entry>
+    
+        <entry>
             <title>Nuclei release - V0.6.7.0</title>
             <link href="http://pvandervelde.github.io/posts/2013-10-23_Nuclei-Release-V0670.html"/>
             <updated>2013-10-23T00:00:00.000Z</updated>
@@ -635,19 +666,6 @@ It took me several attempts at getting the sideways launch right but in the end 
         &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; secondTask
     }
 }&lt;/code&gt;&lt;/pre&gt;
-</content>
-        </entry>
-    
-        <entry>
-            <title>Sherlock release - V0.4.5.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-10-23_Sherlock-Release-V0450.html"/>
-            <updated>2013-10-23T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-10-23_Sherlock-Release-V0450.html</id>
-            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.5.0&quot;&gt;V0.4.5.0&lt;/a&gt; of the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release provides one improvement and one bug fix:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The test report can now include files generated during the test (&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/5&quot;&gt;issue #5&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;Sherlock.Service no longer includes a manifest signing key, instead the key is obtained via a configuration setting (&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/8&quot;&gt;issue #8&lt;/a&gt;)&lt;/li&gt;
-&lt;/ul&gt;
 </content>
         </entry>
     
