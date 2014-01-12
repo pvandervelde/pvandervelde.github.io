@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>Why this blog was created | Mind Vortex</title>
+    <title>Sherlock configuration - Build server integration | Mind Vortex</title>
     <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, Fluid dynamics, CFD, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
@@ -79,7 +79,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
-                        <li><a href="/posts/2014-01-13_Integrating-Sherlock-with-a-build-server.html">Sherlock configuration - Build server integration</a></li>
+                        <li><a href="/posts/2014-12-31_Integrating-Sherlock-with-a-build-server.html">Sherlock configuration - Build server integration</a></li>
                     
                         <li><a href="/posts/2013-12-27_Sherlock-Release-V0480.html">Sherlock release - V0.4.8.0</a></li>
                     
@@ -195,36 +195,110 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-header">
         <h2>
             
-                Why this blog was created
+                Sherlock configuration - Build server integration
             
         </h2>
         <div id="post-meta">
             <p>
-                Friday, August 30, 2013 | Posted in
+                Wednesday, December 31, 2014 | Posted in
                 
-                    <a id="post-category" href="/tags/Blog.html">Blog</a>
+                    <a id="post-category" href="/tags/Sherlock.html">Sherlock</a>
                 
-                    <a id="post-category" href="/tags/Writing.html">Writing</a>
+                    <a id="post-category" href="/tags/Jenkins.html">Jenkins</a>
+                
+                    <a id="post-category" href="/tags/TeamCity.html">TeamCity</a>
+                
+                    <a id="post-category" href="/tags/MsBuild.html">MsBuild</a>
                 
             </p>
         </div>
     </div>
     <div id="post-content">
-        <p>A couple of years ago I had a blog on Blogger but that never got further than a few posts, mainly because I ran out of interesting topics to write about. That
-and my <a href="/about.html">studies</a> started interfering with life in general ... it seems research does that to ones life. In any case the old blog stalled and no
-more posts were written.</p>
-<p>Recently I have been wanting to improve my writing skills, you see, as software engineer I&#39;m reasonably good at writing instructions for a three year
-old, eh I mean a computer, but I am not particularly good at writing concise human-friendly text. I have written two dissertations, one for my master degree
-and one for my PhD, but neither of those qualify as either concise or human-friendly.</p>
-<p>Given that the only way to get better at writing is to practise, practise and practise some more, I thought writing posts about things that interest me
-would be a good way to improve my writing skills. And on top of that it may help me improve my skills in explaining technical constructs as well. Double win.</p>
-<p>The only thing left to answer is what shall I be writing about. Well obviously those things that interest me, mostly being:</p>
+        <p>Once the configuration of <a href="https://github.com/pvandervelde/Sherlock">Sherlock</a> is complete the last step needed to make use of automatic regression testing is to integrate with a build server. In this post I will explain which steps need to be taken to integrate Sherlock with a build server. Examples will be given for <a href="http://jenkins-ci.org/">Jenkins</a>, which is used at my work, and <a href="http://www.jetbrains.com/teamcity/">TeamCity</a>, which I use personally. </p>
+<p>In order to integrate with a build server you will need to: </p>
 <ul>
-<li>My open source <a href="/projects.html">projects</a>. All of them could do with some additional documentation and maybe even some examples. I guess having a 
-blog is just an additional reason to finally write those</li>
-<li>All the (exciting) things I get up to when rock climbing or paragliding.</li>
-<li>And if things progress nicely I might write some articles describing some work I am doing at the moment that is a continuation of the software
-development I did for my PhD.</li>
+<li>Create at least one test configuration</li>
+<li>Write the build scripts necessary to register a test, wait for the completion of the test and process the results.</li>
+<li>Set up a job on the build server to execute the test.  </li>
+</ul>
+<h3 id="test-configurations">Test configurations</h3>
+<p>In order to execute a test the first thing you need to decide on is the test configuration which will be executed. In Sherlock the test configuration is described by a XML file similar to the following gist: </p>
+<script src='https://gist.github.com/8346703.js'></script>
+
+<p>In this configuration file replace all instances of <code>${SOME_TEXT}$</code> with the appropriate information. Note that some configuration settings should be templated so that those values can be supplied by the build system, e.g. the application version number:</p>
+<ul>
+<li>Provide an application name and version for use in the test report.</li>
+<li>Provide a compact description. This will be used as the title of the test report</li>
+<li>Provide each environment with a name. It doesn&#39;t matter what that name is as long as it is consistently used throughout the configuration file. All test steps which should be executed on the same environment should be linked to the same environment name. Note that while it is possible to request multiple environments to be started in a test, it is not possible to synchronize those environments. In other words each environment will exit as soon as it completes the test steps assigned to it, no environment will wait for other environments to complete their work.</li>
+<li>For each test step that needs to be executed provide the order (integer number starting at 0, incrementing for each step), the name of the environment in which the step should be executed, the failure mode, either Stop or Continue and the correct file paths. Note that the test steps use the following definitions for their file paths:<ul>
+<li><strong>msi:</strong> <code>file</code> is the absolute path to the MSI file as on the machine that is used to register the test (i.e. the origin).</li>
+<li><strong>x-copy:</strong> <code>destination</code> is the absolute path to the directory that will hold all the x-copy results on the test environment.</li>
+<li><strong>x-copy:</strong> <code>base</code> is the absolute path to the directory that holds the files / directories to be x-copied on the origin.</li>
+<li><strong>x-copy:</strong> <code>paths</code> contains the absolute paths to the files / directories that should be x-copied. It is expected that these all reside in the <code>base</code> directory at some level.</li>
+<li><strong>script:</strong> <code>file</code> is the absolute path to the script file on the origin.</li>
+<li><strong>console:</strong> <code>exe</code> is the absolute path to the executable that should be executed on the test environment. Note that the path is also pointed to the test environment. Hence the <code>CONSOLE</code> test step is the only test step that doesn&#39;t copy files.</li>
+<li><strong>All test steps:</strong> All files and directories that should be included in the report are absolute paths on the test environment.</li>
+<li><strong>notification:</strong> The absolute path where the final report should be placed. This path should be accessible to both Sherlock (the master controller) and the application that will process the test results.</li>
+</ul>
+</li>
+<li>It makes sense to always copy back any logs that are written during the test. If you don&#39;t need them for test failure diagnosis then it is easy to delete them later, however you can&#39;t copy them from the test environment after the test has completed because the test environment will be reset to its original state upon shut down. </li>
+</ul>
+<p>If you need tests to run in different environments or with different test steps then you will need to create a configuration file for each environment / set of test steps.  </p>
+<h3 id="build-scripts">Build scripts</h3>
+<p>The easiest way to execute the test from a build server is to create a set of build scripts that can do the work for you. In this example I will be using MsBuild as the scripting language.</p>
+<p>In order to create the configuration file from the template it is necessary to replace all the templated configuration settings with their current values. The following gist shows an inline MsBuild task that does exactly that:</p>
+<script src='https://gist.github.com/8277812.js?file=TemplateFile.xml'></script>
+
+<p>In order to use this task create an <code>ItemGroup</code> with the identifiers of the settings and their replacement values. For example:</p>
+<script src='https://gist.github.com/8277812.js?file=HowToUseTemplateFile.xml'></script>
+
+<p>If this example is used on the following template file:</p>
+<script src='https://gist.github.com/8277812.js?file=BeforeReplacement.xml'></script>
+
+<p>Then the outcome is the following output file:</p>
+<script src='https://gist.github.com/8277812.js?file=AfterReplacement.xml'></script>
+
+<p>The next step will be to create a build script that can register the test with the Sherlock system. This can either be done with a call to the <a href="http://msdn.microsoft.com/en-us/library/x8zx72cd.aspx">exec</a> task or with the following inline MsBuild task:</p>
+<script src='https://gist.github.com/8346876.js'></script>
+
+<p>The next step is a little tricky in that it is now necessary to wait for Sherlock to execute the test and create the test report. The tricky bit due to the fact that Sherlock will only execute the tests when a suitable test environment is available. That means that tests could be executed almost immediately if an environment is directly available, or not for a long time if all environments are busy. On top of that MsBuild does not have the ability to watch specific files. The following inline task allows you to wait for certain files to be created. Note that you need to provide a time-out which determines how long this task will wait for the report files. How long this time-out should be depends on:</p>
+<ul>
+<li>How long it takes for the tests to execute.</li>
+<li>How many tests will be executed on the same test environments. Tests executing on different test environments can be run in parallel provided the hardware will stand up to it.</li>
+<li>How many other tests may potentially be executing at the same time.</li>
+</ul>
+<script src='https://gist.github.com/8346893.js'></script>
+
+<p>Finally the report files need to be checked for success or failure. For each test Sherlock produces a HTML and an XML report. The easiest way to find the outcome of a test is to parse the XML report and search for the <code>result</code> element. The value of this element will either be <code>Passed</code> or <code>Failed</code>. The following inline task will accomplish this goal:</p>
+<script src='https://gist.github.com/8346900.js'></script>
+
+<h3 id="build-jobs">Build jobs</h3>
+<ul>
+<li>Set up one or more jobs on the build server to handle the test. Probably best to have a separate job for that, regression can take a while and you don&#39;t want to slow down the CI build (the one that is triggered on each commit)<ul>
+<li>Build number may require special handling if all / part of the build number is determined during the build.</li>
+<li>Version control settings need to be carefully controlled because all builds will need to pull in the same revision. One solution is to store the revision number (or SHA-1 hash or whatever your VCS uses) in the first build job and then transfer that to the other jobs.</li>
+</ul>
+</li>
+<li>Current way I&#39;ve done it at work is (with <a href="">Jenkins</a>):<ul>
+<li>3 jobs: Build (compile, unit test, package and whatever else you need from your CI build), Test (run regression tests) and Deploy (deploy files when you &#39;release to QA&#39;)</li>
+<li>2 Build flow jobs: &#39;Nightly&#39;, runs Build &amp; Test at midnight if there are changes. &#39;Release&#39; triggered manually whenever somebody wants a release to QA, runs &#39;Build&#39;, &#39;Test&#39; and &#39;Deploy&#39;. Done this way because Jenkins doesn&#39;t allow pre-build projects, i.e. the Deploy project can&#39;t trigger the test and build projects.</li>
+<li>Allows your &#39;Build&#39; job to be re-used for CI, nightly and release. Also is the only job that actually creates binaries and packages, hence no configuration differences between your CI build and your release builds.</li>
+<li>Drawback is that you have more projects, which can be a problem if you either have lots of different applications that need build server configurations or if you need to pay for project configurations</li>
+<li>For the build number the simplest way is to write the number to a file in the Build job, archive that and then pull it out in other jobs.</li>
+<li>For the VCS revision number dito, write the information out to a file and read that in the other jobs.</li>
+</ul>
+</li>
+<li>Current way I&#39;ve done it at home is (with <a href="">TeamCity</a>):<ul>
+<li>3 jobs: Build (compile, unit test, package etc.), Test (run regression) and deploy.</li>
+<li>Build has VCS trigger.</li>
+<li>Test has dependency on Build. Both snapshot dependency and artifact dependency. Artifact dependency copies outputs from build (MSI, archive files etc.)</li>
+<li>Deploy has dependency on Test. Both snapshot dependency and artifact dependency. Same as for Test.</li>
+<li>Currently the only thing you can&#39;t do is change the build steps in the different jobs which would be useful if you want to have additional steps done during a complete test (e.g. create a change list from the issue tracker)</li>
+<li>Build number can be copied easily by <a href="http://confluence.jetbrains.com/display/TCD8/Configuring+General+Settings#ConfiguringGeneralSettings-BuildNumberFormat">synchronizing</a> the build numbers.</li>
+<li>The VCS revision synchronization is taken care of when you use <a href="http://confluence.jetbrains.com/display/TCD8/Configuring+Dependencies">build dependencies</a>. I found you need both an artifact dependency (to copy the artifacts, e.g. installer files etc.) and a snapshot dependency (to provide the source files from the correct revision). </li>
+<li>Note that you should create different VCS roots for each project, otherwise the projects all share a single check-out directory, which will likely remove your artifacts etc.</li>
+</ul>
+</li>
 </ul>
  
     </div>
@@ -232,8 +306,8 @@ development I did for my PhD.</li>
     <div id="post-footer">
         <div>
             <div class="navlinks">
+  <a href="/posts/2013-12-27_Sherlock-Release-V0480.html" title="Previous Post: Sherlock release - V0.4.8.0" class="navlinks-prev">&laquo; Sherlock release - V0.4.8.0</a>
   
-  <a href="/posts/2013-09-03_First-time-paragliding.html" title="Next Post: First time paragliding" class="navlinks-next">First time paragliding &raquo;</a>
 </div>
         </div>
     </div>
@@ -253,7 +327,7 @@ development I did for my PhD.</li>
     <div id="post-comments">
         <h3>Comments</h3>
         <div id="post-comment-header">
-            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/1"> this post's issue page on 
+            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/5000"> this post's issue page on 
             GitHub</a> (you'll need a GitHub account).
         </div>
     </div>
@@ -264,7 +338,7 @@ development I did for my PhD.</li>
         for (var i=0; i<data.length; i++) {
           var cuser = data[i].user.login;
           var cuserlink = "https://www.github.com/" + data[i].user.login;
-          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/1#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
+          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/5000#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
           var cbody = data[i].body_html;
           var cavatarlink = data[i].user.avatar_url;
           var cdate = Date.parse(data[i].created_at).toString("yyyy-MM-dd HH:mm:ss");
@@ -273,7 +347,7 @@ development I did for my PhD.</li>
         }
       }
 
-      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/1/comments", {
+      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/5000/comments", {
         headers: {Accept: "application/vnd.github.full+json"},
         dataType: "json",
         success: function(msg){
