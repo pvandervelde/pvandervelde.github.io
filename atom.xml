@@ -3,7 +3,7 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2014-01-31T01:57:38.029Z</updated>
+    <updated>2014-02-18T04:05:23.598Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
@@ -12,11 +12,45 @@
 
     
         <entry>
+            <title>Regression testing of a console application</title>
+            <link href="http://pvandervelde.github.io/posts/2014-02-18_Regression-testing-console-applications.html"/>
+            <updated>2014-02-18T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2014-02-18_Regression-testing-console-applications.html</id>
+            <content type="html">&lt;p&gt;After &lt;a href=&quot;/posts/2013-12-04_Regression-testing-with-Sherlock.html&quot;&gt;setting up&lt;/a&gt; &lt;a href=&quot;https://github.com/pvandervelde/Sherlock&quot;&gt;Sherlock&lt;/a&gt; you will need to create some tests that you can execute with Sherlock. In this post I will describe how I created the regression tests for the command line application of &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For this case the application-under-test (AUT) is the Apollo console application which provides the user with a way to control the capabilities of Apollo, e.g. running a fluid dynamics simulation, by executing a Python script. The goal of the regression test for the console application is to execute a large part of the API which is used by scripts to interact with the different parts of Apollo.&lt;/p&gt;
+&lt;p&gt;In order to test the scripting API I wrote several scripts that will be executed during the test. Each script exercises several parts of the API and checks after each action that the state of the application is as expected. An example of a test script is given in the following code segment:&lt;/p&gt;
+&lt;script src='https://gist.github.com/8995251.js'&gt;&lt;/script&gt;
+
+&lt;p&gt;This test script:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Verifies that no project exists at start-up. If one exists the test is considered failed and the script forces the application to exit with a non-zero exit code.&lt;/li&gt;
+&lt;li&gt;Creates a new project and obtains a reference to the new project. If either step fails then once again the application is forced to exit with a non-zero exit code.&lt;/li&gt;
+&lt;li&gt;The name of the project is changed and the script verifies that the new name has been stored.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Obviously the script given here is a rather trivial and somewhat naive test script however it does provide an idea of what a test script should do.&lt;/p&gt;
+&lt;p&gt;In order to inform Sherlock that the script execution has failed the script can either write to the error stream or it can force the application to exit with a non-zero error code. To provide data for fault analysis a test script can write to both the standard output stream and the error data stream. Information gathered from either stream will be placed in the Sherlock log, which can be copied back to the report location by setting the correct switches. Additionally any data on the error stream will be written to the test report.&lt;/p&gt;
+&lt;p&gt;It is important to note that the test script should be robust enough to handle any kind of problem encountered because there is no guarantee that the application will behave in the appropriate manner, after all the application is being tested to see if it is fit for purpose.&lt;/p&gt;
+&lt;p&gt;Once the test scripts are written you can create a test configuration for the different test steps. An example is given below:&lt;/p&gt;
+&lt;script src='https://gist.github.com/8995455.js'&gt;&lt;/script&gt;
+
+&lt;p&gt;The important things to note in this configuration are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Each test step copies back the system log files which include:&lt;ul&gt;
+&lt;li&gt;The Sherlock log file written on the test environment.&lt;/li&gt;
+&lt;li&gt;Any MSI install log files.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The test script executing test step also copies the log files written by the console application.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        </entry>
+    
+        <entry>
             <title>PG2 - Site number five</title>
             <link href="http://pvandervelde.github.io/posts/2014-01-31_PG2-Site-number-five.html"/>
             <updated>2014-01-31T00:00:00.000Z</updated>
             <id>http://pvandervelde.github.io/posts/2014-01-31_PG2-Site-number-five.html</id>
-            <content type="html">&lt;p&gt;Two weeks ago I managed to fulfil another criteria for my PG2 license by flying at the  &lt;a href=&quot;http://paraglidingnewzealand.com/places-to-fly/site/mangawhai-heads&quot;&gt;Mangawhai Heads&lt;/a&gt; for my fifth site.&lt;/p&gt;
+            <content type="html">&lt;p&gt;Two weeks ago I managed to fulfil another criteria for my PG2 license by flying at the  &lt;a href=&quot;http://paraglidingnewzealand.com/places-to-fly/site/mangawhai-heads&quot;&gt;Mangawhai Heads&lt;/a&gt; for my fifth site. &lt;/p&gt;
 &lt;p&gt;Unlike the other locations the launch site at Mangawhai heads is rather small, just big enough for the glider. Because of the conditions and the amount of space at the launch location I elected to do a forward launch with some assistance of the instructor. That turned out to be a good decision because as soon as the glider was above my head it caught the wind stream and I rocketed off the ground. Unfortunately with all the pre-launch action going on I had neglected to completely check my glider which meant I ended up with a small line tangle in the top C-D line which slowed my glider down a bit during flight. &lt;/p&gt;
 &lt;p&gt;After about 20 minutes of flying I started to notice that my ground speed was reducing more and more, at which point I decided it was better to be on the ground wishing I was in the sky than being in the sky wishing I was on the ground and so I landed on the beach.&lt;/p&gt;
 &lt;p&gt;The learning points of this flight are:&lt;/p&gt;
@@ -571,7 +605,7 @@ After recovering from the jitters for a bit I had a second attempt at top landin
 &lt;li&gt;How to prepare a virtual machine for use as a &lt;a href=&quot;/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html&quot;&gt;testing environment&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;How to &lt;a href=&quot;/posts/2013-12-24_Setting-up-Sherlock-verification.html&quot;&gt;verify&lt;/a&gt;  that all the environments have been configured correctly.&lt;/li&gt;
 &lt;li&gt;How to integrate with a &lt;a href=&quot;/posts/2014-01-13_Integrating-Sherlock-with-a-build-server.html&quot;&gt;build server&lt;/a&gt;. This will discuss build jobs, build scripts and test configuration.&lt;/li&gt;
-&lt;li&gt;A description on how I used Sherlock to perform integration tests on the console application of Apollo.&lt;/li&gt;
+&lt;li&gt;A description on how I used Sherlock to &lt;a href=&quot;/posts/2014-02-18_Regression-testing-console-applications.html&quot;&gt;perform integration tests&lt;/a&gt; on the console application of Apollo.&lt;/li&gt;
 &lt;li&gt;And a description on how I used Sherlock to perform integration tests on a WPF application of &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 </content>
