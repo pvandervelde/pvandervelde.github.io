@@ -79,6 +79,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2014-04-30_nAnicitus-Release-V015.html">nAnicitus release - V0.1.5</a></li>
+                    
                         <li><a href="/posts/2014-03-31_Regression-testing-gui-applications.html">GUI testing with TestStack.White</a></li>
                     
                         <li><a href="/posts/2014-02-18_Regression-testing-console-applications.html">Regression testing of a console application</a></li>
@@ -96,8 +98,6 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         <li><a href="/posts/2013-12-22_nAnicitus-Release-V0140.html">nAnicitus release - V0.1.4.0</a></li>
                     
                         <li><a href="/posts/2013-12-21_Nuclei-Release-V0710.html">Nuclei release - V0.7.1.0</a></li>
-                    
-                        <li><a href="/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html">Sherlock configuration - Virtual machines</a></li>
                     
                 </ul>
             </div>
@@ -148,7 +148,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Waipapa
                     </a>
                 
-                    <a href="/tags/nAnicitus.html" style="font-size: 121.41586705156973%">
+                    <a href="/tags/nAnicitus.html" style="font-size: 127.02381544273197%">
                         nAnicitus
                     </a>
                 
@@ -212,6 +212,38 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2014-04-30_nAnicitus-Release-V015.html'>nAnicitus release - V0.1.5</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Wednesday, April 30, 2014 | Posted in
+                
+                    <a id="post-category" href="/tags/nAnicitus.html">nAnicitus</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Version <a href="https://github.com/pvandervelde/nAnicitus/releases/tag/0.1.5">V0.1.5</a> of the <a href="/projects/nanicitus.html">nAnicitus</a> symbol store application has been released.  </p>
+<p>This release fixes the following issues:</p>
+<ul>
+<li><a href="https://github.com/pvandervelde/nAnicitus/issues/4">#4</a> - Switch versioning scheme to use Semantic Versioning. The version is automatically calculated from the previous version tags in the repository with the <a href="https://github.com/JakeGinnivan/GitHubFlowVersion">GitHubFlowVersion</a> tool.</li>
+<li><a href="https://github.com/pvandervelde/nAnicitus/issues/6">#6</a> - Mark all files as read-only. All source files which are copied to the the UNC directory are now marked as read-only so that users won&#39;t be able to change them.</li>
+<li><a href="https://github.com/pvandervelde/nAnicitus/issues/7">#7</a> - Srctool last message not stripped when finding source paths in PDB</li>
+<li><a href="https://github.com/pvandervelde/nAnicitus/issues/8">#8</a> - PDB embedded sourceserver file path calculation doesn&#39;t match server path. The source server file path is now calculated for each embedded file, instead of using a single directory reference for all files.</li>
+<li><a href="https://github.com/pvandervelde/nAnicitus/issues/10">#10</a> - Automatically create release notes from resolved GitHub issues. The release notes are created by finding all issues that have been closed between the previous and the current tag. This is using <a href="https://github.com/JakeGinnivan/GitReleaseNotes">GitReleaseNote</a> tool.</li>
+</ul>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -1125,7 +1157,7 @@ After recovering from the jitters for a bit I had a second attempt at top landin
 <li>How to <a href="/posts/2013-12-24_Setting-up-Sherlock-verification.html">verify</a>  that all the environments have been configured correctly.</li>
 <li>How to integrate with a <a href="/posts/2014-01-13_Integrating-Sherlock-with-a-build-server.html">build server</a>. This will discuss build jobs, build scripts and test configuration.</li>
 <li>A description on how I used Sherlock to <a href="/posts/2014-02-18_Regression-testing-console-applications.html">perform integration tests</a> on the console application of <a href="/projects/apollo.html">Apollo</a>.</li>
-<li>And a description on how I used Sherlock to <a href="/posts/2014-12-31_Regression-testing-gui-applications.html">perform integration tests</a> on a WPF application of <a href="/projects/apollo.html">Apollo</a>.</li>
+<li>And a description on how I used Sherlock to <a href="/posts/2014-03-31_Regression-testing-gui-applications.html">perform integration tests</a> on a WPF application of <a href="/projects/apollo.html">Apollo</a>.</li>
 </ol>
  
     </div>
@@ -2011,7 +2043,7 @@ development I did for my PhD.</li>
             Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design 
             by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>. Feed icon by <a href="http://www.icojam.com/">Icojam</a>.
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Monday, March 31, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Wednesday, April 30, 2014.</p>
     </div>
 
     <!-- jQuery -->

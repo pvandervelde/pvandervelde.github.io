@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>Mind Vortex</title>
+    <title>nAnicitus release - V0.1.5 | Mind Vortex</title>
     <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, Fluid dynamics, CFD, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
@@ -211,64 +211,91 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
             </div>
         </div>
         <div id="content">
-            <div id="posts">
-    <h3 id="post-tags-header">Posts tagged with: Console</h3>
-    
-        <div id="post-spacer">
-            <div id="post">
+            <!--
+    Commenting is based on: http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html
+-->
+<div id="post">
+    <div id="post">
     <div id="post-header">
         <h2>
             
-                <a href='/posts/2014-02-18_Regression-testing-console-applications.html'>Regression testing of a console application</a>
+                nAnicitus release - V0.1.5
             
         </h2>
         <div id="post-meta">
             <p>
-                Tuesday, February 18, 2014 | Posted in
+                Wednesday, April 30, 2014 | Posted in
                 
-                    <a id="post-category" href="/tags/Regression testing.html">Regression testing</a>
-                
-                    <a id="post-category" href="/tags/Console.html">Console</a>
-                
-                    <a id="post-category" href="/tags/Apollo.html">Apollo</a>
-                
-                    <a id="post-category" href="/tags/Scripting.html">Scripting</a>
+                    <a id="post-category" href="/tags/nAnicitus.html">nAnicitus</a>
                 
             </p>
         </div>
     </div>
     <div id="post-content">
-        <p>After <a href="/posts/2013-12-04_Regression-testing-with-Sherlock.html">setting up</a> <a href="https://github.com/pvandervelde/Sherlock">Sherlock</a> you will need to create some tests that you can execute with Sherlock. In this post I will describe how I created the regression tests for the command line application of <a href="/projects/apollo.html">Apollo</a>.</p>
-<p>For this case the application-under-test (AUT) is the Apollo console application which provides the user with a way to control the capabilities of Apollo, e.g. running a fluid dynamics simulation, by executing a Python script. The goal of the regression test for the console application is to execute a large part of the API which is used by scripts to interact with the different parts of Apollo.</p>
-<p>In order to test the scripting API I wrote several scripts that will be executed during the test. Each script exercises several parts of the API and checks after each action that the state of the application is as expected. An example of a test script is given in the following code segment:</p>
-<script src='https://gist.github.com/8995251.js'></script>
-
-<p>This test script:</p>
-<ol>
-<li>Verifies that no project exists at start-up. If one exists the test is considered failed and the script forces the application to exit with a non-zero exit code.</li>
-<li>Creates a new project and obtains a reference to the new project. If either step fails then once again the application is forced to exit with a non-zero exit code.</li>
-<li>The name of the project is changed and the script verifies that the new name has been stored.</li>
-</ol>
-<p>Obviously the script given here is a rather trivial and somewhat naive test script however it does provide an idea of what a test script should do.</p>
-<p>In order to inform Sherlock that the script execution has failed the script can either write to the error stream or it can force the application to exit with a non-zero error code. To provide data for fault analysis a test script can write to both the standard output stream and the error data stream. Information gathered from either stream will be placed in the Sherlock log, which can be copied back to the report location by setting the correct switches. Additionally any data on the error stream will be written to the test report.</p>
-<p>It is important to note that the test script should be robust enough to handle any kind of problem encountered because there is no guarantee that the application will behave in the appropriate manner, after all the application is being tested to see if it is fit for purpose.</p>
-<p>Once the test scripts are written you can create a test configuration for the different test steps. An example is given below:</p>
-<script src='https://gist.github.com/8995455.js'></script>
-
-<p>The important things to note in this configuration are:</p>
+        <p>Version <a href="https://github.com/pvandervelde/nAnicitus/releases/tag/0.1.5">V0.1.5</a> of the <a href="/projects/nanicitus.html">nAnicitus</a> symbol store application has been released.  </p>
+<p>This release fixes the following issues:</p>
 <ul>
-<li>Each test step copies back the system log files which include:<ul>
-<li>The Sherlock log file written on the test environment.</li>
-<li>Any MSI install log files.</li>
-</ul>
-</li>
-<li>The test script executing test step also copies the log files written by the console application.</li>
+<li><a href="https://github.com/pvandervelde/nAnicitus/issues/4">#4</a> - Switch versioning scheme to use Semantic Versioning. The version is automatically calculated from the previous version tags in the repository with the <a href="https://github.com/JakeGinnivan/GitHubFlowVersion">GitHubFlowVersion</a> tool.</li>
+<li><a href="https://github.com/pvandervelde/nAnicitus/issues/6">#6</a> - Mark all files as read-only. All source files which are copied to the the UNC directory are now marked as read-only so that users won&#39;t be able to change them.</li>
+<li><a href="https://github.com/pvandervelde/nAnicitus/issues/7">#7</a> - Srctool last message not stripped when finding source paths in PDB</li>
+<li><a href="https://github.com/pvandervelde/nAnicitus/issues/8">#8</a> - PDB embedded sourceserver file path calculation doesn&#39;t match server path. The source server file path is now calculated for each embedded file, instead of using a single directory reference for all files.</li>
+<li><a href="https://github.com/pvandervelde/nAnicitus/issues/10">#10</a> - Automatically create release notes from resolved GitHub issues. The release notes are created by finding all issues that have been closed between the previous and the current tag. This is using <a href="https://github.com/JakeGinnivan/GitReleaseNotes">GitReleaseNote</a> tool.</li>
 </ul>
  
     </div>
 </div>
+    <div id="post-footer">
+        <div>
+            <div class="navlinks">
+  <a href="/posts/2014-03-31_Regression-testing-gui-applications.html" title="Previous Post: GUI testing with TestStack.White" class="navlinks-prev">&laquo; GUI testing with TestStack.White</a>
+  
+</div>
         </div>
+    </div>
     
+    <script type="text/javascript" src="http://datejs.googlecode.com/svn/trunk/build/date-en-US.js"></script>
+
+    <script type="text/javascript">
+      $("#post p").each( function(index) {
+        if (index > 0 && $.trim($(this).text()).length > 0) {
+          $(this).attr("id", "par" + index.toString());
+          var html = $(this).html();
+          $(this).html(html + " <a href='#par" + index.toString() + "'>#</a>");
+        }
+      });
+    </script>
+    
+    <div id="post-comments">
+        <h3>Comments</h3>
+        <div id="post-comment-header">
+            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/38"> this post's issue page on 
+            GitHub</a> (you'll need a GitHub account).
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+
+      function loadComments(data) {
+        for (var i=0; i<data.length; i++) {
+          var cuser = data[i].user.login;
+          var cuserlink = "https://www.github.com/" + data[i].user.login;
+          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/38#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
+          var cbody = data[i].body_html;
+          var cavatarlink = data[i].user.avatar_url;
+          var cdate = Date.parse(data[i].created_at).toString("yyyy-MM-dd HH:mm:ss");
+
+          $("#post-comments").append("<div id='post-comment'><div id='post-comment-header'><div id='post-comment-gravatar'>" + '<img src="' + cavatarlink + '" alt="" width="20" height="20">' + "</div><a id='post-comment-user' href=\""+ cuserlink + "\">" + cuser + "</a><a id='post-comment-date' href=\"" + clink + "\">" + cdate + "</a></div><div id='post-comment-body'>" + cbody + "</div></div>");
+        }
+      }
+
+      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/38/comments", {
+        headers: {Accept: "application/vnd.github.full+json"},
+        dataType: "json",
+        success: function(msg){
+          loadComments(msg);
+       }
+      });
+    </script>
 </div>
         </div>
     </div>

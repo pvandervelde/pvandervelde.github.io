@@ -3,13 +3,30 @@
     <title>Mind Vortex</title>
     <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
     <link href="http://pvandervelde.github.io"/>
-    <updated>2014-03-31T02:51:44.225Z</updated>
+    <updated>2014-04-29T21:28:48.565Z</updated>
     <id>http://pvandervelde.github.io</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>nAnicitus release - V0.1.5</title>
+            <link href="http://pvandervelde.github.io/posts/2014-04-30_nAnicitus-Release-V015.html"/>
+            <updated>2014-04-30T00:00:00.000Z</updated>
+            <id>http://pvandervelde.github.io/posts/2014-04-30_nAnicitus-Release-V015.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/nAnicitus/releases/tag/0.1.5&quot;&gt;V0.1.5&lt;/a&gt; of the &lt;a href=&quot;/projects/nanicitus.html&quot;&gt;nAnicitus&lt;/a&gt; symbol store application has been released.  &lt;/p&gt;
+&lt;p&gt;This release fixes the following issues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nAnicitus/issues/4&quot;&gt;#4&lt;/a&gt; - Switch versioning scheme to use Semantic Versioning. The version is automatically calculated from the previous version tags in the repository with the &lt;a href=&quot;https://github.com/JakeGinnivan/GitHubFlowVersion&quot;&gt;GitHubFlowVersion&lt;/a&gt; tool.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nAnicitus/issues/6&quot;&gt;#6&lt;/a&gt; - Mark all files as read-only. All source files which are copied to the the UNC directory are now marked as read-only so that users won&amp;#39;t be able to change them.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nAnicitus/issues/7&quot;&gt;#7&lt;/a&gt; - Srctool last message not stripped when finding source paths in PDB&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nAnicitus/issues/8&quot;&gt;#8&lt;/a&gt; - PDB embedded sourceserver file path calculation doesn&amp;#39;t match server path. The source server file path is now calculated for each embedded file, instead of using a single directory reference for all files.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nAnicitus/issues/10&quot;&gt;#10&lt;/a&gt; - Automatically create release notes from resolved GitHub issues. The release notes are created by finding all issues that have been closed between the previous and the current tag. This is using &lt;a href=&quot;https://github.com/JakeGinnivan/GitReleaseNotes&quot;&gt;GitReleaseNote&lt;/a&gt; tool.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        </entry>
     
         <entry>
             <title>GUI testing with TestStack.White</title>
@@ -694,7 +711,7 @@ After recovering from the jitters for a bit I had a second attempt at top landin
 &lt;li&gt;How to &lt;a href=&quot;/posts/2013-12-24_Setting-up-Sherlock-verification.html&quot;&gt;verify&lt;/a&gt;  that all the environments have been configured correctly.&lt;/li&gt;
 &lt;li&gt;How to integrate with a &lt;a href=&quot;/posts/2014-01-13_Integrating-Sherlock-with-a-build-server.html&quot;&gt;build server&lt;/a&gt;. This will discuss build jobs, build scripts and test configuration.&lt;/li&gt;
 &lt;li&gt;A description on how I used Sherlock to &lt;a href=&quot;/posts/2014-02-18_Regression-testing-console-applications.html&quot;&gt;perform integration tests&lt;/a&gt; on the console application of &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;And a description on how I used Sherlock to &lt;a href=&quot;/posts/2014-12-31_Regression-testing-gui-applications.html&quot;&gt;perform integration tests&lt;/a&gt; on a WPF application of &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;And a description on how I used Sherlock to &lt;a href=&quot;/posts/2014-03-31_Regression-testing-gui-applications.html&quot;&gt;perform integration tests&lt;/a&gt; on a WPF application of &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 </content>
         </entry>
