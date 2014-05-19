@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>Mind Vortex</title>
-    <link href="http://pvandervelde.github.io/atom.xml" rel="self"/>
-    <link href="http://pvandervelde.github.io"/>
-    <updated>2014-05-18T21:50:46.411Z</updated>
-    <id>http://pvandervelde.github.io</id>
+    <link href="http://www.petrikvandervelde.nl/atom.xml" rel="self"/>
+    <link href="http://www.petrikvandervelde.nl"/>
+    <updated>2014-05-19T09:28:35.490Z</updated>
+    <id>http://www.petrikvandervelde.nl</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
@@ -13,9 +13,9 @@
     
         <entry>
             <title>Embedding a symbol stream in a PDB file</title>
-            <link href="http://pvandervelde.github.io/posts/2014-05-19_Embedding-symbol-stream-in-pdb.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2014-05-19_Embedding-symbol-stream-in-pdb.html"/>
             <updated>2014-05-19T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2014-05-19_Embedding-symbol-stream-in-pdb.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2014-05-19_Embedding-symbol-stream-in-pdb.html</id>
             <content type="html">&lt;p&gt;The &lt;a href=&quot;/projects/nanicitus.html&quot;&gt;nAnicitus&lt;/a&gt; application processes &lt;a href=&quot;http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-symbol-package&quot;&gt;NuGet symbol&lt;/a&gt; packages to push the symbols and sources up to their respective location for the symbol and source servers to work. In order to have a symbol server nothing special needs to be done, just push the symbols through the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx&quot;&gt;SymStore&lt;/a&gt; application and a nice directory with indexed symbols is created. However in order to allow debuggers to obtain the source files related to a given PDB some manipulation of the PDB files is necessary. Specifically the SRCSRV stream in the PDB file needs to be &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff552219%28v=vs.85%29.aspx&quot;&gt;modified&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The documentation gives a decent overview of how the source indexing works but it does not actually provide the information necessary to determine what should be written to the SRCSRV stream for a given PDB file. In fact if you want to know what information should be written to the SRCSRV stream if you want to store the indexed source files in a directory instead of getting them from your source control system then even the almighty &lt;a href=&quot;https://www.google.co.nz/webhp?tab=ww&amp;amp;ei=FwljU6S7J8byoATTxoLIAQ&amp;amp;ved=0CBMQ1S4#q=PDB+SRCSRV+UNC+VERSION%3D2&quot;&gt;google&lt;/a&gt; is rather quiet.   &lt;/p&gt;
 &lt;p&gt;In order to write to the SRCSRV stream one can use the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff558874%28v=vs.85%29.aspx&quot;&gt;PDBStr utility&lt;/a&gt;. However that still leaves the question of what to write to the stream. The &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/desktop/ms680641%28v=vs.85%29.aspx&quot;&gt;source server documentation&lt;/a&gt; provides examples for &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff551958%28v=vs.85%29.aspx&quot;&gt;VERSION 1&lt;/a&gt; streams, i.e. the kind that point the debugger to a source control (VCS) command. If however you want to store symbols and sources in a UNC path then you need &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff551966%28v=vs.85%29.aspx&quot;&gt;VERSION 2&lt;/a&gt; streams. With some help from this &lt;a href=&quot;http://www.jayway.com/2011/06/19/hosting-your-own-source-symbol-server/&quot;&gt;blog post&lt;/a&gt;, some digging at MSDN and lots of trial-and-error it seems that the SRCSRV stream should look like:  &lt;/p&gt;
@@ -74,9 +74,9 @@
     
         <entry>
             <title>nAnicitus release - V0.1.5</title>
-            <link href="http://pvandervelde.github.io/posts/2014-04-30_nAnicitus-Release-V015.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2014-04-30_nAnicitus-Release-V015.html"/>
             <updated>2014-04-30T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2014-04-30_nAnicitus-Release-V015.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2014-04-30_nAnicitus-Release-V015.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/nAnicitus/releases/tag/0.1.5&quot;&gt;V0.1.5&lt;/a&gt; of the &lt;a href=&quot;/projects/nanicitus.html&quot;&gt;nAnicitus&lt;/a&gt; symbol store application has been released.  &lt;/p&gt;
 &lt;p&gt;This release fixes the following issues:&lt;/p&gt;
 &lt;ul&gt;
@@ -91,9 +91,9 @@
     
         <entry>
             <title>GUI testing with TestStack.White</title>
-            <link href="http://pvandervelde.github.io/posts/2014-03-31_Regression-testing-gui-applications.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2014-03-31_Regression-testing-gui-applications.html"/>
             <updated>2014-03-31T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2014-03-31_Regression-testing-gui-applications.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2014-03-31_Regression-testing-gui-applications.html</id>
             <content type="html">&lt;p&gt;In the &lt;a href=&quot;/posts/2014-02-18_Regression-testing-console-applications.html&quot;&gt;previous&lt;/a&gt; post I explained how I created the regression tests for a script running application that belongs to the &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt; project. In this post I will explain how I created the regression tests for an Apollo application with a graphical user interface (UI).&lt;/p&gt;
 &lt;p&gt;My initial attempt to write a regression test suite for the GUI application was done using the &lt;a href=&quot;http://www.nunit.org/&quot;&gt;NUnit&lt;/a&gt; and &lt;a href=&quot;http://scriptcs.net/&quot;&gt;ScriptCS&lt;/a&gt; with the idea that NUnit would provide the test execution and validation methods and ScriptCs would provide an easy way to write the test scripts without requiring a complete IDE to be used. After some trial-and-error it became clear that this approach was not the most suitable solution for the following reasons:&lt;/p&gt;
 &lt;ul&gt;
@@ -152,9 +152,9 @@
     
         <entry>
             <title>Regression testing of a console application</title>
-            <link href="http://pvandervelde.github.io/posts/2014-02-18_Regression-testing-console-applications.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2014-02-18_Regression-testing-console-applications.html"/>
             <updated>2014-02-18T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2014-02-18_Regression-testing-console-applications.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2014-02-18_Regression-testing-console-applications.html</id>
             <content type="html">&lt;p&gt;After &lt;a href=&quot;/posts/2013-12-04_Regression-testing-with-Sherlock.html&quot;&gt;setting up&lt;/a&gt; &lt;a href=&quot;https://github.com/pvandervelde/Sherlock&quot;&gt;Sherlock&lt;/a&gt; you will need to create some tests that you can execute with Sherlock. In this post I will describe how I created the regression tests for the command line application of &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;For this case the application-under-test (AUT) is the Apollo console application which provides the user with a way to control the capabilities of Apollo, e.g. running a fluid dynamics simulation, by executing a Python script. The goal of the regression test for the console application is to execute a large part of the API which is used by scripts to interact with the different parts of Apollo.&lt;/p&gt;
 &lt;p&gt;In order to test the scripting API I wrote several scripts that will be executed during the test. Each script exercises several parts of the API and checks after each action that the state of the application is as expected. An example of a test script is given in the following code segment:&lt;/p&gt;
@@ -186,9 +186,9 @@
     
         <entry>
             <title>PG2 - Site number five</title>
-            <link href="http://pvandervelde.github.io/posts/2014-01-31_PG2-Site-number-five.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2014-01-31_PG2-Site-number-five.html"/>
             <updated>2014-01-31T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2014-01-31_PG2-Site-number-five.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2014-01-31_PG2-Site-number-five.html</id>
             <content type="html">&lt;p&gt;Two weeks ago I managed to fulfil another criteria for my PG2 license by flying at the  &lt;a href=&quot;http://paraglidingnewzealand.com/places-to-fly/site/mangawhai-heads&quot;&gt;Mangawhai Heads&lt;/a&gt; for my fifth site. &lt;/p&gt;
 &lt;p&gt;Unlike the other locations the launch site at Mangawhai heads is rather small, just big enough for the glider. Because of the conditions and the amount of space at the launch location I elected to do a forward launch with some assistance of the instructor. That turned out to be a good decision because as soon as the glider was above my head it caught the wind stream and I rocketed off the ground. Unfortunately with all the pre-launch action going on I had neglected to completely check my glider which meant I ended up with a small line tangle in the top C-D line which slowed my glider down a bit during flight. &lt;/p&gt;
 &lt;p&gt;After about 20 minutes of flying I started to notice that my ground speed was reducing more and more, at which point I decided it was better to be on the ground wishing I was in the sky than being in the sky wishing I was on the ground and so I landed on the beach.&lt;/p&gt;
@@ -203,9 +203,9 @@
     
         <entry>
             <title>PG2 - Christmas holiday antics</title>
-            <link href="http://pvandervelde.github.io/posts/2014-01-21_PG2-Christmas-holiday-antics.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2014-01-21_PG2-Christmas-holiday-antics.html"/>
             <updated>2014-01-21T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2014-01-21_PG2-Christmas-holiday-antics.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2014-01-21_PG2-Christmas-holiday-antics.html</id>
             <content type="html">&lt;p&gt;During the Christmas holidays a few weeks ago I was planning to get lots of flying done, after all I had two weeks off and the weather had been amazing while I was in the office so what else could be the case? Unfortunately it turned out that the weather gods had other plans and provided generous helpings of wind and rain. That meant I only managed to fly on two different days. &lt;/p&gt;
 &lt;p&gt;However that doesn&amp;#39;t mean that the Christmas holidays were lacking paragliding activities. You see my new &lt;a href=&quot;http://www.korteldesign.com/spip/?Karma-II-231&quot;&gt;harness&lt;/a&gt; arrived just before Christmas. It was ordered three or so months ago but it was completely worth the wait. The build quality is very high and the harness felt comfortable straight away. Mind you there is still some set up to be done. There are a lot of different straps on this harness which subtly change the position and shape of the harness. I suspect it will be a while before I find all the right settings.
 The biggest difference so far compared to the school harnesses is that it feels like the harness reacts more to changes in the glider, which at the moment is unsettling but I guess I&amp;#39;ll get used to it. And the second difference is that the harness is harder to get into.   &lt;/p&gt;
@@ -217,9 +217,9 @@ The biggest difference so far compared to the school harnesses is that it feels 
     
         <entry>
             <title>Sherlock configuration - Build server integration</title>
-            <link href="http://pvandervelde.github.io/posts/2014-01-13_Integrating-Sherlock-with-a-build-server.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2014-01-13_Integrating-Sherlock-with-a-build-server.html"/>
             <updated>2014-01-13T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2014-01-13_Integrating-Sherlock-with-a-build-server.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2014-01-13_Integrating-Sherlock-with-a-build-server.html</id>
             <content type="html">&lt;p&gt;Once the configuration of &lt;a href=&quot;https://github.com/pvandervelde/Sherlock&quot;&gt;Sherlock&lt;/a&gt; is complete the last step needed to make use of automatic regression testing is to integrate with a build server. In this post I will explain which steps need to be taken to integrate Sherlock with a build server. Examples will be given for &lt;a href=&quot;http://jenkins-ci.org/&quot;&gt;Jenkins&lt;/a&gt;, which is used at my work, and &lt;a href=&quot;http://www.jetbrains.com/teamcity/&quot;&gt;TeamCity&lt;/a&gt;, which I use personally. &lt;/p&gt;
 &lt;p&gt;In order to integrate with a build server you will need to: &lt;/p&gt;
 &lt;ul&gt;
@@ -306,9 +306,9 @@ The biggest difference so far compared to the school harnesses is that it feels 
     
         <entry>
             <title>Sherlock release - V0.4.8.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-12-27_Sherlock-Release-V0480.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-12-27_Sherlock-Release-V0480.html"/>
             <updated>2013-12-27T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-12-27_Sherlock-Release-V0480.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-12-27_Sherlock-Release-V0480.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.8.0&quot;&gt;V0.4.8.0&lt;/a&gt; of the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release provides the following issues:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/13&quot;&gt;#13&lt;/a&gt; - Provide setup verification&lt;/li&gt;
@@ -324,9 +324,9 @@ The biggest difference so far compared to the school harnesses is that it feels 
     
         <entry>
             <title>Sherlock configuration - Verification</title>
-            <link href="http://pvandervelde.github.io/posts/2013-12-24_Setting-up-Sherlock-verification.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-12-24_Setting-up-Sherlock-verification.html"/>
             <updated>2013-12-24T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-12-24_Setting-up-Sherlock-verification.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-12-24_Setting-up-Sherlock-verification.html</id>
             <content type="html">&lt;p&gt;After the configuration of the &lt;a href=&quot;/posts/2013-12-10_Setting-up-Sherlock-serverside.html&quot;&gt;host machine&lt;/a&gt; and the &lt;a href=&quot;/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html&quot;&gt;virtual machines&lt;/a&gt; the final step in the configuration of Sherlock is to verify that everything is configured correctly. This can be done by using the verification package that comes with each &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases&quot;&gt;release&lt;/a&gt; of Sherlock. In order to use the verification package take the following steps:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Unpack the &lt;strong&gt;verification.zip&lt;/strong&gt; package to a directory somewhere (e.g. &lt;code&gt;c:\temp\sherlock&lt;/code&gt;).&lt;/li&gt;
@@ -388,27 +388,27 @@ The biggest difference so far compared to the school harnesses is that it feels 
     
         <entry>
             <title>nAnicitus release - V0.1.4.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-12-22_nAnicitus-Release-V0140.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-12-22_nAnicitus-Release-V0140.html"/>
             <updated>2013-12-22T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-12-22_nAnicitus-Release-V0140.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-12-22_nAnicitus-Release-V0140.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/nAnicitus/releases/tag/V0.1.4.0&quot;&gt;V0.1.4.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nanicitus.html&quot;&gt;nAnicitus&lt;/a&gt; symbol store application has been released. This release fixes issue &lt;a href=&quot;https://github.com/pvandervelde/nAnicitus/issues/1&quot;&gt;#1&lt;/a&gt;. If a package is locked by the operating system, e.g. because the file write has not completed yet, then nAnicitus will try to load the package 3 times, waiting 5 seconds between each try. On top of that if the loading of a package fails then the nAnicitus will retry loading the package 3 times before giving up.&lt;/p&gt;
 </content>
         </entry>
     
         <entry>
             <title>Nuclei release - V0.7.1.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-12-21_Nuclei-Release-V0710.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-12-21_Nuclei-Release-V0710.html"/>
             <updated>2013-12-21T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-12-21_Nuclei-Release-V0710.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-12-21_Nuclei-Release-V0710.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.1.0&quot;&gt;V0.7.1.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release fixes issue &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/issues/9&quot;&gt;#9&lt;/a&gt;.&lt;/p&gt;
 </content>
         </entry>
     
         <entry>
             <title>Sherlock configuration - Virtual machines</title>
-            <link href="http://pvandervelde.github.io/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html"/>
             <updated>2013-12-11T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html</id>
             <content type="html">&lt;p&gt;After &lt;a href=&quot;/posts/2013-12-10_Setting-up-Sherlock-serverside.html&quot;&gt;setting up the host machine&lt;/a&gt; the next step in the &lt;a href=&quot;/posts/2013-12-04_Regression-testing-with-Sherlock.html&quot;&gt;configuration&lt;/a&gt; of Sherlock is to set up one or more virtual machines. Each virtual machine will have the following applications installed:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The update service which handles the installation of the latest available Sherlock binaries. &lt;/li&gt;
@@ -494,9 +494,9 @@ The biggest difference so far compared to the school harnesses is that it feels 
     
         <entry>
             <title>Sherlock configuration - Server side</title>
-            <link href="http://pvandervelde.github.io/posts/2013-12-10_Setting-up-Sherlock-serverside.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-12-10_Setting-up-Sherlock-serverside.html"/>
             <updated>2013-12-10T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-12-10_Setting-up-Sherlock-serverside.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-12-10_Setting-up-Sherlock-serverside.html</id>
             <content type="html">&lt;p&gt;In this post I will explain how to configure the &lt;a href=&quot;https://github.com/pvandervelde/Sherlock&quot;&gt;Sherlock&lt;/a&gt; host services, which handle test registration and selection and control of the test environments for a test. The set-up follows the following steps:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Preparing the host machine which includes installation of the OS and the required services.&lt;/li&gt;
@@ -678,9 +678,9 @@ The biggest difference so far compared to the school harnesses is that it feels 
     
         <entry>
             <title>PG2 - Top landings?</title>
-            <link href="http://pvandervelde.github.io/posts/2013-12-05_PG2-Top-landings.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-12-05_PG2-Top-landings.html"/>
             <updated>2013-12-05T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-12-05_PG2-Top-landings.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-12-05_PG2-Top-landings.html</id>
             <content type="html">&lt;p&gt;Two weeks ago the weather was once again favourable to learn more new skills on my way to my &lt;a href=&quot;/tags/PG2.html&quot;&gt;PG2 license&lt;/a&gt;. When we arrived at Maioro the wind was just enough to soar. Given that the forecast has indicated an increase in wind strength over the afternoon we decided to practise some ground handling first. After about an hour of practising reverse launches and keeping the glider stable above our heads it was time to fly. The wind was still a bit light but with a lot of scratching I still managed to get 40 - 45 minutes of flying in on my first flight, my longest flight until then.&lt;/p&gt;
 &lt;p&gt;As the afternoon progressed the wind strength slowly increased and staying up became easier which resulted in another 45 minute flight.&lt;/p&gt;
 &lt;p&gt;Later in the afternoon the instructor told me it was possible to get a set of short flights with some top landings in. For my first try I launched, gained some height and then turned in for the top landing and completely stuffed it up. As I started moving over to the landing spot everything accelerated and I tried to slow down and turn at the same time, which meant I was not actually doing either of those things so when I got close to the ground I was still moving at a decent speed and hence I face planted. Fortunately there was no actual damage to either me or the glider.
@@ -691,9 +691,9 @@ After recovering from the jitters for a bit I had a second attempt at top landin
     
         <entry>
             <title>Regression testing with Sherlock</title>
-            <link href="http://pvandervelde.github.io/posts/2013-12-04_Regression-testing-with-Sherlock.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-12-04_Regression-testing-with-Sherlock.html"/>
             <updated>2013-12-04T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-12-04_Regression-testing-with-Sherlock.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-12-04_Regression-testing-with-Sherlock.html</id>
             <content type="html">&lt;p&gt;Over a series of posts I hope to explain how to set up and use the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; test environment system. The idea is to follow the set up procedure I used both at home for the &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt; project and the proof of concept I am working on at my work place. But first lets start with a short explanation of what Sherlock is and what it does. &lt;/p&gt;
 &lt;h3 id=&quot;what-is-sherlock&quot;&gt;What is Sherlock&lt;/h3&gt;
 &lt;p&gt;Sherlock consists of a set of applications and services that provide test environment organisation and automatic execution of a set of tests on one or more test environments. The organisation part consists of:&lt;/p&gt;
@@ -752,9 +752,9 @@ After recovering from the jitters for a bit I had a second attempt at top landin
     
         <entry>
             <title>Nuclei release - V0.7.0.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-12-04_Nuclei-Release-V0700.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-12-04_Nuclei-Release-V0700.html"/>
             <updated>2013-12-04T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-12-04_Nuclei-Release-V0700.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-12-04_Nuclei-Release-V0700.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.0.0&quot;&gt;V0.7.0.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release adds support for grouping timing results based on their logical area.&lt;/p&gt;
 &lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group1 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup(); 
 &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(group1, &lt;span class=&quot;string&quot;&gt;&quot;My first timing group&quot;&lt;/span&gt;))
@@ -779,9 +779,9 @@ After recovering from the jitters for a bit I had a second attempt at top landin
     
         <entry>
             <title>Setting up nAnicitus</title>
-            <link href="http://pvandervelde.github.io/posts/2013-12-03_Setting-up-nAnicitus.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-12-03_Setting-up-nAnicitus.html"/>
             <updated>2013-12-03T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-12-03_Setting-up-nAnicitus.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-12-03_Setting-up-nAnicitus.html</id>
             <content type="html">&lt;p&gt;In this post I will explain how to install and configure the nAnicitus windows service. nAnicitus is a windows service that acts as a gatekeeper for the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx&quot;&gt;SymStore&lt;/a&gt; application. SymStore provides a relatively simple way to create a local / private &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/desktop/ms680693%28v=vs.85%29.aspx&quot;&gt;symbol server&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;This statement should bring up a few questions, cunning questions like:&lt;/p&gt;
 &lt;ol&gt;
@@ -820,9 +820,9 @@ After recovering from the jitters for a bit I had a second attempt at top landin
     
         <entry>
             <title>PG2 - Bumpy air, smooth air</title>
-            <link href="http://pvandervelde.github.io/posts/2013-11-19_PG2-Bumpy-air-smooth-air.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-11-19_PG2-Bumpy-air-smooth-air.html"/>
             <updated>2013-11-19T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-11-19_PG2-Bumpy-air-smooth-air.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-11-19_PG2-Bumpy-air-smooth-air.html</id>
             <content type="html">&lt;p&gt;Once more the &lt;a href=&quot;/tags/PG2.html&quot;&gt;PG2&lt;/a&gt; group gathered for some flying over the weekend. The action this time was at Maioro with a southerly wind providing for a very bumpy ride. Because of the angle between the wind and the cliff the lift band was very narrow and so one had to work hard to stay in the air. Over the course of the day I managed to get three long flights in but unfortunately I only managed to top land one of them, on the other two I bombed out and had to do a decent bit of walking to get back to the start place. Overall it was a good learning experience flying in very bumpy air with not much lift.&lt;/p&gt;
 &lt;p&gt;As a little treat for myself I had taken the Monday off from work so that I could go flying if the weather proved to be suitable. The weather forecast for Monday showed great promise for some good flying.&lt;/p&gt;
 &lt;p&gt;On Monday a &lt;a href=&quot;http://en.wikipedia.org/wiki/Convergence_zone&quot;&gt;convergence&lt;/a&gt; hanging around over the city so our instructor decided that with some luck the wind would turn northerly which would make &lt;a href=&quot;http://en.wikipedia.org/wiki/North_Head,_New_Zealand&quot;&gt;North head&lt;/a&gt; an excellent place to fly. After some para-waiting the weather gods decided that the southerly wind would break through the convergence which thereby ended our hopes for flying at North head. Fortunately there are quite a few places around Auckland where flying is possible so our instructor suggested going to &lt;a href=&quot;http://en.wikipedia.org/wiki/Muriwai&quot;&gt;Maori bay&lt;/a&gt;. When we got to Maori bay it turned out that the wind was smooth and from a suitable direction, so indeed the site was flyable. My first flight was a tandem flight with my instructor. While flying he showed me how to pick the right soaring lines and what to look out for. In the 30 or so minutes that we flew the tandem I learned heaps, and I did most of the flying, except for the start and the landing. &lt;/p&gt;
@@ -832,27 +832,27 @@ After recovering from the jitters for a bit I had a second attempt at top landin
     
         <entry>
             <title>nAdoni release - V0.2.1.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-11-13_NAdoni-Release-V0210.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-11-13_NAdoni-Release-V0210.html"/>
             <updated>2013-11-13T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-11-13_NAdoni-Release-V0210.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-11-13_NAdoni-Release-V0210.html</id>
             <content type="html">&lt;p&gt;In my haste to release the new &lt;a href=&quot;2013-11-13_NAdoni-Release-V0200.html&quot;&gt;KeyGenerator&lt;/a&gt; functionality I completely forgot to add the packaging of said KeyGenerator. Hence I hereby present Version &lt;a href=&quot;https://github.com/pvandervelde/nAdoni/releases/tag/V0.2.1.0&quot;&gt;V0.2.1.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nadoni.html&quot;&gt;nAdoni&lt;/a&gt; update manifest builder project which adds the ZIP archive containing the &lt;code&gt;nAdoni.KeyGenerator&lt;/code&gt; console application.&lt;/p&gt;
 </content>
         </entry>
     
         <entry>
             <title>nAdoni release - V0.2.0.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-11-13_NAdoni-Release-V0200.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-11-13_NAdoni-Release-V0200.html"/>
             <updated>2013-11-13T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-11-13_NAdoni-Release-V0200.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-11-13_NAdoni-Release-V0200.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/nAdoni/releases/tag/V0.2.0.0&quot;&gt;V0.2.0.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nadoni.html&quot;&gt;nAdoni&lt;/a&gt; update manifest builder project has been released. This release adds the &lt;code&gt;nAdoni.KeyGenerator&lt;/code&gt; console application to the project. This application can be used to generate the RSA key files which are necessary in order to build the manifest files.&lt;/p&gt;
 </content>
         </entry>
     
         <entry>
             <title>PG2 - Up and down the coast</title>
-            <link href="http://pvandervelde.github.io/posts/2013-11-11_PG2-Up-and-down-the-coast.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-11-11_PG2-Up-and-down-the-coast.html"/>
             <updated>2013-11-11T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-11-11_PG2-Up-and-down-the-coast.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-11-11_PG2-Up-and-down-the-coast.html</id>
             <content type="html">&lt;p&gt;Last weekend once again the wind was suitable for flying at &lt;a href=&quot;http://en.wikipedia.org/wiki/Kariotahi_Beach&quot;&gt;Kario&lt;/a&gt; and so more flying was had. The weather forecast indicated that the wind was going to be pretty strong and as we arrived on the beach that was confirmed by the general feel and the wind socks. &lt;/p&gt;
 &lt;p&gt;The first thing I had to deal with was the fact that launching was tricky due to the strong winds. The first launch went off without problems but on the second one I got picked up as the glider rose above my head, causing me to fall on my back (yay for back protectors) and the glider to overshoot and collapse. The conclusion was too much brake and not enough moving towards the glider.
 At that point Eva taught me how to do sideways launch where you lay the glider out at an angle to the wind, pull one end up first and then use brake on the high side to stabilize the glider above your head. Using this method the glider generates less pull and is relatively easy to control during the launching phase. Unlike the reverse launch however you need to be much more aggressive in pulling up the glider because if you are not, you give the low side time to catch up which defeats the entire purpose of using this method. In fact you want the whole thing to come up on an angle so that you can control the inflation speed.
@@ -864,18 +864,18 @@ It took me several attempts at getting the sideways launch right but in the end 
     
         <entry>
             <title>nAnicitus release - V0.1.3.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-10-31_nAnicitus-Release-V0130.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-10-31_nAnicitus-Release-V0130.html"/>
             <updated>2013-10-31T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-10-31_nAnicitus-Release-V0130.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-10-31_nAnicitus-Release-V0130.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/nAnicitus/releases/tag/V0.1.3.0&quot;&gt;V0.1.3.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nanicitus.html&quot;&gt;nAnicitus&lt;/a&gt; symbol store application has been released. This release adds additional logging and improves the handling of unexpected situations during processing of symbol packages.&lt;/p&gt;
 </content>
         </entry>
     
         <entry>
             <title>Sherlock release - V0.4.7.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-10-30_Sherlock-Release-V0470.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-10-30_Sherlock-Release-V0470.html"/>
             <updated>2013-10-30T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-10-30_Sherlock-Release-V0470.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-10-30_Sherlock-Release-V0470.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.7.0&quot;&gt;V0.4.7.0&lt;/a&gt; of the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release provides one bug fix:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The Windows job object created by the Sherlock service to ensure termination of the Sherlock.Service.Master and Sherlock.Service.Executor applications is now set to only include direct children (i.e. Sherlock.Service.Master / Sherlock.Service.Executor) in the job and not the indirect children. This allows the application under test to create its own job objects even on Windows 7 (which does not allow nesting of job objects) (&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/11&quot;&gt;issue #11&lt;/a&gt;).&lt;/li&gt;
@@ -885,9 +885,9 @@ It took me several attempts at getting the sideways launch right but in the end 
     
         <entry>
             <title>Weekend at Waipapa - Drying tomatoes</title>
-            <link href="http://pvandervelde.github.io/posts/2013-10-28_Weekend-at-Waipapa-drying-tomatoes.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-10-28_Weekend-at-Waipapa-drying-tomatoes.html"/>
             <updated>2013-10-28T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-10-28_Weekend-at-Waipapa-drying-tomatoes.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-10-28_Weekend-at-Waipapa-drying-tomatoes.html</id>
             <content type="html">&lt;p&gt;On the &lt;a href=&quot;http://en.wikipedia.org/wiki/Labour_Day#New_Zealand&quot;&gt;long weekend&lt;/a&gt; my friend Chris organised a climbing trip to &lt;a href=&quot;http://www.freeclimb.co.nz/wharepapa.html&quot;&gt;lake Waipapa&lt;/a&gt;, a climbing area with many delicate slab climbs.&lt;/p&gt;
 &lt;p&gt;We spend both days at the main wall working on some of the climbs. For Chris his climb of the weekend was &amp;#39;Millennium madness&amp;#39;, an amazing corner &lt;a href=&quot;http://en.wikipedia.org/wiki/Traditional_climbing&quot;&gt;trad&lt;/a&gt; climb which is rated &lt;a href=&quot;http://en.wikipedia.org/wiki/Grade_%28climbing%29#Ewbank&quot;&gt;18&lt;/a&gt;. From the trad gear side you have to make sure that your rack has several finger size pieces of gear so that you can use some at the start of the climb and some near the middle. The crux of the climb is the first 5 or so meters where you have to figure out how to switch between the different foot placements that are available. The climber starts out bridging between a set of small ledges and then transitions to using the crack to foot-jam and then to using some small indentations on the main face. The tricky bit is getting the transition between the different types of foot placements correct. &lt;/p&gt;
 &lt;p&gt;On saturday Chris had two attempts at cleaning &amp;#39;Millennium Madness&amp;#39; but didn&amp;#39;t quite get it right. It seems that the first time climbing in Waipapa after winter is always tricky as you are trying to re-acquire the correct climbing techniques for the delicate Waipapa climbs. &lt;/p&gt;
@@ -899,9 +899,9 @@ It took me several attempts at getting the sideways launch right but in the end 
     
         <entry>
             <title>PG2 - At the top of the stack</title>
-            <link href="http://pvandervelde.github.io/posts/2013-10-25_PG2-At-the-top-of-the-stack.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-10-25_PG2-At-the-top-of-the-stack.html"/>
             <updated>2013-10-25T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-10-25_PG2-At-the-top-of-the-stack.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-10-25_PG2-At-the-top-of-the-stack.html</id>
             <content type="html">&lt;p&gt;Last weekend I thought I could repeat the &lt;a href=&quot;/posts/2013-10-13_PG2-Spending-a-weekend-in-the-air.html&quot;&gt;full weekend flying&lt;/a&gt; trick that I pulled a few weeks back. The weather forecast was for sunny and windy, but not too windy. So on Saturday morning we drove out to the beach but when we got to the launch site it became clear that it would be touch-and-go due to the high winds. In the end I only got a little hop while practising my launches. After that I practised my ground handling with a &lt;a href=&quot;http://gingliders.com/speedflying/speedriding-gliders/nano/&quot;&gt;Gin Nano&lt;/a&gt; which is a fun little glider but it did feel more like a kite than a real glider.&lt;/p&gt;
 &lt;p&gt;The next day was a different story. The wind died down just enough and the sun stayed, all in all a perfect day for flying. Because there were a large number of people the group was split into two, the absolute beginners and the people who had flown before. The latter group immediately set up for their first flights while the former group started with ground handling exercises. I was with the group of people who got to prepare for their first flights immediately. &lt;/p&gt;
 &lt;p&gt;Over the day I managed to get three flights in, all with varying levels of success. On the first flight of the day I too rushed and stuffed several things up. First of all I was too enthusiastic with the initial launch which lead to the glider pulling me off my feet and then over flying me. We both ended lying on the ground. Fortunately only my ego was damaged so another attempt was made. On the second start I was more controlled but still kinda jittery during the launch and the run. To top it off I managed to twist the brake line around the rises. So in the end I just fly a circuit down to the ground and landed. No harm done and lots of lessons learned.&lt;/p&gt;
@@ -913,9 +913,9 @@ It took me several attempts at getting the sideways launch right but in the end 
     
         <entry>
             <title>Sherlock release - V0.4.6.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-10-24_Sherlock-Release-V0460.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-10-24_Sherlock-Release-V0460.html"/>
             <updated>2013-10-24T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-10-24_Sherlock-Release-V0460.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-10-24_Sherlock-Release-V0460.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.6.0&quot;&gt;V0.4.6.0&lt;/a&gt; of the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release provides two bug fixes:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The MSI installer now verifies that all directories exist before writing to them (&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/9&quot;&gt;issue #9&lt;/a&gt;)&lt;/li&gt;
@@ -926,9 +926,9 @@ It took me several attempts at getting the sideways launch right but in the end 
     
         <entry>
             <title>Sherlock release - V0.4.5.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-10-23_Sherlock-Release-V0450.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-10-23_Sherlock-Release-V0450.html"/>
             <updated>2013-10-23T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-10-23_Sherlock-Release-V0450.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-10-23_Sherlock-Release-V0450.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.5.0&quot;&gt;V0.4.5.0&lt;/a&gt; of the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release provides one improvement and one bug fix:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The test report can now include files generated during the test (&lt;a href=&quot;https://github.com/pvandervelde/Sherlock/issues/5&quot;&gt;issue #5&lt;/a&gt;)&lt;/li&gt;
@@ -939,9 +939,9 @@ It took me several attempts at getting the sideways launch right but in the end 
     
         <entry>
             <title>Nuclei release - V0.6.7.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-10-23_Nuclei-Release-V0670.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-10-23_Nuclei-Release-V0670.html"/>
             <updated>2013-10-23T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-10-23_Nuclei-Release-V0670.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-10-23_Nuclei-Release-V0670.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.7.0&quot;&gt;V0.6.7.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release fixes a bug in the processing of &lt;code&gt;ICommandSet&lt;/code&gt; return tasks which caused the processor to throw an exception if the return task was a &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ee372288.aspx&quot;&gt;continuation task&lt;/a&gt;. This bug fix means it is now possible to chain tasks and return the final task from an &lt;code&gt;ICommandSet&lt;/code&gt; object. An example of this behaviour is given in the following section of code.&lt;/p&gt;
 &lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;interface&lt;/span&gt; IMyCommandSet : ICommandSet
 {
@@ -964,9 +964,9 @@ It took me several attempts at getting the sideways launch right but in the end 
     
         <entry>
             <title>PG2 - Spending a weekend in the air</title>
-            <link href="http://pvandervelde.github.io/posts/2013-10-13_PG2-Spending-a-weekend-in-the-air.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-10-13_PG2-Spending-a-weekend-in-the-air.html"/>
             <updated>2013-10-13T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-10-13_PG2-Spending-a-weekend-in-the-air.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-10-13_PG2-Spending-a-weekend-in-the-air.html</id>
             <content type="html">&lt;p&gt;Last weekend another episode in my &lt;a href=&quot;/tags/PG2.html&quot;&gt;PG2 course&lt;/a&gt; took place with flights happening on both Saturday &lt;em&gt;and&lt;/em&gt; Sunday. Both days started with an off shore breeze but as the day progressed the sea breeze brought six to seven knots of wind from the South-West and we were good to go.&lt;/p&gt;
 &lt;p&gt;This time we flew from the high launch at at &lt;a href=&quot;http://en.wikipedia.org/wiki/Kariotahi_Beach&quot;&gt;Kariotahi&lt;/a&gt; which has the lowest point of the launch at about 90m above the beach. The walk up follows a narrow, relatively steep, sandy and muddy path which increased everybody&amp;#39;s desire to top land. Fortunately for us our excellent instructor always managed to get us into a position where top landings were possible, in spite of the sometimes lacking wind strength. &lt;/p&gt;
 &lt;p&gt;&lt;img align=&quot;left&quot; alt=&quot;Cruising around on my Gin Atlas&quot; src=&quot;/images/paragliding/paraglide_0006.JPG&quot; /&gt;&lt;/p&gt;
@@ -984,9 +984,9 @@ It took me several attempts at getting the sideways launch right but in the end 
     
         <entry>
             <title>Nuclei release - V0.6.6.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-10-12_Nuclei-Release-V0660.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-10-12_Nuclei-Release-V0660.html"/>
             <updated>2013-10-12T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-10-12_Nuclei-Release-V0660.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-10-12_Nuclei-Release-V0660.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.6.0&quot;&gt;V0.6.6.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release adds the ability to specify the name and version of the application in the log file. If no application name or version is specified then the information from &lt;code&gt;Assembly.GetEntryAssembly()&lt;/code&gt; is used. &lt;/p&gt;
 &lt;p&gt;The application name and version can be specified when creating a new logger via the &lt;code&gt;LoggerBuilder&lt;/code&gt; like so:&lt;/p&gt;
 &lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;cs&quot;&gt;IConfiguration configuration = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; MyConfiguration();
@@ -1000,9 +1000,9 @@ It took me several attempts at getting the sideways launch right but in the end 
     
         <entry>
             <title>Nuclei release - V0.6.5.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-09-26_Nuclei-Release-v0650.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-09-26_Nuclei-Release-v0650.html"/>
             <updated>2013-09-26T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-09-26_Nuclei-Release-v0650.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-09-26_Nuclei-Release-v0650.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.5.0&quot;&gt;V0.6.5.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release adds an option to allow the user to select which
 types of channels the communication layer is allowed to use. The communication layer can be allowed to use TCP/IP channels, named pipe channels or both.&lt;/p&gt;
 &lt;p&gt;In the previous versions in the constructor of the &lt;code&gt;CommunicationModule&lt;/code&gt; needed to be provided with a 
@@ -1034,9 +1034,9 @@ builder.RegisterModule(
     
         <entry>
             <title>nRefs release - V0.1.0.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-09-25_nRefs-Release-v0100.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-09-25_nRefs-Release-v0100.html"/>
             <updated>2013-09-25T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-09-25_nRefs-Release-v0100.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-09-25_nRefs-Release-v0100.html</id>
             <content type="html">&lt;p&gt;The &lt;a href=&quot;https://github.com/pvandervelde/nRefs/releases/tag/v0.1.0.0&quot;&gt;first release&lt;/a&gt; of the &lt;a href=&quot;/projects/nRefs.html&quot;&gt;nRefs&lt;/a&gt; assembly reference extraction application has been released. This release&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The test output now includes an XML report with all the messages and an indication of test success or failure.&lt;/li&gt;
@@ -1047,9 +1047,9 @@ builder.RegisterModule(
     
         <entry>
             <title>How this blog was created</title>
-            <link href="http://pvandervelde.github.io/posts/2013-09-25_How-this-blog-was-created.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-09-25_How-this-blog-was-created.html"/>
             <updated>2013-09-25T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-09-25_How-this-blog-was-created.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-09-25_How-this-blog-was-created.html</id>
             <content type="html">&lt;p&gt;A long time ago, in a location far, far, far away there was a hero in search for a quest ... &lt;/p&gt;
 &lt;p&gt;And he searched ...&lt;/p&gt;
 &lt;p&gt;And he searched .... &lt;/p&gt;
@@ -1116,9 +1116,9 @@ projects subdirectories and then sorts them by date. The &lt;em&gt;recent&lt;/em
     
         <entry>
             <title>Sherlock release - V0.4.4.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-09-21_Sherlock-Release-v0440.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-09-21_Sherlock-Release-v0440.html"/>
             <updated>2013-09-21T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-09-21_Sherlock-Release-v0440.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-09-21_Sherlock-Release-v0440.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.4.0&quot;&gt;V0.4.4.0&lt;/a&gt; of the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release provides two improvements:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The test output now includes an XML report with all the messages and an indication of test success or failure.&lt;/li&gt;
@@ -1129,9 +1129,9 @@ projects subdirectories and then sorts them by date. The &lt;em&gt;recent&lt;/em
     
         <entry>
             <title>PG2 - Second day</title>
-            <link href="http://pvandervelde.github.io/posts/2013-09-16_PG2-Second-day-flying.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-09-16_PG2-Second-day-flying.html"/>
             <updated>2013-09-16T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-09-16_PG2-Second-day-flying.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-09-16_PG2-Second-day-flying.html</id>
             <content type="html">&lt;p&gt;On Sunday the weather was good enough for some flying on the west coast. So at 11.30am about 8 of us gathered at &lt;a href=&quot;http://en.wikipedia.org/wiki/Kariotahi_Beach&quot;&gt;Kario&lt;/a&gt; and the second day of my &lt;a href=&quot;/tags/PG2.html&quot;&gt;PG2&lt;/a&gt; had started.&lt;/p&gt;
 &lt;p&gt;&lt;img align=&quot;left&quot; alt=&quot;Paraglider soaring high over beautiful west coast&quot; src=&quot;/images/paragliding/paraglide_0004.JPG&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;The first thing to notice about the west coast is that it looks amazing, rugged and empty. It seems that with paragliding besides the flying I also get to look out over the amazing landscapes New Zealand has. Double win!&lt;/p&gt;
@@ -1152,9 +1152,9 @@ projects subdirectories and then sorts them by date. The &lt;em&gt;recent&lt;/em
     
         <entry>
             <title>Sherlock release - V0.4.3.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-09-14_Sherlock-Release-v0430.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-09-14_Sherlock-Release-v0430.html"/>
             <updated>2013-09-14T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-09-14_Sherlock-Release-v0430.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-09-14_Sherlock-Release-v0430.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.3.0&quot;&gt;V0.4.3.0&lt;/a&gt; of the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release provides several bug fixes for:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The console application: Changed the way the REST URLs are constructed so that it works if the web service on a sub-part of a domain, e.g. &lt;code&gt;http://myserver/sherlock&lt;/code&gt; works now&lt;/li&gt;
@@ -1166,9 +1166,9 @@ projects subdirectories and then sorts them by date. The &lt;em&gt;recent&lt;/em
     
         <entry>
             <title>Sherlock release - V0.4.2.0</title>
-            <link href="http://pvandervelde.github.io/posts/2013-09-11_Sherlock-Release-v0420.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-09-11_Sherlock-Release-v0420.html"/>
             <updated>2013-09-11T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-09-11_Sherlock-Release-v0420.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-09-11_Sherlock-Release-v0420.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.2.0&quot;&gt;V0.4.2.0&lt;/a&gt; of the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release adds one bug fix and one improvement.&lt;/p&gt;
 &lt;p&gt;The bug fix is a change to the &lt;code&gt;IsHyperVMachine&lt;/code&gt; and &lt;code&gt;IsPhysicalMachine&lt;/code&gt; stored procedures in order to make them easier to use correctly.&lt;/p&gt;
 &lt;p&gt;The improvement is the addition of build steps that package the web projects into a ZIP file for easier deployment. These zip files can now also be retrieved from the &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.2.0&quot;&gt;release note&lt;/a&gt;&lt;/p&gt;
@@ -1177,9 +1177,9 @@ projects subdirectories and then sorts them by date. The &lt;em&gt;recent&lt;/em
     
         <entry>
             <title>Sherlock release - V0.4.0.1</title>
-            <link href="http://pvandervelde.github.io/posts/2013-09-08_Sherlock-Release-v0401.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-09-08_Sherlock-Release-v0401.html"/>
             <updated>2013-09-08T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-09-08_Sherlock-Release-v0401.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-09-08_Sherlock-Release-v0401.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.0.1&quot;&gt;V0.4.0.1&lt;/a&gt; of the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release adds two new features and one improvement.&lt;/p&gt;
 &lt;p&gt;The new features are:&lt;/p&gt;
 &lt;ul&gt;
@@ -1195,9 +1195,9 @@ projects subdirectories and then sorts them by date. The &lt;em&gt;recent&lt;/em
     
         <entry>
             <title>First time paragliding</title>
-            <link href="http://pvandervelde.github.io/posts/2013-09-03_First-time-paragliding.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-09-03_First-time-paragliding.html"/>
             <updated>2013-09-03T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-09-03_First-time-paragliding.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-09-03_First-time-paragliding.html</id>
             <content type="html">&lt;p&gt;A little while ago I signed up for a &lt;a href=&quot;http://paraglidingnewzealand.com/information/learning-to-fly&quot;&gt;PG2&lt;/a&gt; paragliding course 
 with &lt;a href=&quot;http://wingsandwaves.co.nz&quot;&gt;Wings and Waves&lt;/a&gt;. Unfortunately I signed up just before winter crept in and made it impossible to fly. As
 we are moving towards spring the weather has been getting better and last Sunday the weather was good enough for us (my girlfriend and me) to
@@ -1217,9 +1217,9 @@ have our first shot at flying a paraglider.&lt;/p&gt;
     
         <entry>
             <title>Why this blog was created</title>
-            <link href="http://pvandervelde.github.io/posts/2013-08-30_Why-this-blog-was-created.html"/>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-08-30_Why-this-blog-was-created.html"/>
             <updated>2013-08-30T00:00:00.000Z</updated>
-            <id>http://pvandervelde.github.io/posts/2013-08-30_Why-this-blog-was-created.html</id>
+            <id>http://www.petrikvandervelde.nl/posts/2013-08-30_Why-this-blog-was-created.html</id>
             <content type="html">&lt;p&gt;A couple of years ago I had a blog on Blogger but that never got further than a few posts, mainly because I ran out of interesting topics to write about. That
 and my &lt;a href=&quot;/about.html&quot;&gt;studies&lt;/a&gt; started interfering with life in general ... it seems research does that to ones life. In any case the old blog stalled and no
 more posts were written.&lt;/p&gt;
