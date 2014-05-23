@@ -3,13 +3,26 @@
     <title>Mind Vortex</title>
     <link href="http://www.petrikvandervelde.nl/atom.xml" rel="self"/>
     <link href="http://www.petrikvandervelde.nl"/>
-    <updated>2014-05-19T09:28:35.490Z</updated>
+    <updated>2014-05-23T03:55:32.531Z</updated>
     <id>http://www.petrikvandervelde.nl</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>Improvements to the site</title>
+            <link href="http://www.petrikvandervelde.nl/posts/2014-05-23_Improvements-to-the-site.html"/>
+            <updated>2014-05-23T00:00:00.000Z</updated>
+            <id>http://www.petrikvandervelde.nl/posts/2014-05-23_Improvements-to-the-site.html</id>
+            <content type="html">&lt;p&gt;Over the last few days some changes were made to the structure of this website. Of these changes the first change that was made is in the move from the standard GitHub pages URL to my own custom domain provided by the amazingly helpful people at &lt;a href=&quot;https://dnsimple.com/&quot;&gt;dnsimple&lt;/a&gt;. While the URL for this website has changed it is still being hosted by GitHub pages and so the old URL will continue working just fine.&lt;/p&gt;
+&lt;p&gt;The only slight catch is that the project pages for my projects now suddenly redirect through my new domain as well. Apparently this is due to the way GitHub &lt;a href=&quot;https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages#overview&quot;&gt;handles&lt;/a&gt; custom domains. For now I will live with this situation but later on my personal projects may be moved to separate &lt;a href=&quot;https://help.github.com/articles/what-s-the-difference-between-user-and-organization-accounts&quot;&gt;organisations&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The second change is the addition of pagination for the landing page. As I continued to write more blog posts this page was getting rather long and slow to load. The new landing page only contains the last five blog posts and provides a way to navigate to the previous posts at the bottom of the page. This should make the page much quicker to load. I will share the implementation of the pagination in a future blog post but for those who are interested the changes necessary to implement pagination in &lt;a href=&quot;https://github.com/docpad/docpad-plugin-paged/&quot;&gt;DocPad&lt;/a&gt; are pretty minor and can be seen in a single &lt;a href=&quot;https://github.com/pvandervelde/mindvortex/commit/9472ad503725eb42d98e30b6c4452d2b6766b344&quot;&gt;commit&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Besides setting up the pagination of the landing page I also created an &lt;a href=&quot;/archive.html&quot;&gt;archive&lt;/a&gt; page which, logically, shows all the blog posts in chronological order. Again a future blog post will describe the necessary changes to include the archive page. &lt;/p&gt;
+&lt;p&gt;Last but not least the site has gotten a new &lt;a href=&quot;http://en.wikipedia.org/wiki/Favicon&quot;&gt;favicon&lt;/a&gt; which is a little more vortex-y than the last icon.&lt;/p&gt;
+</content>
+        </entry>
     
         <entry>
             <title>Embedding a symbol stream in a PDB file</title>
@@ -19,18 +32,18 @@
             <content type="html">&lt;p&gt;The &lt;a href=&quot;/projects/nanicitus.html&quot;&gt;nAnicitus&lt;/a&gt; application processes &lt;a href=&quot;http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-symbol-package&quot;&gt;NuGet symbol&lt;/a&gt; packages to push the symbols and sources up to their respective location for the symbol and source servers to work. In order to have a symbol server nothing special needs to be done, just push the symbols through the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx&quot;&gt;SymStore&lt;/a&gt; application and a nice directory with indexed symbols is created. However in order to allow debuggers to obtain the source files related to a given PDB some manipulation of the PDB files is necessary. Specifically the SRCSRV stream in the PDB file needs to be &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff552219%28v=vs.85%29.aspx&quot;&gt;modified&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The documentation gives a decent overview of how the source indexing works but it does not actually provide the information necessary to determine what should be written to the SRCSRV stream for a given PDB file. In fact if you want to know what information should be written to the SRCSRV stream if you want to store the indexed source files in a directory instead of getting them from your source control system then even the almighty &lt;a href=&quot;https://www.google.co.nz/webhp?tab=ww&amp;amp;ei=FwljU6S7J8byoATTxoLIAQ&amp;amp;ved=0CBMQ1S4#q=PDB+SRCSRV+UNC+VERSION%3D2&quot;&gt;google&lt;/a&gt; is rather quiet.   &lt;/p&gt;
 &lt;p&gt;In order to write to the SRCSRV stream one can use the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff558874%28v=vs.85%29.aspx&quot;&gt;PDBStr utility&lt;/a&gt;. However that still leaves the question of what to write to the stream. The &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/desktop/ms680641%28v=vs.85%29.aspx&quot;&gt;source server documentation&lt;/a&gt; provides examples for &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff551958%28v=vs.85%29.aspx&quot;&gt;VERSION 1&lt;/a&gt; streams, i.e. the kind that point the debugger to a source control (VCS) command. If however you want to store symbols and sources in a UNC path then you need &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff551966%28v=vs.85%29.aspx&quot;&gt;VERSION 2&lt;/a&gt; streams. With some help from this &lt;a href=&quot;http://www.jayway.com/2011/06/19/hosting-your-own-source-symbol-server/&quot;&gt;blog post&lt;/a&gt;, some digging at MSDN and lots of trial-and-error it seems that the SRCSRV stream should look like:  &lt;/p&gt;
-&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;brainfuck&quot;&gt;&lt;span class=&quot;comment&quot;&gt;SRCSRV:&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;ini&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;VERSION=2&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;INDEXVERSION=2&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;VERCTRL=http&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;SRCSRV:&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;variables&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;SRCSRVVERCTRL=http&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;UNCROOT=&lt;/span&gt; &amp;lt;&lt;span class=&quot;comment&quot;&gt;UNC_SOURCE_PATH&lt;/span&gt;&amp;gt;
-&lt;span class=&quot;comment&quot;&gt;HTTP_EXTRACT_TARGET=%UNCROOT%\\&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;+&lt;/span&gt; &amp;lt;&lt;span class=&quot;comment&quot;&gt;UNC_SOURCE_PATH&lt;/span&gt;&amp;gt;
-&lt;span class=&quot;comment&quot;&gt;SRCSRVTRG=%http_extract_target%&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;SRCSRVCMD=&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;SRCSRV:&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;files&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In this stream the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff551958%28v=vs.85%29.aspx&quot;&gt;variables mean&lt;/a&gt;:&lt;/p&gt;
+&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;hljs makefile&quot;&gt;SRCSRV: ini ------------------------------------------------
+&lt;span class=&quot;hljs-constant&quot;&gt;VERSION&lt;/span&gt;=2
+&lt;span class=&quot;hljs-constant&quot;&gt;INDEXVERSION&lt;/span&gt;=2
+&lt;span class=&quot;hljs-constant&quot;&gt;VERCTRL&lt;/span&gt;=http
+SRCSRV: variables ------------------------------------------
+&lt;span class=&quot;hljs-constant&quot;&gt;SRCSRVVERCTRL&lt;/span&gt;=http
+&lt;span class=&quot;hljs-constant&quot;&gt;UNCROOT&lt;/span&gt;= &amp;lt;UNC_SOURCE_PATH&amp;gt;
+&lt;span class=&quot;hljs-constant&quot;&gt;HTTP_EXTRACT_TARGET&lt;/span&gt;=%UNCROOT%\\ + &amp;lt;UNC_SOURCE_PATH&amp;gt;
+&lt;span class=&quot;hljs-constant&quot;&gt;SRCSRVTRG&lt;/span&gt;=%http_extract_target%
+&lt;span class=&quot;hljs-constant&quot;&gt;SRCSRVCMD&lt;/span&gt;=
+SRCSRV: source files ---------------------------------------
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;In this stream the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff551958%28v=vs.85%29.aspx&quot;&gt;variables mean&lt;/a&gt;:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;&lt;code&gt;Version = 2&lt;/code&gt;&lt;/strong&gt; - Indicates the version of the SRCSRV stream&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;&lt;code&gt;VerCtrl = http&lt;/code&gt;&lt;/strong&gt; - &amp;#39;Version control&amp;#39; is done through HTTP. This variable is potentially optional.&lt;/li&gt;
@@ -41,20 +54,20 @@
 &lt;li&gt;&lt;strong&gt;&lt;code&gt;SRCSRVCMD&lt;/code&gt;&lt;/strong&gt; - The command for the VCS to extract the source files. For UNC this is not required.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;When nAnicitus processes a PDB file it generates a SRCSRV file that looks similar to this:&lt;/p&gt;
-&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;brainfuck&quot;&gt;&lt;span class=&quot;comment&quot;&gt;SRCSRV:&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;ini&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;VERSION=2&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;INDEXVERSION=2&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;VERCTRL=http&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;SRCSRV:&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;variables&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;SRCSRVVERCTRL=http&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;UNCROOT=\\MyServer\sources&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;HTTP_EXTRACT_TARGET=%UNCROOT%\%var2%\%var3%\%var4%&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;SRCSRVTRG=%http_extract_target%&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;SRCSRVCMD=&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;SRCSRV:&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;files&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;c:\source\MyProject\MyClass&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;cs*MyProject*1&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;4*MyProject\MyClass&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;cs&lt;/span&gt;
-&lt;span class=&quot;comment&quot;&gt;SRCSRV:&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The redirection of the source paths is handled as &lt;code&gt;&amp;lt;FILE&amp;gt;*&amp;lt;PROJECT&amp;gt;*&amp;lt;VERSION&amp;gt;*&amp;lt;RELATIVE_FILE&amp;gt;&lt;/code&gt; which means that the &lt;code&gt;c:\source\MyProject\MyClass.cs&lt;/code&gt; file will be found on the source server at &lt;code&gt;\\MyServer\sources\MyProject\1.2.3.4\MyProject\MyClass.cs&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;hljs mel&quot;&gt;SRCSRV: ini ------------------------------------------------
+VERSION=&lt;span class=&quot;hljs-number&quot;&gt;2&lt;/span&gt;
+INDEXVERSION=&lt;span class=&quot;hljs-number&quot;&gt;2&lt;/span&gt;
+VERCTRL=http
+SRCSRV: variables ------------------------------------------
+SRCSRVVERCTRL=http
+UNCROOT=\\MyServer\sources
+HTTP_EXTRACT_TARGET=&lt;span class=&quot;hljs-variable&quot;&gt;%UNCROOT&lt;/span&gt;&lt;span class=&quot;hljs-variable&quot;&gt;%\&lt;/span&gt;&lt;span class=&quot;hljs-variable&quot;&gt;%var2&lt;/span&gt;&lt;span class=&quot;hljs-variable&quot;&gt;%\&lt;/span&gt;&lt;span class=&quot;hljs-variable&quot;&gt;%var3&lt;/span&gt;&lt;span class=&quot;hljs-variable&quot;&gt;%\&lt;/span&gt;&lt;span class=&quot;hljs-variable&quot;&gt;%var4&lt;/span&gt;%
+SRCSRVTRG=&lt;span class=&quot;hljs-variable&quot;&gt;%http_extract_target&lt;/span&gt;%
+SRCSRVCMD=
+SRCSRV: &lt;span class=&quot;hljs-keyword&quot;&gt;source&lt;/span&gt; files ---------------------------------------
+c:\&lt;span class=&quot;hljs-keyword&quot;&gt;source&lt;/span&gt;\MyProject\MyClass.cs&lt;span class=&quot;hljs-variable&quot;&gt;*MyProject&lt;/span&gt;&lt;span class=&quot;hljs-variable&quot;&gt;*1&lt;/span&gt;&lt;span class=&quot;hljs-number&quot;&gt;.2&lt;/span&gt;&lt;span class=&quot;hljs-number&quot;&gt;.3&lt;/span&gt;&lt;span class=&quot;hljs-number&quot;&gt;.4&lt;/span&gt;&lt;span class=&quot;hljs-variable&quot;&gt;*MyProject&lt;/span&gt;\MyClass.cs
+SRCSRV: end------------------------------------------------
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The redirection of the source paths is handled as &lt;code&gt;&amp;lt;FILE&amp;gt;*&amp;lt;PROJECT&amp;gt;*&amp;lt;VERSION&amp;gt;*&amp;lt;RELATIVE_FILE&amp;gt;&lt;/code&gt; which means that the &lt;code&gt;c:\source\MyProject\MyClass.cs&lt;/code&gt; file will be found on the source server at &lt;code&gt;\\MyServer\sources\MyProject\1.2.3.4\MyProject\MyClass.cs&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;The process of pushing the symbols and sources up to their respective locations with nAnicitus is done via the following steps:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;The user drops the NuGet symbol package containing the binaries, PDB files and source files into the designated upload folder for nAnicitus.&lt;/li&gt;
@@ -155,7 +168,7 @@
             <link href="http://www.petrikvandervelde.nl/posts/2014-02-18_Regression-testing-console-applications.html"/>
             <updated>2014-02-18T00:00:00.000Z</updated>
             <id>http://www.petrikvandervelde.nl/posts/2014-02-18_Regression-testing-console-applications.html</id>
-            <content type="html">&lt;p&gt;After &lt;a href=&quot;/posts/2013-12-04_Regression-testing-with-Sherlock.html&quot;&gt;setting up&lt;/a&gt; &lt;a href=&quot;https://github.com/pvandervelde/Sherlock&quot;&gt;Sherlock&lt;/a&gt; you will need to create some tests that you can execute with Sherlock. In this post I will describe how I created the regression tests for the command line application of &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt;.&lt;/p&gt;
+            <content type="html">&lt;p&gt;After &lt;a href=&quot;/posts/2013-12-04_Regression-testing-with-Sherlock.html&quot;&gt;setting up&lt;/a&gt; &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; you will need to create some tests that you can execute with Sherlock. In this post I will describe how I created the regression tests for the command line application of &lt;a href=&quot;/projects/apollo.html&quot;&gt;Apollo&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;For this case the application-under-test (AUT) is the Apollo console application which provides the user with a way to control the capabilities of Apollo, e.g. running a fluid dynamics simulation, by executing a Python script. The goal of the regression test for the console application is to execute a large part of the API which is used by scripts to interact with the different parts of Apollo.&lt;/p&gt;
 &lt;p&gt;In order to test the scripting API I wrote several scripts that will be executed during the test. Each script exercises several parts of the API and checks after each action that the state of the application is as expected. An example of a test script is given in the following code segment:&lt;/p&gt;
 &lt;script src='https://gist.github.com/8995251.js'&gt;&lt;/script&gt;
@@ -220,7 +233,7 @@ The biggest difference so far compared to the school harnesses is that it feels 
             <link href="http://www.petrikvandervelde.nl/posts/2014-01-13_Integrating-Sherlock-with-a-build-server.html"/>
             <updated>2014-01-13T00:00:00.000Z</updated>
             <id>http://www.petrikvandervelde.nl/posts/2014-01-13_Integrating-Sherlock-with-a-build-server.html</id>
-            <content type="html">&lt;p&gt;Once the configuration of &lt;a href=&quot;https://github.com/pvandervelde/Sherlock&quot;&gt;Sherlock&lt;/a&gt; is complete the last step needed to make use of automatic regression testing is to integrate with a build server. In this post I will explain which steps need to be taken to integrate Sherlock with a build server. Examples will be given for &lt;a href=&quot;http://jenkins-ci.org/&quot;&gt;Jenkins&lt;/a&gt;, which is used at my work, and &lt;a href=&quot;http://www.jetbrains.com/teamcity/&quot;&gt;TeamCity&lt;/a&gt;, which I use personally. &lt;/p&gt;
+            <content type="html">&lt;p&gt;Once the configuration of &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; is complete the last step needed to make use of automatic regression testing is to integrate with a build server. In this post I will explain which steps need to be taken to integrate Sherlock with a build server. Examples will be given for &lt;a href=&quot;http://jenkins-ci.org/&quot;&gt;Jenkins&lt;/a&gt;, which is used at my work, and &lt;a href=&quot;http://www.jetbrains.com/teamcity/&quot;&gt;TeamCity&lt;/a&gt;, which I use personally. &lt;/p&gt;
 &lt;p&gt;In order to integrate with a build server you will need to: &lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Create at least one test configuration&lt;/li&gt;
@@ -460,7 +473,7 @@ The biggest difference so far compared to the school harnesses is that it feels 
 &lt;li&gt;&lt;strong&gt;Automatic updates:&lt;/strong&gt; Automatic updates can be disabled because they will never be deployed due to the fact that the machine is reset after each test.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&quot;configuring-sherlock&quot;&gt;Configuring Sherlock&lt;/h3&gt;
-&lt;p&gt;Once the operating system is configured &lt;a href=&quot;https://github.com/pvandervelde/Sherlock/releases&quot;&gt;Sherlock&lt;/a&gt; can be installed and configured. &lt;/p&gt;
+&lt;p&gt;Once the operating system is configured &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; can be installed and configured. &lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Unzip the &lt;strong&gt;service.zip&lt;/strong&gt; package into the &lt;code&gt;c:\sherlock&lt;/code&gt; directory.&lt;/li&gt;
 &lt;li&gt;Copy the XML file containing the public key used to sign the manifests to the virtual machine and place it in the &lt;code&gt;c:\sherlock&lt;/code&gt; directory.&lt;/li&gt;
@@ -497,7 +510,7 @@ The biggest difference so far compared to the school harnesses is that it feels 
             <link href="http://www.petrikvandervelde.nl/posts/2013-12-10_Setting-up-Sherlock-serverside.html"/>
             <updated>2013-12-10T00:00:00.000Z</updated>
             <id>http://www.petrikvandervelde.nl/posts/2013-12-10_Setting-up-Sherlock-serverside.html</id>
-            <content type="html">&lt;p&gt;In this post I will explain how to configure the &lt;a href=&quot;https://github.com/pvandervelde/Sherlock&quot;&gt;Sherlock&lt;/a&gt; host services, which handle test registration and selection and control of the test environments for a test. The set-up follows the following steps:&lt;/p&gt;
+            <content type="html">&lt;p&gt;In this post I will explain how to configure the &lt;a href=&quot;/projects/sherlock.html&quot;&gt;Sherlock&lt;/a&gt; host services, which handle test registration and selection and control of the test environments for a test. The set-up follows the following steps:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Preparing the host machine which includes installation of the OS and the required services.&lt;/li&gt;
 &lt;li&gt;Installation of database.&lt;/li&gt;
@@ -535,7 +548,8 @@ The biggest difference so far compared to the school harnesses is that it feels 
 &lt;/li&gt;
 &lt;li&gt;Share the &lt;code&gt;reports&lt;/code&gt; and &lt;code&gt;console&lt;/code&gt; directories so that they can be accessed over the network. The &lt;code&gt;console&lt;/code&gt; directory will only need read access, the &lt;code&gt;reports&lt;/code&gt; directory will need read and write access.&lt;/li&gt;
 &lt;li&gt;Install the &lt;a href=&quot;https://github.com/pvandervelde/nAdoni&quot;&gt;nAdoni&lt;/a&gt; manifest signing tool. This application will be used sign the update manifest files.&lt;/li&gt;
-&lt;li&gt;Generate the update keys by executing the following command line (assuming that you installed nadoni in &lt;code&gt;c:\tools\nadoni&lt;/code&gt;):&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;dos&quot;&gt;c:\tools\nadoni\keygenerator\nadoni.keygenerator.exe --private=&amp;lt;PATH_TO_PRIVATE_KEY_FILE&amp;gt; --public=&amp;lt;PATH_TO_PUBLIC_KEY_FILE&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;li&gt;Generate the update keys by executing the following command line (assuming that you installed nadoni in &lt;code&gt;c:\tools\nadoni&lt;/code&gt;):&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;hljs dos&quot;&gt;c:\tools\nadoni\keygenerator\nadoni.keygenerator.exe --private=&amp;lt;PATH_TO_PRIVATE_KEY_FILE&amp;gt; --public=&amp;lt;PATH_TO_PUBLIC_KEY_FILE&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;ul&gt;
 &lt;li&gt;Where &lt;code&gt;&amp;lt;PATH_TO_PRIVATE_KEY_FILE&amp;gt;&lt;/code&gt; points to the XML file that will contain the private and public parts of the manifest signing key and &lt;code&gt;&amp;lt;PATH_TO_PUBLIC_KEY_FILE&amp;gt;&lt;/code&gt; points to the XML file that will contain the public part of the manifest signing key. &lt;/li&gt;
 &lt;/ul&gt;
@@ -551,9 +565,10 @@ The biggest difference so far compared to the school harnesses is that it feels 
 &lt;ul&gt;
 &lt;li&gt;db_datareader&lt;/li&gt;
 &lt;li&gt;db_datawriter&lt;/li&gt;
-&lt;li&gt;Grant access to stored procedures. This can be done via: &lt;code&gt;GRANT EXEC TO &amp;lt;STORED_PROCEDURE_NAME&amp;gt; TO &amp;lt;SQL_USER&amp;gt;&lt;/code&gt;. Given that Sherlock only accesses the database through stored procedures, there is no direct table access, there are quite a few stored procedures which means it makes sense to create a script in order to grant access to the stored procedures. The following SQL script can be used to generate an access script for the user:&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;sql&quot;&gt;&lt;span class=&quot;operator&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;SELECT&lt;/span&gt;  &lt;span class=&quot;string&quot;&gt;'GRANT EXEC ON '&lt;/span&gt;+ SCHEMA_NAME(schema_id) + &lt;span class=&quot;string&quot;&gt;'.'&lt;/span&gt; + name + &lt;span class=&quot;string&quot;&gt;' TO &amp;lt;SQL_USER&amp;gt;'&lt;/span&gt;
-&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; sys.procedures
-&lt;span class=&quot;keyword&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;li&gt;Grant access to stored procedures. This can be done via: &lt;code&gt;GRANT EXEC TO &amp;lt;STORED_PROCEDURE_NAME&amp;gt; TO &amp;lt;SQL_USER&amp;gt;&lt;/code&gt;. Given that Sherlock only accesses the database through stored procedures, there is no direct table access, there are quite a few stored procedures which means it makes sense to create a script in order to grant access to the stored procedures. The following SQL script can be used to generate an access script for the user:&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;hljs sql&quot;&gt;&lt;span class=&quot;hljs-operator&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;SELECT&lt;/span&gt;  &lt;span class=&quot;hljs-string&quot;&gt;'GRANT EXEC ON '&lt;/span&gt;+ SCHEMA_NAME(schema_id) + &lt;span class=&quot;hljs-string&quot;&gt;'.'&lt;/span&gt; + name + &lt;span class=&quot;hljs-string&quot;&gt;' TO &amp;lt;SQL_USER&amp;gt;'&lt;/span&gt;
+&lt;span class=&quot;hljs-keyword&quot;&gt;from&lt;/span&gt; sys.procedures
+&lt;span class=&quot;hljs-keyword&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;hljs-keyword&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;hljs-number&quot;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -629,9 +644,11 @@ The biggest difference so far compared to the school harnesses is that it feels 
 &lt;p&gt;The executor controller does not need any changes to the configuration file and can thus be left untouched.&lt;/p&gt;
 &lt;p&gt;The next step is to create the manifest files that are used by the update service to determine which ZIP archive to use. In order to create the manifests the &lt;a href=&quot;https://github.com/pvandervelde/nAdoni&quot;&gt;nAdoni&lt;/a&gt; application is used. This can be done with the following command lines:&lt;/p&gt;
 &lt;p&gt;For the master controller:&lt;/p&gt;
-&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;dos&quot;&gt;C:\tools\nadoni\manifestbuilder\nAdoni.ManifestBuilder.exe -v=&quot;{VERSION}&quot; -n=&quot;Sherlock.Service.Master.exe&quot; -f=&quot;c:\testing\appupdate\service.master.zip&quot; -u=&quot;http://myhostmachine/appupdate/service.master.zip&quot; -k=&quot;C:\mykeydirectory\manifestsigningkey.private.xml&quot; -o=&quot;c:\testing\appupdate\masterservice.manifest&quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;hljs dos&quot;&gt;C:\tools\nadoni\manifestbuilder\nAdoni.ManifestBuilder.exe -v=&quot;{VERSION}&quot; -n=&quot;Sherlock.Service.Master.exe&quot; -f=&quot;c:\testing\appupdate\service.master.zip&quot; -u=&quot;http://myhostmachine/appupdate/service.master.zip&quot; -k=&quot;C:\mykeydirectory\manifestsigningkey.private.xml&quot; -o=&quot;c:\testing\appupdate\masterservice.manifest&quot;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;And for the executor controller:&lt;/p&gt;
-&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;dos&quot;&gt;C:\tools\nadoni\manifestbuilder\nAdoni.ManifestBuilder.exe -v=&quot;{VERSION}&quot; -n=&quot;Sherlock.Service.Executor.exe&quot; -f=&quot;c:\testing\appupdate\service.executor.zip&quot; -u=&quot;http://myhostmachine/appupdate/service.executor.zip&quot; -k=&quot;C:\mykeydirectory\manifestsigningkey.private.xml&quot; -o=&quot;c:\testing\appupdate\executorservice.manifest&quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;hljs dos&quot;&gt;C:\tools\nadoni\manifestbuilder\nAdoni.ManifestBuilder.exe -v=&quot;{VERSION}&quot; -n=&quot;Sherlock.Service.Executor.exe&quot; -f=&quot;c:\testing\appupdate\service.executor.zip&quot; -u=&quot;http://myhostmachine/appupdate/service.executor.zip&quot; -k=&quot;C:\mykeydirectory\manifestsigningkey.private.xml&quot; -o=&quot;c:\testing\appupdate\executorservice.manifest&quot;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Another way to create the manifest files is through the use of the following Msbuild script: &lt;/p&gt;
 &lt;script src='https://gist.github.com/6521946.js'&gt;&lt;/script&gt;
 
@@ -666,8 +683,8 @@ The biggest difference so far compared to the school harnesses is that it feels 
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Install the application as a service by opening an elevated command line and navigating to the &lt;code&gt;c:\testing\service&lt;/code&gt; directory. Then execute the following command line:&lt;/p&gt;
-&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;brainfuck&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;sherlock&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;exe&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;username:SherlockUser&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;password:SherlockPassword&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;delayed&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;servicename:Sherlock&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
+&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;hljs css&quot;&gt;  &lt;span class=&quot;hljs-tag&quot;&gt;sherlock&lt;/span&gt;&lt;span class=&quot;hljs-class&quot;&gt;.service&lt;/span&gt;&lt;span class=&quot;hljs-class&quot;&gt;.exe&lt;/span&gt; &lt;span class=&quot;hljs-tag&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;hljs-tag&quot;&gt;-username&lt;/span&gt;&lt;span class=&quot;hljs-pseudo&quot;&gt;:SherlockUser&lt;/span&gt; &lt;span class=&quot;hljs-tag&quot;&gt;-password&lt;/span&gt;&lt;span class=&quot;hljs-pseudo&quot;&gt;:SherlockPassword&lt;/span&gt; &lt;span class=&quot;hljs-tag&quot;&gt;--delayed&lt;/span&gt; &lt;span class=&quot;hljs-tag&quot;&gt;-servicename&lt;/span&gt;&lt;span class=&quot;hljs-pseudo&quot;&gt;:Sherlock&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;li&gt;Go to the Windows services control and start the service. After a short while this will grab the latest version of the master controller binaries, drop them in &lt;code&gt;C:\ProgramData\Sherlock\Sherlock.Service.Master&lt;/code&gt; and then start the master controller application. You can verify that all is well by checking the log files which are located in &lt;code&gt;C:\ProgramData\Sherlock\Sherlock.Service\{VERSION}\logs&lt;/code&gt; and &lt;code&gt;C:\ProgramData\Sherlock\Sherlock.Service.Master\{VERSION}\logs&lt;/code&gt; for the service and the master controller respectively.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&quot;firewall&quot;&gt;Firewall&lt;/h3&gt;
@@ -756,24 +773,25 @@ After recovering from the jitters for a bit I had a second attempt at top landin
             <updated>2013-12-04T00:00:00.000Z</updated>
             <id>http://www.petrikvandervelde.nl/posts/2013-12-04_Nuclei-Release-V0700.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.0.0&quot;&gt;V0.7.0.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release adds support for grouping timing results based on their logical area.&lt;/p&gt;
-&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group1 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup(); 
-&lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(group1, &lt;span class=&quot;string&quot;&gt;&quot;My first timing group&quot;&lt;/span&gt;))
+&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;hljs cs&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;var&lt;/span&gt; group1 = &lt;span class=&quot;hljs-keyword&quot;&gt;new&lt;/span&gt; TimingGroup(); 
+&lt;span class=&quot;hljs-keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(group1, &lt;span class=&quot;hljs-string&quot;&gt;&quot;My first timing group&quot;&lt;/span&gt;))
 {
-    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; group2 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TimingGroup();
-    &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(
+    &lt;span class=&quot;hljs-keyword&quot;&gt;var&lt;/span&gt; group2 = &lt;span class=&quot;hljs-keyword&quot;&gt;new&lt;/span&gt; TimingGroup();
+    &lt;span class=&quot;hljs-keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(
         group2, 
-        &lt;span class=&quot;string&quot;&gt;&quot;This timing is not a child of the first one&quot;&lt;/span&gt;))
+        &lt;span class=&quot;hljs-string&quot;&gt;&quot;This timing is not a child of the first one&quot;&lt;/span&gt;))
     {
-        &lt;span class=&quot;comment&quot;&gt;// Do stuff here ...&lt;/span&gt;
+        &lt;span class=&quot;hljs-comment&quot;&gt;// Do stuff here ...&lt;/span&gt;
     }
 
-    &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(
+    &lt;span class=&quot;hljs-keyword&quot;&gt;using&lt;/span&gt; (Profiler.Measure(
         group1, 
-        &lt;span class=&quot;string&quot;&gt;&quot;This timing is a child of the first one&quot;&lt;/span&gt;))
+        &lt;span class=&quot;hljs-string&quot;&gt;&quot;This timing is a child of the first one&quot;&lt;/span&gt;))
     {
-        &lt;span class=&quot;comment&quot;&gt;// Do stuff here ...&lt;/span&gt;
+        &lt;span class=&quot;hljs-comment&quot;&gt;// Do stuff here ...&lt;/span&gt;
     }
-}&lt;/code&gt;&lt;/pre&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;
 </content>
         </entry>
     
@@ -782,7 +800,7 @@ After recovering from the jitters for a bit I had a second attempt at top landin
             <link href="http://www.petrikvandervelde.nl/posts/2013-12-03_Setting-up-nAnicitus.html"/>
             <updated>2013-12-03T00:00:00.000Z</updated>
             <id>http://www.petrikvandervelde.nl/posts/2013-12-03_Setting-up-nAnicitus.html</id>
-            <content type="html">&lt;p&gt;In this post I will explain how to install and configure the nAnicitus windows service. nAnicitus is a windows service that acts as a gatekeeper for the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx&quot;&gt;SymStore&lt;/a&gt; application. SymStore provides a relatively simple way to create a local / private &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/desktop/ms680693%28v=vs.85%29.aspx&quot;&gt;symbol server&lt;/a&gt;.&lt;/p&gt;
+            <content type="html">&lt;p&gt;In this post I will explain how to install and configure the &lt;a href=&quot;/projects/nanicitus.html&quot;&gt;nAnicitus&lt;/a&gt; windows service. nAnicitus is a windows service that acts as a gatekeeper for the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx&quot;&gt;SymStore&lt;/a&gt; application. SymStore provides a relatively simple way to create a local / private &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/windows/desktop/ms680693%28v=vs.85%29.aspx&quot;&gt;symbol server&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;This statement should bring up a few questions, cunning questions like:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Why would a development team even need a symbol server?&lt;ul&gt;
@@ -812,8 +830,8 @@ After recovering from the jitters for a bit I had a second attempt at top landin
 &lt;li&gt;&lt;strong&gt;UploadPath:&lt;/strong&gt; The directory where the NuGet symbol packages are placed for nAnicitus to process.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Finally to install the application as a windows service, open a command line window with administrative permissions, navigate to the nAnicitus install directory and execute the following command:&lt;/p&gt;
-&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;cmake&quot;&gt;    Nanicitus.Service &lt;span class=&quot;keyword&quot;&gt;install&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Once the service is installed use the normal windows services control to change the properties of the service.&lt;/p&gt;
+&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;hljs cmake&quot;&gt;    Nanicitus.Service &lt;span class=&quot;hljs-keyword&quot;&gt;install&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Once the service is installed use the normal windows services control to change the properties of the service.&lt;/p&gt;
 &lt;p&gt;And now you should have a working symbol server! &lt;/p&gt;
 </content>
         </entry>
@@ -943,22 +961,23 @@ It took me several attempts at getting the sideways launch right but in the end 
             <updated>2013-10-23T00:00:00.000Z</updated>
             <id>http://www.petrikvandervelde.nl/posts/2013-10-23_Nuclei-Release-V0670.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.7.0&quot;&gt;V0.6.7.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release fixes a bug in the processing of &lt;code&gt;ICommandSet&lt;/code&gt; return tasks which caused the processor to throw an exception if the return task was a &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ee372288.aspx&quot;&gt;continuation task&lt;/a&gt;. This bug fix means it is now possible to chain tasks and return the final task from an &lt;code&gt;ICommandSet&lt;/code&gt; object. An example of this behaviour is given in the following section of code.&lt;/p&gt;
-&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;interface&lt;/span&gt; IMyCommandSet : ICommandSet
+&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;hljs cs&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;hljs-keyword&quot;&gt;interface&lt;/span&gt; IMyCommandSet : ICommandSet
 {
     Task DoSomethingAwesome();
 }
 
-&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;sealed&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; MyCommand : IMyCommandSet
+&lt;span class=&quot;hljs-keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;hljs-keyword&quot;&gt;sealed&lt;/span&gt; &lt;span class=&quot;hljs-keyword&quot;&gt;class&lt;/span&gt; MyCommand : IMyCommandSet
 {
-    &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; Task DoSomethingAwesome()
+    &lt;span class=&quot;hljs-keyword&quot;&gt;public&lt;/span&gt; Task &lt;span class=&quot;hljs-title&quot;&gt;DoSomethingAwesome&lt;/span&gt;()
     {
-        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; firstTask = Task.Factory.StartNew(
-            () =&amp;gt; Thread.Sleep(&lt;span class=&quot;number&quot;&gt;1000&lt;/span&gt;));
-        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; secondTask = firstTask.ContinueWith(
-            t =&amp;gt; Console.WriteLine(&lt;span class=&quot;string&quot;&gt;&quot;Awesome sauce&quot;&lt;/span&gt;)); 
-        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; secondTask
+        &lt;span class=&quot;hljs-keyword&quot;&gt;var&lt;/span&gt; firstTask = Task.Factory.StartNew(
+            () =&amp;gt; Thread.Sleep(&lt;span class=&quot;hljs-number&quot;&gt;1000&lt;/span&gt;));
+        &lt;span class=&quot;hljs-keyword&quot;&gt;var&lt;/span&gt; secondTask = firstTask.ContinueWith(
+            t =&amp;gt; Console.WriteLine(&lt;span class=&quot;hljs-string&quot;&gt;&quot;Awesome sauce&quot;&lt;/span&gt;)); 
+        &lt;span class=&quot;hljs-keyword&quot;&gt;return&lt;/span&gt; secondTask
     }
-}&lt;/code&gt;&lt;/pre&gt;
+}
+&lt;/code&gt;&lt;/pre&gt;
 </content>
         </entry>
     
@@ -989,12 +1008,13 @@ It took me several attempts at getting the sideways launch right but in the end 
             <id>http://www.petrikvandervelde.nl/posts/2013-10-12_Nuclei-Release-V0660.html</id>
             <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.6.0&quot;&gt;V0.6.6.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. This release adds the ability to specify the name and version of the application in the log file. If no application name or version is specified then the information from &lt;code&gt;Assembly.GetEntryAssembly()&lt;/code&gt; is used. &lt;/p&gt;
 &lt;p&gt;The application name and version can be specified when creating a new logger via the &lt;code&gt;LoggerBuilder&lt;/code&gt; like so:&lt;/p&gt;
-&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;cs&quot;&gt;IConfiguration configuration = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; MyConfiguration();
-&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; logger = LoggerBuilder.ForFile(
-    &lt;span class=&quot;string&quot;&gt;@&quot;c:\mylogfile.txt&quot;&lt;/span&gt;,
-    &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DebugLogTemplate(configuration, () =&amp;gt; DateTimeOffset.Now),
+&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;hljs cs&quot;&gt;IConfiguration configuration = &lt;span class=&quot;hljs-keyword&quot;&gt;new&lt;/span&gt; MyConfiguration();
+&lt;span class=&quot;hljs-keyword&quot;&gt;var&lt;/span&gt; logger = LoggerBuilder.ForFile(
+    &lt;span class=&quot;hljs-string&quot;&gt;@&quot;c:\mylogfile.txt&quot;&lt;/span&gt;,
+    &lt;span class=&quot;hljs-keyword&quot;&gt;new&lt;/span&gt; DebugLogTemplate(configuration, () =&amp;gt; DateTimeOffset.Now),
     applicationName,
-    applicationVersion);&lt;/code&gt;&lt;/pre&gt;
+    applicationVersion);
+&lt;/code&gt;&lt;/pre&gt;
 </content>
         </entry>
     
@@ -1007,28 +1027,30 @@ It took me several attempts at getting the sideways launch right but in the end 
 types of channels the communication layer is allowed to use. The communication layer can be allowed to use TCP/IP channels, named pipe channels or both.&lt;/p&gt;
 &lt;p&gt;In the previous versions in the constructor of the &lt;code&gt;CommunicationModule&lt;/code&gt; needed to be provided with a 
 list of &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/wiki/Nuclei.Communication#communicationsubject&quot;&gt;communication subjects&lt;/a&gt; and a flag indicating if &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/wiki/Nuclei.Communication#endpoints-and-their-discovery&quot;&gt;channel discovery&lt;/a&gt; was allowed.&lt;/p&gt;
-&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; builder = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ContainerBuilder(); 
+&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;hljs cs&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;var&lt;/span&gt; builder = &lt;span class=&quot;hljs-keyword&quot;&gt;new&lt;/span&gt; ContainerBuilder(); 
 builder.RegisterModule(
-    &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; CommunicationModule(
-        &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; List&amp;lt;CommunicationSubject&amp;gt;
+    &lt;span class=&quot;hljs-keyword&quot;&gt;new&lt;/span&gt; CommunicationModule(
+        &lt;span class=&quot;hljs-keyword&quot;&gt;new&lt;/span&gt; List&amp;lt;CommunicationSubject&amp;gt;
             {
                 CommunicationSubjects.Dataset,
             },
-        &lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt;));&lt;/code&gt;&lt;/pre&gt;
+        &lt;span class=&quot;hljs-keyword&quot;&gt;false&lt;/span&gt;));
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;In V0.6.5.0 an extra parameter needs to be provided which indicates which types of channel the communication layer is allowed to use to communicate with other instances. The allowable options are &lt;code&gt;ChannelType.NamedPipe&lt;/code&gt; and &lt;code&gt;ChannelType.TcpIP&lt;/code&gt;.&lt;/p&gt;
-&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; builder = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ContainerBuilder();
+&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;hljs cs&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;var&lt;/span&gt; builder = &lt;span class=&quot;hljs-keyword&quot;&gt;new&lt;/span&gt; ContainerBuilder();
 builder.RegisterModule(
-    &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; CommunicationModule(
-        &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; List&amp;lt;CommunicationSubject&amp;gt;
+    &lt;span class=&quot;hljs-keyword&quot;&gt;new&lt;/span&gt; CommunicationModule(
+        &lt;span class=&quot;hljs-keyword&quot;&gt;new&lt;/span&gt; List&amp;lt;CommunicationSubject&amp;gt;
             {
                 CommunicationSubjects.Dataset,
             },
-        &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt;[]
+        &lt;span class=&quot;hljs-keyword&quot;&gt;new&lt;/span&gt;[]
             {
                 ChannelType.NamedPipe,
                 ChannelType.TcpIP,
             }, 
-        &lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt;));&lt;/code&gt;&lt;/pre&gt;
+        &lt;span class=&quot;hljs-keyword&quot;&gt;false&lt;/span&gt;));
+&lt;/code&gt;&lt;/pre&gt;
 </content>
         </entry>
     
@@ -1056,7 +1078,8 @@ builder.RegisterModule(
 &lt;p&gt;And .. oh never mind, our hero he is not the object of this current post, thus we shall be leaving him in some weird limbo looking for his quest... oh well. The topic of this post is how this blog / website was build. It turns out that building anything in HTML, CSS, Node.js and all the other cool web technologies isn&amp;#39;t really my strong suit. However I&amp;#39;m hoping that the description of how I build this site may be useful to somebody at some point in time, if only to have a good laugh at my lack of CSS skills.&lt;/p&gt;
 &lt;p&gt;As much as I love writing code, the idea of writing my content in an angle bracket language didn&amp;#39;t really attract me so the plan was hatched (it came out of a purple egg, by the way) to write (nearly) all content in &lt;a href=&quot;http://daringfireball.net/projects/markdown/&quot;&gt;Markdown&lt;/a&gt; by using &lt;a href=&quot;http://docpad.org&quot;&gt;Docpad&lt;/a&gt;. Given that I&amp;#39;ve recently started using &lt;a href=&quot;http://github.com&quot;&gt;GitHub&lt;/a&gt; for my open source projects why not use it for version control and GitHub pages to serve my website. &lt;/p&gt;
 &lt;p&gt;I won&amp;#39;t bore you with the details on how to install Docpad, the Docpad website has an excellent introduction to all those things. Once the initial install is done Docpad allows you to create a skeleton website by executing the following command&lt;/p&gt;
-&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;dos&quot;&gt;Docpad run&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&quot;highlight&quot;&gt;&lt;code class=&quot;hljs dos&quot;&gt;Docpad run
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;At which point Docpad presents a list of possible skeletons to use. In my case I selected the &lt;a href=&quot;http://html5boilerplate.com/&quot;&gt;HTML5 boilerplate template&lt;/a&gt;. In order to get a nice layout quickly I also used the &lt;a href=&quot;http://www.freecsstemplates.org/previews/opentools/&quot;&gt;Open tools&lt;/a&gt; template. &lt;/p&gt;
 &lt;p&gt;Once I had the basic site layout sorted it was time to focus creating my own sections. Fortunately Docpad has a large number of plugins that provide useful additions to the generation process. For the generation of this site the following plugins are used:&lt;/p&gt;
 &lt;ul&gt;

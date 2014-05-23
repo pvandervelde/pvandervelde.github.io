@@ -484,6 +484,45 @@ hr {
     list-style: none;
 }
 
+/** ARCHIVE */
+
+.archive {
+  position: relative;
+  padding: 30px 0px 0px 0px;
+  margin-top: -20px;
+}
+
+.archive + .archive {
+  margin-top: 0px;
+  border-top: 1px solid #D4D4D4;
+}
+
+.archive-title a {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.archive-year {
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.archive + .archive .archive-year {
+    margin-top: 20px;
+}
+
+.archive-tags {
+    color: #989898;
+    padding-top: 0.2em;
+}
+
+/** PAGINATION */
+
+.pagination {
+    padding-top: 1em;
+    border-top: 1px solid #D4D4D4;
+}
+
 /** SIDEBAR */
 
 #sidebar {
