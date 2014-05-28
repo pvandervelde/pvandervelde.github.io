@@ -3,13 +3,51 @@
     <title>Mind Vortex</title>
     <link href="http://www.petrikvandervelde.nl/atom.xml" rel="self"/>
     <link href="http://www.petrikvandervelde.nl"/>
-    <updated>2014-05-23T03:55:32.531Z</updated>
+    <updated>2014-05-28T01:51:10.819Z</updated>
     <id>http://www.petrikvandervelde.nl</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>Nuclei release - V0.8.0</title>
+            <link href="http://www.petrikvandervelde.nl/posts/2014-05-28_Nuclei-release-V080.html"/>
+            <updated>2014-05-28T00:00:00.000Z</updated>
+            <id>http://www.petrikvandervelde.nl/posts/2014-05-28_Nuclei-release-V080.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/releases/tag/0.8.0&quot;&gt;V0.8.0&lt;/a&gt; of the &lt;a href=&quot;/projects/nuclei.html&quot;&gt;Nuclei&lt;/a&gt; library has been released. &lt;/p&gt;
+&lt;p&gt;This release introduces a few large features to Nuclei.Communication library and adds some minor updates to the base Nuclei library.&lt;/p&gt;
+&lt;p&gt;The main focus of this release was adding version tolerance (&lt;a href=&quot;https://github.com/pvandervelde/Nuclei/issues/3&quot;&gt;#3&lt;/a&gt;) to the different layers of the communication stack:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;The discovery layer&lt;/em&gt; - Provides ways to discover remote endpoints either automatically (via &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/dd456782%28v=vs.110%29.aspx&quot;&gt;WCF discovery&lt;/a&gt;) or manually.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;The protocol layer&lt;/em&gt; - Provides the means to send messages to one or more remote endpoints and handling the responses to those messages if they are expected.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;The interaction layer&lt;/em&gt; -  Provides an abstraction over the &lt;em&gt;protocol layer&lt;/em&gt; in the form of an proxy objects that provide user-defined methods which can be invoked on a remote endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In version 0.8.0 of the Nuclei.Communication library each of these layers now supports the ability to negotiate with a remote endpoint to determine which communication version will be used to exchange data between the endpoints. The  communication version which will be used is the highest (i.e. most recent) version that both endpoints support. If the endpoint do not support the same versions then communication will not be enabled between the endpoints.&lt;/p&gt;
+&lt;p&gt;The second focus was to improve the robustness of all the network activity. The main changes here were: &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/Nuclei/issues/7&quot;&gt;#7&lt;/a&gt; - Detection of messages that have not received their response within a given time-out.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/Nuclei/issues/11&quot;&gt;#11&lt;/a&gt;, &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/pull/17&quot;&gt;#17&lt;/a&gt;, &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/pull/18&quot;&gt;#18&lt;/a&gt; - Method(s) to detect if a remote endpoint is still available and discard endpoint information if it is not.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/Nuclei/issues/19&quot;&gt;#19&lt;/a&gt;, &lt;a href=&quot;https://github.com/pvandervelde/Nuclei/issues/23&quot;&gt;#23&lt;/a&gt; - Automatically rebuilding the communication channel if it faults during message sending and then resend the message that caused the faulting.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The final focus was on decoupling the interaction interfaces from their implementations. With these changes an endpoint does not need to provide concrete implementations of either the command (&lt;a href=&quot;https://github.com/pvandervelde/Nuclei/pull/6&quot;&gt;#6&lt;/a&gt;) and notification (&lt;a href=&quot;https://github.com/pvandervelde/Nuclei/pull/31&quot;&gt;#31&lt;/a&gt;) interfaces but can map the members on those interfaces to equivalent members on any given object.&lt;/p&gt;
+&lt;p&gt;Additionally it is now possible for some parameters on a command interface method (ie. the method on a command interface) and a command object method (i.e .the concrete instance method that is mapped to the given command) to contain parameters that have a special meaning. The available options are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For command interface methods (&lt;a href=&quot;https://github.com/pvandervelde/Nuclei/issues/23&quot;&gt;#23&lt;/a&gt;)&lt;ul&gt;
+&lt;li&gt;Provision of a time-out indicating the maximum amount of time the endpoint should wait for a response to the command invocation request.&lt;/li&gt;
+&lt;li&gt;Provision of a retry count indicating the maximum number of times the endpoint should send the command invocation request should any errors occur during invocation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;For command instance methods (&lt;a href=&quot;https://github.com/pvandervelde/Nuclei/pull/28&quot;&gt;#28&lt;/a&gt;)&lt;ul&gt;
+&lt;li&gt;Provision of the ID of the endpoint requesting the invocation of the command method.&lt;/li&gt;
+&lt;li&gt;Provision of the ID of the message that was send to request the invocation of the command method.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Finally the Nuclei library versioning was switched to use &lt;a href=&quot;http://semver.org/&quot;&gt;semantic versioning&lt;/a&gt;.&lt;/p&gt;
+</content>
+        </entry>
     
         <entry>
             <title>Improvements to the site</title>
