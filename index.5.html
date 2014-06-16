@@ -85,25 +85,25 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2014-06-16_nBuildKit-release-V015.html">nBuildKit release - V0.1.5</a></li>
+                    
+                        <li><a href="/projects/nbuildkit.html">nBuildKit</a></li>
+                    
                         <li><a href="/posts/2014-05-28_Nuclei-release-V080.html">Nuclei release - V0.8.0</a></li>
                     
                         <li><a href="/posts/2014-05-23_Improvements-to-the-site.html">Improvements to the site</a></li>
+                    
+                        <li><a href="/projects/sherlock.html">Sherlock</a></li>
                     
                         <li><a href="/projects/nanicitus.html">nAnicitus</a></li>
                     
                         <li><a href="/projects/nuclei.html">Nuclei</a></li>
                     
-                        <li><a href="/projects/ntreva.html">nTreva</a></li>
-                    
                         <li><a href="/projects/nrefs.html">nRefs</a></li>
                     
-                        <li><a href="/projects/sherlock.html">Sherlock</a></li>
+                        <li><a href="/projects/ntreva.html">nTreva</a></li>
                     
                         <li><a href="/projects/nadoni.html">nAdoni</a></li>
-                    
-                        <li><a href="/posts/2014-05-19_Embedding-symbol-stream-in-pdb.html">Embedding a symbol stream in a PDB file</a></li>
-                    
-                        <li><a href="/posts/2014-04-30_nAnicitus-Release-V015.html">nAnicitus release - V0.1.5</a></li>
                     
                 </ul>
             </div>
@@ -112,6 +112,10 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 
                     <a href="/tags/apollo.html" style="font-size: 120.81448319328996%">
                         Apollo
+                    </a>
+                
+                    <a href="/tags/appveyor.html" style="font-size: 100%">
+                        AppVeyor
                     </a>
                 
                     <a href="/tags/blog.html" style="font-size: 130.49266672559813%">
@@ -124,6 +128,14 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 
                     <a href="/tags/console.html" style="font-size: 100%">
                         Console
+                    </a>
+                
+                    <a href="/tags/continous-integration.html" style="font-size: 100%">
+                        Continous integration
+                    </a>
+                
+                    <a href="/tags/continuous-deployment.html" style="font-size: 100%">
+                        Continuous deployment
                     </a>
                 
                     <a href="/tags/docpad.html" style="font-size: 120.81448319328996%">
@@ -230,6 +242,10 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         nAnicitus
                     </a>
                 
+                    <a href="/tags/nbuildkit.html" style="font-size: 100%">
+                        nBuildKit
+                    </a>
+                
                     <a href="/tags/nrefs.html" style="font-size: 100%">
                         nRefs
                     </a>
@@ -238,6 +254,33 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-10-30_Sherlock-Release-V0470.html'>Sherlock release - V0.4.7.0</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Wednesday, October 30, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.7.0">V0.4.7.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides one bug fix:</p>
+<ul>
+<li>The Windows job object created by the Sherlock service to ensure termination of the Sherlock.Service.Master and Sherlock.Service.Executor applications is now set to only include direct children (i.e. Sherlock.Service.Master / Sherlock.Service.Executor) in the job and not the indirect children. This allows the application under test to create its own job objects even on Windows 7 (which does not allow nesting of job objects) (<a href="https://github.com/pvandervelde/Sherlock/issues/11">issue #11</a>).</li>
+</ul>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -356,47 +399,6 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
 </div>
     </div>
 
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-10-23_Nuclei-Release-V0670.html'>Nuclei release - V0.6.7.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, October 23, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/nuclei.html">Nuclei</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.7.0">V0.6.7.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release fixes a bug in the processing of <code>ICommandSet</code> return tasks which caused the processor to throw an exception if the return task was a <a href="http://msdn.microsoft.com/en-us/library/ee372288.aspx">continuation task</a>. This bug fix means it is now possible to chain tasks and return the final task from an <code>ICommandSet</code> object. An example of this behaviour is given in the following section of code.</p>
-<pre class="highlight"><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> IMyCommandSet : ICommandSet
-{
-    Task DoSomethingAwesome();
-}
-
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">class</span> MyCommand : IMyCommandSet
-{
-    <span class="hljs-keyword">public</span> Task <span class="hljs-title">DoSomethingAwesome</span>()
-    {
-        <span class="hljs-keyword">var</span> firstTask = Task.Factory.StartNew(
-            () =&gt; Thread.Sleep(<span class="hljs-number">1000</span>));
-        <span class="hljs-keyword">var</span> secondTask = firstTask.ContinueWith(
-            t =&gt; Console.WriteLine(<span class="hljs-string">"Awesome sauce"</span>)); 
-        <span class="hljs-keyword">return</span> secondTask
-    }
-}
-</code></pre>
- 
-    </div>
-</div>
-    </div>
-
 
 <!-- Page Listing -->
 
@@ -449,7 +451,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
             <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
             from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Wednesday, May 28, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Monday, June 16, 2014.</p>
     </div>
 
     <!-- jQuery -->

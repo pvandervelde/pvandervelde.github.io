@@ -3,13 +3,25 @@
     <title>Mind Vortex</title>
     <link href="http://www.petrikvandervelde.nl/atom.xml" rel="self"/>
     <link href="http://www.petrikvandervelde.nl"/>
-    <updated>2014-05-28T01:51:10.819Z</updated>
+    <updated>2014-06-16T01:32:24.483Z</updated>
     <id>http://www.petrikvandervelde.nl</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>nBuildKit release - V0.1.5</title>
+            <link href="http://www.petrikvandervelde.nl/posts/2014-06-16_nBuildKit-release-V015.html"/>
+            <updated>2014-06-16T00:00:00.000Z</updated>
+            <id>http://www.petrikvandervelde.nl/posts/2014-06-16_nBuildKit-release-V015.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/releases/tag/0.1.5&quot;&gt;V0.1.5&lt;/a&gt; of the &lt;a href=&quot;/projects/nbuildkit.html&quot;&gt;nBuildKit&lt;/a&gt; build library has been released. &lt;/p&gt;
+&lt;p&gt;This first release introduces the &lt;a href=&quot;https://www.nuget.org/packages/nBuildKit.MsBuild/0.1.5&quot;&gt;MsBuild&lt;/a&gt; NuGet package. This package contains build scripts that provide the ability to perform a complete build consisting of workspace preparation, compilation of binaries, execution of unit tests, analysis of source code and binaries and finally packing of the binaries as NuGet packages or ZIP archives.
+The &lt;code&gt;nBuildKit.MsBuild&lt;/code&gt; NuGet package also provides scripts that can be used to tag a release in the version control system (VCS) and deploy the artifacts to a file server, NuGet feed or a GitHub release.&lt;/p&gt;
+&lt;p&gt;The documentation for this library can be found on the nBuildKit &lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/wiki/MsBuild&quot;&gt;wiki&lt;/a&gt;&lt;/p&gt;
+</content>
+        </entry>
     
         <entry>
             <title>Nuclei release - V0.8.0</title>
