@@ -3,13 +3,45 @@
     <title>Mind Vortex</title>
     <link href="http://www.petrikvandervelde.nl/atom.xml" rel="self"/>
     <link href="http://www.petrikvandervelde.nl"/>
-    <updated>2014-06-16T01:32:24.483Z</updated>
+    <updated>2014-07-21T10:07:59.237Z</updated>
     <id>http://www.petrikvandervelde.nl</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>nBuildKit release - V0.2.4</title>
+            <link href="http://www.petrikvandervelde.nl/posts/2014-07-21_nBuildKit-release-V024.html"/>
+            <updated>2014-07-21T00:00:00.000Z</updated>
+            <id>http://www.petrikvandervelde.nl/posts/2014-07-21_nBuildKit-release-V024.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/releases/tag/0.2.4&quot;&gt;V0.2.4&lt;/a&gt; of the &lt;a href=&quot;/projects/nbuildkit.html&quot;&gt;nBuildKit&lt;/a&gt; build library has been released. &lt;/p&gt;
+&lt;p&gt;This release introduces NuGet packages that allow Visual Studio &lt;a href=&quot;https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.CSharp/&quot;&gt;C#&lt;/a&gt; and &lt;a href=&quot;https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.WiX/&quot;&gt;WiX&lt;/a&gt; projects to share a common configuration including code analysis and strong naming capabilities and to generate one or more source files before building the project.&lt;/p&gt;
+&lt;p&gt;Both packages provide the ability to share a configuration between multiple projects in a Visual Studio solution. The shared configuration can contain items like Debug and Release settings, targeted .NET framework, code analysis settings and many other options.&lt;/p&gt;
+&lt;p&gt;Beyond that the C# NuGet package provides capabilities to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Generate &lt;code&gt;AssemblyInfo.XXXX.cs&lt;/code&gt; files for:&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;AssemblyInfo.VersionNumber.cs&lt;/code&gt; contains the version numbers for the project as determined by nBuildKit from the versioning strategies provided. Currently supported are either a version number provided through an MsBuild project file or through &lt;a href=&quot;https://github.com/JakeGinnivan/GitHubFlowVersion&quot;&gt;GitHubFlowVersion&lt;/a&gt;. By allowing nBuildKit to generate the &lt;code&gt;AssemblyInfo.VersionNumber.cs&lt;/code&gt; file it is possible to automatically version the binaries the same way as all other artifacts, e.g. NuGet packages, installers, documentation etc. etc.. The version number is currently provided through the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/system.reflection.assemblyversionattribute(v=vs.110).aspx&quot;&gt;AssemblyVersionAttribute&lt;/a&gt; as &lt;code&gt;Major.Minor.0.0&lt;/code&gt;; through the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/system.reflection.assemblyfileversionattribute(v=vs.110).aspx&quot;&gt;AssemblyFileVersionAttribute&lt;/a&gt; as &lt;code&gt;Major.Minor.Patch.Build&lt;/code&gt;; and through the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/system.reflection.assemblyinformationalversionattribute(v=vs.110).aspx&quot;&gt;AssemblyInformationalVersionAttribute&lt;/a&gt; as the full &lt;a href=&quot;http://semver.org/&quot;&gt;semantic version&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AssemblyInfo.BuildInformation.cs&lt;/code&gt; contains information about the current build of the binaries. This includes the configuration, e.g. Release; the date and time that the binary was compiled and information describing the build number and the commit number that were used to generate the binaries.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AssemblyInfo.InternalsVisibleTo.cs&lt;/code&gt; contains the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute(v=vs.110).aspx&quot;&gt;InternalsVisibleToAttribute&lt;/a&gt; values for any assemblies that should have access to the internals of the current assembly for purposes of unit testing.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AssemblyInfo.Company.cs&lt;/code&gt; contains the information describing the &amp;#39;company&amp;#39; that created the binaries. The information includes the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/system.reflection.assemblycompanyattribute(v=vs.110).aspx&quot;&gt;AssemblyCompanyAttribute&lt;/a&gt; and the &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/system.reflection.assemblycopyrightattribute(v=vs.110).aspx&quot;&gt;AssemblyCopyrightAttribute&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Generate a &lt;code&gt;CompanyInformation.cs&lt;/code&gt; source file that contains an internal static class providing constants for the company name and the company URL.&lt;/li&gt;
+&lt;li&gt;Generate a &lt;code&gt;ProductInformation.cs&lt;/code&gt; source file that contains an internal static class providing constants for the name of the product. &lt;/li&gt;
+&lt;li&gt;Generate an &lt;code&gt;app.manifest&lt;/code&gt; file with the current project version number.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And the WiX NuGet package provides capabilities to&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Generate a &lt;code&gt;VersionNumber.wxi&lt;/code&gt; WiX include file that contains the version numbers for the application and the installer.&lt;/li&gt;
+&lt;li&gt;Generate a &lt;code&gt;CompanyInformation.wxi&lt;/code&gt; WiX include file that contains the name and URL of the company that produces the product.&lt;/li&gt;
+&lt;li&gt;Generate a &lt;code&gt;ProductInformation.wxi&lt;/code&gt; WiX include file that contains the name and description of the product.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The generation of all of these files can be enabled through a setting in the &lt;code&gt;settings.props&lt;/code&gt; file that is also used by the &lt;a href=&quot;https://www.nuget.org/packages/nBuildKit.MsBuild/&quot;&gt;nBuildKit.MsBuild&lt;/a&gt; NuGet package &lt;/p&gt;
+&lt;p&gt;The documentation for this library can be found on the nBuildKit &lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/wiki/MsBuild&quot;&gt;wiki&lt;/a&gt;&lt;/p&gt;
+</content>
+        </entry>
     
         <entry>
             <title>nBuildKit release - V0.1.5</title>

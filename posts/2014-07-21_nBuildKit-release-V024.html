@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>Sherlock release - V0.4.6.0 | Mind Vortex</title>
+    <title>nBuildKit release - V0.2.4 | Mind Vortex</title>
     <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
@@ -261,32 +261,51 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-header">
         <h2>
             
-                Sherlock release - V0.4.6.0
+                nBuildKit release - V0.2.4
             
         </h2>
         <div id="post-meta">
             <p>
-                Thursday, October 24, 2013 | Posted in
+                Monday, July 21, 2014 | Posted in
                 
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
+                    <a id="post-category" href="/tags/nbuildkit.html">nBuildKit</a>
                 
             </p>
         </div>
     </div>
     <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.6.0">V0.4.6.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides two bug fixes:</p>
+        <p>Version <a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.2.4">V0.2.4</a> of the <a href="/projects/nbuildkit.html">nBuildKit</a> build library has been released. </p>
+<p>This release introduces NuGet packages that allow Visual Studio <a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.CSharp/">C#</a> and <a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.WiX/">WiX</a> projects to share a common configuration including code analysis and strong naming capabilities and to generate one or more source files before building the project.</p>
+<p>Both packages provide the ability to share a configuration between multiple projects in a Visual Studio solution. The shared configuration can contain items like Debug and Release settings, targeted .NET framework, code analysis settings and many other options.</p>
+<p>Beyond that the C# NuGet package provides capabilities to:</p>
 <ul>
-<li>The MSI installer now verifies that all directories exist before writing to them (<a href="https://github.com/pvandervelde/Sherlock/issues/9">issue #9</a>)</li>
-<li>The X-copy installer now verifies that the destination directory exists before copying files to it (<a href="https://github.com/pvandervelde/Sherlock/issues/10">issue #10</a>)</li>
+<li>Generate <code>AssemblyInfo.XXXX.cs</code> files for:<ul>
+<li><code>AssemblyInfo.VersionNumber.cs</code> contains the version numbers for the project as determined by nBuildKit from the versioning strategies provided. Currently supported are either a version number provided through an MsBuild project file or through <a href="https://github.com/JakeGinnivan/GitHubFlowVersion">GitHubFlowVersion</a>. By allowing nBuildKit to generate the <code>AssemblyInfo.VersionNumber.cs</code> file it is possible to automatically version the binaries the same way as all other artifacts, e.g. NuGet packages, installers, documentation etc. etc.. The version number is currently provided through the <a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblyversionattribute(v=vs.110).aspx">AssemblyVersionAttribute</a> as <code>Major.Minor.0.0</code>; through the <a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblyfileversionattribute(v=vs.110).aspx">AssemblyFileVersionAttribute</a> as <code>Major.Minor.Patch.Build</code>; and through the <a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblyinformationalversionattribute(v=vs.110).aspx">AssemblyInformationalVersionAttribute</a> as the full <a href="http://semver.org/">semantic version</a>.</li>
+<li><code>AssemblyInfo.BuildInformation.cs</code> contains information about the current build of the binaries. This includes the configuration, e.g. Release; the date and time that the binary was compiled and information describing the build number and the commit number that were used to generate the binaries.</li>
+<li><code>AssemblyInfo.InternalsVisibleTo.cs</code> contains the <a href="http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute(v=vs.110).aspx">InternalsVisibleToAttribute</a> values for any assemblies that should have access to the internals of the current assembly for purposes of unit testing.</li>
+<li><code>AssemblyInfo.Company.cs</code> contains the information describing the &#39;company&#39; that created the binaries. The information includes the <a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblycompanyattribute(v=vs.110).aspx">AssemblyCompanyAttribute</a> and the <a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblycopyrightattribute(v=vs.110).aspx">AssemblyCopyrightAttribute</a>.</li>
 </ul>
+</li>
+<li>Generate a <code>CompanyInformation.cs</code> source file that contains an internal static class providing constants for the company name and the company URL.</li>
+<li>Generate a <code>ProductInformation.cs</code> source file that contains an internal static class providing constants for the name of the product. </li>
+<li>Generate an <code>app.manifest</code> file with the current project version number.</li>
+</ul>
+<p>And the WiX NuGet package provides capabilities to</p>
+<ul>
+<li>Generate a <code>VersionNumber.wxi</code> WiX include file that contains the version numbers for the application and the installer.</li>
+<li>Generate a <code>CompanyInformation.wxi</code> WiX include file that contains the name and URL of the company that produces the product.</li>
+<li>Generate a <code>ProductInformation.wxi</code> WiX include file that contains the name and description of the product.</li>
+</ul>
+<p>The generation of all of these files can be enabled through a setting in the <code>settings.props</code> file that is also used by the <a href="https://www.nuget.org/packages/nBuildKit.MsBuild/">nBuildKit.MsBuild</a> NuGet package </p>
+<p>The documentation for this library can be found on the nBuildKit <a href="https://github.com/pvandervelde/nBuildKit/wiki/MsBuild">wiki</a></p>
  
     </div>
 </div>
     <div id="post-footer">
         <div>
             <div class="navlinks">
-  <a href="/posts/2013-10-23_Sherlock-Release-V0450.html" title="Previous Post: Sherlock release - V0.4.5.0" class="navlinks-prev">&laquo; Sherlock release - V0.4.5.0</a>
-  <a href="/posts/2013-10-25_PG2-At-the-top-of-the-stack.html" title="Next Post: PG2 - At the top of the stack" class="navlinks-next">PG2 - At the top of the stack &raquo;</a>
+  <a href="/posts/2014-06-16_nBuildKit-release-V015.html" title="Previous Post: nBuildKit release - V0.1.5" class="navlinks-prev">&laquo; nBuildKit release - V0.1.5</a>
+  
 </div>
         </div>
     </div>
@@ -306,7 +325,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-comments">
         <h3>Comments</h3>
         <div id="post-comment-header">
-            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/15"> this post's issue page on 
+            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/43"> this post's issue page on 
             GitHub</a> (you'll need a GitHub account).
         </div>
     </div>
@@ -317,7 +336,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         for (var i=0; i<data.length; i++) {
           var cuser = data[i].user.login;
           var cuserlink = "https://www.github.com/" + data[i].user.login;
-          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/15#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
+          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/43#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
           var cbody = data[i].body_html;
           var cavatarlink = data[i].user.avatar_url;
           var cdate = Date.parse(data[i].created_at).toString("yyyy-MM-dd HH:mm:ss");
@@ -326,7 +345,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         }
       }
 
-      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/15/comments", {
+      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/43/comments", {
         headers: {Accept: "application/vnd.github.full+json"},
         dataType: "json",
         success: function(msg){
