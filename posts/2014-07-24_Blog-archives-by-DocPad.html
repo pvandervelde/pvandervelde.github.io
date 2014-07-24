@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>Sherlock release - V0.4.5.0 | Mind Vortex</title>
+    <title>Blog archives by DocPad | Mind Vortex</title>
     <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
@@ -261,32 +261,35 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-header">
         <h2>
             
-                Sherlock release - V0.4.5.0
+                Blog archives by DocPad
             
         </h2>
         <div id="post-meta">
             <p>
-                Wednesday, October 23, 2013 | Posted in
+                Thursday, July 24, 2014 | Posted in
                 
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
+                    <a id="post-category" href="/tags/blog.html">Blog</a>
+                
+                    <a id="post-category" href="/tags/docpad.html">DocPad</a>
                 
             </p>
         </div>
     </div>
     <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.5.0">V0.4.5.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides one improvement and one bug fix:</p>
-<ul>
-<li>The test report can now include files generated during the test (<a href="https://github.com/pvandervelde/Sherlock/issues/5">issue #5</a>)</li>
-<li>Sherlock.Service no longer includes a manifest signing key, instead the key is obtained via a configuration setting (<a href="https://github.com/pvandervelde/Sherlock/issues/8">issue #8</a>)</li>
-</ul>
+        <p>A while ago I decided that it was time to add an <a href="/archives.html">archive</a> page to the website so that there would be a place to get a quick overview of all the posts that I have written. Fortunately setting up an archive page with <a href="http://docpad.org/">DocPad</a> is relatively simple.  </p>
+<p>The first step to take was to add a new layout for the archive page.</p>
+<script src='https://gist.github.com/b7434bc8a1b7eb240da9.js'></script>
+
+<p>The layout gets the list of all posts and iterates over them in chronological order. All the posts for one year are grouped together under a header titled after the year. In keeping with the layout of the rest of the site each post gets a title, the day and month and the tags that belong to that post. In order for this specific layout to work you will need to add the <code>moment</code> node.js package</p>
+<p>The layout and the CSS for the archive page is heavily based on the layout created by <a href="http://www.jptacek.com/">John Ptacek</a>.</p>
  
     </div>
 </div>
     <div id="post-footer">
         <div>
             <div class="navlinks">
-  <a href="/posts/2013-10-23_Nuclei-Release-V0670.html" title="Previous Post: Nuclei release - V0.6.7.0" class="navlinks-prev">&laquo; Nuclei release - V0.6.7.0</a>
-  <a href="/posts/2013-10-24_Sherlock-Release-V0460.html" title="Next Post: Sherlock release - V0.4.6.0" class="navlinks-next">Sherlock release - V0.4.6.0 &raquo;</a>
+  <a href="/posts/2014-07-21_nBuildKit-release-V024.html" title="Previous Post: nBuildKit release - V0.2.4" class="navlinks-prev">&laquo; nBuildKit release - V0.2.4</a>
+  
 </div>
         </div>
     </div>
@@ -306,7 +309,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-comments">
         <h3>Comments</h3>
         <div id="post-comment-header">
-            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/14"> this post's issue page on 
+            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/44"> this post's issue page on 
             GitHub</a> (you'll need a GitHub account).
         </div>
     </div>
@@ -317,7 +320,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         for (var i=0; i<data.length; i++) {
           var cuser = data[i].user.login;
           var cuserlink = "https://www.github.com/" + data[i].user.login;
-          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/14#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
+          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/44#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
           var cbody = data[i].body_html;
           var cavatarlink = data[i].user.avatar_url;
           var cdate = Date.parse(data[i].created_at).toString("yyyy-MM-dd HH:mm:ss");
@@ -326,7 +329,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         }
       }
 
-      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/14/comments", {
+      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/44/comments", {
         headers: {Accept: "application/vnd.github.full+json"},
         dataType: "json",
         success: function(msg){

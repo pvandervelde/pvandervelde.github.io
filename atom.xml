@@ -3,13 +3,27 @@
     <title>Mind Vortex</title>
     <link href="http://www.petrikvandervelde.nl/atom.xml" rel="self"/>
     <link href="http://www.petrikvandervelde.nl"/>
-    <updated>2014-07-21T10:07:59.237Z</updated>
+    <updated>2014-07-24T10:33:33.788Z</updated>
     <id>http://www.petrikvandervelde.nl</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>Blog archives by DocPad</title>
+            <link href="http://www.petrikvandervelde.nl/posts/2014-07-24_Blog-archives-by-DocPad.html"/>
+            <updated>2014-07-24T00:00:00.000Z</updated>
+            <id>http://www.petrikvandervelde.nl/posts/2014-07-24_Blog-archives-by-DocPad.html</id>
+            <content type="html">&lt;p&gt;A while ago I decided that it was time to add an &lt;a href=&quot;/archives.html&quot;&gt;archive&lt;/a&gt; page to the website so that there would be a place to get a quick overview of all the posts that I have written. Fortunately setting up an archive page with &lt;a href=&quot;http://docpad.org/&quot;&gt;DocPad&lt;/a&gt; is relatively simple.  &lt;/p&gt;
+&lt;p&gt;The first step to take was to add a new layout for the archive page.&lt;/p&gt;
+&lt;script src='https://gist.github.com/b7434bc8a1b7eb240da9.js'&gt;&lt;/script&gt;
+
+&lt;p&gt;The layout gets the list of all posts and iterates over them in chronological order. All the posts for one year are grouped together under a header titled after the year. In keeping with the layout of the rest of the site each post gets a title, the day and month and the tags that belong to that post. In order for this specific layout to work you will need to add the &lt;code&gt;moment&lt;/code&gt; node.js package&lt;/p&gt;
+&lt;p&gt;The layout and the CSS for the archive page is heavily based on the layout created by &lt;a href=&quot;http://www.jptacek.com/&quot;&gt;John Ptacek&lt;/a&gt;.&lt;/p&gt;
+</content>
+        </entry>
     
         <entry>
             <title>nBuildKit release - V0.2.4</title>
