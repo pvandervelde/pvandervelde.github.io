@@ -85,6 +85,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2014-07-26_Adding-pagination-with-DocPad.html">Adding pagination with DocPad</a></li>
+                    
                         <li><a href="/posts/2014-07-24_Blog-archives-by-DocPad.html">Blog archives by DocPad</a></li>
                     
                         <li><a href="/posts/2014-07-21_nBuildKit-release-V024.html">nBuildKit release - V0.2.4</a></li>
@@ -97,13 +99,11 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2014-05-23_Improvements-to-the-site.html">Improvements to the site</a></li>
                     
-                        <li><a href="/projects/nanicitus.html">nAnicitus</a></li>
-                    
-                        <li><a href="/projects/sherlock.html">Sherlock</a></li>
-                    
                         <li><a href="/projects/nuclei.html">Nuclei</a></li>
                     
-                        <li><a href="/projects/ntreva.html">nTreva</a></li>
+                        <li><a href="/projects/nrefs.html">nRefs</a></li>
+                    
+                        <li><a href="/projects/nanicitus.html">nAnicitus</a></li>
                     
                 </ul>
             </div>
@@ -259,6 +259,38 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-header">
         <h2>
             
+                <a href='/posts/2013-10-12_Nuclei-Release-V0660.html'>Nuclei release - V0.6.6.0</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Saturday, October 12, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/nuclei.html">Nuclei</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.6.0">V0.6.6.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release adds the ability to specify the name and version of the application in the log file. If no application name or version is specified then the information from <code>Assembly.GetEntryAssembly()</code> is used. </p>
+<p>The application name and version can be specified when creating a new logger via the <code>LoggerBuilder</code> like so:</p>
+<pre class="highlight"><code class="hljs cs">IConfiguration configuration = <span class="hljs-keyword">new</span> MyConfiguration();
+<span class="hljs-keyword">var</span> logger = LoggerBuilder.ForFile(
+    <span class="hljs-string">@"c:\mylogfile.txt"</span>,
+    <span class="hljs-keyword">new</span> DebugLogTemplate(configuration, () =&gt; DateTimeOffset.Now),
+    applicationName,
+    applicationVersion);
+</code></pre>
+ 
+    </div>
+</div>
+    </div>
+
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
                 <a href='/posts/2013-09-26_Nuclei-Release-v0650.html'>Nuclei release - V0.6.5.0</a>
             
         </h2>
@@ -300,34 +332,6 @@ builder.RegisterModule(
             }, 
         <span class="hljs-keyword">false</span>));
 </code></pre>
- 
-    </div>
-</div>
-    </div>
-
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-09-25_nRefs-Release-v0100.html'>nRefs release - V0.1.0.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, September 25, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/nrefs.html">nRefs</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>The <a href="https://github.com/pvandervelde/nRefs/releases/tag/v0.1.0.0">first release</a> of the <a href="/projects/nRefs.html">nRefs</a> assembly reference extraction application has been released. This release</p>
-<ul>
-<li>The test output now includes an XML report with all the messages and an indication of test success or failure.</li>
-<li>Removed the Test data directory settings from the web service because test packages are now always dropped in the App_Data directory</li>
-</ul>
  
     </div>
 </div>
@@ -427,6 +431,34 @@ projects subdirectories and then sorts them by date. The <em>recent</em> section
     <div id="post-header">
         <h2>
             
+                <a href='/posts/2013-09-25_nRefs-Release-v0100.html'>nRefs release - V0.1.0.0</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Wednesday, September 25, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/nrefs.html">nRefs</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>The <a href="https://github.com/pvandervelde/nRefs/releases/tag/v0.1.0.0">first release</a> of the <a href="/projects/nRefs.html">nRefs</a> assembly reference extraction application has been released. This release</p>
+<ul>
+<li>The test output now includes an XML report with all the messages and an indication of test success or failure.</li>
+<li>Removed the Test data directory settings from the web service because test packages are now always dropped in the App_Data directory</li>
+</ul>
+ 
+    </div>
+</div>
+    </div>
+
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
                 <a href='/posts/2013-09-21_Sherlock-Release-v0440.html'>Sherlock release - V0.4.4.0</a>
             
         </h2>
@@ -445,46 +477,6 @@ projects subdirectories and then sorts them by date. The <em>recent</em> section
 <li>The test output now includes an XML report with all the messages and an indication of test success or failure.</li>
 <li>Removed the Test data directory settings from the web service because test packages are now always dropped in the App_Data directory</li>
 </ul>
- 
-    </div>
-</div>
-    </div>
-
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-09-16_PG2-Second-day-flying.html'>PG2 - Second day</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Monday, September 16, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/paragliding.html">Paragliding</a>
-                
-                    <a id="post-category" href="/tags/pg2.html">PG2</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>On Sunday the weather was good enough for some flying on the west coast. So at 11.30am about 8 of us gathered at <a href="http://en.wikipedia.org/wiki/Kariotahi_Beach">Kario</a> and the second day of my <a href="/tags/PG2.html">PG2</a> had started.</p>
-<p><img align="left" alt="Paraglider soaring high over beautiful west coast" src="/images/paragliding/paraglide_0004.JPG" /></p>
-<p>The first thing to notice about the west coast is that it looks amazing, rugged and empty. It seems that with paragliding besides the flying I also get to look out over the amazing landscapes New Zealand has. Double win!</p>
-<p>But before I get to fly as a qualified pilot a lot more training has to be had and that we did. The day started off with some ground handling exercises on the really old gliders. My first taste of <a href="http://en.wikipedia.org/wiki/Paragliding#Reverse_launch">reverse launching</a> except with out the actual turning around and flying bit. It turns out reverse launching isn&#39;t actually as simple as I thought it would be. Having flown kites for many years I thought I would get the reverse launch down pretty easily but when the gliders get larger and the controls are reversed things get difficult. More practise is required ...</p>
-<p>After the ground handling a few short flights down the slope were made with a larger glider to practise the forward starts and then it was time to get some actual flights done. I managed to get three short flights in where I got to practise forward starts, turning and then landing. Some observations (which are probably obvious to those that have flown paragliders before): </p>
-<ul>
-<li>If there is a distinct edge at the end of the start field then when you fly out over that edge the glider will climb rapidly due to the wind blasting straight up the edge. This is nothing to worry about, although it feels slightly disconcerting at first.</li>
-<li>A paraglider moves around more than you would think, even in a nice constant sea breeze</li>
-<li>If you land at even a slight angle to the wind it gets really hard to put the glider on its back, instead of its side. I got only one landing totally right.</li>
-</ul>
-<p><img align="right" alt="Flying my new Gin Atlas" src="/images/paragliding/paraglide_0005.JPG" /></p>
-<p>And then it was time for the unexpected highlight of the day. When I paid for the PG2 course I paid for a combination package, which includes the PG2 course, a glider and a harness. Now I still haven&#39;t selected a harness but I have selected the glider, a bright red <a href="http://gingliders.com/paragliders/atlas/">Gin Atlas</a>. I didn&#39;t expect to be able to fly it so soon in my course but after my initial three flights both instructors gave me the go ahead to fly it. </p>
-<p>I managed a further two flights with it. The first one was a nice long soaring flight where I got to get a feel for the glider. At the end of the flight I managed to get quite a bit of height. And to top that flight off the instructor guided me in for a top landing upon which I nearly broke my glider by stuffing up the landing. Fortunately no gliders or pilots where hurt.</p>
-<p>The last flight of the day was back down to the beach to pack our equipment and drive home. I set myself up for a landing approach and promptly overshot my selected landing spot by about 100 meters or so. I guess selecting and landing in the right spot is yet another skill I have to work on.</p>
-<p>All in all it was an amazing day of flying, especially the nice soaring flight on my shiny new glider.</p>
  
     </div>
 </div>
@@ -542,7 +534,7 @@ projects subdirectories and then sorts them by date. The <em>recent</em> section
             <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
             from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Thursday, July 24, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Saturday, July 26, 2014.</p>
     </div>
 
     <!-- jQuery -->

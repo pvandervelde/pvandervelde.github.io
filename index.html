@@ -85,6 +85,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2014-07-26_Adding-pagination-with-DocPad.html">Adding pagination with DocPad</a></li>
+                    
                         <li><a href="/posts/2014-07-24_Blog-archives-by-DocPad.html">Blog archives by DocPad</a></li>
                     
                         <li><a href="/posts/2014-07-21_nBuildKit-release-V024.html">nBuildKit release - V0.2.4</a></li>
@@ -97,13 +99,11 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2014-05-23_Improvements-to-the-site.html">Improvements to the site</a></li>
                     
-                        <li><a href="/projects/nanicitus.html">nAnicitus</a></li>
-                    
-                        <li><a href="/projects/sherlock.html">Sherlock</a></li>
-                    
                         <li><a href="/projects/nuclei.html">Nuclei</a></li>
                     
-                        <li><a href="/projects/ntreva.html">nTreva</a></li>
+                        <li><a href="/projects/nrefs.html">nRefs</a></li>
+                    
+                        <li><a href="/projects/nanicitus.html">nAnicitus</a></li>
                     
                 </ul>
             </div>
@@ -259,6 +259,42 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-header">
         <h2>
             
+                <a href='/posts/2014-07-26_Adding-pagination-with-DocPad.html'>Adding pagination with DocPad</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Saturday, July 26, 2014 | Posted in
+                
+                    <a id="post-category" href="/tags/blog.html">Blog</a>
+                
+                    <a id="post-category" href="/tags/docpad.html">DocPad</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Last year when I started this blog I decided to keep the layout as simple as possible, hence all the posts were just added to the home page and to their own page. Over time as more posts were written the home page got larger and larger making it slower to load and more difficult to navigate. In order to improve this <a href="https://github.com/pvandervelde/mindvortex/commit/9472ad503725eb42d98e30b6c4452d2b6766b344">pagination</a> of the home page was introduced.</p>
+<p>Once again <a href="http://docpad.org/">DocPad</a> makes this very easy because all you have to do is add the <a href="https://github.com/docpad/docpad-plugin-paged">DocPad-paged</a> plugin and then update the documents you want to split. In the case of this blog only the index page needed to be split. The new index page now looks like this:</p>
+<script src='https://gist.github.com/26f698e7c7099033188f.js'></script>
+
+<p>In order to make the paged plugin do its work the following &#39;properties&#39; were added to the header:</p>
+<ul>
+<li><strong>isPaged</strong> - Indicates that the document should be broken up into multiple pages.</li>
+<li><strong>pageCollection</strong> - The collection from which the sub-documents that will fill up the current page are taken.</li>
+<li><strong>pageSize</strong> - The number of sub-documents per page</li>
+</ul>
+<p>Finally two buttons were added to the bottom of the page to naviage to he newer and the older posts.</p>
+ 
+    </div>
+</div>
+    </div>
+
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
                 <a href='/posts/2014-07-24_Blog-archives-by-DocPad.html'>Blog archives by DocPad</a>
             
         </h2>
@@ -274,7 +310,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
     </div>
     <div id="post-content">
-        <p>A while ago I decided that it was time to add an <a href="/archives.html">archive</a> page to the website so that there would be a place to get a quick overview of all the posts that I have written. Fortunately setting up an archive page with <a href="http://docpad.org/">DocPad</a> is relatively simple.  </p>
+        <p>A while ago I decided that it was time to add an <a href="/archives.html">archive</a> page to the website so that there would be a place to get a quick overview of all the posts that I have written. Fortunately setting up an archive page with <a href="http://docpad.org/">DocPad</a> is relatively <a href="https://github.com/pvandervelde/mindvortex/commit/31698aa10fd205f41999e0b89792744a2bb8b82b">simple</a>.  </p>
 <p>The first step to take was to add a new layout for the archive page.</p>
 <script src='https://gist.github.com/b7434bc8a1b7eb240da9.js'></script>
 
@@ -412,34 +448,6 @@ The <code>nBuildKit.MsBuild</code> NuGet package also provides scripts that can 
 </div>
     </div>
 
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2014-05-23_Improvements-to-the-site.html'>Improvements to the site</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Friday, May 23, 2014 | Posted in
-                
-                    <a id="post-category" href="/tags/blog.html">Blog</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Over the last few days some changes were made to the structure of this website. Of these changes the first change that was made is in the move from the standard GitHub pages URL to my own custom domain provided by the amazingly helpful people at <a href="https://dnsimple.com/">dnsimple</a>. While the URL for this website has changed it is still being hosted by GitHub pages and so the old URL will continue working just fine.</p>
-<p>The only slight catch is that the project pages for my projects now suddenly redirect through my new domain as well. Apparently this is due to the way GitHub <a href="https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages#overview">handles</a> custom domains. For now I will live with this situation but later on my personal projects may be moved to separate <a href="https://help.github.com/articles/what-s-the-difference-between-user-and-organization-accounts">organisations</a>.</p>
-<p>The second change is the addition of pagination for the landing page. As I continued to write more blog posts this page was getting rather long and slow to load. The new landing page only contains the last five blog posts and provides a way to navigate to the previous posts at the bottom of the page. This should make the page much quicker to load. I will share the implementation of the pagination in a future blog post but for those who are interested the changes necessary to implement pagination in <a href="https://github.com/docpad/docpad-plugin-paged/">DocPad</a> are pretty minor and can be seen in a single <a href="https://github.com/pvandervelde/mindvortex/commit/9472ad503725eb42d98e30b6c4452d2b6766b344">commit</a>.</p>
-<p>Besides setting up the pagination of the landing page I also created an <a href="/archive.html">archive</a> page which, logically, shows all the blog posts in chronological order. Again a future blog post will describe the necessary changes to include the archive page. </p>
-<p>Last but not least the site has gotten a new <a href="http://en.wikipedia.org/wiki/Favicon">favicon</a> which is a little more vortex-y than the last icon.</p>
- 
-    </div>
-</div>
-    </div>
-
 
 <!-- Page Listing -->
 
@@ -490,7 +498,7 @@ The <code>nBuildKit.MsBuild</code> NuGet package also provides scripts that can 
             <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
             from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Thursday, July 24, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Saturday, July 26, 2014.</p>
     </div>
 
     <!-- jQuery -->

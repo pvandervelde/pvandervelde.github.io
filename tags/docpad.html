@@ -85,6 +85,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2014-07-26_Adding-pagination-with-DocPad.html">Adding pagination with DocPad</a></li>
+                    
                         <li><a href="/posts/2014-07-24_Blog-archives-by-DocPad.html">Blog archives by DocPad</a></li>
                     
                         <li><a href="/posts/2014-07-21_nBuildKit-release-V024.html">nBuildKit release - V0.2.4</a></li>
@@ -97,13 +99,11 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2014-05-23_Improvements-to-the-site.html">Improvements to the site</a></li>
                     
-                        <li><a href="/projects/nanicitus.html">nAnicitus</a></li>
-                    
-                        <li><a href="/projects/sherlock.html">Sherlock</a></li>
-                    
                         <li><a href="/projects/nuclei.html">Nuclei</a></li>
                     
-                        <li><a href="/projects/ntreva.html">nTreva</a></li>
+                        <li><a href="/projects/nrefs.html">nRefs</a></li>
+                    
+                        <li><a href="/projects/nanicitus.html">nAnicitus</a></li>
                     
                 </ul>
             </div>
@@ -261,6 +261,42 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-header">
         <h2>
             
+                <a href='/posts/2014-07-26_Adding-pagination-with-DocPad.html'>Adding pagination with DocPad</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Saturday, July 26, 2014 | Posted in
+                
+                    <a id="post-category" href="/tags/blog.html">Blog</a>
+                
+                    <a id="post-category" href="/tags/docpad.html">DocPad</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Last year when I started this blog I decided to keep the layout as simple as possible, hence all the posts were just added to the home page and to their own page. Over time as more posts were written the home page got larger and larger making it slower to load and more difficult to navigate. In order to improve this <a href="https://github.com/pvandervelde/mindvortex/commit/9472ad503725eb42d98e30b6c4452d2b6766b344">pagination</a> of the home page was introduced.</p>
+<p>Once again <a href="http://docpad.org/">DocPad</a> makes this very easy because all you have to do is add the <a href="https://github.com/docpad/docpad-plugin-paged">DocPad-paged</a> plugin and then update the documents you want to split. In the case of this blog only the index page needed to be split. The new index page now looks like this:</p>
+<script src='https://gist.github.com/26f698e7c7099033188f.js'></script>
+
+<p>In order to make the paged plugin do its work the following &#39;properties&#39; were added to the header:</p>
+<ul>
+<li><strong>isPaged</strong> - Indicates that the document should be broken up into multiple pages.</li>
+<li><strong>pageCollection</strong> - The collection from which the sub-documents that will fill up the current page are taken.</li>
+<li><strong>pageSize</strong> - The number of sub-documents per page</li>
+</ul>
+<p>Finally two buttons were added to the bottom of the page to naviage to he newer and the older posts.</p>
+ 
+    </div>
+</div>
+        </div>
+    
+        <div id="post-spacer">
+            <div id="post">
+    <div id="post-header">
+        <h2>
+            
                 <a href='/posts/2014-07-24_Blog-archives-by-DocPad.html'>Blog archives by DocPad</a>
             
         </h2>
@@ -276,7 +312,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
     </div>
     <div id="post-content">
-        <p>A while ago I decided that it was time to add an <a href="/archives.html">archive</a> page to the website so that there would be a place to get a quick overview of all the posts that I have written. Fortunately setting up an archive page with <a href="http://docpad.org/">DocPad</a> is relatively simple.  </p>
+        <p>A while ago I decided that it was time to add an <a href="/archives.html">archive</a> page to the website so that there would be a place to get a quick overview of all the posts that I have written. Fortunately setting up an archive page with <a href="http://docpad.org/">DocPad</a> is relatively <a href="https://github.com/pvandervelde/mindvortex/commit/31698aa10fd205f41999e0b89792744a2bb8b82b">simple</a>.  </p>
 <p>The first step to take was to add a new layout for the archive page.</p>
 <script src='https://gist.github.com/b7434bc8a1b7eb240da9.js'></script>
 
@@ -414,7 +450,7 @@ projects subdirectories and then sorts them by date. The <em>recent</em> section
             <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
             from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Thursday, July 24, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Saturday, July 26, 2014.</p>
     </div>
 
     <!-- jQuery -->
