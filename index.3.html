@@ -85,6 +85,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2014-08-19_nBuildKit-release-V032.html">nBuildKit release - V0.3.2</a></li>
+                    
                         <li><a href="/posts/2014-07-26_Adding-pagination-with-DocPad.html">Adding pagination with DocPad</a></li>
                     
                         <li><a href="/posts/2014-07-24_Blog-archives-by-DocPad.html">Blog archives by DocPad</a></li>
@@ -100,8 +102,6 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         <li><a href="/posts/2014-05-23_Improvements-to-the-site.html">Improvements to the site</a></li>
                     
                         <li><a href="/projects/nuclei.html">Nuclei</a></li>
-                    
-                        <li><a href="/projects/nrefs.html">nRefs</a></li>
                     
                         <li><a href="/projects/nanicitus.html">nAnicitus</a></li>
                     
@@ -242,7 +242,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         nAnicitus
                     </a>
                 
-                    <a href="/tags/nbuildkit.html" style="font-size: 113.13247675185968%">
+                    <a href="/tags/nbuildkit.html" style="font-size: 120.81448319328996%">
                         nBuildKit
                     </a>
                 
@@ -254,6 +254,85 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-12-24_Setting-up-Sherlock-verification.html'>Sherlock configuration - Verification</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Tuesday, December 24, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>After the configuration of the <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">host machine</a> and the <a href="/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html">virtual machines</a> the final step in the configuration of Sherlock is to verify that everything is configured correctly. This can be done by using the verification package that comes with each <a href="https://github.com/pvandervelde/Sherlock/releases">release</a> of Sherlock. In order to use the verification package take the following steps:</p>
+<ul>
+<li>Unpack the <strong>verification.zip</strong> package to a directory somewhere (e.g. <code>c:\temp\sherlock</code>).</li>
+<li>Update the configuration file <code>Sherlock.VerificationConfiguration.msbuild</code> with the following settings:<ul>
+<li><strong>ConfigurationReportDirectory:</strong> The directory where you want the final report to be placed. Note that both the user who requests the test and the user which is used to run the Sherlock services need to have access to this directory. The <code>report</code> directory that was created on the <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">host</a> machine</li>
+<li><strong>ConfigurationServerUrl:</strong> The URL of the web service, e.g. <code>http:\\myhostmachine\sherlock.api</code></li>
+<li><strong>ConfigurationOperatingSystem:</strong> The operating system name that you want to test with. This needs to match one of the operating systems that has been registered with the management website and which is installed on at least one of your test environments.</li>
+<li><strong>ConfigurationOperatingSystemServicePack:</strong> Can be left empty if the operating system has no service pack. If the operating system has a service pack then it needs to match the service pack name of the operating system as registered with the management web site.</li>
+<li><strong>ConfigurationOperatingSystemCulture:</strong> The <a href="http://en.wikipedia.org/wiki/IETF_language_tag">culture</a> as defined for the registered operating system.</li>
+<li><strong>ConfigurationOperatingSystemPointerSize:</strong> The &#39;bitness&#39; or pointer size for the operating system, either 32 or 64 bits. Should again match the value that was provided when the operating system was registered.</li>
+<li><strong>ConfigurationRemotePcWorkingPath:</strong> A path where the test files will be placed on the test environment, e.g. <code>c:\temp</code>.</li>
+<li><strong>ConfigurationSherlockConsoleDirectory:</strong> The directory where the console application is installed, this may be a UNC path or a normal directory, e.g. <code>\\MyHostMachine\console</code>.</li>
+</ul>
+</li>
+<li>Execute the <code>Sherlock.ExecuteVerificationTests.msbuild</code> script. This script will prepare the files to be send across (a test application and some test scripts), start the console application, register the test and then wait for the reports to be produced. </li>
+</ul>
+<p>Note that the reports will come back with some errors. The verification was designed this way on purpose to make it possible to test the error handling. In the end there should be three reports, one for each known test configuration version, i.e. v1.0, v1.1 and v1.2. The reports should show the following errors:</p>
+<ul>
+<li>The script execution that executes <code>c:\temp\Sherlock.Verification.Console.exe</code> with the <code>-f</code> command line argument. The <code>-f</code> parameter indicates that the process should &#39;fail&#39; and exit with an exit code of 1.</li>
+<li>The script execution for <code>c:\temp\Sherlock.Verfication.Console.exe</code> with parameter <code>-c</code>. The <code>-c</code> parameter indicates that the process should exit with an unhandled exception. The exit code for the process should be -532462766.</li>
+<li>The application execution <code>c:\temp\Sherlock.Verification.Console.exe</code> with the <code>-f</code> command line argument. </li>
+<li>The application execution for <code>c:\temp\Sherlock.Verfication.Console.exe</code> with parameter <code>-c</code>. </li>
+</ul>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p>If there are any problems during the verification then the first thing to look at are the debug logs which are written by the different applications. The logs are generally found in <code>c:\ProgramData\Sherlock\&lt;APP_NAME&gt;\&lt;VERSION&gt;\logs</code>. Notes:</p>
+<ol>
+<li>If there is not enough information in the logs then you can change the log level in the application configuration file under the <code>DefaultLogLevel</code> configuration option. The available levels are (from most verbose to least verbose):<ul>
+<li>Trace </li>
+<li>Debug</li>
+<li>Info</li>
+<li>Warn</li>
+<li>Error</li>
+<li>Fatal</li>
+<li>None</li>
+</ul>
+</li>
+<li>The applications running in the test environment also log but those logs may be removed if the test environment is a virtual machine. However version 1.2 of the test configuration file has the possibly to copy the logs back to the host machine for inclusion into the test report. For this to work set the <code>includesystemlog</code> attribute of the <code>includeinreport</code> element to <code>true</code>.</li>
+</ol>
+<p>Some standard problems that may occur are mentioned below.</p>
+<h4 id="console-and-web-service">Console and web service</h4>
+<ul>
+<li>If the console application fails to connect to the web service because it cannot find the web service then verify that the web service can be reached. The two main problems that could be the root cause of this are either the web service is not running or the user which started the console application has no access rights to the web service.</li>
+<li>If the console application crashes due to a URL problem (see the log file) then it is most likely that you put a partial URL, e.g. <code>mycoolserver\sherlock.api</code> instead of <code>http://mycoolserver/sherlock.api</code>.</li>
+<li>If the console successfully manages to go through nearly all the test registration steps but fails on the transfer of the test files then there is quite likely a problem with the web service permissions to write to the <code>App_Data</code> directory.</li>
+<li>If the web service fails on the first call then there is quite likely a problem with the database connection. This is most likley either a problem with the connection string or a problem with the permissions. In case of a permission issue check if the user which is running the web service can access the stored procedures in the database.</li>
+</ul>
+<h4 id="update-service">Update service</h4>
+<ul>
+<li>If the update service is unable to verify the update packages then it is not able to access the public key file. Make sure the configuration file points to the public key file and that this file is reachable by the service.</li>
+</ul>
+<h4 id="master-controller">Master controller</h4>
+<ul>
+<li>If the master controller fails to connect to the database this could point to either a problem with the connection string or a problem with the permissions. In case of a permissions problem again check that the user running the master controller can access the stored procedures in the database.</li>
+<li>If the master controller is unable to start a virtual machine then the <em>SherlockUser</em> may not have <a href="http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/17/allowing-non-administrators-to-control-hyper-v.aspx">permissions</a> to start the virtual machines. The log will show this as an error in the environment loading. Probably a security exception.</li>
+<li>If the controller is blocked by the firewall, or the firewall on the test environment is blocking, then there will be no communication between the test environment and the host. The log shows this through the fact that the host will wait an excessive amount of time for the remote &#39;endpoint&#39; to connect. A normal start up takes around 2 minutes for a test environment start, operating system load and Sherlock load.</li>
+</ul>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -608,36 +687,6 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
 </div>
     </div>
 
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-12-05_PG2-Top-landings.html'>PG2 - Top landings?</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Thursday, December 05, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/paragliding.html">Paragliding</a>
-                
-                    <a id="post-category" href="/tags/pg2.html">PG2</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Two weeks ago the weather was once again favourable to learn more new skills on my way to my <a href="/tags/PG2.html">PG2 license</a>. When we arrived at Maioro the wind was just enough to soar. Given that the forecast has indicated an increase in wind strength over the afternoon we decided to practise some ground handling first. After about an hour of practising reverse launches and keeping the glider stable above our heads it was time to fly. The wind was still a bit light but with a lot of scratching I still managed to get 40 - 45 minutes of flying in on my first flight, my longest flight until then.</p>
-<p>As the afternoon progressed the wind strength slowly increased and staying up became easier which resulted in another 45 minute flight.</p>
-<p>Later in the afternoon the instructor told me it was possible to get a set of short flights with some top landings in. For my first try I launched, gained some height and then turned in for the top landing and completely stuffed it up. As I started moving over to the landing spot everything accelerated and I tried to slow down and turn at the same time, which meant I was not actually doing either of those things so when I got close to the ground I was still moving at a decent speed and hence I face planted. Fortunately there was no actual damage to either me or the glider.
-After recovering from the jitters for a bit I had a second attempt at top landing which took a lot longer to set up and decent but ended in a perfect touch down. The conclusion of all of this is that I need to focus more on flying the glider till the last minute, stay in the harness to maintain the weight shift and focus on the direction of flight more. Oh so much more to learn. </p>
-<p>The fifth and final flight of the day was flying back to the car park which was quite easy as I only had to fly along the ridges to maintain more than enough height to get to the car park.</p>
- 
-    </div>
-</div>
-    </div>
-
 
 <!-- Page Listing -->
 
@@ -690,7 +739,7 @@ After recovering from the jitters for a bit I had a second attempt at top landin
             <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
             from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Saturday, July 26, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Monday, August 18, 2014.</p>
     </div>
 
     <!-- jQuery -->
