@@ -85,6 +85,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html">Building and delivering nBuildKit with AppVeyor</a></li>
+                    
                         <li><a href="/posts/2014-08-19_nBuildKit-release-V032.html">nBuildKit release - V0.3.2</a></li>
                     
                         <li><a href="/posts/2014-07-26_Adding-pagination-with-DocPad.html">Adding pagination with DocPad</a></li>
@@ -101,16 +103,14 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2014-05-23_Improvements-to-the-site.html">Improvements to the site</a></li>
                     
-                        <li><a href="/projects/nuclei.html">Nuclei</a></li>
-                    
-                        <li><a href="/projects/nanicitus.html">nAnicitus</a></li>
+                        <li><a href="/projects/ntreva.html">nTreva</a></li>
                     
                 </ul>
             </div>
             <div id="sbox3">
                 <h2>Tags</h2>
                 
-                    <a href="/tags/apollo.html" style="font-size: 120.81448319328996%">
+                    <a href="/tags/apollo.html" style="font-size: 113.13247675185968%">
                         Apollo
                     </a>
                 
@@ -126,16 +126,16 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Climbing
                     </a>
                 
+                    <a href="/tags/configuration.html" style="font-size: 100%">
+                        Configuration
+                    </a>
+                
                     <a href="/tags/console.html" style="font-size: 100%">
                         Console
                     </a>
                 
-                    <a href="/tags/continous-integration.html" style="font-size: 100%">
+                    <a href="/tags/continous-integration.html" style="font-size: 113.13247675185968%">
                         Continous integration
-                    </a>
-                
-                    <a href="/tags/continuous-deployment.html" style="font-size: 100%">
-                        Continuous deployment
                     </a>
                 
                     <a href="/tags/docpad.html" style="font-size: 120.81448319328996%">
@@ -146,8 +146,16 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         GitHub
                     </a>
                 
-                    <a href="/tags/jenkins.html" style="font-size: 100%">
+                    <a href="/tags/gitversion.html" style="font-size: 100%">
+                        GitVersion
+                    </a>
+                
+                    <a href="/tags/jenkins.html" style="font-size: 120.81448319328996%">
                         Jenkins
+                    </a>
+                
+                    <a href="/tags/job-template.html" style="font-size: 100%">
+                        Job template
                     </a>
                 
                     <a href="/tags/msbuild.html" style="font-size: 100%">
@@ -186,8 +194,12 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Scripting
                     </a>
                 
-                    <a href="/tags/sherlock.html" style="font-size: 150%">
+                    <a href="/tags/sherlock.html" style="font-size: 148.59593857014607%">
                         Sherlock
+                    </a>
+                
+                    <a href="/tags/software-delivery.html" style="font-size: 100%">
+                        Software delivery
                     </a>
                 
                     <a href="/tags/source-server.html" style="font-size: 100%">
@@ -242,7 +254,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         nAnicitus
                     </a>
                 
-                    <a href="/tags/nbuildkit.html" style="font-size: 120.81448319328996%">
+                    <a href="/tags/nbuildkit.html" style="font-size: 126.26495350371935%">
                         nBuildKit
                     </a>
                 
@@ -254,6 +266,33 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-10-30_Sherlock-Release-V0470.html'>Sherlock release - V0.4.7.0</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Wednesday, October 30, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.7.0">V0.4.7.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides one bug fix:</p>
+<ul>
+<li>The Windows job object created by the Sherlock service to ensure termination of the Sherlock.Service.Master and Sherlock.Service.Executor applications is now set to only include direct children (i.e. Sherlock.Service.Master / Sherlock.Service.Executor) in the job and not the indirect children. This allows the application under test to create its own job objects even on Windows 7 (which does not allow nesting of job objects) (<a href="https://github.com/pvandervelde/Sherlock/issues/11">issue #11</a>).</li>
+</ul>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -349,47 +388,6 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-header">
         <h2>
             
-                <a href='/posts/2013-10-23_Nuclei-Release-V0670.html'>Nuclei release - V0.6.7.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, October 23, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/nuclei.html">Nuclei</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.7.0">V0.6.7.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release fixes a bug in the processing of <code>ICommandSet</code> return tasks which caused the processor to throw an exception if the return task was a <a href="http://msdn.microsoft.com/en-us/library/ee372288.aspx">continuation task</a>. This bug fix means it is now possible to chain tasks and return the final task from an <code>ICommandSet</code> object. An example of this behaviour is given in the following section of code.</p>
-<pre class="highlight"><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> IMyCommandSet : ICommandSet
-{
-    Task DoSomethingAwesome();
-}
-
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">class</span> MyCommand : IMyCommandSet
-{
-    <span class="hljs-keyword">public</span> Task <span class="hljs-title">DoSomethingAwesome</span>()
-    {
-        <span class="hljs-keyword">var</span> firstTask = Task.Factory.StartNew(
-            () =&gt; Thread.Sleep(<span class="hljs-number">1000</span>));
-        <span class="hljs-keyword">var</span> secondTask = firstTask.ContinueWith(
-            t =&gt; Console.WriteLine(<span class="hljs-string">"Awesome sauce"</span>)); 
-        <span class="hljs-keyword">return</span> secondTask
-    }
-}
-</code></pre>
- 
-    </div>
-</div>
-    </div>
-
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
                 <a href='/posts/2013-10-23_Sherlock-Release-V0450.html'>Sherlock release - V0.4.5.0</a>
             
         </h2>
@@ -465,7 +463,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
             <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
             from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Monday, August 18, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Saturday, September 27, 2014.</p>
     </div>
 
     <!-- jQuery -->

@@ -85,6 +85,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html">Building and delivering nBuildKit with AppVeyor</a></li>
+                    
                         <li><a href="/posts/2014-08-19_nBuildKit-release-V032.html">nBuildKit release - V0.3.2</a></li>
                     
                         <li><a href="/posts/2014-07-26_Adding-pagination-with-DocPad.html">Adding pagination with DocPad</a></li>
@@ -101,16 +103,14 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2014-05-23_Improvements-to-the-site.html">Improvements to the site</a></li>
                     
-                        <li><a href="/projects/nuclei.html">Nuclei</a></li>
-                    
-                        <li><a href="/projects/nanicitus.html">nAnicitus</a></li>
+                        <li><a href="/projects/ntreva.html">nTreva</a></li>
                     
                 </ul>
             </div>
             <div id="sbox3">
                 <h2>Tags</h2>
                 
-                    <a href="/tags/apollo.html" style="font-size: 120.81448319328996%">
+                    <a href="/tags/apollo.html" style="font-size: 113.13247675185968%">
                         Apollo
                     </a>
                 
@@ -126,16 +126,16 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Climbing
                     </a>
                 
+                    <a href="/tags/configuration.html" style="font-size: 100%">
+                        Configuration
+                    </a>
+                
                     <a href="/tags/console.html" style="font-size: 100%">
                         Console
                     </a>
                 
-                    <a href="/tags/continous-integration.html" style="font-size: 100%">
+                    <a href="/tags/continous-integration.html" style="font-size: 113.13247675185968%">
                         Continous integration
-                    </a>
-                
-                    <a href="/tags/continuous-deployment.html" style="font-size: 100%">
-                        Continuous deployment
                     </a>
                 
                     <a href="/tags/docpad.html" style="font-size: 120.81448319328996%">
@@ -146,8 +146,16 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         GitHub
                     </a>
                 
-                    <a href="/tags/jenkins.html" style="font-size: 100%">
+                    <a href="/tags/gitversion.html" style="font-size: 100%">
+                        GitVersion
+                    </a>
+                
+                    <a href="/tags/jenkins.html" style="font-size: 120.81448319328996%">
                         Jenkins
+                    </a>
+                
+                    <a href="/tags/job-template.html" style="font-size: 100%">
+                        Job template
                     </a>
                 
                     <a href="/tags/msbuild.html" style="font-size: 100%">
@@ -186,8 +194,12 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Scripting
                     </a>
                 
-                    <a href="/tags/sherlock.html" style="font-size: 150%">
+                    <a href="/tags/sherlock.html" style="font-size: 148.59593857014607%">
                         Sherlock
+                    </a>
+                
+                    <a href="/tags/software-delivery.html" style="font-size: 100%">
+                        Software delivery
                     </a>
                 
                     <a href="/tags/source-server.html" style="font-size: 100%">
@@ -242,7 +254,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         nAnicitus
                     </a>
                 
-                    <a href="/tags/nbuildkit.html" style="font-size: 120.81448319328996%">
+                    <a href="/tags/nbuildkit.html" style="font-size: 126.26495350371935%">
                         nBuildKit
                     </a>
                 
@@ -254,6 +266,46 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html'>Building and delivering nBuildKit with AppVeyor</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Saturday, September 27, 2014 | Posted in
+                
+                    <a id="post-category" href="/tags/appveyor.html">AppVeyor</a>
+                
+                    <a id="post-category" href="/tags/continous-integration.html">Continous integration</a>
+                
+                    <a id="post-category" href="/tags/nbuildkit.html">nBuildKit</a>
+                
+                    <a id="post-category" href="/tags/software-delivery.html">Software delivery</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>The build server that is being used to build the packages for <a href="/projects/nbuildkit.html">nBuildKit</a> is <a href="http://www.appveyor.com/">AppVeyor</a>. AppVeyor is an Continuous Integration system in the cloud. The way AppVeyor works is that every time a commit occurs in a GitHub project AppVeyor is notified. AppVeyor then spins up a new clean virtual machine (VM) on which your build scripts are executed. Once the build is done the VM is terminated and thrown away. This way there is no way that the changes made to the build environment by a build will influence future builds.  </p>
+<p>For nBuildKit two builds were configured. The first configuration is the standard <a href="https://ci.appveyor.com/project/pvandervelde/nbuildkit">continuous integration</a> build which generates the version numbers and templates and then creates the NuGet packages. As the final step the build artefacts are archived for later use by the second build configuration.
+For this configuration no special settings are required other then to tell AppVeyor to store the artifacts.</p>
+<p>The second build configuration handles the <a href="https://ci.appveyor.com/project/pvandervelde/nbuildkit-244">delivery</a> of the artefacts. This configuration gathers the build artefacts from the latest build of the first build configuration, tags the revision that was build and then pushes the NuGet packages to <a href="http://www.nuget.org/packages/nbuildkit.msbuild">NuGet.org</a> and marks the given commit as a release in <a href="https://github.com/pvandervelde/nBuildKit/releases">GitHub</a>.</p>
+<p>For this second configuration a few tweaks need to be made to the environment before the build can be executed. The first thing to do is to install the <a href="https://github.com/aktau/github-release">GitHub-release</a> application which provides an easy way to push release information to github. A simple Powershell script is used to set-up this part of the environment: </p>
+<script src='https://gist.github.com/77bd834239d9f67c40d7.js'></script>
+
+<p>Once all the required tools are installed the artefacts of the selected continuous integration build need to be downloaded and placed in the correct directories. For that yet another Powershell script is used:</p>
+<script src='https://gist.github.com/9cf270ef5266b18a1ac9.js'></script>
+
+<p>Once all the artefacts are restored the delivery process can be executed. For nBuildKit the delivery process is executed by nBuildKit itself in the standard dogfooding approach that is so well known in the software business.</p>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -393,33 +445,6 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
 </div>
     </div>
 
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2014-06-16_nBuildKit-release-V015.html'>nBuildKit release - V0.1.5</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Monday, June 16, 2014 | Posted in
-                
-                    <a id="post-category" href="/tags/nbuildkit.html">nBuildKit</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.1.5">V0.1.5</a> of the <a href="/projects/nbuildkit.html">nBuildKit</a> build library has been released. </p>
-<p>This first release introduces the <a href="https://www.nuget.org/packages/nBuildKit.MsBuild/0.1.5">MsBuild</a> NuGet package. This package contains build scripts that provide the ability to perform a complete build consisting of workspace preparation, compilation of binaries, execution of unit tests, analysis of source code and binaries and finally packing of the binaries as NuGet packages or ZIP archives.
-The <code>nBuildKit.MsBuild</code> NuGet package also provides scripts that can be used to tag a release in the version control system (VCS) and deploy the artifacts to a file server, NuGet feed or a GitHub release.</p>
-<p>The documentation for this library can be found on the nBuildKit <a href="https://github.com/pvandervelde/nBuildKit/wiki/MsBuild">wiki</a></p>
- 
-    </div>
-</div>
-    </div>
-
 
 <!-- Page Listing -->
 
@@ -470,7 +495,7 @@ The <code>nBuildKit.MsBuild</code> NuGet package also provides scripts that can 
             <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
             from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Monday, August 18, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Saturday, September 27, 2014.</p>
     </div>
 
     <!-- jQuery -->

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Site Properities -->
-    <title>Sherlock release - V0.4.0.1 | Mind Vortex</title>
+    <title>Building and delivering nBuildKit with AppVeyor | Mind Vortex</title>
     <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
     <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, rock climbing, paragliding" />
     <meta name="author" content="Petrik van der Velde" />
@@ -273,37 +273,44 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-header">
         <h2>
             
-                Sherlock release - V0.4.0.1
+                Building and delivering nBuildKit with AppVeyor
             
         </h2>
         <div id="post-meta">
             <p>
-                Sunday, September 08, 2013 | Posted in
+                Saturday, September 27, 2014 | Posted in
                 
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
+                    <a id="post-category" href="/tags/appveyor.html">AppVeyor</a>
+                
+                    <a id="post-category" href="/tags/continous-integration.html">Continous integration</a>
+                
+                    <a id="post-category" href="/tags/nbuildkit.html">nBuildKit</a>
+                
+                    <a id="post-category" href="/tags/software-delivery.html">Software delivery</a>
                 
             </p>
         </div>
     </div>
     <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.0.1">V0.4.0.1</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release adds two new features and one improvement.</p>
-<p>The new features are:</p>
-<ul>
-<li>The ability to continue with a test sequence after a test step has failed. The test step should indicate that the failure mode is &#39;continue&#39;. Other option is &#39;stop&#39;</li>
-<li>Added a test step that allows executing a console application with a set of input parameters</li>
-</ul>
-<p>The following gist gives an overview of what the configuration for the new console test step looks like</p>
-<script src='https://gist.github.com/6483292.js'></script>
+        <p>The build server that is being used to build the packages for <a href="/projects/nbuildkit.html">nBuildKit</a> is <a href="http://www.appveyor.com/">AppVeyor</a>. AppVeyor is an Continuous Integration system in the cloud. The way AppVeyor works is that every time a commit occurs in a GitHub project AppVeyor is notified. AppVeyor then spins up a new clean virtual machine (VM) on which your build scripts are executed. Once the build is done the VM is terminated and thrown away. This way there is no way that the changes made to the build environment by a build will influence future builds.  </p>
+<p>For nBuildKit two builds were configured. The first configuration is the standard <a href="https://ci.appveyor.com/project/pvandervelde/nbuildkit">continuous integration</a> build which generates the version numbers and templates and then creates the NuGet packages. As the final step the build artefacts are archived for later use by the second build configuration.
+For this configuration no special settings are required other then to tell AppVeyor to store the artifacts.</p>
+<p>The second build configuration handles the <a href="https://ci.appveyor.com/project/pvandervelde/nbuildkit-244">delivery</a> of the artefacts. This configuration gathers the build artefacts from the latest build of the first build configuration, tags the revision that was build and then pushes the NuGet packages to <a href="http://www.nuget.org/packages/nbuildkit.msbuild">NuGet.org</a> and marks the given commit as a release in <a href="https://github.com/pvandervelde/nBuildKit/releases">GitHub</a>.</p>
+<p>For this second configuration a few tweaks need to be made to the environment before the build can be executed. The first thing to do is to install the <a href="https://github.com/aktau/github-release">GitHub-release</a> application which provides an easy way to push release information to github. A simple Powershell script is used to set-up this part of the environment: </p>
+<script src='https://gist.github.com/77bd834239d9f67c40d7.js'></script>
 
-<p>The improvement is in the HTML output report which is has been overhauled to improve the layout and readability.</p>
+<p>Once all the required tools are installed the artefacts of the selected continuous integration build need to be downloaded and placed in the correct directories. For that yet another Powershell script is used:</p>
+<script src='https://gist.github.com/9cf270ef5266b18a1ac9.js'></script>
+
+<p>Once all the artefacts are restored the delivery process can be executed. For nBuildKit the delivery process is executed by nBuildKit itself in the standard dogfooding approach that is so well known in the software business.</p>
  
     </div>
 </div>
     <div id="post-footer">
         <div>
             <div class="navlinks">
-  <a href="/posts/2013-09-03_First-time-paragliding.html" title="Previous Post: First time paragliding" class="navlinks-prev">&laquo; First time paragliding</a>
-  <a href="/posts/2013-09-11_Sherlock-Release-v0420.html" title="Next Post: Sherlock release - V0.4.2.0" class="navlinks-next">Sherlock release - V0.4.2.0 &raquo;</a>
+  <a href="/posts/2014-08-19_nBuildKit-release-V032.html" title="Previous Post: nBuildKit release - V0.3.2" class="navlinks-prev">&laquo; nBuildKit release - V0.3.2</a>
+  
 </div>
         </div>
     </div>
@@ -323,7 +330,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
     <div id="post-comments">
         <h3>Comments</h3>
         <div id="post-comment-header">
-            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/3"> this post's issue page on 
+            Want to leave a comment? Visit <a href="https://github.com/pvandervelde/pvandervelde.github.io/issues/47"> this post's issue page on 
             GitHub</a> (you'll need a GitHub account).
         </div>
     </div>
@@ -334,7 +341,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         for (var i=0; i<data.length; i++) {
           var cuser = data[i].user.login;
           var cuserlink = "https://www.github.com/" + data[i].user.login;
-          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/3#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
+          var clink = "https://github.com/pvandervelde/pvandervelde.github.io/issues/47#issuecomment-" + data[i].url.substring(data[i].url.lastIndexOf("/")+1);
           var cbody = data[i].body_html;
           var cavatarlink = data[i].user.avatar_url;
           var cdate = Date.parse(data[i].created_at).toString("yyyy-MM-dd HH:mm:ss");
@@ -343,7 +350,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         }
       }
 
-      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/3/comments", {
+      $.ajax("https://api.github.com/repos/pvandervelde/pvandervelde.github.io/issues/47/comments", {
         headers: {Accept: "application/vnd.github.full+json"},
         dataType: "json",
         success: function(msg){

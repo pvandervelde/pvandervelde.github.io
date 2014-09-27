@@ -85,6 +85,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html">Building and delivering nBuildKit with AppVeyor</a></li>
+                    
                         <li><a href="/posts/2014-08-19_nBuildKit-release-V032.html">nBuildKit release - V0.3.2</a></li>
                     
                         <li><a href="/posts/2014-07-26_Adding-pagination-with-DocPad.html">Adding pagination with DocPad</a></li>
@@ -101,16 +103,14 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2014-05-23_Improvements-to-the-site.html">Improvements to the site</a></li>
                     
-                        <li><a href="/projects/nuclei.html">Nuclei</a></li>
-                    
-                        <li><a href="/projects/nanicitus.html">nAnicitus</a></li>
+                        <li><a href="/projects/ntreva.html">nTreva</a></li>
                     
                 </ul>
             </div>
             <div id="sbox3">
                 <h2>Tags</h2>
                 
-                    <a href="/tags/apollo.html" style="font-size: 120.81448319328996%">
+                    <a href="/tags/apollo.html" style="font-size: 113.13247675185968%">
                         Apollo
                     </a>
                 
@@ -126,16 +126,16 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Climbing
                     </a>
                 
+                    <a href="/tags/configuration.html" style="font-size: 100%">
+                        Configuration
+                    </a>
+                
                     <a href="/tags/console.html" style="font-size: 100%">
                         Console
                     </a>
                 
-                    <a href="/tags/continous-integration.html" style="font-size: 100%">
+                    <a href="/tags/continous-integration.html" style="font-size: 113.13247675185968%">
                         Continous integration
-                    </a>
-                
-                    <a href="/tags/continuous-deployment.html" style="font-size: 100%">
-                        Continuous deployment
                     </a>
                 
                     <a href="/tags/docpad.html" style="font-size: 120.81448319328996%">
@@ -146,8 +146,16 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         GitHub
                     </a>
                 
-                    <a href="/tags/jenkins.html" style="font-size: 100%">
+                    <a href="/tags/gitversion.html" style="font-size: 100%">
+                        GitVersion
+                    </a>
+                
+                    <a href="/tags/jenkins.html" style="font-size: 120.81448319328996%">
                         Jenkins
+                    </a>
+                
+                    <a href="/tags/job-template.html" style="font-size: 100%">
+                        Job template
                     </a>
                 
                     <a href="/tags/msbuild.html" style="font-size: 100%">
@@ -186,8 +194,12 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Scripting
                     </a>
                 
-                    <a href="/tags/sherlock.html" style="font-size: 150%">
+                    <a href="/tags/sherlock.html" style="font-size: 148.59593857014607%">
                         Sherlock
+                    </a>
+                
+                    <a href="/tags/software-delivery.html" style="font-size: 100%">
+                        Software delivery
                     </a>
                 
                     <a href="/tags/source-server.html" style="font-size: 100%">
@@ -242,7 +254,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         nAnicitus
                     </a>
                 
-                    <a href="/tags/nbuildkit.html" style="font-size: 120.81448319328996%">
+                    <a href="/tags/nbuildkit.html" style="font-size: 126.26495350371935%">
                         nBuildKit
                     </a>
                 
@@ -254,6 +266,209 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-12-10_Setting-up-Sherlock-serverside.html'>Sherlock configuration - Server side</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Tuesday, December 10, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>In this post I will explain how to configure the <a href="/projects/sherlock.html">Sherlock</a> host services, which handle test registration and selection and control of the test environments for a test. The set-up follows the following steps:</p>
+<ul>
+<li>Preparing the host machine which includes installation of the OS and the required services.</li>
+<li>Installation of database.</li>
+<li>Installation of the web parts.</li>
+<li>Creation of the update files and the update manifests.</li>
+<li>Installation of the services.</li>
+<li>Configuration of the firewall.</li>
+<li>Verification of the configuration.</li>
+</ul>
+<h3 id="preparing-the-host-machine">Preparing the host machine</h3>
+<p>The first step in the configuration of the host services is to prepare the machine from which the Hyper-V service will be running. Note that Sherlock does not require that all services run on this machine but for the purposes of this post I will assume that this is the case. The configuration of the host machine consists of:</p>
+<ol>
+<li>Install the host operating system on the machine. Both the machine and the operating system need to <a href="http://en.wikipedia.org/wiki/Hyper-V#System_requirements_and_specifications">support Hyper-V</a>. On top of that for the very least the master controller service has to be installed on the host machine, which means it is not possible to install the core Hyper-V version of Windows.</li>
+<li>Create or associate a user which you will use to run the Sherlock services. It is strongly recommended to not run the Sherlock services as local administrator for security reasons. It is more suitable to provide a separate user to run the services. Note that this user will need permissions to run services, but doesn&#39;t need installation permissions etc. For the remainder of this post lets call this user the <em>SherlockUser</em>. <em>Note:</em> If you have a specific user that is used for your build server then it makes sense to use that user, although that is not required.</li>
+<li>Install the <a href="http://technet.microsoft.com/en-us/library/hh846766.aspx">Hyper-V role</a> on the host machine.</li>
+<li>Grant the <em>SherlockUser</em> <a href="http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/17/allowing-non-administrators-to-control-hyper-v.aspx">permissions</a> to start, stop and reset Hyper-V virtual machines.</li>
+<li>Install the <a href="http://www.iis.net/learn/get-started/whats-new-in-iis-8/installing-iis-8-on-windows-server-2012">IIS role</a> on the host machine. <em>Note:</em> that in theory (i.e. this has not been tested) IIS can be installed on a different machine than the host machine as long as it will be able to reach the database. The IIS install will need to have the following parts installed as a minimum:<ul>
+<li>ASP .NET 4.5</li>
+<li>Basic authentication</li>
+<li>Windows Authentication</li>
+<li>Management tools</li>
+<li>Http logging and tracing</li>
+</ul>
+</li>
+<li>Install <a href="http://www.microsoft.com/web/platform/database.aspx">MSSQL Express 2012</a> on the host machine. <em>Note:</em> As with IIS it is again possible to install the database on any machine as long as both IIS and the Hyper-V host can connect to it.</li>
+<li>Create a directory that will hold all the files related to Sherlock, e.g. <code>c:\testing</code>. In that directory create the following sub-directories:<ul>
+<li><code>appupdate</code> - Contains the application update files and manifests.</li>
+<li><code>console</code> - Contains the binary files for the console application which is used by the user to register a test.</li>
+<li><code>service</code> - Contains the binaries for the windows service that will run the controller application.</li>
+<li><code>web.api</code> - Contains the binaries for the web service that interacts with the database on test registration.</li>
+<li><code>web.intranet</code> - Contains the binaries for the management web site.</li>
+<li><code>reports</code> - The location where tests can place their generated reports. Note that Sherlock allows placing test reports in any location as long as the service has access to that directory.</li>
+<li><code>temp</code> - The temporary directory used for report generation etc.</li>
+</ul>
+</li>
+<li>Share the <code>reports</code> and <code>console</code> directories so that they can be accessed over the network. The <code>console</code> directory will only need read access, the <code>reports</code> directory will need read and write access.</li>
+<li>Install the <a href="https://github.com/pvandervelde/nAdoni">nAdoni</a> manifest signing tool. This application will be used sign the update manifest files.</li>
+<li>Generate the update keys by executing the following command line (assuming that you installed nadoni in <code>c:\tools\nadoni</code>):<pre class="highlight"><code class="hljs dos">c:\tools\nadoni\keygenerator\nadoni.keygenerator.exe --private=&lt;PATH_TO_PRIVATE_KEY_FILE&gt; --public=&lt;PATH_TO_PUBLIC_KEY_FILE&gt;
+</code></pre>
+<ul>
+<li>Where <code>&lt;PATH_TO_PRIVATE_KEY_FILE&gt;</code> points to the XML file that will contain the private and public parts of the manifest signing key and <code>&lt;PATH_TO_PUBLIC_KEY_FILE&gt;</code> points to the XML file that will contain the public part of the manifest signing key. </li>
+</ul>
+</li>
+</ol>
+<h3 id="database">Database</h3>
+<p>The second step in the installation process is to create the Sherlock database.</p>
+<ul>
+<li>Unpack the <em>sql.zip</em> file that is part of the <a href="https://github.com/pvandervelde/Sherlock/releases">Sherlock release</a>.</li>
+<li>Create database called <code>Sherlock</code>.</li>
+<li>Apply all the SQL scripts from the <em>sql.zip</em> file, starting at the V1 script through to the latest upgrade script <em>Sherlock_Upgrade_Vm_To_Vn.sql</em>.</li>
+<li><p>Provide permissions for the user that will be connecting to the database. You can either use the <em>SherlockUser</em> or you can create an SQL user. Grant this user the following access:</p>
+<ul>
+<li>db_datareader</li>
+<li>db_datawriter</li>
+<li>Grant access to stored procedures. This can be done via: <code>GRANT EXEC TO &lt;STORED_PROCEDURE_NAME&gt; TO &lt;SQL_USER&gt;</code>. Given that Sherlock only accesses the database through stored procedures, there is no direct table access, there are quite a few stored procedures which means it makes sense to create a script in order to grant access to the stored procedures. The following SQL script can be used to generate an access script for the user:<pre class="highlight"><code class="hljs sql"><span class="hljs-operator"><span class="hljs-keyword">SELECT</span>  <span class="hljs-string">'GRANT EXEC ON '</span>+ SCHEMA_NAME(schema_id) + <span class="hljs-string">'.'</span> + name + <span class="hljs-string">' TO &lt;SQL_USER&gt;'</span>
+<span class="hljs-keyword">from</span> sys.procedures
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">1</span>
+</span></code></pre>
+</li>
+</ul>
+</li>
+<li><p>Set-up a back up for the Sherlock database. <em>Note:</em> The test data is only useful to Sherlock and then only when tests are either running or haven&#39;t been run yet. In other words there is no useful information for the user describing test results etc.. However the information describing the available test environments should be backed-up.</p>
+</li>
+</ul>
+<h3 id="iis">IIS</h3>
+<p>Step number three for the installation of Sherlock is to configure the web service, web page and the application update location. We&#39;ll start with the application update location:</p>
+<ul>
+<li>In IIS Manager create a new virtual directory under the default web site using the following settings <ul>
+<li><strong>Alias:</strong> AppUpdate</li>
+<li><strong>Path:</strong> <code>c:\testing\appupdate</code></li>
+<li><strong>Connect as:</strong> <em>SherlockUser</em>. Make sure the <em>SherlockUser</em> has read permissions for the directory.</li>
+</ul>
+</li>
+<li>Allow directory browsing through the <em>IIS -&gt; Directory Browsing</em> Feature.</li>
+<li>Finally test access to this directory via a browser by going to <code>&lt;HOST_ADDRESS&gt;\AppUpdate</code>. This should display the contents of the directory.</li>
+</ul>
+<p>Before configuring the web site and the web service create a new application pool with the following settings:</p>
+<ul>
+<li><strong>Name:</strong> SherlockAppPool</li>
+<li><strong>.NET Framework version:</strong> V4.0.30319</li>
+<li><strong>Managed pipeline mode:</strong> Integrated </li>
+</ul>
+<p>The next project to configure is the web site that will be used to manage the testing environments. </p>
+<ul>
+<li>Unzip <strong>Sherlock.Web.Intranet.sql</strong> to the <code>c:\testing\web.intranet</code> directory.</li>
+<li>In IIS Manager create a new application under the default web site using the following settings:<ul>
+<li><strong>Alias:</strong> Sherlock.Intranet</li>
+<li><strong>Application pool:</strong> SherlockAppPool</li>
+<li><strong>Path:</strong> <code>c:\testing\web.intranet</code></li>
+<li><strong>Connect as:</strong> <em>SherlockUser</em>. Again make sure that the <em>SherlockUser</em> has access to the directory containing the web site binaries.</li>
+</ul>
+</li>
+<li>Set the authentication for the web site to be anonymous only.</li>
+<li>Define the connection string to be as given below:</li>
+</ul>
+<script src='https://gist.github.com/7866267.js'></script>
+
+<ul>
+<li>Remove the following sections from the configuration file<ul>
+<li>System.Web -&gt; Authentication</li>
+<li>System.Web -&gt; Authorization</li>
+</ul>
+</li>
+</ul>
+<p>The last web project to configure is the web service that will be used to add information about the new tests to the database.</p>
+<ul>
+<li>Unzip <strong>Sherlock.Web.Api.zip</strong> to the <code>c:\testing\web.api</code> directory.</li>
+<li>In IIS Manager create a new application under the default web site using the following settings:<ul>
+<li><strong>Alias:</strong> Sherlock.Api</li>
+<li><strong>Application pool:</strong> SherlockAppPool</li>
+<li><strong>Path:</strong> <code>c:\testing\web.api</code></li>
+<li><strong>Connect as:</strong> <em>SherlockUser</em>. Again make sure that the <em>SherlockUser</em> has access to the directory containing the web service binaries.</li>
+</ul>
+</li>
+<li>Define the connection string to be the same as given for the management website.</li>
+<li>Set the authentication for the web site to be anonymous only. </li>
+</ul>
+<h3 id="update-manifests-and-files">Update manifests and files</h3>
+<p>The two main services for Sherlock, the master controller and the executor controller, are not directly installed on either the host machine or the test environments. The Sherlock service probes the <code>AppUpdate</code> directory for the binaries of these services. This greatly improves the ease with which Sherlock can be upgraded given that an upgrade of Sherlock does not require any changes to the test environments.</p>
+<p>To create the necessary upgrade files for the Sherlock services it will be necessary to update the configuration file of the master controller which takes the following steps:</p>
+<ul>
+<li>Unzip <strong>Service.Master.zip</strong> into a temporary directory.</li>
+<li>Update the configuration file (<code>Sherlock.Service.Master.exe.config</code>) with the following settings:<ul>
+<li><strong>TestDataDirectory:</strong> <code>c:\testing\web.api\App_Data</code></li>
+<li><strong>TestReportFilesDir:</strong> <code>c:\testing\temp</code> </li>
+</ul>
+</li>
+<li>Define the connection string to be the same as given for the management website. </li>
+<li>Repackage the binaries into a ZIP archive with the name <strong>Service.Master.zip</strong>.</li>
+</ul>
+<p>The executor controller does not need any changes to the configuration file and can thus be left untouched.</p>
+<p>The next step is to create the manifest files that are used by the update service to determine which ZIP archive to use. In order to create the manifests the <a href="https://github.com/pvandervelde/nAdoni">nAdoni</a> application is used. This can be done with the following command lines:</p>
+<p>For the master controller:</p>
+<pre class="highlight"><code class="hljs dos">C:\tools\nadoni\manifestbuilder\nAdoni.ManifestBuilder.exe -v="{VERSION}" -n="Sherlock.Service.Master.exe" -f="c:\testing\appupdate\service.master.zip" -u="http://myhostmachine/appupdate/service.master.zip" -k="C:\mykeydirectory\manifestsigningkey.private.xml" -o="c:\testing\appupdate\masterservice.manifest"
+</code></pre>
+<p>And for the executor controller:</p>
+<pre class="highlight"><code class="hljs dos">C:\tools\nadoni\manifestbuilder\nAdoni.ManifestBuilder.exe -v="{VERSION}" -n="Sherlock.Service.Executor.exe" -f="c:\testing\appupdate\service.executor.zip" -u="http://myhostmachine/appupdate/service.executor.zip" -k="C:\mykeydirectory\manifestsigningkey.private.xml" -o="c:\testing\appupdate\executorservice.manifest"
+</code></pre>
+<p>Another way to create the manifest files is through the use of the following Msbuild script: </p>
+<script src='https://gist.github.com/6521946.js'></script>
+
+<p>In this case the following changes must be made to the file:</p>
+<ul>
+<li><code>${PATH_TO_NADONI_DIRECTORY}$</code> - The path to the directory in which the nAdoni binaries have been placed.</li>
+<li><code>${URL_TO_APP_UPDATE}$</code> - The URL to the <code>AppUpdate</code> directory, e.g. <code>http://myhostmachine/appupdate</code>.</li>
+<li><code>${MANIFEST_SIGNING_KEY_PATH}$</code> - The path to the XML file that contains the private key information.</li>
+</ul>
+<p>And the following properties must be specified on the command line:</p>
+<ul>
+<li><strong>Version:</strong> The version of Sherlock for which the manifest files are generated.</li>
+</ul>
+<h3 id="services">Services</h3>
+<p>Finally on the host machine two applications need to be configured. These are the console application that will be executed by the user to register a test and the update service that will control the master controller application.</p>
+<p>To configure the console application take the following steps:  </p>
+<ul>
+<li>Unzip the <strong>console.zip</strong> package into the <code>c:\testing\console</code> directory.</li>
+<li>Open the configuration file (<code>Sherlock.Console.exe.config</code>) and update the following settings:<ul>
+<li><strong>WebServiceUrl:</strong> Point this to the <em>Sherlock.Api</em> site, e.g. <code>http://myhostmachine/sherlock.api</code>.</li>
+</ul>
+</li>
+<li>Note that the console needs to be accessed from other machines, e.g.from the build server, so make sure that the directory is shared with read-rights for all users that will need access. </li>
+</ul>
+<p>To configure the update service take the following steps:</p>
+<ul>
+<li>Unzip the <strong>service.zip</strong> package into the <code>c:\testing\service</code> directory.</li>
+<li>Open the configuration file (<code>Sherlock.Service.exe.config</code>) and update the following settings:<ul>
+<li><strong>ApplicationName:</strong> The name of the application for which updates should be tracked, in this case that is: <code>Sherlock.Service.Master.exe</code>.</li>
+<li><strong>UpdateManifestUri:</strong> The URL of the manifest file, in this case: <code>http:\\myhostmachine\appupdate\masterservice.manifest</code></li>
+<li><strong>ManifestPublicKeyFile:</strong> The path to the XML file containing the public key section of the manifest signing key, e.g. <code>C:\mykeydirectory\manifestsigningkey.public.xml</code></li>
+</ul>
+</li>
+<li><p>Install the application as a service by opening an elevated command line and navigating to the <code>c:\testing\service</code> directory. Then execute the following command line:</p>
+<pre class="highlight"><code class="hljs css">  <span class="hljs-tag">sherlock</span><span class="hljs-class">.service</span><span class="hljs-class">.exe</span> <span class="hljs-tag">install</span> <span class="hljs-tag">-username</span><span class="hljs-pseudo">:SherlockUser</span> <span class="hljs-tag">-password</span><span class="hljs-pseudo">:SherlockPassword</span> <span class="hljs-tag">--delayed</span> <span class="hljs-tag">-servicename</span><span class="hljs-pseudo">:Sherlock</span>
+</code></pre></li>
+<li>Go to the Windows services control and start the service. After a short while this will grab the latest version of the master controller binaries, drop them in <code>C:\ProgramData\Sherlock\Sherlock.Service.Master</code> and then start the master controller application. You can verify that all is well by checking the log files which are located in <code>C:\ProgramData\Sherlock\Sherlock.Service\{VERSION}\logs</code> and <code>C:\ProgramData\Sherlock\Sherlock.Service.Master\{VERSION}\logs</code> for the service and the master controller respectively.</li>
+</ul>
+<h3 id="firewall">Firewall</h3>
+<p>The last step is to let the master controller through the firewall. For this create an inbound rule that allows <code>Sherlock.Service.Master.exe</code> to connect to all types of protocols. Normally only Domain and private networks should be sufficient.</p>
+<p>And with all that done the host machine configuration is completed.</p>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -467,35 +682,6 @@ After recovering from the jitters for a bit I had a second attempt at top landin
 </div>
     </div>
 
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-11-19_PG2-Bumpy-air-smooth-air.html'>PG2 - Bumpy air, smooth air</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Tuesday, November 19, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/paragliding.html">Paragliding</a>
-                
-                    <a id="post-category" href="/tags/pg2.html">PG2</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Once more the <a href="/tags/PG2.html">PG2</a> group gathered for some flying over the weekend. The action this time was at Maioro with a southerly wind providing for a very bumpy ride. Because of the angle between the wind and the cliff the lift band was very narrow and so one had to work hard to stay in the air. Over the course of the day I managed to get three long flights in but unfortunately I only managed to top land one of them, on the other two I bombed out and had to do a decent bit of walking to get back to the start place. Overall it was a good learning experience flying in very bumpy air with not much lift.</p>
-<p>As a little treat for myself I had taken the Monday off from work so that I could go flying if the weather proved to be suitable. The weather forecast for Monday showed great promise for some good flying.</p>
-<p>On Monday a <a href="http://en.wikipedia.org/wiki/Convergence_zone">convergence</a> hanging around over the city so our instructor decided that with some luck the wind would turn northerly which would make <a href="http://en.wikipedia.org/wiki/North_Head,_New_Zealand">North head</a> an excellent place to fly. After some para-waiting the weather gods decided that the southerly wind would break through the convergence which thereby ended our hopes for flying at North head. Fortunately there are quite a few places around Auckland where flying is possible so our instructor suggested going to <a href="http://en.wikipedia.org/wiki/Muriwai">Maori bay</a>. When we got to Maori bay it turned out that the wind was smooth and from a suitable direction, so indeed the site was flyable. My first flight was a tandem flight with my instructor. While flying he showed me how to pick the right soaring lines and what to look out for. In the 30 or so minutes that we flew the tandem I learned heaps, and I did most of the flying, except for the start and the landing. </p>
-<p>After the tandem flight I managed to get two shorter flights in with my own glider. The launches were a bit more tricky than I was used to because the start place was on angled ground with the wind coming in slightly off angle. However I managed to get the glider to launch without too much trouble in both situations and I did some amazing flying in yet another beautiful New Zealand beach location.</p>
- 
-    </div>
-</div>
-    </div>
-
 
 <!-- Page Listing -->
 
@@ -548,7 +734,7 @@ After recovering from the jitters for a bit I had a second attempt at top landin
             <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
             from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Monday, August 18, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Saturday, September 27, 2014.</p>
     </div>
 
     <!-- jQuery -->

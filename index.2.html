@@ -85,6 +85,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html">Building and delivering nBuildKit with AppVeyor</a></li>
+                    
                         <li><a href="/posts/2014-08-19_nBuildKit-release-V032.html">nBuildKit release - V0.3.2</a></li>
                     
                         <li><a href="/posts/2014-07-26_Adding-pagination-with-DocPad.html">Adding pagination with DocPad</a></li>
@@ -101,16 +103,14 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2014-05-23_Improvements-to-the-site.html">Improvements to the site</a></li>
                     
-                        <li><a href="/projects/nuclei.html">Nuclei</a></li>
-                    
-                        <li><a href="/projects/nanicitus.html">nAnicitus</a></li>
+                        <li><a href="/projects/ntreva.html">nTreva</a></li>
                     
                 </ul>
             </div>
             <div id="sbox3">
                 <h2>Tags</h2>
                 
-                    <a href="/tags/apollo.html" style="font-size: 120.81448319328996%">
+                    <a href="/tags/apollo.html" style="font-size: 113.13247675185968%">
                         Apollo
                     </a>
                 
@@ -126,16 +126,16 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Climbing
                     </a>
                 
+                    <a href="/tags/configuration.html" style="font-size: 100%">
+                        Configuration
+                    </a>
+                
                     <a href="/tags/console.html" style="font-size: 100%">
                         Console
                     </a>
                 
-                    <a href="/tags/continous-integration.html" style="font-size: 100%">
+                    <a href="/tags/continous-integration.html" style="font-size: 113.13247675185968%">
                         Continous integration
-                    </a>
-                
-                    <a href="/tags/continuous-deployment.html" style="font-size: 100%">
-                        Continuous deployment
                     </a>
                 
                     <a href="/tags/docpad.html" style="font-size: 120.81448319328996%">
@@ -146,8 +146,16 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         GitHub
                     </a>
                 
-                    <a href="/tags/jenkins.html" style="font-size: 100%">
+                    <a href="/tags/gitversion.html" style="font-size: 100%">
+                        GitVersion
+                    </a>
+                
+                    <a href="/tags/jenkins.html" style="font-size: 120.81448319328996%">
                         Jenkins
+                    </a>
+                
+                    <a href="/tags/job-template.html" style="font-size: 100%">
+                        Job template
                     </a>
                 
                     <a href="/tags/msbuild.html" style="font-size: 100%">
@@ -186,8 +194,12 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Scripting
                     </a>
                 
-                    <a href="/tags/sherlock.html" style="font-size: 150%">
+                    <a href="/tags/sherlock.html" style="font-size: 148.59593857014607%">
                         Sherlock
+                    </a>
+                
+                    <a href="/tags/software-delivery.html" style="font-size: 100%">
+                        Software delivery
                     </a>
                 
                     <a href="/tags/source-server.html" style="font-size: 100%">
@@ -242,7 +254,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         nAnicitus
                     </a>
                 
-                    <a href="/tags/nbuildkit.html" style="font-size: 120.81448319328996%">
+                    <a href="/tags/nbuildkit.html" style="font-size: 126.26495350371935%">
                         nBuildKit
                     </a>
                 
@@ -254,6 +266,88 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2014-03-31_Regression-testing-gui-applications.html'>GUI testing with TestStack.White</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Monday, March 31, 2014 | Posted in
+                
+                    <a id="post-category" href="/tags/regression-testing.html">Regression testing</a>
+                
+                    <a id="post-category" href="/tags/ui-test.html">UI test</a>
+                
+                    <a id="post-category" href="/tags/teststack.white.html">TestStack.White</a>
+                
+                    <a id="post-category" href="/tags/apollo.html">Apollo</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>In the <a href="/posts/2014-02-18_Regression-testing-console-applications.html">previous</a> post I explained how I created the regression tests for a script running application that belongs to the <a href="/projects/apollo.html">Apollo</a> project. In this post I will explain how I created the regression tests for an Apollo application with a graphical user interface (UI).</p>
+<p>My initial attempt to write a regression test suite for the GUI application was done using the <a href="http://www.nunit.org/">NUnit</a> and <a href="http://scriptcs.net/">ScriptCS</a> with the idea that NUnit would provide the test execution and validation methods and ScriptCs would provide an easy way to write the test scripts without requiring a complete IDE to be used. After some trial-and-error it became clear that this approach was not the most suitable solution for the following reasons:</p>
+<ul>
+<li>Using NUnit, or any unit test framework for that matter, complicated things because there is no way to take control of the order in which the regression tests are executed. While the ordering of unit tests is irrelevant, the ordering of regression tests may not be in that it is accepted that regression tests involve the execution multiple, ordered tests for one single activation of the application under test (AUT).</li>
+<li>A secondary drawback of using a unit test framework is that there is normally no way to re-run a test case if it fails, something which is more acceptable for a regression test than for a unit test.</li>
+<li>The test code got rather complicated due to the many helper methods, script files etc.. While ScriptCs coped beautifully with this it turned out to hard for me to work with without the organizing features of a complete IDE.</li>
+</ul>
+<p>In the end I wrote a custom (console) application that handles the ordering and execution of the different test cases in the way that makes sense for my current requirements.</p>
+<h4 id="testing-application">Testing application</h4>
+<p>The testing application executes the tests, collects the results and logs all the outputs. When executing the tests each test is executed a maximum of three times before it is marked as a fail. The following code is used by the application to execute the test steps and to keep track of the number of times a test step is executed. </p>
+<script src='https://gist.github.com/9202656.js?file=Apollo_Regression_ExecuteTestStep.cs'></script>
+
+<script src='https://gist.github.com/9202656.js?file=Apollo_Regression_TestStep.cs'></script>
+
+<p>The reason for having multiple attempts to complete a test is that the nature of the GUI automation testing is that it is not completely <a href="http://www.mathpirate.net/log/2009/12/23/ui-automation-tricks-and-traps/">consistent</a>. By allowing a test to fail twice it is possible to work around the problem of inconsistent handling of controls.</p>
+<p>The second part of the application keeps track of the test results while the tests are running. The application will always try to execute all the tests, irrespective of their final success or failure. That way the user will always have a complete report of the state of all the tests.</p>
+<script src='https://gist.github.com/9202656.js?file=Apollo_Regression_EntryPoint.cs'></script>
+
+<p>Finally the application provides utility methods for logging which should be used liberally by both the application and the test steps.</p>
+<h4 id="tests">Tests</h4>
+<p>In order for the tests to interact with the GUI I chose to use the <a href="https://github.com/TestStack/White">TestStack.White</a> library mainly because it is a mature open source library that has a number of active contributors. One thing to keep in mind when selecting a GUI automation library is that the <a href="http://en.wikipedia.org/wiki/Microsoft_UI_Automation">underlying technology</a> has some tricky hooks to it that cannot be completely hidden by the automation library. One example is that all controls can be found based on their <a href="http://msdn.microsoft.com/en-us/library/aa349646%28v=vs.110%29.aspx">automation ID</a> but windows cannot, even if the window in question has an automation ID.</p>
+<p>The main piece of advice for writing UI automation tests is always to write some helper methods to hide the underlying complexity of the UI access technology. In my case I took the following steps:  </p>
+<ul>
+<li>Control very carefully how your helper methods return information to the caller, either through a return value or through exceptions. In my case if a helper method returns a value it should either return the requested object or null if it fails to get the requested object. The calling code should then always check for null and handle the case of a null return value, e.g. by retrying the method call. The only time the method will throw an exception is if the assumed conditions for the method are wrong, e.g. the application under test (AUT) has crashed. If the helper method has no return value then it may throw if it fails to execute.</li>
+</ul>
+<script src='https://gist.github.com/9202656.js?file=Apollo_Regression_HelpersForMenu.cs'></script>
+
+<ul>
+<li>All actions that get a control will try to get the control several times if they fail. Due to the nature of UI automation it is possible that the control is not available the first time the code tries to get hold of the control. This may be due tot he fact that the automation tests are fast enough that they try to get the control in the 0.1 second that the control is not available yet. Note that this also makes for some very tricky debugging which requires a decent amount of logging. </li>
+</ul>
+<script src='https://gist.github.com/9202656.js?file=Apollo_Regression_Retry.cs'></script>
+
+<p>Note that automation tests are usually linked strongly to a specific version of the software because the tests assume the availability of certain automation IDs and controls. Some parts are implicitly linked and others can be, but don&#39;t have to be, explicitly linked. Examples are: </p>
+<ul>
+<li>The application, product and company names can be shared through a configuration or shared code file:</li>
+</ul>
+<script src='https://gist.github.com/9202656.js?file=Apollo_Regression_CompanyInformation.cs'></script>
+
+<ul>
+<li>Automation IDs can be shared via a shared code file. Note that application ID names should be pointing to a given area / functionality, not specific controls (Also note that in my case that&#39;s not always done the right way):</li>
+</ul>
+<script src='https://gist.github.com/9202656.js?file=Apollo_Regression_AutomationID.cs'></script>
+
+<script src='https://gist.github.com/9202656.js?file=Apollo_Explorer_MenuView.xaml'></script>
+
+<p>When executing the tests it is a good idea to reset your application state either at the end of each test or at the start of each test. Or even better both to make sure that you always start a test from the same state irrespective of the way the previous test ended, e.g. with an application crash.</p>
+<p>Finally do not give up if you find it hard to make the tests reliable. By continually improving the robustness of the test code eventually the tests will start to behave in the way you expect them too. Some <a href="http://www.mathpirate.net/log/2009/12/23/ui-automation-tricks-and-traps/">tricks and hacks</a> that I found necessary are:</p>
+<ul>
+<li>Time-outs while getting controls, setting values on controls or getting values from controls. While these are ugly they are sometimes necessary.</li>
+<li>For each test restart the application if at all possible so that you end up with a known application state. This will improve the repeatability of the tests. Note that if the application is slow to start up then you can either improve the start up performance of the application or if that is not possible then carefully combine tests but be aware that tests may fail due to polluted application state. </li>
+<li>Note that some application state survives restarts, e.g. user and application settings. It would be good if you have a way of resetting that state in a relatively sure-fire way. This is something I have not implemented yet though.</li>
+</ul>
+<p>And then the last comment must be that the development of these tests has been much more complicated than I thought it would be. The approach I used required some coding skills so this may or may not be suitable in other situations depending on the skill sets of the testers or developers.</p>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -480,39 +574,6 @@ The biggest difference so far compared to the school harnesses is that it feels 
 </div>
     </div>
 
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-12-27_Sherlock-Release-V0480.html'>Sherlock release - V0.4.8.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Friday, December 27, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.8.0">V0.4.8.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides the following issues:</p>
-<ul>
-<li><a href="https://github.com/pvandervelde/Sherlock/issues/13">#13</a> - Provide setup verification</li>
-<li><a href="https://github.com/pvandervelde/Sherlock/issues/14">#14</a> - Add license and readme to all downloadable files</li>
-<li><a href="https://github.com/pvandervelde/Sherlock/issues/15">#15</a> - Include test purpose in final test report</li>
-<li><a href="https://github.com/pvandervelde/Sherlock/issues/22">#22</a> - Add NuGet symbols package for easy upload to a symbol server</li>
-<li><a href="https://github.com/pvandervelde/Sherlock/issues/23">#23</a> - OutOfMemoryException in Sherlock.Service.Master</li>
-<li><a href="https://github.com/pvandervelde/Sherlock/issues/24">#24</a> - Hyper-V: If a virtual machine is running when a new test is started terminate the current run</li>
-<li><a href="https://github.com/pvandervelde/Sherlock/issues/26">#26</a> - Hyper-V: Handle state change result code</li>
-</ul>
- 
-    </div>
-</div>
-    </div>
-
 
 <!-- Page Listing -->
 
@@ -565,7 +626,7 @@ The biggest difference so far compared to the school harnesses is that it feels 
             <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
             from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Monday, August 18, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Saturday, September 27, 2014.</p>
     </div>
 
     <!-- jQuery -->
