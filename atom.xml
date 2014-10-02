@@ -3,7 +3,7 @@
     <title>Mind Vortex</title>
     <link href="http://www.petrikvandervelde.nl/atom.xml" rel="self"/>
     <link href="http://www.petrikvandervelde.nl"/>
-    <updated>2014-09-27T05:07:33.130Z</updated>
+    <updated>2014-10-02T09:20:50.774Z</updated>
     <id>http://www.petrikvandervelde.nl</id>
     <author>
         <name>Petrik van der Velde</name>
@@ -1199,19 +1199,6 @@ builder.RegisterModule(
         </entry>
     
         <entry>
-            <title>nRefs release - V0.1.0.0</title>
-            <link href="http://www.petrikvandervelde.nl/posts/2013-09-25_nRefs-Release-v0100.html"/>
-            <updated>2013-09-25T00:00:00.000Z</updated>
-            <id>http://www.petrikvandervelde.nl/posts/2013-09-25_nRefs-Release-v0100.html</id>
-            <content type="html">&lt;p&gt;The &lt;a href=&quot;https://github.com/pvandervelde/nRefs/releases/tag/v0.1.0.0&quot;&gt;first release&lt;/a&gt; of the &lt;a href=&quot;/projects/nRefs.html&quot;&gt;nRefs&lt;/a&gt; assembly reference extraction application has been released. This release&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The test output now includes an XML report with all the messages and an indication of test success or failure.&lt;/li&gt;
-&lt;li&gt;Removed the Test data directory settings from the web service because test packages are now always dropped in the App_Data directory&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-        </entry>
-    
-        <entry>
             <title>How this blog was created</title>
             <link href="http://www.petrikvandervelde.nl/posts/2013-09-25_How-this-blog-was-created.html"/>
             <updated>2013-09-25T00:00:00.000Z</updated>
@@ -1277,6 +1264,19 @@ projects subdirectories and then sorts them by date. The &lt;em&gt;recent&lt;/em
 &lt;li&gt;&lt;a href=&quot;http://takitapart.com&quot;&gt;takitapart&lt;/a&gt; provided an &lt;a href=&quot;http://takitapart.com/posts/organizing-docpad/&quot;&gt;excellent&lt;/a&gt; post describing how to organise content in a Docpad website.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://lucor.github.io&quot;&gt;Luca&amp;#39;s forge&lt;/a&gt; provided a good start to using Docpad in his &lt;a href=&quot;http://lucor.github.io/post/migrating-from-octopress-to-docpad/&quot;&gt;migration&lt;/a&gt; post. This site also provides some very nice ideas around the way posts and tags should look.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://www.delarre.net&quot;&gt;Ben Delarre&lt;/a&gt; provided a nice &lt;a href=&quot;http://www.delarre.net/posts/blogging-with-docpad/&quot;&gt;summary&lt;/a&gt; of his own Docpad setup.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        </entry>
+    
+        <entry>
+            <title>nRefs release - V0.1.0.0</title>
+            <link href="http://www.petrikvandervelde.nl/posts/2013-09-25_nRefs-Release-v0100.html"/>
+            <updated>2013-09-25T00:00:00.000Z</updated>
+            <id>http://www.petrikvandervelde.nl/posts/2013-09-25_nRefs-Release-v0100.html</id>
+            <content type="html">&lt;p&gt;The &lt;a href=&quot;https://github.com/pvandervelde/nRefs/releases/tag/v0.1.0.0&quot;&gt;first release&lt;/a&gt; of the &lt;a href=&quot;/projects/nRefs.html&quot;&gt;nRefs&lt;/a&gt; assembly reference extraction application has been released. This release&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The test output now includes an XML report with all the messages and an indication of test success or failure.&lt;/li&gt;
+&lt;li&gt;Removed the Test data directory settings from the web service because test packages are now always dropped in the App_Data directory&lt;/li&gt;
 &lt;/ul&gt;
 </content>
         </entry>
