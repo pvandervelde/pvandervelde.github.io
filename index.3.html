@@ -85,6 +85,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2014-11-10_Creating-azure-vm-images-with-powershell.html">Creating Azure VM images with Powershell</a></li>
+                    
                         <li><a href="/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html">Building and delivering nBuildKit with AppVeyor</a></li>
                     
                         <li><a href="/posts/2014-08-19_nBuildKit-release-V032.html">nBuildKit release - V0.3.2</a></li>
@@ -103,8 +105,6 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2014-05-23_Improvements-to-the-site.html">Improvements to the site</a></li>
                     
-                        <li><a href="/projects/ntreva.html">nTreva</a></li>
-                    
                 </ul>
             </div>
             <div id="sbox3">
@@ -116,6 +116,10 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 
                     <a href="/tags/appveyor.html" style="font-size: 100%">
                         AppVeyor
+                    </a>
+                
+                    <a href="/tags/azure.html" style="font-size: 120.81448319328996%">
+                        Azure
                     </a>
                 
                     <a href="/tags/blog.html" style="font-size: 130.49266672559813%">
@@ -150,7 +154,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         GitVersion
                     </a>
                 
-                    <a href="/tags/jenkins.html" style="font-size: 120.81448319328996%">
+                    <a href="/tags/jenkins.html" style="font-size: 130.49266672559813%">
                         Jenkins
                     </a>
                 
@@ -176,6 +180,10 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 
                     <a href="/tags/paragliding.html" style="font-size: 136.86752324814032%">
                         Paragliding
+                    </a>
+                
+                    <a href="/tags/powershell.html" style="font-size: 100%">
+                        Powershell
                     </a>
                 
                     <a href="/tags/regression-test.html" style="font-size: 100%">
@@ -266,6 +274,116 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2014-01-13_Integrating-Sherlock-with-a-build-server.html'>Sherlock configuration - Build server integration</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Monday, January 13, 2014 | Posted in
+                
+                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
+                
+                    <a id="post-category" href="/tags/jenkins.html">Jenkins</a>
+                
+                    <a id="post-category" href="/tags/teamcity.html">TeamCity</a>
+                
+                    <a id="post-category" href="/tags/msbuild.html">MsBuild</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Once the configuration of <a href="/projects/sherlock.html">Sherlock</a> is complete the last step needed to make use of automatic regression testing is to integrate with a build server. In this post I will explain which steps need to be taken to integrate Sherlock with a build server. Examples will be given for <a href="http://jenkins-ci.org/">Jenkins</a>, which is used at my work, and <a href="http://www.jetbrains.com/teamcity/">TeamCity</a>, which I use personally. </p>
+<p>In order to integrate with a build server you will need to: </p>
+<ul>
+<li>Create at least one test configuration</li>
+<li>Write the build scripts necessary to register a test, wait for the completion of the test and process the results.</li>
+<li>Set up a job on the build server to execute the test.  </li>
+</ul>
+<h3 id="test-configurations">Test configurations</h3>
+<p>In order to execute a test the first thing you need to decide on is the test configuration which will be executed. In Sherlock the test configuration is described by a XML file similar to the following gist: </p>
+<script src='https://gist.github.com/8346703.js'></script>
+
+<p>In this configuration file replace all instances of <code>${SOME_TEXT}$</code> with the appropriate information. Note that some configuration settings should be templated so that those values can be supplied by the build system, e.g. the application version number:</p>
+<ul>
+<li>Provide an application name and version for use in the test report.</li>
+<li>Provide a compact description. This will be used as the title of the test report</li>
+<li>Provide each environment with a name. It doesn&#39;t matter what that name is as long as it is consistently used throughout the configuration file. All test steps which should be executed on the same environment should be linked to the same environment name. Note that while it is possible to request multiple environments to be started in a test, it is not possible to synchronize those environments. In other words each environment will exit as soon as it completes the test steps assigned to it, no environment will wait for other environments to complete their work.</li>
+<li>For each test step that needs to be executed provide the order (integer number starting at 0, incrementing for each step), the name of the environment in which the step should be executed, the failure mode, either Stop or Continue and the correct file paths. Note that the test steps use the following definitions for their file paths:<ul>
+<li><strong>msi:</strong> <code>file</code> is the absolute path to the MSI file as on the machine that is used to register the test (i.e. the origin).</li>
+<li><strong>x-copy:</strong> <code>destination</code> is the absolute path to the directory that will hold all the x-copy results on the test environment.</li>
+<li><strong>x-copy:</strong> <code>base</code> is the absolute path to the directory that holds the files / directories to be x-copied on the origin.</li>
+<li><strong>x-copy:</strong> <code>paths</code> contains the absolute paths to the files / directories that should be x-copied. It is expected that these all reside in the <code>base</code> directory at some level.</li>
+<li><strong>script:</strong> <code>file</code> is the absolute path to the script file on the origin.</li>
+<li><strong>console:</strong> <code>exe</code> is the absolute path to the executable that should be executed on the test environment. Note that the path is also pointed to the test environment. Hence the <code>CONSOLE</code> test step is the only test step that doesn&#39;t copy files.</li>
+<li><strong>All test steps:</strong> All files and directories that should be included in the report are absolute paths on the test environment.</li>
+<li><strong>notification:</strong> The absolute path where the final report should be placed. This path should be accessible to both Sherlock (the master controller) and the application that will process the test results.</li>
+</ul>
+</li>
+<li>It makes sense to always copy back any logs that are written during the test. If you don&#39;t need them for test failure diagnosis then it is easy to delete them later, however you can&#39;t copy them from the test environment after the test has completed because the test environment will be reset to its original state upon shut down. </li>
+</ul>
+<p>If you need tests to run in different environments or with different test steps then you will need to create a configuration file for each environment / set of test steps.  </p>
+<h3 id="build-scripts">Build scripts</h3>
+<p>The easiest way to execute the test from a build server is to create a set of build scripts that can do the work for you. In this example I will be using MsBuild as the scripting language.</p>
+<p>In order to create the configuration file from the template it is necessary to replace all the templated configuration settings with their current values. The following gist shows an inline MsBuild task that does exactly that:</p>
+<script src='https://gist.github.com/8277812.js?file=TemplateFile.xml'></script>
+
+<p>In order to use this task create an <code>ItemGroup</code> with the identifiers of the settings and their replacement values. For example:</p>
+<script src='https://gist.github.com/8277812.js?file=HowToUseTemplateFile.xml'></script>
+
+<p>If this example is used on the following template file:</p>
+<script src='https://gist.github.com/8277812.js?file=BeforeReplacement.xml'></script>
+
+<p>Then the outcome is the following output file:</p>
+<script src='https://gist.github.com/8277812.js?file=AfterReplacement.xml'></script>
+
+<p>The next step will be to create a build script that can register the test with the Sherlock system. This can either be done with a call to the <a href="http://msdn.microsoft.com/en-us/library/x8zx72cd.aspx">exec</a> task or with the following inline MsBuild task:</p>
+<script src='https://gist.github.com/8346876.js'></script>
+
+<p>The next step is a little tricky in that it is now necessary to wait for Sherlock to execute the test and create the test report. The tricky bit due to the fact that Sherlock will only execute the tests when a suitable test environment is available. That means that tests could be executed almost immediately if an environment is directly available, or not for a long time if all environments are busy. On top of that MsBuild does not have the ability to watch specific files. The following inline task allows you to wait for certain files to be created. Note that you need to provide a time-out which determines how long this task will wait for the report files. How long this time-out should be depends on:</p>
+<ul>
+<li>How long it takes for the tests to execute.</li>
+<li>How many tests will be executed on the same test environments. Tests executing on different test environments can be run in parallel provided the hardware will stand up to it.</li>
+<li>How many other tests may potentially be executing at the same time.</li>
+</ul>
+<script src='https://gist.github.com/8346893.js'></script>
+
+<p>Finally the report files need to be checked for success or failure. For each test Sherlock produces a HTML and an XML report. The easiest way to find the outcome of a test is to parse the XML report and search for the <code>result</code> element. The value of this element will either be <code>Passed</code> or <code>Failed</code>. The following inline task will accomplish this goal:</p>
+<script src='https://gist.github.com/8346900.js'></script>
+
+<h3 id="build-jobs">Build jobs</h3>
+<p>The final task is to setup one or more build jobs for the build server to execute. While you can combine the testing steps with the build steps it is in general advisable to have a separate job for the testing steps. The main reason for that is that the the testing steps can take quite a while to execute, ranging from several minutes to hours, which slows down the continuous integration feedback cycle considerably. Based on the idea that the tests should be contained in their own build job the following set-up is proposed. </p>
+<ul>
+<li>Define three different build jobs for the build, test and deploy stages of the process. This means that each job will be responsible for a specific task. Individual jobs will be use the artefacts produced by the other jobs.</li>
+<li>Set up dependencies between the different builds where required. For instance the test job will depend on the artefacts produced by the build job.</li>
+<li>The build job can be run both as continuous integration build, i.e. execute the build job each time a commit to the source control system is detected, and as pre-requisite to the test job.</li>
+<li>Similarly the test job could be run nightly to provide relatively quick feedback on regression problems while also acting as pre-requisite to the deploy job. </li>
+<li>If the version number includes either the build counter of the build job or the revision number of the source control commit then special care needs to be taken for the test and deploy jobs in order to ensure that they get the same numbers as the build job did.</li>
+<li>In a similar fashion it will be necessary to control the version control settings so that all builds pull in the same revision. One solution would be to store the revision index in the first job in the chain and then transfer that to the other jobs.</li>
+</ul>
+<p>For the two build systems I have specifically worked with the following additional notes can be made:</p>
+<ul>
+<li><a href="http://jenkins-ci.org/">Jenkins</a><ul>
+<li>In addition to the three standard jobs you will probably need a <a href="https://wiki.jenkins-ci.org/display/JENKINS/Build+Flow+Plugin">Build flow</a> job to trigger the different standard jobs in the right order. This has to be done because at the moment it does not seem possible in Jenkins to trigger pre-requisite builds without having the downstream project taking up one of the build executors. The build flow jobs live outside the actual build executors which makes it possible to optimize the use of the executors.</li>
+<li>In order to deal with the build number problems as specified above the simplest way is to write the number to a file in the upstream job, archive that and then pull it out in the downstream jobs. The same goes for the version control information.</li>
+</ul>
+</li>
+<li><a href="http://www.jetbrains.com/teamcity/">TeamCity</a><ul>
+<li>Downstream jobs have both a snapshot dependency and an artefact dependency on the upstream job. The <a href="http://confluence.jetbrains.com/display/TCD8/Configuring+Dependencies">snapshot dependency</a> takes care of the synchronization of the version control revision. Note that you should create different VCS roots for each project, otherwise the projects all share a single check-out directory. By sharing a single directory it is possible that upon starting the second job the directory is cleaned which will likely remove the artefacts from the first job. </li>
+<li>The build number can be copied easily by <a href="http://confluence.jetbrains.com/display/TCD8/Configuring+General+Settings#ConfiguringGeneralSettings-BuildNumberFormat">synchronizing</a> the build numbers.</li>
+</ul>
+</li>
+</ul>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -426,109 +544,6 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
 </div>
     </div>
 
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html'>Sherlock configuration - Virtual machines</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, December 11, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>After <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">setting up the host machine</a> the next step in the <a href="/posts/2013-12-04_Regression-testing-with-Sherlock.html">configuration</a> of Sherlock is to set up one or more virtual machines. Each virtual machine will have the following applications installed:</p>
-<ul>
-<li>The update service which handles the installation of the latest available Sherlock binaries. </li>
-<li>The executor service which handles the communication with the master controller, handles the download and upload of test files and test reports and controls the test execution. </li>
-<li>The application which executes the test steps. This has been separated from the service so that: <ul>
-<li>It is possible to run the application on the desktop while the executor service is running as a Windows service.</li>
-<li>Any fatal errors in the test application don&#39;t affect the service, thereby maintaining communication with the master controller, and thus allowing error reports to be send.</li>
-<li>It is possible to run multiple applications under different accounts (planned in future releases).</li>
-</ul>
-</li>
-</ul>
-<p>The configuration process for a virtual machine consists of the following steps:</p>
-<ul>
-<li>Create a new virtual machine and install the operating system</li>
-<li>Configure the operating system on the virtual machine</li>
-<li>Install and configure the Sherlock applications on the virtual machine</li>
-<li>Store information about the virtual machine in the host database</li>
-</ul>
-<h3 id="preparing-the-virtual-machine">Preparing the virtual machine</h3>
-<p>The first step is to create a <a href="http://technet.microsoft.com/en-us/library/cc772480.aspx">new virtual machine</a> and install the operating system. This should be straight forward but there a few things to look out for:</p>
-<ul>
-<li>The operating system must (currently) support <a href="http://en.wikipedia.org/wiki/.NET_Framework_version_history#.NET_Framework_4.5">.NET 4.5</a> because that is what Sherlock is needs to run on.</li>
-<li>The network for the virtual machine must be set up so that it can at the very least see the host machine and the other virtual machines stored on the same host machine.<ul>
-<li><strong>Note:</strong> Windows networks can <a href="http://www.petri.co.il/working-with-domain-member-virtual-machines-and-snapshots.htm">deny access</a> to the test virtual machines after being used for a while (usually 30 days) due to the fact that the test machine is reset after each test, thereby not allowing it to handle the renewal of network identification keys correctly.</li>
-</ul>
-</li>
-</ul>
-<h3 id="preparing-the-operating-system">Preparing the operating system</h3>
-<p>After the creation of the virtual machine and the installation of the operating system it is necessary to configure the operating system. Some of the changes are necessary for Sherlock to function while others are necessary only from a test perspective.</p>
-<p>Lets first start with the changes required for Sherlock to function. </p>
-<ul>
-<li>If .NET 4.5 is not already installed, then install it. Without it Sherlock won&#39;t run at all.</li>
-<li>Create a new user that will be used to execute the tests. This user needs to be an administrator so that the execution of an MSI install can succeed without the need for elevation (which is <a href="http://stackoverflow.com/questions/5098121/how-can-i-get-elevated-permissions-uac-via-impersonation-under-a-non-interacti">a bit tricky</a> from an application). The user can be either a machine local administrator or a domain user  which is granted administration rights on the machine.<ul>
-<li>Note that there might a difference between a domain user with administrative rights on the computer and a local administrator. If you turn UAC off then in general a local administrator is running all applications elevated while the applications started by the domain user run with no elevation only to be silently elevated if requested to do so. Unfortunately this means that the domain user will not be able to run a silent install from a command line unless that command line is explicitly elevated (which is not possible from an application).</li>
-</ul>
-</li>
-<li>Disable User Access Control (UAC) so that Sherlock can execute MSI installations. <strong>Note:</strong> In some cases corporate network controls and/or group policies override local settings. In those cases talk to the local IT people regarding UAC. Also note that on Windows 8 it is not possible to turn off the UAC by moving the &#39;UAC slider&#39; all the way down. This is because Metro applications require some form of UAC to exist in order for them to work.</li>
-</ul>
-<p>Finally before installing Sherlock a few tweaks should be made to the operating system configuration so that the automated tests can proceed. Note that for all the following changes there may be group policies in place put there by your local IT service. It may be necessary to talk to the IT people about the settings you want to change and the <a href="http://www.brianbondy.com/blog/id/100/">reason</a> you need to change those settings.</p>
-<ul>
-<li><strong>Interactive user:</strong> If you need to run interactive tests, e.g. UI tests, then you need to make sure a user is logged in. Use <a href="http://technet.microsoft.com/en-us/sysinternals/bb963905.aspx">Autologon</a> to automatically log your user in when the computer starts while still maintaining password security.</li>
-<li><strong>Windows 8 switch to desktop:</strong> If you are on Windows 8 you need to make sure that the desktop is <a href="http://www.7tutorials.com/how-boot-desktop-windows-8-skip-start-screen">available</a> for interactive applications to execute on.</li>
-<li><strong>Screen saver:</strong> In order to prevent any interactive tests from failing due to a <a href="http://windows.microsoft.com/en-nz/windows-vista/turn-your-screen-saver-on-or-off">screensaver</a> or the <a href="http://answers.microsoft.com/en-us/windows/forum/windows_7-security/disable-automatic-lock-with-windows-7/daef8f0a-810f-46e8-9420-3c32c4bd6479">automatic locking of the desktop</a> both those features need to be turned off. </li>
-<li><strong>Windows error reporting:</strong> Any tests that run on the desktop may hang eternally if the application under tests fails and displays the Windows Error Reporting (WER) dialog. In order to prevent this from happening <a href="http://4sysops.com/archives/how-to-disable-windows-error-reporting/">WER should be disabled</a>. The most efficient way of doing this is to use the group policy controls to disable the following elements:<ul>
-<li>In <code>Computer Configuration\Administrative Templates\System\Internet Communication Management\Internet Communication settings</code> enable the setting: <code>Turn off Windows Error Reporting</code>.</li>
-<li>In <code>Computer Configuration\Administrative Templates\Windows Components\Windows Error Reporting</code> enable the settings <code>Disable Windows error reporting</code> and <code>Prevent display of the user interface for critical errors</code>, and disable the setting <code>Display error notification</code>.</li>
-</ul>
-</li>
-<li><strong>Automatic updates:</strong> Automatic updates can be disabled because they will never be deployed due to the fact that the machine is reset after each test.</li>
-</ul>
-<h3 id="configuring-sherlock">Configuring Sherlock</h3>
-<p>Once the operating system is configured <a href="/projects/sherlock.html">Sherlock</a> can be installed and configured. </p>
-<ul>
-<li>Unzip the <strong>service.zip</strong> package into the <code>c:\sherlock</code> directory.</li>
-<li>Copy the XML file containing the public key used to sign the manifests to the virtual machine and place it in the <code>c:\sherlock</code> directory.</li>
-<li>Open the configuration file (<code>Sherlock.Service.exe.config</code>) and update the following settings:<ul>
-<li><strong>ApplicationName:</strong> The name of the application for which updates should be tracked, in this case that is: <code>Sherlock.Service.Executor.exe</code>.</li>
-<li><strong>UpdateManifestUri:</strong> The URL of the manifest file, in this case: <code>http:\\myhostmachine\appupdate\executorservice.manifest</code></li>
-<li><strong>ManifestPublicKeyFile:</strong> The path to the XML file containing the public key section of the manifest signing key, e.g. <code>C:\sherlock\manifestsigningkey.public.xml</code></li>
-</ul>
-</li>
-<li>Set the update service to start automatically when the computer starts. This can be done as an actual service (in case no interactive tests will be executed) or by automatically starting the application when the user logs on to windows (in case interactive tests need to be executed).</li>
-<li>The last step is to let the executor controller through the firewall. For this create an inbound rule that allows <code>c:\ProgramData\Sherlock\Sherlock.Service.Executor\{VERSION}\Sherlock.Service.Executor.exe</code> to connect to all types of protocols. Normally only Domain and private networks should be sufficient.</li>
-</ul>
-<h3 id="testing">Testing</h3>
-<p>Once the operating system and Sherlock have been configured it is sensible to test the configurations to make sure it all works. In order to do this take the following steps:</p>
-<ul>
-<li>Restart the virtual machine. Once the machine starts up it should (depending on your configuration)<ul>
-<li>Automatically log on the test user</li>
-<li>On windows 8 switch to the desktop</li>
-<li>Start the Sherlock update service. The service should download the latest version of the executor controller and start it. You can verify this by looking at the logs which can be found in <code>c:\programdata\sherlock\sherlock.service\{VERSION}\logs</code> and <code>c:\programdata\sherlock\sherlock.service.executor\{VERSION}\logs</code> for the update service and the executor controller respectively.</li>
-</ul>
-</li>
-<li>After both applications have started stop them both by stopping the update service (<code>Sherlock.Service</code>).</li>
-<li>Once the applications have been stopped remove the data from the directory <code>c:\ProgramData\Sherlock</code>.</li>
-<li>Shut down the machine.</li>
-<li>Take a <a href="http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/16/managing-snapshots-with-hyper-v.aspx">snapshot</a> of the current state of the virtual machine and give it a sensible name.</li>
-</ul>
-<h3 id="host-configuration">Host configuration</h3>
-<p>Finally the last step in the configuration of a new test environment is to register the environment with Sherlock through the management website.</p>
- 
-    </div>
-</div>
-    </div>
-
 
 <!-- Page Listing -->
 
@@ -581,7 +596,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
             <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
             from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Thursday, October 02, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Monday, November 10, 2014.</p>
     </div>
 
     <!-- jQuery -->

@@ -85,6 +85,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2014-11-10_Creating-azure-vm-images-with-powershell.html">Creating Azure VM images with Powershell</a></li>
+                    
                         <li><a href="/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html">Building and delivering nBuildKit with AppVeyor</a></li>
                     
                         <li><a href="/posts/2014-08-19_nBuildKit-release-V032.html">nBuildKit release - V0.3.2</a></li>
@@ -103,8 +105,6 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2014-05-23_Improvements-to-the-site.html">Improvements to the site</a></li>
                     
-                        <li><a href="/projects/ntreva.html">nTreva</a></li>
-                    
                 </ul>
             </div>
             <div id="sbox3">
@@ -116,6 +116,10 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 
                     <a href="/tags/appveyor.html" style="font-size: 100%">
                         AppVeyor
+                    </a>
+                
+                    <a href="/tags/azure.html" style="font-size: 120.81448319328996%">
+                        Azure
                     </a>
                 
                     <a href="/tags/blog.html" style="font-size: 130.49266672559813%">
@@ -150,7 +154,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         GitVersion
                     </a>
                 
-                    <a href="/tags/jenkins.html" style="font-size: 120.81448319328996%">
+                    <a href="/tags/jenkins.html" style="font-size: 130.49266672559813%">
                         Jenkins
                     </a>
                 
@@ -176,6 +180,10 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 
                     <a href="/tags/paragliding.html" style="font-size: 136.86752324814032%">
                         Paragliding
+                    </a>
+                
+                    <a href="/tags/powershell.html" style="font-size: 100%">
+                        Powershell
                     </a>
                 
                     <a href="/tags/regression-test.html" style="font-size: 100%">
@@ -266,6 +274,109 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html'>Sherlock configuration - Virtual machines</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Wednesday, December 11, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>After <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">setting up the host machine</a> the next step in the <a href="/posts/2013-12-04_Regression-testing-with-Sherlock.html">configuration</a> of Sherlock is to set up one or more virtual machines. Each virtual machine will have the following applications installed:</p>
+<ul>
+<li>The update service which handles the installation of the latest available Sherlock binaries. </li>
+<li>The executor service which handles the communication with the master controller, handles the download and upload of test files and test reports and controls the test execution. </li>
+<li>The application which executes the test steps. This has been separated from the service so that: <ul>
+<li>It is possible to run the application on the desktop while the executor service is running as a Windows service.</li>
+<li>Any fatal errors in the test application don&#39;t affect the service, thereby maintaining communication with the master controller, and thus allowing error reports to be send.</li>
+<li>It is possible to run multiple applications under different accounts (planned in future releases).</li>
+</ul>
+</li>
+</ul>
+<p>The configuration process for a virtual machine consists of the following steps:</p>
+<ul>
+<li>Create a new virtual machine and install the operating system</li>
+<li>Configure the operating system on the virtual machine</li>
+<li>Install and configure the Sherlock applications on the virtual machine</li>
+<li>Store information about the virtual machine in the host database</li>
+</ul>
+<h3 id="preparing-the-virtual-machine">Preparing the virtual machine</h3>
+<p>The first step is to create a <a href="http://technet.microsoft.com/en-us/library/cc772480.aspx">new virtual machine</a> and install the operating system. This should be straight forward but there a few things to look out for:</p>
+<ul>
+<li>The operating system must (currently) support <a href="http://en.wikipedia.org/wiki/.NET_Framework_version_history#.NET_Framework_4.5">.NET 4.5</a> because that is what Sherlock is needs to run on.</li>
+<li>The network for the virtual machine must be set up so that it can at the very least see the host machine and the other virtual machines stored on the same host machine.<ul>
+<li><strong>Note:</strong> Windows networks can <a href="http://www.petri.co.il/working-with-domain-member-virtual-machines-and-snapshots.htm">deny access</a> to the test virtual machines after being used for a while (usually 30 days) due to the fact that the test machine is reset after each test, thereby not allowing it to handle the renewal of network identification keys correctly.</li>
+</ul>
+</li>
+</ul>
+<h3 id="preparing-the-operating-system">Preparing the operating system</h3>
+<p>After the creation of the virtual machine and the installation of the operating system it is necessary to configure the operating system. Some of the changes are necessary for Sherlock to function while others are necessary only from a test perspective.</p>
+<p>Lets first start with the changes required for Sherlock to function. </p>
+<ul>
+<li>If .NET 4.5 is not already installed, then install it. Without it Sherlock won&#39;t run at all.</li>
+<li>Create a new user that will be used to execute the tests. This user needs to be an administrator so that the execution of an MSI install can succeed without the need for elevation (which is <a href="http://stackoverflow.com/questions/5098121/how-can-i-get-elevated-permissions-uac-via-impersonation-under-a-non-interacti">a bit tricky</a> from an application). The user can be either a machine local administrator or a domain user  which is granted administration rights on the machine.<ul>
+<li>Note that there might a difference between a domain user with administrative rights on the computer and a local administrator. If you turn UAC off then in general a local administrator is running all applications elevated while the applications started by the domain user run with no elevation only to be silently elevated if requested to do so. Unfortunately this means that the domain user will not be able to run a silent install from a command line unless that command line is explicitly elevated (which is not possible from an application).</li>
+</ul>
+</li>
+<li>Disable User Access Control (UAC) so that Sherlock can execute MSI installations. <strong>Note:</strong> In some cases corporate network controls and/or group policies override local settings. In those cases talk to the local IT people regarding UAC. Also note that on Windows 8 it is not possible to turn off the UAC by moving the &#39;UAC slider&#39; all the way down. This is because Metro applications require some form of UAC to exist in order for them to work.</li>
+</ul>
+<p>Finally before installing Sherlock a few tweaks should be made to the operating system configuration so that the automated tests can proceed. Note that for all the following changes there may be group policies in place put there by your local IT service. It may be necessary to talk to the IT people about the settings you want to change and the <a href="http://www.brianbondy.com/blog/id/100/">reason</a> you need to change those settings.</p>
+<ul>
+<li><strong>Interactive user:</strong> If you need to run interactive tests, e.g. UI tests, then you need to make sure a user is logged in. Use <a href="http://technet.microsoft.com/en-us/sysinternals/bb963905.aspx">Autologon</a> to automatically log your user in when the computer starts while still maintaining password security.</li>
+<li><strong>Windows 8 switch to desktop:</strong> If you are on Windows 8 you need to make sure that the desktop is <a href="http://www.7tutorials.com/how-boot-desktop-windows-8-skip-start-screen">available</a> for interactive applications to execute on.</li>
+<li><strong>Screen saver:</strong> In order to prevent any interactive tests from failing due to a <a href="http://windows.microsoft.com/en-nz/windows-vista/turn-your-screen-saver-on-or-off">screensaver</a> or the <a href="http://answers.microsoft.com/en-us/windows/forum/windows_7-security/disable-automatic-lock-with-windows-7/daef8f0a-810f-46e8-9420-3c32c4bd6479">automatic locking of the desktop</a> both those features need to be turned off. </li>
+<li><strong>Windows error reporting:</strong> Any tests that run on the desktop may hang eternally if the application under tests fails and displays the Windows Error Reporting (WER) dialog. In order to prevent this from happening <a href="http://4sysops.com/archives/how-to-disable-windows-error-reporting/">WER should be disabled</a>. The most efficient way of doing this is to use the group policy controls to disable the following elements:<ul>
+<li>In <code>Computer Configuration\Administrative Templates\System\Internet Communication Management\Internet Communication settings</code> enable the setting: <code>Turn off Windows Error Reporting</code>.</li>
+<li>In <code>Computer Configuration\Administrative Templates\Windows Components\Windows Error Reporting</code> enable the settings <code>Disable Windows error reporting</code> and <code>Prevent display of the user interface for critical errors</code>, and disable the setting <code>Display error notification</code>.</li>
+</ul>
+</li>
+<li><strong>Automatic updates:</strong> Automatic updates can be disabled because they will never be deployed due to the fact that the machine is reset after each test.</li>
+</ul>
+<h3 id="configuring-sherlock">Configuring Sherlock</h3>
+<p>Once the operating system is configured <a href="/projects/sherlock.html">Sherlock</a> can be installed and configured. </p>
+<ul>
+<li>Unzip the <strong>service.zip</strong> package into the <code>c:\sherlock</code> directory.</li>
+<li>Copy the XML file containing the public key used to sign the manifests to the virtual machine and place it in the <code>c:\sherlock</code> directory.</li>
+<li>Open the configuration file (<code>Sherlock.Service.exe.config</code>) and update the following settings:<ul>
+<li><strong>ApplicationName:</strong> The name of the application for which updates should be tracked, in this case that is: <code>Sherlock.Service.Executor.exe</code>.</li>
+<li><strong>UpdateManifestUri:</strong> The URL of the manifest file, in this case: <code>http:\\myhostmachine\appupdate\executorservice.manifest</code></li>
+<li><strong>ManifestPublicKeyFile:</strong> The path to the XML file containing the public key section of the manifest signing key, e.g. <code>C:\sherlock\manifestsigningkey.public.xml</code></li>
+</ul>
+</li>
+<li>Set the update service to start automatically when the computer starts. This can be done as an actual service (in case no interactive tests will be executed) or by automatically starting the application when the user logs on to windows (in case interactive tests need to be executed).</li>
+<li>The last step is to let the executor controller through the firewall. For this create an inbound rule that allows <code>c:\ProgramData\Sherlock\Sherlock.Service.Executor\{VERSION}\Sherlock.Service.Executor.exe</code> to connect to all types of protocols. Normally only Domain and private networks should be sufficient.</li>
+</ul>
+<h3 id="testing">Testing</h3>
+<p>Once the operating system and Sherlock have been configured it is sensible to test the configurations to make sure it all works. In order to do this take the following steps:</p>
+<ul>
+<li>Restart the virtual machine. Once the machine starts up it should (depending on your configuration)<ul>
+<li>Automatically log on the test user</li>
+<li>On windows 8 switch to the desktop</li>
+<li>Start the Sherlock update service. The service should download the latest version of the executor controller and start it. You can verify this by looking at the logs which can be found in <code>c:\programdata\sherlock\sherlock.service\{VERSION}\logs</code> and <code>c:\programdata\sherlock\sherlock.service.executor\{VERSION}\logs</code> for the update service and the executor controller respectively.</li>
+</ul>
+</li>
+<li>After both applications have started stop them both by stopping the update service (<code>Sherlock.Service</code>).</li>
+<li>Once the applications have been stopped remove the data from the directory <code>c:\ProgramData\Sherlock</code>.</li>
+<li>Shut down the machine.</li>
+<li>Take a <a href="http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/16/managing-snapshots-with-hyper-v.aspx">snapshot</a> of the current state of the virtual machine and give it a sensible name.</li>
+</ul>
+<h3 id="host-configuration">Host configuration</h3>
+<p>Finally the last step in the configuration of a new test environment is to register the environment with Sherlock through the management website.</p>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -504,49 +615,6 @@ After recovering from the jitters for a bit I had a second attempt at top landin
     <div id="post-header">
         <h2>
             
-                <a href='/posts/2013-12-04_Nuclei-Release-V0700.html'>Nuclei release - V0.7.0.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, December 04, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/nuclei.html">Nuclei</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.0.0">V0.7.0.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release adds support for grouping timing results based on their logical area.</p>
-<pre class="highlight"><code class="hljs cs"><span class="hljs-keyword">var</span> group1 = <span class="hljs-keyword">new</span> TimingGroup(); 
-<span class="hljs-keyword">using</span> (Profiler.Measure(group1, <span class="hljs-string">"My first timing group"</span>))
-{
-    <span class="hljs-keyword">var</span> group2 = <span class="hljs-keyword">new</span> TimingGroup();
-    <span class="hljs-keyword">using</span> (Profiler.Measure(
-        group2, 
-        <span class="hljs-string">"This timing is not a child of the first one"</span>))
-    {
-        <span class="hljs-comment">// Do stuff here ...</span>
-    }
-
-    <span class="hljs-keyword">using</span> (Profiler.Measure(
-        group1, 
-        <span class="hljs-string">"This timing is a child of the first one"</span>))
-    {
-        <span class="hljs-comment">// Do stuff here ...</span>
-    }
-}
-</code></pre>
- 
-    </div>
-</div>
-    </div>
-
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
                 <a href='/posts/2013-12-04_Regression-testing-with-Sherlock.html'>Regression testing with Sherlock</a>
             
         </h2>
@@ -625,58 +693,39 @@ After recovering from the jitters for a bit I had a second attempt at top landin
     <div id="post-header">
         <h2>
             
-                <a href='/posts/2013-12-03_Setting-up-nAnicitus.html'>Setting up nAnicitus</a>
+                <a href='/posts/2013-12-04_Nuclei-Release-V0700.html'>Nuclei release - V0.7.0.0</a>
             
         </h2>
         <div id="post-meta">
             <p>
-                Tuesday, December 03, 2013 | Posted in
+                Wednesday, December 04, 2013 | Posted in
                 
-                    <a id="post-category" href="/tags/nanicitus.html">nAnicitus</a>
-                
-                    <a id="post-category" href="/tags/symbol-server.html">Symbol server</a>
-                
-                    <a id="post-category" href="/tags/symstore.html">SymStore</a>
-                
-                    <a id="post-category" href="/tags/pdb.html">PDB</a>
+                    <a id="post-category" href="/tags/nuclei.html">Nuclei</a>
                 
             </p>
         </div>
     </div>
     <div id="post-content">
-        <p>In this post I will explain how to install and configure the <a href="/projects/nanicitus.html">nAnicitus</a> windows service. nAnicitus is a windows service that acts as a gatekeeper for the <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx">SymStore</a> application. SymStore provides a relatively simple way to create a local / private <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms680693%28v=vs.85%29.aspx">symbol server</a>.</p>
-<p>This statement should bring up a few questions, cunning questions like:</p>
-<ol>
-<li>Why would a development team even need a symbol server?<ul>
-<li>The PDB files which are produced as the result of a build are just as unique as assemblies or executables. Each assembly has <a href="http://www.wintellect.com/blogs/jrobbins/pdb-files-what-every-developer-must-know">one specific PDB</a> file to which it is linked via a GUID. Each time an assembly is build a new GUID is embedded, even if the source code has not changed. This means that in order to debug a given assembly for which you don&#39;t have the source code, which can happen if you debug other peoples libraries or if you are debugging a crash dump, then you will need the linked PDB file. Hence in order to enable debugging of releases one has to either place the PDB in the same location as the binaries or one has to store the PDB files in a symbol server.</li>
-</ul>
-</li>
-<li>Why would a development team not use SymStore directly?<ul>
-<li>The disadvantage of SymStore is that it is not capable of processing <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff558851(v=vs.85).aspx">multiple PDB files at the same time</a>, i.e. it should really only be called by one user at the time. By providing a windows service that synchronizes the access to the SymStore application it is possible for multiple users to add symbols to the symbol server without having to worry about the integrity of the symbol server files.</li>
-</ul>
-</li>
-</ol>
-<p>Before we continue with the installation of nAnicitus lets have a quick look at how nAnicitus works. </p>
-<ol>
-<li>The user creates a <a href="http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-symbol-package">NuGet symbol package</a> and places that in a pre-configured upload directory.</li>
-<li>nAnicitus unpacks the symbol package and extracts the PDB files and the source files.</li>
-<li>For each PDB file it is determined which source files were used to create it. Based on that information a <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms680641%28v=vs.85%29.aspx">symbol stream</a> is created and inserted into the PDB file which points to the source server path for the source files belonging to the PDB file.</li>
-<li>The PDB files are uploaded via <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx">SymStore</a>.</li>
-<li>The source files are uploaded to the source server path.</li>
-</ol>
-<p>Before installing nAnicitus it is necessary to install the <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/gg463009.aspx">debugging tools for windows</a>. Make sure to install the complete set of tools so that you get all the symbol server tools as well. Once the the debugging tools are installed you can <a href="https://github.com/pvandervelde/nAnicitus/releases">download</a> and unzip the latest version of nAnicitus. </p>
-<p>The next step is to update the configuration file with the directory and UNC paths:</p>
-<ul>
-<li><strong>DebuggingToolsDirectory:</strong> The debugging tools directory (e.g. <code>c:\Program Files (x86)\Windows Kits\8.0\Debuggers\x64</code>). This path may be left out if it is in the default location (as given here).</li>
-<li><strong>SourceIndexUncPath:</strong> The UNC path to the directory where the indexed sources will be placed (e.g. <code>\\MyServer\sources</code>).</li>
-<li><strong>SymbolsIndexUncPath:</strong> The UNC path to the directory where the indexed symbols (i.e. PDBs) will be placed (e.g. <code>\\MyServer\symbols</code>).</li>
-<li><strong>ProcessedPackagesPath:</strong> The directory where the NuGet symbol packages will be dropped after they are processed. The NuGet symbol packages are saved in this directory so that it is possible to reprocess the packages if for instance the location of the source path changes, e.g. after switching to a new server.</li>
-<li><strong>UploadPath:</strong> The directory where the NuGet symbol packages are placed for nAnicitus to process.</li>
-</ul>
-<p>Finally to install the application as a windows service, open a command line window with administrative permissions, navigate to the nAnicitus install directory and execute the following command:</p>
-<pre class="highlight"><code class="hljs cmake">    Nanicitus.Service <span class="hljs-keyword">install</span>
-</code></pre><p>Once the service is installed use the normal windows services control to change the properties of the service.</p>
-<p>And now you should have a working symbol server! </p>
+        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.0.0">V0.7.0.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release adds support for grouping timing results based on their logical area.</p>
+<pre class="highlight"><code class="hljs cs"><span class="hljs-keyword">var</span> group1 = <span class="hljs-keyword">new</span> TimingGroup(); 
+<span class="hljs-keyword">using</span> (Profiler.Measure(group1, <span class="hljs-string">"My first timing group"</span>))
+{
+    <span class="hljs-keyword">var</span> group2 = <span class="hljs-keyword">new</span> TimingGroup();
+    <span class="hljs-keyword">using</span> (Profiler.Measure(
+        group2, 
+        <span class="hljs-string">"This timing is not a child of the first one"</span>))
+    {
+        <span class="hljs-comment">// Do stuff here ...</span>
+    }
+
+    <span class="hljs-keyword">using</span> (Profiler.Measure(
+        group1, 
+        <span class="hljs-string">"This timing is a child of the first one"</span>))
+    {
+        <span class="hljs-comment">// Do stuff here ...</span>
+    }
+}
+</code></pre>
  
     </div>
 </div>
@@ -734,7 +783,7 @@ After recovering from the jitters for a bit I had a second attempt at top landin
             <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
             from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Thursday, October 02, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Monday, November 10, 2014.</p>
     </div>
 
     <!-- jQuery -->
