@@ -85,6 +85,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2014-11-30_nBuildKit-release-V041.html">nBuildKit release - V0.4.1</a></li>
+                    
                         <li><a href="/posts/2014-11-10_Creating-azure-vm-images-with-powershell.html">Creating Azure VM images with Powershell</a></li>
                     
                         <li><a href="/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html">Building and delivering nBuildKit with AppVeyor</a></li>
@@ -103,8 +105,6 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2014-05-28_Nuclei-release-V080.html">Nuclei release - V0.8.0</a></li>
                     
-                        <li><a href="/posts/2014-05-23_Improvements-to-the-site.html">Improvements to the site</a></li>
-                    
                 </ul>
             </div>
             <div id="sbox3">
@@ -118,7 +118,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         AppVeyor
                     </a>
                 
-                    <a href="/tags/azure.html" style="font-size: 120.81448319328996%">
+                    <a href="/tags/azure.html" style="font-size: 126.26495350371935%">
                         Azure
                     </a>
                 
@@ -182,7 +182,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Paragliding
                     </a>
                 
-                    <a href="/tags/powershell.html" style="font-size: 100%">
+                    <a href="/tags/powershell.html" style="font-size: 113.13247675185968%">
                         Powershell
                     </a>
                 
@@ -262,7 +262,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         nAnicitus
                     </a>
                 
-                    <a href="/tags/nbuildkit.html" style="font-size: 126.26495350371935%">
+                    <a href="/tags/nbuildkit.html" style="font-size: 130.49266672559813%">
                         nBuildKit
                     </a>
                 
@@ -274,6 +274,30 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-12-21_Nuclei-Release-V0710.html'>Nuclei release - V0.7.1.0</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Saturday, December 21, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/nuclei.html">Nuclei</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.1.0">V0.7.1.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release fixes issue <a href="https://github.com/pvandervelde/Nuclei/issues/9">#9</a>.</p>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -688,49 +712,6 @@ After recovering from the jitters for a bit I had a second attempt at top landin
 </div>
     </div>
 
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-12-04_Nuclei-Release-V0700.html'>Nuclei release - V0.7.0.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, December 04, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/nuclei.html">Nuclei</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.0.0">V0.7.0.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release adds support for grouping timing results based on their logical area.</p>
-<pre class="highlight"><code class="hljs cs"><span class="hljs-keyword">var</span> group1 = <span class="hljs-keyword">new</span> TimingGroup(); 
-<span class="hljs-keyword">using</span> (Profiler.Measure(group1, <span class="hljs-string">"My first timing group"</span>))
-{
-    <span class="hljs-keyword">var</span> group2 = <span class="hljs-keyword">new</span> TimingGroup();
-    <span class="hljs-keyword">using</span> (Profiler.Measure(
-        group2, 
-        <span class="hljs-string">"This timing is not a child of the first one"</span>))
-    {
-        <span class="hljs-comment">// Do stuff here ...</span>
-    }
-
-    <span class="hljs-keyword">using</span> (Profiler.Measure(
-        group1, 
-        <span class="hljs-string">"This timing is a child of the first one"</span>))
-    {
-        <span class="hljs-comment">// Do stuff here ...</span>
-    }
-}
-</code></pre>
- 
-    </div>
-</div>
-    </div>
-
 
 <!-- Page Listing -->
 
@@ -783,7 +764,7 @@ After recovering from the jitters for a bit I had a second attempt at top landin
             <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
             from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Monday, November 10, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Sunday, November 30, 2014.</p>
     </div>
 
     <!-- jQuery -->

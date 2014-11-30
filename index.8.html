@@ -85,6 +85,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2014-11-30_nBuildKit-release-V041.html">nBuildKit release - V0.4.1</a></li>
+                    
                         <li><a href="/posts/2014-11-10_Creating-azure-vm-images-with-powershell.html">Creating Azure VM images with Powershell</a></li>
                     
                         <li><a href="/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html">Building and delivering nBuildKit with AppVeyor</a></li>
@@ -103,8 +105,6 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                     
                         <li><a href="/posts/2014-05-28_Nuclei-release-V080.html">Nuclei release - V0.8.0</a></li>
                     
-                        <li><a href="/posts/2014-05-23_Improvements-to-the-site.html">Improvements to the site</a></li>
-                    
                 </ul>
             </div>
             <div id="sbox3">
@@ -118,7 +118,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         AppVeyor
                     </a>
                 
-                    <a href="/tags/azure.html" style="font-size: 120.81448319328996%">
+                    <a href="/tags/azure.html" style="font-size: 126.26495350371935%">
                         Azure
                     </a>
                 
@@ -182,7 +182,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         Paragliding
                     </a>
                 
-                    <a href="/tags/powershell.html" style="font-size: 100%">
+                    <a href="/tags/powershell.html" style="font-size: 113.13247675185968%">
                         Powershell
                     </a>
                 
@@ -262,7 +262,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         nAnicitus
                     </a>
                 
-                    <a href="/tags/nbuildkit.html" style="font-size: 126.26495350371935%">
+                    <a href="/tags/nbuildkit.html" style="font-size: 130.49266672559813%">
                         nBuildKit
                     </a>
                 
@@ -274,6 +274,57 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-09-26_Nuclei-Release-v0650.html'>Nuclei release - V0.6.5.0</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Thursday, September 26, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/nuclei.html">Nuclei</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.6.5.0">V0.6.5.0</a> of the <a href="/projects/nuclei.html">Nuclei</a> library has been released. This release adds an option to allow the user to select which
+types of channels the communication layer is allowed to use. The communication layer can be allowed to use TCP/IP channels, named pipe channels or both.</p>
+<p>In the previous versions in the constructor of the <code>CommunicationModule</code> needed to be provided with a 
+list of <a href="https://github.com/pvandervelde/Nuclei/wiki/Nuclei.Communication#communicationsubject">communication subjects</a> and a flag indicating if <a href="https://github.com/pvandervelde/Nuclei/wiki/Nuclei.Communication#endpoints-and-their-discovery">channel discovery</a> was allowed.</p>
+<pre class="highlight"><code class="hljs cs"><span class="hljs-keyword">var</span> builder = <span class="hljs-keyword">new</span> ContainerBuilder(); 
+builder.RegisterModule(
+    <span class="hljs-keyword">new</span> CommunicationModule(
+        <span class="hljs-keyword">new</span> List&lt;CommunicationSubject&gt;
+            {
+                CommunicationSubjects.Dataset,
+            },
+        <span class="hljs-keyword">false</span>));
+</code></pre>
+<p>In V0.6.5.0 an extra parameter needs to be provided which indicates which types of channel the communication layer is allowed to use to communicate with other instances. The allowable options are <code>ChannelType.NamedPipe</code> and <code>ChannelType.TcpIP</code>.</p>
+<pre class="highlight"><code class="hljs cs"><span class="hljs-keyword">var</span> builder = <span class="hljs-keyword">new</span> ContainerBuilder();
+builder.RegisterModule(
+    <span class="hljs-keyword">new</span> CommunicationModule(
+        <span class="hljs-keyword">new</span> List&lt;CommunicationSubject&gt;
+            {
+                CommunicationSubjects.Dataset,
+            },
+        <span class="hljs-keyword">new</span>[]
+            {
+                ChannelType.NamedPipe,
+                ChannelType.TcpIP,
+            }, 
+        <span class="hljs-keyword">false</span>));
+</code></pre>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -459,35 +510,6 @@ projects subdirectories and then sorts them by date. The <em>recent</em> section
 </div>
     </div>
 
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-09-14_Sherlock-Release-v0430.html'>Sherlock release - V0.4.3.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Saturday, September 14, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.3.0">V0.4.3.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides several bug fixes for:</p>
-<ul>
-<li>The console application: Changed the way the REST URLs are constructed so that it works if the web service on a sub-part of a domain, e.g. <code>http://myserver/sherlock</code> works now</li>
-<li>The web service: Added Trace.Write statements for ease of debugging</li>
-<li>The windows service: Fixed a dead-lock bug in the shut-down process and linked all processes via a Windows Job Object to ensure that all child processes are terminated if the service is terminated.</li>
-</ul>
- 
-    </div>
-</div>
-    </div>
-
 
 <!-- Page Listing -->
 
@@ -540,7 +562,7 @@ projects subdirectories and then sorts them by date. The <em>recent</em> section
             <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
             from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Monday, November 10, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Sunday, November 30, 2014.</p>
     </div>
 
     <!-- jQuery -->

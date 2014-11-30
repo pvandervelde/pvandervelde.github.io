@@ -3,13 +3,24 @@
     <title>Mind Vortex</title>
     <link href="http://www.petrikvandervelde.nl/atom.xml" rel="self"/>
     <link href="http://www.petrikvandervelde.nl"/>
-    <updated>2014-11-10T09:23:00.353Z</updated>
+    <updated>2014-11-30T07:08:16.761Z</updated>
     <id>http://www.petrikvandervelde.nl</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>nBuildKit release - V0.4.1</title>
+            <link href="http://www.petrikvandervelde.nl/posts/2014-11-30_nBuildKit-release-V041.html"/>
+            <updated>2014-11-30T00:00:00.000Z</updated>
+            <id>http://www.petrikvandervelde.nl/posts/2014-11-30_nBuildKit-release-V041.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/releases/tag/0.4.1&quot;&gt;V0.4.1&lt;/a&gt; of the &lt;a href=&quot;/projects/nbuildkit.html&quot;&gt;nBuildKit&lt;/a&gt; build library has been released. &lt;/p&gt;
+&lt;p&gt;This release introduces the ability to &lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/44&quot;&gt;mix custom build steps&lt;/a&gt; with the default provided ones in &lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/47&quot;&gt;any order&lt;/a&gt; that is desired. On top of that additional changes were made that now make it possible to build &lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/46&quot;&gt;multiple Visual Studio solutions&lt;/a&gt; in a specific order. &lt;/p&gt;
+&lt;p&gt;Finally the user can provide one or more scripts that will be called if the build or the deploy process &lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/48&quot;&gt;fails&lt;/a&gt;. These scripts can be used to clean-up resources or provide notification on build failure. Do note that any failure in these scripts will lead to the immediate termination of the process.&lt;/p&gt;
+</content>
+        </entry>
     
         <entry>
             <title>Creating Azure VM images with Powershell</title>
