@@ -3,13 +3,52 @@
     <title>Mind Vortex</title>
     <link href="http://www.petrikvandervelde.nl/atom.xml" rel="self"/>
     <link href="http://www.petrikvandervelde.nl"/>
-    <updated>2014-11-30T07:08:16.761Z</updated>
+    <updated>2015-05-23T11:16:36.736Z</updated>
     <id>http://www.petrikvandervelde.nl</id>
     <author>
         <name>Petrik van der Velde</name>
         <email></email>
     </author>
 
+    
+        <entry>
+            <title>nBuildKit release - V0.5.1</title>
+            <link href="http://www.petrikvandervelde.nl/posts/2015-05-23_nBuildKit-release-V051.html"/>
+            <updated>2015-05-23T00:00:00.000Z</updated>
+            <id>http://www.petrikvandervelde.nl/posts/2015-05-23_nBuildKit-release-V051.html</id>
+            <content type="html">&lt;p&gt;Version &lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/releases/tag/0.5.1&quot;&gt;V0.5.1&lt;/a&gt; of the &lt;a href=&quot;/projects/nbuildkit.html&quot;&gt;nBuildKit&lt;/a&gt; build library has been released. &lt;/p&gt;
+&lt;p&gt;This release adds the following features&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/91&quot;&gt;91&lt;/a&gt;: MsBuild.Projects: Common.props should do a more extensive search for settings.props&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/90&quot;&gt;90&lt;/a&gt;: MsBuild: Allow pushing symbols via NuGet enhancement&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/89&quot;&gt;89&lt;/a&gt;: MsBuild: Allow assembly versioning to be more custom defined.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/87&quot;&gt;87&lt;/a&gt;: MsBuild: Rename template files to have normal extension&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/86&quot;&gt;86&lt;/a&gt;: MsBuild: Rename the DirMsBuildShared, DirMsBuildExtensions and DirMsBuildTemplates properties enhancement&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/85&quot;&gt;85&lt;/a&gt;: Unable to build projects which have a mixture of target frameworks&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/83&quot;&gt;83&lt;/a&gt;: MsBuild: Allow PreCleanScripts and PreCompilationScripts to define their own properties&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/82&quot;&gt;82&lt;/a&gt;: MsBuild: Update the Sample custom version files to match the current version gathering capabilities&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/80&quot;&gt;80&lt;/a&gt;: MsBuild: Combine top-level build.msbuild, deploy.msbuild and shared.locatenbuildkit.msbuild&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/78&quot;&gt;78&lt;/a&gt;: MsBuild: Automatically include NuGet dependencies if nuspec is in same directory as project&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/72&quot;&gt;72&lt;/a&gt;: MsBuild: Define default directory paths only in settings.props file&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/68&quot;&gt;68&lt;/a&gt;: Improve inline documentation of settings.props file&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/66&quot;&gt;66&lt;/a&gt;: MsBuild: Provide initialization/installation scripts for an empty workspace&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/55&quot;&gt;55&lt;/a&gt;: MsBuild: Allow assembly copyright to be more custom defined&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/22&quot;&gt;22&lt;/a&gt;: MsBuild: Allow each file to have their own base directory when creating ZIP archives&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/19&quot;&gt;19&lt;/a&gt;: MsBuild.Projects: Provide scripts for Visual Basic projects&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And fixes the following issues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/92&quot;&gt;92&lt;/a&gt;: MsBuild.Projects: GetVersion, VcsInfo and Generate files also run when they&amp;#39;re disabled in the settings.props file&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/88&quot;&gt;88&lt;/a&gt;: MsBuild.Projects: Excessive NuGet restore of global packages&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/84&quot;&gt;84&lt;/a&gt;: Not compatible with ncrunch&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/54&quot;&gt;54&lt;/a&gt;: MsBuild: First space trimmed from release note content&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Finally the following tasks were completed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pvandervelde/nBuildKit/issues/7&quot;&gt;7&lt;/a&gt;: MsBuild: Set up tests&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        </entry>
     
         <entry>
             <title>nBuildKit release - V0.4.1</title>

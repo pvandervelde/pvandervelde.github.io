@@ -85,6 +85,8 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                 <h2>Recent</h2>
                 <ul>
                     
+                        <li><a href="/posts/2015-05-23_nBuildKit-release-V051.html">nBuildKit release - V0.5.1</a></li>
+                    
                         <li><a href="/posts/2014-11-30_nBuildKit-release-V041.html">nBuildKit release - V0.4.1</a></li>
                     
                         <li><a href="/posts/2014-11-10_Creating-azure-vm-images-with-powershell.html">Creating Azure VM images with Powershell</a></li>
@@ -102,8 +104,6 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         <li><a href="/posts/2014-06-16_nBuildKit-release-V015.html">nBuildKit release - V0.1.5</a></li>
                     
                         <li><a href="/projects/nbuildkit.html">nBuildKit</a></li>
-                    
-                        <li><a href="/posts/2014-05-28_Nuclei-release-V080.html">Nuclei release - V0.8.0</a></li>
                     
                 </ul>
             </div>
@@ -262,7 +262,7 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
                         nAnicitus
                     </a>
                 
-                    <a href="/tags/nbuildkit.html" style="font-size: 130.49266672559813%">
+                    <a href="/tags/nbuildkit.html" style="font-size: 133.94695994514964%">
                         nBuildKit
                     </a>
                 
@@ -274,6 +274,30 @@ Rock climber, and future paragliding pilot. Developer of <a href="http://pvander
         </div>
         <div id="content">
             
+    <div id="post-spacer">
+    <div id="post">
+    <div id="post-header">
+        <h2>
+            
+                <a href='/posts/2013-12-22_nAnicitus-Release-V0140.html'>nAnicitus release - V0.1.4.0</a>
+            
+        </h2>
+        <div id="post-meta">
+            <p>
+                Sunday, December 22, 2013 | Posted in
+                
+                    <a id="post-category" href="/tags/nanicitus.html">nAnicitus</a>
+                
+            </p>
+        </div>
+    </div>
+    <div id="post-content">
+        <p>Version <a href="https://github.com/pvandervelde/nAnicitus/releases/tag/V0.1.4.0">V0.1.4.0</a> of the <a href="/projects/nanicitus.html">nAnicitus</a> symbol store application has been released. This release fixes issue <a href="https://github.com/pvandervelde/nAnicitus/issues/1">#1</a>. If a package is locked by the operating system, e.g. because the file write has not completed yet, then nAnicitus will try to load the package 3 times, waiting 5 seconds between each try. On top of that if the loading of a package fails then the nAnicitus will retry loading the package 3 times before giving up.</p>
+ 
+    </div>
+</div>
+    </div>
+
     <div id="post-spacer">
     <div id="post">
     <div id="post-header">
@@ -634,84 +658,6 @@ After recovering from the jitters for a bit I had a second attempt at top landin
 </div>
     </div>
 
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-12-04_Regression-testing-with-Sherlock.html'>Regression testing with Sherlock</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, December 04, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-                    <a id="post-category" href="/tags/regression-test.html">Regression test</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Over a series of posts I hope to explain how to set up and use the <a href="/projects/sherlock.html">Sherlock</a> test environment system. The idea is to follow the set up procedure I used both at home for the <a href="/projects/apollo.html">Apollo</a> project and the proof of concept I am working on at my work place. But first lets start with a short explanation of what Sherlock is and what it does. </p>
-<h3 id="what-is-sherlock">What is Sherlock</h3>
-<p>Sherlock consists of a set of applications and services that provide test environment organisation and automatic execution of a set of tests on one or more test environments. The organisation part consists of:</p>
-<ul>
-<li>Keeping track of which environments exist, which are available for testing and which are not, e.g. for maintenance reasons.</li>
-<li>What operating system is loaded onto each environment.</li>
-<li>Which applications are pre-loaded onto each environment.</li>
-<li>Relationships between virtual machines and their (physical) host machine. </li>
-</ul>
-<p>The test execution part consists of:</p>
-<ul>
-<li>Selection of the most suitable environment for a test based on the desired combination of operating system and available applications.</li>
-<li>Preparing of the environment for test. This includes loading test environments, i.e. waking up physical test environments through the <a href="http://en.wikipedia.org/wiki/Wake-on-LAN">Wake-on-LAN</a> approach and starting virtual machines, and sending over the test data, e.g. installer files.</li>
-<li>Triggering test execution on the active test environment.</li>
-<li>Processing test status and test report information.</li>
-<li>Post test environment clean-up. This currently only includes resetting virtual machine disks back to the pre-test state.</li>
-<li>Accumulation of test events and generation of the final test report.</li>
-</ul>
-<p>In general the Sherlock system will consist of at least one <a href="http://en.wikipedia.org/wiki/Hyper-V">Hyper-V</a> host machine and a set of one or more Hyper-V virtual machines. In this arrangement the host machine handles the test organisation and part of the test execution, while the virtual machines serve as test environments. </p>
-<p>While it is possible for Sherlock to execute tests on physical machines it is advised to only execute on virtual machines because of the inability to reset a physical machine back to the pre-test state. Virtual machines on the other hand can easily be restored to the pre-test state through the use of snapshots.</p>
-<h3 id="the-life-of-a-test">The life of a test</h3>
-<p>When executing a test with Sherlock the following steps are present: </p>
-<ol>
-<li>The user creates a test configuration file which describes all requirements for the test environment, which steps should be executed and where the report should be placed.</li>
-<li>The user registers the test with Sherlock via the console application.</li>
-<li>Some time after the registration of the test completed the Sherlock host service loads test information and selects one or more suitable environments to execute the test steps on. The time between the completion of the test registration and the starting of the test execution depends on whether suitable test environments are available and how busy they are.</li>
-<li>The selected test environments are prepared for the test execution. This preparation includes activating the environment and transferring the test data for each environment (e.g. installer files etc.).</li>
-<li>Each environment executes the desired test steps and reports back on the success or failure of each test step.</li>
-<li>Once an environment has completed its test steps it will report the completion the test, upon which the host service will terminate the environment and restore it to the original state.</li>
-<li>Once all environments have completed their test steps the test is marked as completed and the test report is compiled and placed in the predetermined location.  </li>
-</ol>
-<h3 id="pre-requisites">Pre-requisites</h3>
-<p>The first pre-requisite in the configuration is the <a href="https://github.com/pvandervelde/Sherlock/releases">latest release</a> of sherlock. A release consists of a number of ZIP packages including:</p>
-<ul>
-<li><strong>console.zip</strong> - Contains the binaries and configuration files for the console application which is used to register a test.</li>
-<li><strong>sherlock.web.api.zip</strong> - The web service that will store information about a new test in the database.</li>
-<li><strong>sherlock.web.intranet.zip</strong> - The management web site that can be used to add or remove test environments.</li>
-<li><strong>service.zip</strong> - The windows service that is used to run the <em>master controller</em> or the <em>executor controller</em>.</li>
-<li><strong>service.master.zip</strong> - The master controller application which handles the scheduling of tests, loading and unloading of test environments and processing of the test reports. </li>
-<li><strong>service.executor.zip</strong> - The executor controller application which controls the execution of a test on a test environment.</li>
-<li><strong>sql.zip</strong> - The SQL change scripts for the database.</li>
-</ul>
-<p>The second pre-requisite is the availability of a physical machine on which a Windows version with <a href="http://en.wikipedia.org/wiki/Hyper-V#System_requirements_and_specifications">Hyper-V</a> can be installed.</p>
-<h3 id="planned-posts-">Planned posts:</h3>
-<p>The next following posts will describe:</p>
-<ol>
-<li>How to set up the <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">Hyper-V host machine</a>.</li>
-<li>How to prepare a virtual machine for use as a <a href="/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html">testing environment</a>.</li>
-<li>How to <a href="/posts/2013-12-24_Setting-up-Sherlock-verification.html">verify</a>  that all the environments have been configured correctly.</li>
-<li>How to integrate with a <a href="/posts/2014-01-13_Integrating-Sherlock-with-a-build-server.html">build server</a>. This will discuss build jobs, build scripts and test configuration.</li>
-<li>A description on how I used Sherlock to <a href="/posts/2014-02-18_Regression-testing-console-applications.html">perform integration tests</a> on the console application of <a href="/projects/apollo.html">Apollo</a>.</li>
-<li>And a description on how I used Sherlock to <a href="/posts/2014-03-31_Regression-testing-gui-applications.html">perform integration tests</a> on a WPF application of <a href="/projects/apollo.html">Apollo</a>.</li>
-</ol>
- 
-    </div>
-</div>
-    </div>
-
 
 <!-- Page Listing -->
 
@@ -764,7 +710,7 @@ After recovering from the jitters for a bit I had a second attempt at top landin
             <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
             from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
         </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Sunday, November 30, 2014.</p>
+        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Saturday, May 23, 2015.</p>
     </div>
 
     <!-- jQuery -->
