@@ -1,579 +1,582 @@
+
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<head> 
-    <!-- Standard Meta -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width" />
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-    <!-- Site Properities -->
-    <title>Home | Mind Vortex</title>
-    <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
-    <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, rock climbing, paragliding" />
-    <meta name="author" content="Petrik van der Velde" />
+    <title>Mind vortex</title>
+    <meta name="description" content="Welcome!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- DocPad Meta -->
-    <meta name="generator" content="DocPad v6.65.0" />
+    <link type="application/rss+xml" rel="alternate" title="Mind vortex" href="/feed.rss" />
+    <link type="application/atom+xml" rel="alternate" title="Mind vortex" href="/feed.atom" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <!-- DocPad Styles + Our Own -->
-    <style >html.wait {
-	cursor: wait !important;
-	opacity: 0;
-	transition: opacity 0.5s ease;
-}</style><link  rel="stylesheet" href="/vendor/normalize.css" /><link  rel="stylesheet" href="/vendor/h5bp.css" /><link  rel="stylesheet" href="/styles/style.css" /><link  rel="stylesheet" href="/styles/github.css" />
+    <link href="/assets/css/normalize.css" rel="stylesheet" />
+    <link href="/assets/css/h5bp.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/override.css" rel="stylesheet" />
+    <link href="/assets/css/github.css" rel="stylesheet" type="text/css">
 
-    <!-- Icons -->
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="/icons/twister.ico" />
-    
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-</head>
-<body>
-    <!--[if lt IE 7]>
-        <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+
+    <meta name="application-name" content="Mind vortex" />
+    <meta name="msapplication-tooltip" content="Mind vortex" />
+    <meta name="msapplication-starturl" content="/" />
+
+    <meta property="og:title" content="Mind vortex" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/" />
+    <!-- TODO: More social graph meta tags -->
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/highlight.pack.js"></script>
+    <script src="/assets/js/clean-blog.js"></script>
+    <script src="/assets/js/d3.v3.min.js"></script>
+    <script src="/assets/js/trianglify.min.js"></script>
+    <script src="/assets/js/Please-compressed.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="/assets/js/html5shiv.js"></script>
+            <script src="/assets/js/respond.min.js"></script>
     <![endif]-->
-    
-    <div id="header" class="container">
-        <div id="logo">
-            <h1><a href="/">Mind Vortex</a></h1>
-        </div>
-        <div id="menu">
-            <ul>
-                
-                    <li class="active">
-                        
-                            Home
-                        
-                    </li>
-                
-                    <li class="inactive">
-                        
-                            <a href="/projects.html">Projects</a>
-                        
-                    </li>
-                
-                    <li class="inactive">
-                        
-                            <a href="/archives.html">Archives</a>
-                        
-                    </li>
-                
-                    <li class="inactive">
-                        
-                            <a href="/about.html">About</a>
-                        
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
-    <div id="page" class="container">
-        <div id="sidebar">
-            <div id="sbox1">
-                <h2 id="patrick-van-der-velde">Patrick van der Velde</h2>
-<p><img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"> </p>
-<p>Dutch software developer, living, working and playing in New Zealand. 
-Rock climber, and future paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock">Sherlock</a>, 
-<a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects</p>
-<p><a href="/about.html">More ...</a></p>
 
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        <div id="header" class="container">
+            <div id="logo">
+                <h1><a href="/">Mind vortex</a></h1>
             </div>
-            <div id="sbox2">
-                <h2>Recent</h2>
+            <div id="menu">
                 <ul>
-                    
-                        <li><a href="/posts/2015-05-23_nBuildKit-release-V051.html">nBuildKit release - V0.5.1</a></li>
-                    
-                        <li><a href="/posts/2014-11-30_nBuildKit-release-V041.html">nBuildKit release - V0.4.1</a></li>
-                    
-                        <li><a href="/posts/2014-11-10_Creating-azure-vm-images-with-powershell.html">Creating Azure VM images with Powershell</a></li>
-                    
-                        <li><a href="/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html">Building and delivering nBuildKit with AppVeyor</a></li>
-                    
-                        <li><a href="/posts/2014-08-19_nBuildKit-release-V032.html">nBuildKit release - V0.3.2</a></li>
-                    
-                        <li><a href="/posts/2014-07-26_Adding-pagination-with-DocPad.html">Adding pagination with DocPad</a></li>
-                    
-                        <li><a href="/posts/2014-07-24_Blog-archives-by-DocPad.html">Blog archives by DocPad</a></li>
-                    
-                        <li><a href="/posts/2014-07-21_nBuildKit-release-V024.html">nBuildKit release - V0.2.4</a></li>
-                    
-                        <li><a href="/posts/2014-06-16_nBuildKit-release-V015.html">nBuildKit release - V0.1.5</a></li>
-                    
-                        <li><a href="/projects/nbuildkit.html">nBuildKit</a></li>
-                    
+                                <li class="active" >
+                Home
+            </li>
+            <li class="inactive" >
+                <a href="/posts">Archive</a>
+            </li>
+            <li class="inactive" >
+                <a href="/projects">Projects</a>
+            </li>
+            <li class="inactive" >
+                <a href="/about">About</a>
+            </li>
+
                 </ul>
             </div>
-            <div id="sbox3">
-                <h2>Tags</h2>
-                
-                    <a href="/tags/apollo.html" style="font-size: 113.13247675185968%">
-                        Apollo
-                    </a>
-                
-                    <a href="/tags/appveyor.html" style="font-size: 100%">
-                        AppVeyor
-                    </a>
-                
-                    <a href="/tags/azure.html" style="font-size: 126.26495350371935%">
-                        Azure
-                    </a>
-                
-                    <a href="/tags/blog.html" style="font-size: 130.49266672559813%">
-                        Blog
-                    </a>
-                
-                    <a href="/tags/climbing.html" style="font-size: 100%">
-                        Climbing
-                    </a>
-                
-                    <a href="/tags/configuration.html" style="font-size: 100%">
-                        Configuration
-                    </a>
-                
-                    <a href="/tags/console.html" style="font-size: 100%">
-                        Console
-                    </a>
-                
-                    <a href="/tags/continous-integration.html" style="font-size: 113.13247675185968%">
-                        Continous integration
-                    </a>
-                
-                    <a href="/tags/docpad.html" style="font-size: 120.81448319328996%">
-                        DocPad
-                    </a>
-                
-                    <a href="/tags/github.html" style="font-size: 100%">
-                        GitHub
-                    </a>
-                
-                    <a href="/tags/gitversion.html" style="font-size: 100%">
-                        GitVersion
-                    </a>
-                
-                    <a href="/tags/jenkins.html" style="font-size: 130.49266672559813%">
-                        Jenkins
-                    </a>
-                
-                    <a href="/tags/job-template.html" style="font-size: 100%">
-                        Job template
-                    </a>
-                
-                    <a href="/tags/msbuild.html" style="font-size: 100%">
-                        MsBuild
-                    </a>
-                
-                    <a href="/tags/nuclei.html" style="font-size: 150%">
-                        Nuclei
-                    </a>
-                
-                    <a href="/tags/pdb.html" style="font-size: 113.13247675185968%">
-                        PDB
-                    </a>
-                
-                    <a href="/tags/pg2.html" style="font-size: 141.62896638657992%">
-                        PG2
-                    </a>
-                
-                    <a href="/tags/paragliding.html" style="font-size: 136.86752324814032%">
-                        Paragliding
-                    </a>
-                
-                    <a href="/tags/powershell.html" style="font-size: 113.13247675185968%">
-                        Powershell
-                    </a>
-                
-                    <a href="/tags/regression-test.html" style="font-size: 100%">
-                        Regression test
-                    </a>
-                
-                    <a href="/tags/regression-testing.html" style="font-size: 113.13247675185968%">
-                        Regression testing
-                    </a>
-                
-                    <a href="/tags/srcsrv.html" style="font-size: 100%">
-                        SRCSRV
-                    </a>
-                
-                    <a href="/tags/scripting.html" style="font-size: 100%">
-                        Scripting
-                    </a>
-                
-                    <a href="/tags/sherlock.html" style="font-size: 148.59593857014607%">
-                        Sherlock
-                    </a>
-                
-                    <a href="/tags/software-delivery.html" style="font-size: 100%">
-                        Software delivery
-                    </a>
-                
-                    <a href="/tags/source-server.html" style="font-size: 100%">
-                        Source server
-                    </a>
-                
-                    <a href="/tags/symstore.html" style="font-size: 100%">
-                        SymStore
-                    </a>
-                
-                    <a href="/tags/symbol-server.html" style="font-size: 100%">
-                        Symbol server
-                    </a>
-                
-                    <a href="/tags/symbol-stream.html" style="font-size: 100%">
-                        Symbol stream
-                    </a>
-                
-                    <a href="/tags/teamcity.html" style="font-size: 100%">
-                        TeamCity
-                    </a>
-                
-                    <a href="/tags/teststack-white.html" style="font-size: 100%">
-                        TestStack.White
-                    </a>
-                
-                    <a href="/tags/ui-test.html" style="font-size: 100%">
-                        UI test
-                    </a>
-                
-                    <a href="/tags/unc.html" style="font-size: 100%">
-                        UNC
-                    </a>
-                
-                    <a href="/tags/wcf.html" style="font-size: 126.26495350371935%">
-                        WCF
-                    </a>
-                
-                    <a href="/tags/waipapa.html" style="font-size: 100%">
-                        Waipapa
-                    </a>
-                
-                    <a href="/tags/writing.html" style="font-size: 100%">
-                        Writing
-                    </a>
-                
-                    <a href="/tags/nadoni.html" style="font-size: 113.13247675185968%">
-                        nAdoni
-                    </a>
-                
-                    <a href="/tags/nanicitus.html" style="font-size: 130.49266672559813%">
-                        nAnicitus
-                    </a>
-                
-                    <a href="/tags/nbuildkit.html" style="font-size: 133.94695994514964%">
-                        nBuildKit
-                    </a>
-                
-                    <a href="/tags/nrefs.html" style="font-size: 100%">
-                        nRefs
-                    </a>
-                
+        </div>
+
+        <div id="page" class="container">
+            <div id="sidebar">
+                <div id="sbox1">
+                    <h2>Patrick van der Velde</h2>
+
+<p>
+    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+</p>
+<p>
+    Dutch software developer, living, working and playing in New Zealand.
+    Rock climber, and paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock)">Sherlock</a>
+    <a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects
+</p>
+<p>
+    <a href="/about.html">More ...</a>
+</p>
+
+                </div>
+                <div id="sbox2">
+                    <h2>Recent</h2>
+                    <ul class="list-unstyled">
+                            <li><a href="/posts/Updating-blog-to-wyam">Exit Docpad, enter Wyam</a></li>
+                            <li><a href="/posts/nBuildKit-release-V051">nBuildKit release - V0.5.1</a></li>
+                            <li><a href="/posts/nBuildKit-release-V041">nBuildKit release - V0.4.1</a></li>
+                            <li><a href="/posts/Creating-azure-vm-images-with-powershell">Creating Azure VM images with Powershell</a></li>
+                            <li><a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor">Building and delivering nBuildKit with AppVeyor</a></li>
+                            <li><a href="/posts/nBuildKit-release-V032">nBuildKit release - V0.3.2</a></li>
+                            <li><a href="/posts/Adding-pagination-with-DocPad">Adding pagination with DocPad</a></li>
+                            <li><a href="/posts/Blog-archives-by-DocPad">Blog archives by DocPad</a></li>
+                            <li><a href="/posts/nBuildKit-release-V024">nBuildKit release - V0.2.4</a></li>
+                            <li><a href="/posts/nBuildKit-release-V015">nBuildKit release - V0.1.5</a></li>
+                    </ul>
+                </div>
+                <div id="sbox3">
+                    <h2>Tags</h2>
+                    <div>
+                        <ul class="list-unstyled">
+                                <li>
+                                    <a role="button" href="/tags/sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nanicitus" class="btn btn-default btn-sm"> nAnicitus (5)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nadoni" class="btn btn-default btn-sm"> nAdoni (2)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/regression-testing" class="btn btn-default btn-sm"> Regression testing (2)</a>
+                                </li>
+                        </ul>
+                    </div>
+                    <br />
+                    <ul class="pager">
+                        <li class="next">
+                            <a href="/tags">View All Tags &rarr;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="content">
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Updating-blog-to-wyam">Exit Docpad, enter Wyam</a>
+</h2>
+<div id="post-meta">
+    <p>
+Wednesday, 11 January 2017
+ |         Posted in                     <a id="post-category" role="button" href="/tags/blog" class="btn btn-default btn-xs">Blog</a>
+    </p>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>After not having done anything with my blog for over a year I have returned and will once again try
+to make this blogging thing happen. Part of my goals for 2017 is to start advancing my career
+independent from my job. And one part of that goal is to blog about all the things I'm learning.</p>
+<p>For about a year and a half <a href="http://docpad.org/">Docpad</a> has been very helpful in adding content to
+my blog, however as I was trying to automate my blog more and more I came to the conclusion that
+being on a Windows operating system doesn't make dealing with node and NPM any easier. So I figured
+it might make sense to switch to a <a href="">static generator</a> which uses technologies that play better on
+Windows. Enter <a href="https://wyam.io">Wyam</a>, a static generator written in .NET, a technology stack
+I'm very familiar with.</p>
+<h3>Getting started</h3>
+<p>To get started with Wyam I downloaded the latest version and generated a skeleton directory structure
+by running the <code>wyam.exe new --recipe Blog</code> command. Once the skeleton has been created you can
+create the pages by running <code>wyam.exe -r Blog -t CleanBlog</code>, and to create and be able to view
+the pages you can execute <code>wyam -r Blog -t CleanBlog -p</code>. These commands assume that you store
+your blog source in the <code>input</code> directory and that the website pages should be placed in the
+<code>output</code> directory. This however is where the build engineer in me started making
+disapproving sounds so I changed the input and output folders by specifying the appropriate command line
+parameters to make it happy again</p>
+<pre><code>wyam.exe --input src --output build\site -r Blog -t CleanBlog -p
+</code></pre>
+<p>Good that is much more inline with the standard paths used by <a href="/projects/nbuildkit">nBuildKit</a>.
+Another change that needs to be made is where Wyam stores the NuGet packages. Normally Wyam stores
+those in a global location, however I strongly feel that builds should always only write to their
+local workspaces, so lets redirect the packages to a folder that is local to the workspaces</p>
+<pre><code>wyam.exe --input src --output build\site --use-local-packages --packages-path packages -r Blog -t CleanBlog -p
+</code></pre>
+<p>That command line is getting longer but we can make it shorter again by moving some of the
+standard items into the <a href="https://wyam.io/docs/usage/configuration">Wyam configuration file</a>, so
+I created a <code>config.wyam</code> file in the root of the workspace and added the following lines</p>
+<pre><code>// Preprocessor directives
+#recipe Blog
+#theme CleanBlog
+</code></pre>
+<p>And with this the command line to generate the website and start a local webserver is</p>
+<pre><code>wyam.exe --input src --output build\site --use-local-packages --packages-path packages
+</code></pre>
+<h3>Moving the existing content</h3>
+<p>Moving the existing content from the Docpad generated site to the Wyam generated site required a bit
+of work although the initial results were quite easy to achieve. I started off moving the
+post files to the <code>posts</code> directory and updating all the files to be named so that Wyam is able
+to extract the date and time from the file name. In order for that to work Wyam wants the file
+name to follow the naming convention <code>&lt;YEAR&gt;-&lt;MONTH&gt;-&lt;DAY&gt;-&lt;TITLE&gt;.md</code>.</p>
+<p>The next step was to update the front matter in the post files. Wyam would like to see the
+following format:</p>
+<pre><code>Title: &lt;POST_TITLE_GOES_HERE&gt;
+Tags:
+  - &lt;TAG_1&gt;
+  - &lt;TAG_2&gt;
+</code></pre>
+<p>With this done Wyam can generate a website with blog posts with the correct titles and dates. This
+is a good start. Next are the non-post pages, like the <a href="/">home page</a> and the <a href="/projects">project pages</a>.
+These can simply be dropped in the desired directory. Wyam will automatically generate HTML pages
+from any Markdown file and simply copy the other files (like the favicon etc.). Any non-blog post
+pages will show up in the menu bar so for all pages that should not show up in the menu bar you can
+add the <code>ShowInNavBar: false</code> entry in the page front matter like so:</p>
+<pre><code>Title: My page that shouldn't show up in the NavBar
+ShowInNavBar: false
+---
+# Content
+</code></pre>
+<p>Once that was done I created <a href="https://wyam.io/recipes/blog/themes">overrides</a> for</p>
+<ul>
+<li>The page and post footers by creating the <code>_Footer.cshml</code> and <code>_PostFooter.cshtml</code> files. The page
+footer was straight forward but the post footer required some additional work to get the links
+to the previous and next post to function correctly. Fortunately <a href="https://daveaglick.com/">Dave Glick</a>
+was very helpful on the <a href="https://gitter.im/Wyamio/Wyam">gitter</a> page for Wyam and pointed out
+that there are collections that you can iterate over to find out what the previous and
+next posts are.</li>
+</ul>
+<script src="https://gist.github.com/pvandervelde/d2825f2c5d67ab30d15ce179ced4b30f.js"></script>
+<ul>
+<li>The sidebar which contains my little &lsquo;about me&rsquo; blurp.</li>
+<li>The navbar which by default orders pages alphabetically and does not contain a link to the home page.
+In my Docpad blog both those things are not true, so I did a bit of Razor coding and generated the
+navbar items myself</li>
+</ul>
+<script src="https://gist.github.com/pvandervelde/7645c478ae08c94d3716ca8e8ad41c4c.js"></script>
+<p>These changes got most of the pages looking pretty close to what they should be, but yet not quite
+the same as it was.</p>
+<h3>Tweaking</h3>
+<p>If you don't have an existing layout for your blog or you don't mind changing the layout then
+after the previous steps you should have a very nice looking blog that works just fine. However it
+turns out I'm stuborn and specific in the way I want things to look. In this case I wanted my blog
+to not look any different than the existing one does, at least for the time being. So that meant
+I had to do a fair amount of tweaking.</p>
+<p>The first major tweak was to get the sidebar looking like it should. This turned out to be a little
+harder than I expected because it required overriding the <code>_Layout.cshtml</code> page. While this is a
+bigger step than the other overrides it also meant I was able to make the pages look exactly like
+I wanted and I was able to re-use my CSS files.</p>
+<script src="https://gist.github.com/pvandervelde/5e3520e0f150176f529b1972fc2042a7.js"></script>
+<p>One of the more tricky parts was to generate a list of the last 10 posts. Originally I was using
+the list of posts, however because this is the layout page that is used for all pages it might
+well be that some pages are generated before the full post list is available (say hello to the
+<a href="/tags">tags</a> pages). Once again Dave Glick came through and pointed me to the <a href="https://wyam.io/recipes/blog/pipelines">RawPosts</a>
+collection which is generated right at the beginning of the cycle.</p>
+<p>Once the issues with the sidebar were resolved the next step was to show the last five blog posts
+on the home page. By default Wyam will place excepts on the home page with a link to the actual post
+in the post title. However what I wanted was the full post, excluding the comment section. Once again
+the <code>RawPosts</code> collection came to the rescue which allowed me to iterate over the last five posts
+and get their pre-rendered content.</p>
+<script src="https://gist.github.com/pvandervelde/d0d83eb2c636a5d3b63b5bf0cce6029c.js"></script>
+<p>Some additional hacking also allowed me to reuse the <code>_PostHeader.cshtml</code> file for both the posts
+on the home page, for which the title links to the actual post page, and for the post page in which
+the title is just a header.</p>
+<script src="https://gist.github.com/pvandervelde/465c0a2399f135a25e656b0d15c1866a.js"></script>
+<p>With these changes the blog looks (almost) exactly like it used to look except that it is now
+being generated by <a href="https://wyam.io">Wyam</a>. All in all I have to say I'm pretty happy with the result
+and with how easy it was to move from Docpad to Wyam. And as a bonus I understand much more of
+how Wyam works and how my own blog is generated.</p>
+
+                </div>
             </div>
         </div>
-        <div id="content">
-            
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2015-05-23_nBuildKit-release-V051.html'>nBuildKit release - V0.5.1</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Saturday, May 23, 2015 | Posted in
-                
-                    <a id="post-category" href="/tags/nbuildkit.html">nBuildKit</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.5.1">V0.5.1</a> of the <a href="/projects/nbuildkit.html">nBuildKit</a> build library has been released. </p>
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/nBuildKit-release-V051">nBuildKit release - V0.5.1</a>
+</h2>
+<div id="post-meta">
+    <p>
+Saturday, 23 May 2015
+ |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
+    </p>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>Version <a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.5.1">V0.5.1</a> of the <a href="/projects/nbuildkit.html">nBuildKit</a>
+build library has been released.</p>
 <p>This release adds the following features</p>
 <ul>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/91">91</a>: MsBuild.Projects: Common.props should do a more extensive search for settings.props</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/90">90</a>: MsBuild: Allow pushing symbols via NuGet enhancement</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/89">89</a>: MsBuild: Allow assembly versioning to be more custom defined.</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/87">87</a>: MsBuild: Rename template files to have normal extension</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/86">86</a>: MsBuild: Rename the DirMsBuildShared, DirMsBuildExtensions and DirMsBuildTemplates properties enhancement</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/85">85</a>: Unable to build projects which have a mixture of target frameworks</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/83">83</a>: MsBuild: Allow PreCleanScripts and PreCompilationScripts to define their own properties</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/82">82</a>: MsBuild: Update the Sample custom version files to match the current version gathering capabilities</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/80">80</a>: MsBuild: Combine top-level build.msbuild, deploy.msbuild and shared.locatenbuildkit.msbuild</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/78">78</a>: MsBuild: Automatically include NuGet dependencies if nuspec is in same directory as project</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/72">72</a>: MsBuild: Define default directory paths only in settings.props file</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/68">68</a>: Improve inline documentation of settings.props file</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/66">66</a>: MsBuild: Provide initialization/installation scripts for an empty workspace</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/55">55</a>: MsBuild: Allow assembly copyright to be more custom defined</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/22">22</a>: MsBuild: Allow each file to have their own base directory when creating ZIP archives</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/19">19</a>: MsBuild.Projects: Provide scripts for Visual Basic projects</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/91">91</a>: MsBuild.Projects: Common.props should
+do a more extensive search for settings.props</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/90">90</a>: MsBuild: Allow pushing symbols via
+NuGet enhancement</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/89">89</a>: MsBuild: Allow assembly versioning to
+be more custom defined.</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/87">87</a>: MsBuild: Rename template files to have
+normal extension</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/86">86</a>: MsBuild: Rename the DirMsBuildShared,
+DirMsBuildExtensions and DirMsBuildTemplates properties enhancement</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/85">85</a>: Unable to build projects which have a
+mixture of target frameworks</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/83">83</a>: MsBuild: Allow PreCleanScripts and
+PreCompilationScripts to define their own properties</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/82">82</a>: MsBuild: Update the Sample custom
+version files to match the current version gathering capabilities</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/80">80</a>: MsBuild: Combine top-level build.msbuild,
+deploy.msbuild and shared.locatenbuildkit.msbuild</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/78">78</a>: MsBuild: Automatically include NuGet
+dependencies if nuspec is in same directory as project</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/72">72</a>: MsBuild: Define default directory
+paths only in settings.props file</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/68">68</a>: Improve inline documentation of
+settings.props file</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/66">66</a>: MsBuild: Provide initialization/installation
+scripts for an empty workspace</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/55">55</a>: MsBuild: Allow assembly copyright to be
+more custom defined</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/22">22</a>: MsBuild: Allow each file to have their
+own base directory when creating ZIP archives</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/19">19</a>: MsBuild.Projects: Provide scripts for
+Visual Basic projects</li>
 </ul>
 <p>And fixes the following issues:</p>
 <ul>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/92">92</a>: MsBuild.Projects: GetVersion, VcsInfo and Generate files also run when they&#39;re disabled in the settings.props file</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/88">88</a>: MsBuild.Projects: Excessive NuGet restore of global packages</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/92">92</a>: MsBuild.Projects: GetVersion, VcsInfo and
+Generate files also run when they're disabled in the settings.props file</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/88">88</a>: MsBuild.Projects: Excessive NuGet
+restore of global packages</li>
 <li><a href="https://github.com/pvandervelde/nBuildKit/issues/84">84</a>: Not compatible with ncrunch</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/54">54</a>: MsBuild: First space trimmed from release note content</li>
+<li><a href="https://github.com/pvandervelde/nBuildKit/issues/54">54</a>: MsBuild: First space trimmed from
+release note content</li>
 </ul>
 <p>Finally the following tasks were completed:</p>
 <ul>
 <li><a href="https://github.com/pvandervelde/nBuildKit/issues/7">7</a>: MsBuild: Set up tests</li>
 </ul>
- 
-    </div>
-</div>
-    </div>
 
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2014-11-30_nBuildKit-release-V041.html'>nBuildKit release - V0.4.1</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Sunday, November 30, 2014 | Posted in
-                
-                    <a id="post-category" href="/tags/nbuildkit.html">nBuildKit</a>
-                
-            </p>
+                </div>
+            </div>
         </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.4.1">V0.4.1</a> of the <a href="/projects/nbuildkit.html">nBuildKit</a> build library has been released. </p>
-<p>This release introduces the ability to <a href="https://github.com/pvandervelde/nBuildKit/issues/44">mix custom build steps</a> with the default provided ones in <a href="https://github.com/pvandervelde/nBuildKit/issues/47">any order</a> that is desired. On top of that additional changes were made that now make it possible to build <a href="https://github.com/pvandervelde/nBuildKit/issues/46">multiple Visual Studio solutions</a> in a specific order. </p>
-<p>Finally the user can provide one or more scripts that will be called if the build or the deploy process <a href="https://github.com/pvandervelde/nBuildKit/issues/48">fails</a>. These scripts can be used to clean-up resources or provide notification on build failure. Do note that any failure in these scripts will lead to the immediate termination of the process.</p>
- 
-    </div>
-</div>
-    </div>
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
 
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2014-11-10_Creating-azure-vm-images-with-powershell.html'>Creating Azure VM images with Powershell</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Monday, November 10, 2014 | Posted in
-                
-                    <a id="post-category" href="/tags/powershell.html">Powershell</a>
-                
-                    <a id="post-category" href="/tags/azure.html">Azure</a>
-                
-            </p>
+
+<h2>
+            <a href="/posts/nBuildKit-release-V041">nBuildKit release - V0.4.1</a>
+</h2>
+<div id="post-meta">
+    <p>
+Sunday, 30 November 2014
+ |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
+    </p>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>Version <a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.4.1">V0.4.1</a> of the
+<a href="/projects/nbuildkit.html">nBuildKit</a> build library has been released.</p>
+<p>This release introduces the ability to <a href="https://github.com/pvandervelde/nBuildKit/issues/44">mix custom build steps</a>
+with the default provided ones in <a href="https://github.com/pvandervelde/nBuildKit/issues/47">any order</a>
+that is desired. On top of that additional changes were made that now make it possible to build
+<a href="https://github.com/pvandervelde/nBuildKit/issues/46">multiple Visual Studio solutions</a> in a specific
+order.</p>
+<p>Finally the user can provide one or more scripts that will be called if the build or the deploy process
+<a href="https://github.com/pvandervelde/nBuildKit/issues/48">fails</a>. These scripts can be used to clean-up
+resources or provide notification on build failure. Do note that any failure in these scripts will
+lead to the immediate termination of the process.</p>
+
+                </div>
+            </div>
         </div>
-    </div>
-    <div id="post-content">
-        <p>As part of a new <a href="https://github.com/pvandervelde/azure-jenkins">project</a> to create a <a href="http://jenkins-ci.org/">Jenkins CI server</a> on Azure I am writing a set of powershell scripts to control virtual machines on Azure. For this project the plan is to use virtual machine (VM) images as a template for an <a href="http://martinfowler.com/bliki/ImmutableServer.html">&#39;immutable server&#39;</a> that will contain the Jenkins instance. </p>
-<p>Now the actual server isn&#39;t really &#39;immutable&#39; given that the jenkins instance will update, add and delete files on the hard drive which will obviously change the state of the server. As such the immutable idea isn&#39;t applied to the whole server but more to the configuration part of the server. The idea being that the configuration of the server will not be changed once the server is put in production. Any configuration changes (e.g. a new version of Jenkins) will be done by creating a new image, spinning up a new server based on that image and then destroying the old server and replacing it with the new one.  </p>
-<p>So in order to achieve this goal the first step will be to build an image with all the required software on it and then verify that this image has indeed been created correctly.</p>
-<p>To create the image we first obtain a certificate that can be used for the WinRM SSL connection between the Azure VM and the local machine that is executing the creation scripts. You can either get an official one or you can use a self-signed certificate (which is obviously less secure). Two things of interest are: </p>
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Creating-azure-vm-images-with-powershell">Creating Azure VM images with Powershell</a>
+</h2>
+<div id="post-meta">
+    <p>
+Monday, 10 November 2014
+ |         Posted in                     <a id="post-category" role="button" href="/tags/azure" class="btn btn-default btn-xs">Azure</a>
+                    <a id="post-category" role="button" href="/tags/powershell" class="btn btn-default btn-xs">Powershell</a>
+    </p>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>As part of a new <a href="https://github.com/pvandervelde/azure-jenkins">project</a> to create a
+<a href="http://jenkins-ci.org/">Jenkins CI server</a> on Azure I am writing a set of powershell scripts to
+control virtual machines on Azure. For this project the plan is to use virtual machine (VM) images
+as a template for an <a href="http://martinfowler.com/bliki/ImmutableServer.html">&lsquo;immutable server&rsquo;</a> that
+will contain the Jenkins instance.</p>
+<p>Now the actual server isn't really &lsquo;immutable&rsquo; given that the jenkins instance will update, add and
+delete files on the hard drive which will obviously change the state of the server. As such the immutable
+idea isn't applied to the whole server but more to the configuration part of the server. The idea being
+that the configuration of the server will not be changed once the server is put in production. Any
+configuration changes (e.g. a new version of Jenkins) will be done by creating a new image, spinning
+up a new server based on that image and then destroying the old server and replacing it with the
+new one.</p>
+<p>So in order to achieve this goal the first step will be to build an image with all the required
+software on it and then verify that this image has indeed been created correctly.</p>
+<p>To create the image we first obtain a certificate that can be used for the WinRM SSL connection between
+the Azure VM and the local machine that is executing the creation scripts. You can either get an official
+one or you can use a self-signed certificate (which is obviously less secure). Two things of
+interest are:</p>
 <ul>
-<li>The certificate needs to have an <a href="http://consultingblogs.emc.com/gracemollison/archive/2010/02/19/creating-and-using-self-signed-certificates-for-use-with-azure-service-management-api.aspx">exportable</a> private key because otherwise it cannot be used for the WinRM connection.</li>
-<li>The certificate needs to be named after the connection that you expect to make. For a connection to an Azure VM this will most likely be something like <code>&lt;RESOURCE_GROUP_NAME&gt;.cloudapp.net</code>. </li>
+<li>The certificate needs to have an <a href="http://consultingblogs.emc.com/gracemollison/archive/2010/02/19/creating-and-using-self-signed-certificates-for-use-with-azure-service-management-api.aspx">exportable</a>
+private key because otherwise it cannot be used for the WinRM connection.</li>
+<li>The certificate needs to be named after the connection that you expect to make. For a connection to
+an Azure VM this will most likely be something like <code>&lt;RESOURCE_GROUP_NAME&gt;.cloudapp.net</code>.</li>
 </ul>
-<p>Once the certificate is installed in the user certificate store we can create a new virtual machine from a given base image, e.g. a Windows 2012 R2 server image. The following powershell function creates a new windows VM with a WinRM endpoint with the certificate that was created earlier. Note that the <a href="http://msdn.microsoft.com/en-us/library/dn495254.aspx"><code>New-AzureVM</code></a> function can create resource and storage groups for the new VM if you don&#39;t specify a storage account and a matching resource group.</p>
-<script src='https://gist.github.com/1153f249115780ed2b99.js'></script>
+<p>Once the certificate is installed in the user certificate store we can create a new virtual machine
+from a given base image, e.g. a Windows 2012 R2 server image. The following powershell function creates
+a new windows VM with a WinRM endpoint with the certificate that was created earlier. Note that the
+<a href="http://msdn.microsoft.com/en-us/library/dn495254.aspx"><code>New-AzureVM</code></a> function can create resource
+and storage groups for the new VM if you don't specify a storage account and a matching resource group.</p>
+<script src="https://gist.github.com/pvandervelde/1153f249115780ed2b99.js"></script>
+<p>Once the VM is running a new Powershell remote session can be opened to the machine in order to start
+the configuration of the machine. Note that this approach only seems to be working for <code>https</code> connections
+because the <code>Get-AzureWinRMUri</code> function only returns the <code>https</code> URI. Hence the need for a certificate
+that can be used to secure the connection.</p>
+<script src="https://gist.github.com/pvandervelde/eb6e28934d5fd16fe186.js"></script>
+<p>The next step is to copy all the installer files and configuration scripts to the VM. This can be
+done over the <a href="http://measureofchaos.wordpress.com/2012/09/26/copying-files-via-powershell-remoting-channel/">remoting channnel</a>.</p>
+<script src="https://gist.github.com/pvandervelde/b2f5b4156e5efe67f495.js"></script>
+<p>Once all the required files have been copied to the VM the configuration of the machine can be started.
+This can be done in many different ways, e.g through the use of a <a href="https://www.getchef.com/">configuration</a>
+<a href="http://puppetlabs.com/">management</a> <a href="http://technet.microsoft.com/en-us/library/dn249912.aspx">tool</a>
+or just via the use of plain old scripts. When the configuration is complete and all the necessary
+clean-up has been done the time has come to turn the VM into an image. Before doing that a Windows
+machine will have to be <a href="http://en.wikipedia.org/wiki/Sysprep">sysprepp'ed</a> so that there are no
+unique identifiers in the image (and thus in the copies).</p>
+<p>In order to sysprep an Azure VM it is necessary to execute the sysprep command through a script on the
+VM because sysprep <a href="http://blogs.msdn.com/b/brocode/archive/2014/06/20/how-to-automate-sysprep-of-an-iaas-vm-on-microsoft-azure.aspx">fails</a>
+if the command is given directly through the remoting channel. The following function creates a new
+Powershell script which invokes sysprep, copies that to the VM and then executes that script. Once
+sysprep has completed running the machine will be turned off and an image can be created.</p>
+<script src="https://gist.github.com/pvandervelde/b2f5b4156e5efe67f495.js"></script>
+<p>The next step is to test the new image in order to verify that all configuration changes have been
+applied correctly. The explanation of how the testing of an virtual machine image works is a topic
+for the next blog post.</p>
 
-<p>Once the VM is running a new Powershell remote session can be opened to the machine in order to start the configuration of the machine. Note that this approach only seems to be working for <code>https</code> connections because the <code>Get-AzureWinRMUri</code> function only returns the <code>https</code> URI. Hence the need for a certificate that can be used to secure the connection.</p>
-<script src='https://gist.github.com/eb6e28934d5fd16fe186.js'></script>
-
-<p>The next step is to copy all the installer files and configuration scripts to the VM. This can be done over the <a href="http://measureofchaos.wordpress.com/2012/09/26/copying-files-via-powershell-remoting-channel/">remoting channnel</a>. </p>
-<script src='https://gist.github.com/b2f5b4156e5efe67f495.js'></script>
-
-<p>Once all the required files have been copied to the VM the configuration of the machine can be started. This can be done in many different ways, e.g through the use of a <a href="https://www.getchef.com/">configuration</a> <a href="http://puppetlabs.com/">management</a> <a href="http://technet.microsoft.com/en-us/library/dn249912.aspx">tool</a> or just via the use of plain old scripts. When the configuration is complete and all the necessary clean-up has been done the time has come to turn the VM into an image. Before doing that a Windows machine will have to be <a href="http://en.wikipedia.org/wiki/Sysprep">sysprepp&#39;ed</a> so that there are no unique identifiers in the image (and thus in the copies).</p>
-<p>In order to sysprep an Azure VM it is necessary to execute the sysprep command through a script on the VM because sysprep <a href="http://blogs.msdn.com/b/brocode/archive/2014/06/20/how-to-automate-sysprep-of-an-iaas-vm-on-microsoft-azure.aspx">fails</a> if the command is given directly through the remoting channel. The following function creates a new Powershell script which invokes sysprep, copies that to the VM and then executes that script. Once sysprep has completed running the machine will be turned off and an image can be created. </p>
-<script src='https://gist.github.com/349767f804a32195ee67.js'></script>
-
-<p>The next step is to test the new image in order to verify that all configuration changes have been applied correctly. The explanation of how the testing of an virtual machine image works is a topic for the next blog post.</p>
- 
-    </div>
-</div>
-    </div>
-
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html'>Building and delivering nBuildKit with AppVeyor</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Saturday, September 27, 2014 | Posted in
-                
-                    <a id="post-category" href="/tags/appveyor.html">AppVeyor</a>
-                
-                    <a id="post-category" href="/tags/continous-integration.html">Continous integration</a>
-                
-                    <a id="post-category" href="/tags/nbuildkit.html">nBuildKit</a>
-                
-                    <a id="post-category" href="/tags/software-delivery.html">Software delivery</a>
-                
-            </p>
+                </div>
+            </div>
         </div>
-    </div>
-    <div id="post-content">
-        <p>The build server that is being used to build the packages for <a href="/projects/nbuildkit.html">nBuildKit</a> is <a href="http://www.appveyor.com/">AppVeyor</a>. AppVeyor is an Continuous Integration system in the cloud. The way AppVeyor works is that every time a commit occurs in a GitHub project AppVeyor is notified. AppVeyor then spins up a new clean virtual machine (VM) on which your build scripts are executed. Once the build is done the VM is terminated and thrown away. This way there is no way that the changes made to the build environment by a build will influence future builds.  </p>
-<p>For nBuildKit two builds were configured. The first configuration is the standard <a href="https://ci.appveyor.com/project/pvandervelde/nbuildkit">continuous integration</a> build which generates the version numbers and templates and then creates the NuGet packages. As the final step the build artefacts are archived for later use by the second build configuration.
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor">Building and delivering nBuildKit with AppVeyor</a>
+</h2>
+<div id="post-meta">
+    <p>
+Saturday, 27 September 2014
+ |         Posted in                     <a id="post-category" role="button" href="/tags/appveyor" class="btn btn-default btn-xs">AppVeyor</a>
+                    <a id="post-category" role="button" href="/tags/continous-integration" class="btn btn-default btn-xs">Continous integration</a>
+                    <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
+                    <a id="post-category" role="button" href="/tags/software-delivery" class="btn btn-default btn-xs">Software delivery</a>
+    </p>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>The build server that is being used to build the packages for <a href="/projects/nbuildkit.html">nBuildKit</a>
+is <a href="http://www.appveyor.com/">AppVeyor</a>. AppVeyor is an Continuous Integration system in the cloud.
+The way AppVeyor works is that every time a commit occurs in a GitHub project AppVeyor is notified.
+AppVeyor then spins up a new clean virtual machine (VM) on which your build scripts are executed.
+Once the build is done the VM is terminated and thrown away. This way there is no way that the
+changes made to the build environment by a build will influence future builds.</p>
+<p>For nBuildKit two builds were configured. The first configuration is the standard
+<a href="https://ci.appveyor.com/project/pvandervelde/nbuildkit">continuous integration</a> build which generates
+the version numbers and templates and then creates the NuGet packages. As the final step the build
+artefacts are archived for later use by the second build configuration.
 For this configuration no special settings are required other then to tell AppVeyor to store the artifacts.</p>
-<p>The second build configuration handles the <a href="https://ci.appveyor.com/project/pvandervelde/nbuildkit-244">delivery</a> of the artefacts. This configuration gathers the build artefacts from the latest build of the first build configuration, tags the revision that was build and then pushes the NuGet packages to <a href="http://www.nuget.org/packages/nbuildkit.msbuild">NuGet.org</a> and marks the given commit as a release in <a href="https://github.com/pvandervelde/nBuildKit/releases">GitHub</a>.</p>
-<p>For this second configuration a few tweaks need to be made to the environment before the build can be executed. The first thing to do is to install the <a href="https://github.com/aktau/github-release">GitHub-release</a> application which provides an easy way to push release information to github. A simple Powershell script is used to set-up this part of the environment: </p>
-<script src='https://gist.github.com/77bd834239d9f67c40d7.js'></script>
+<p>The second build configuration handles the <a href="https://ci.appveyor.com/project/pvandervelde/nbuildkit-244">delivery</a>
+of the artefacts. This configuration gathers the build artefacts from the latest build of the first
+build configuration, tags the revision that was build and then pushes the NuGet packages to
+<a href="http://www.nuget.org/packages/nbuildkit.msbuild">NuGet.org</a> and marks the given commit as a release
+in <a href="https://github.com/pvandervelde/nBuildKit/releases">GitHub</a>.</p>
+<p>For this second configuration a few tweaks need to be made to the environment before the build can be
+executed. The first thing to do is to install the <a href="https://github.com/aktau/github-release">GitHub-release</a>
+application which provides an easy way to push release information to github. A simple Powershell
+script is used to set-up this part of the environment:</p>
+<script src="https://gist.github.com/pvandervelde/77bd834239d9f67c40d7.js"></script>
+<p>Once all the required tools are installed the artefacts of the selected continuous integration build
+need to be downloaded and placed in the correct directories. For that yet another Powershell script
+is used:</p>
+<script src="https://gist.github.com/pvandervelde/9cf270ef5266b18a1ac9.js"></script>
+<p>Once all the artefacts are restored the delivery process can be executed. For nBuildKit the delivery
+process is executed by nBuildKit itself in the standard dogfooding approach that is so well known in
+the software business.</p>
 
-<p>Once all the required tools are installed the artefacts of the selected continuous integration build need to be downloaded and placed in the correct directories. For that yet another Powershell script is used:</p>
-<script src='https://gist.github.com/9cf270ef5266b18a1ac9.js'></script>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
 
-<p>Once all the artefacts are restored the delivery process can be executed. For nBuildKit the delivery process is executed by nBuildKit itself in the standard dogfooding approach that is so well known in the software business.</p>
- 
+        <footer>
+            <div id="footer" class="container">
+    <div id="fbox1">
+        <h2>Related</h2>
+        <ul>
+            <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
+            <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
+            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
+        </ul>
+    </div>
+    <div id="fbox2">
+        <h2 id="copyright">Copyright</h2>
+        <p>Copyright (c) 2017 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
+
+        <h2 id="disclaimer">Disclaimer</h2>
+        <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
+    </div>
+    <div id="fbox3">
+        <h2 id="media">Media</h2>
+        <p><a href="/feed.atom"><img src="/assets/images/feed.png" alt="Atom feed"></a></p>
     </div>
 </div>
-    </div>
-
-    <div id="post-spacer">
-    <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2014-08-19_nBuildKit-release-V032.html'>nBuildKit release - V0.3.2</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Tuesday, August 19, 2014 | Posted in
-                
-                    <a id="post-category" href="/tags/nbuildkit.html">nBuildKit</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.3.2">V0.3.2</a> of the <a href="/projects/nbuildkit.html">nBuildKit</a> build library has been released. </p>
-<p>This release introduces a version provider using <a href="https://github.com/Particular/GitVersion">GitVersion</a> and a custom version provider that can be implemented by a user. On top of that the <a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.Common/">nBuildKit.MsBuild.Projects.Common</a> and <a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.Common.Net/">nBuildKit.MsBuild.Projects.Common.Net</a> packages have been merged with the <a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.CSharp/">C#</a> and <a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.WiX/">WiX</a> packages.</p>
- 
-    </div>
+<div id="copyright" class="container">
+    <p>
+        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+    </p>
+    <p>
+        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+    </p>
+    <p>Generated by <a href="https://wyam.io" rel="nofollow">Wyam</a> on Wed, 11 Jan 2017 22:29:30 GMT.</p>
 </div>
-    </div>
 
-
-<!-- Page Listing -->
-
-    <div class="pagination">
-        <!-- Previous Page Button -->
-        
-            <a class="navlinks-prev" href="/index.1.html">Older</a>
-        
-
-        <!-- Next Page Button -->
-        
-    </div>
-
-        </div>
-    </div>
-    <div id="footer" class="container">
-        <div id="fbox1">
-            <h2>Related</h2>
-
-<ul>
-    <li id="first"><a href="https://github.com/pvandervelde">GitHub</a></li>
-    <li><a href="http://www.linkedin.com/profile/view?id=33950311">LinkedIn</a></li>
-    <li><a href="http://stackoverflow.com/users/539846/petrik">StackOverflow</a></li>
-    <li><a href="http://careers.stackoverflow.com/pvandervelde">StackOverflow Careers</a></li>
-    <li><a href="https://plus.google.com/+PatrickvanderVelde/about">Google+</a></li>
-</ul>
-        </div>
-        <div id="fbox2">
-            <h2 id="copyright">Copyright</h2>
-<p>Copyright (c) 2013 <a href="http://www.petrikvandervelde.nl">http://www.petrikvandervelde.nl</a>. All rights reserved.</p>
-<h2 id="disclaimer">Disclaimer</h2>
-<p>The opinions expressed herein are my own personal opinions and do not represent my employer&#39;s view in any way.</p>
-
-        </div>
-        <div id="fbox3">
-            <h2 id="media">Media</h2>
-<p><a href="/atom.xml"><img src="/images/feed.png" alt="Atom feed"></a></p>
-
-        </div>
-    </div>
-    <div id="copyright" class="container">
-        <p>
-            Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design 
-            by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
-        </p>
-        <p>
-            Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by 
-            <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
-            from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
-        </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Saturday, May 23, 2015.</p>
-    </div>
-
-    <!-- jQuery -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/vendor/jquery.js"><\/script>')</script>
-
-    <!-- DocPad Scripts + Our Own -->
-    <script >(function(){
-	/* Did we just livereload? */
-var log = !!(localStorage && console && console.log && true);
-if ( log && localStorage.getItem('/docpad-livereload/reloaded') === 'yes' ) {
-	localStorage.removeItem('/docpad-livereload/reloaded');
-	console.log('LiveReload completed at', new Date())
-}
-
-/* Listen for the regenerated event and perform a reload of the page when the event occurs */
-var listen = function(){
-	var primus = new Primus('/docpad-livereload');
-	primus.on('data', function(data){
-		if ( data && data.message ) {
-			if ( data.message === 'generateBefore' ) {
-				if ( log ) {
-					console.log('LiveReload started at', new Date());
-				}
-				if ( typeof document.getElementsByTagName !== 'undefined' ) {
-	document.getElementsByTagName('html')[0].className += ' wait';
-}
-			}
-			else if ( data.message === 'generateAfter' ) {
-				if ( log ) {
-					localStorage.setItem('/docpad-livereload/reloaded', 'yes');
-				}
-				document.location.reload();
-			}
-		}
-	});
-};
-	/* Inject socket into our page */
-var inject = function(){
-	var t = document.createElement('script');
-	t.type = 'text/javascript';
-	t.async = 'async';
-	t.src = '/primus/primus.js';
-	t.onload = listen;
-	var s = document.getElementsByTagName('script')[0];
-	s.parentNode.insertBefore(t, s);
-};
-	if ( typeof Primus !== 'undefined' ) {
-		listen();
-	} else {
-		inject();
-	}
-})();</script><script >(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-46605109-1');
-ga('send', 'pageview');</script><script defer="defer"  src="/vendor/log.js"></script><script defer="defer"  src="/vendor/modernizr.js"></script><script defer="defer"  src="/scripts/script.js"></script>
-</body>
+        </footer>
+    </body>
 </html>

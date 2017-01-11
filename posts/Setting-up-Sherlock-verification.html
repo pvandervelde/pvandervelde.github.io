@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+
+    <title>Mind vortex - Sherlock configuration - Verification</title>
+    <meta name="description" content="Welcome!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link type="application/rss+xml" rel="alternate" title="Mind vortex" href="/feed.rss" />
+    <link type="application/atom+xml" rel="alternate" title="Mind vortex" href="/feed.atom" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <link href="/assets/css/normalize.css" rel="stylesheet" />
+    <link href="/assets/css/h5bp.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/override.css" rel="stylesheet" />
+    <link href="/assets/css/github.css" rel="stylesheet" type="text/css">
+
+
+    <meta name="application-name" content="Mind vortex" />
+    <meta name="msapplication-tooltip" content="Mind vortex" />
+    <meta name="msapplication-starturl" content="/" />
+
+    <meta property="og:title" content="Mind vortex - Sherlock configuration - Verification" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Setting-up-Sherlock-verification" />
+    <!-- TODO: More social graph meta tags -->
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/highlight.pack.js"></script>
+    <script src="/assets/js/clean-blog.js"></script>
+    <script src="/assets/js/d3.v3.min.js"></script>
+    <script src="/assets/js/trianglify.min.js"></script>
+    <script src="/assets/js/Please-compressed.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="/assets/js/html5shiv.js"></script>
+            <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        <div id="header" class="container">
+            <div id="logo">
+                <h1><a href="/">Mind vortex</a></h1>
+            </div>
+            <div id="menu">
+                <ul>
+                                <li class="inactive" >
+                <a href="/">Home</a>
+            </li>
+            <li class="inactive" >
+                <a href="/posts">Archive</a>
+            </li>
+            <li class="inactive" >
+                <a href="/projects">Projects</a>
+            </li>
+            <li class="inactive" >
+                <a href="/about">About</a>
+            </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div id="page" class="container">
+            <div id="sidebar">
+                <div id="sbox1">
+                    <h2>Patrick van der Velde</h2>
+
+<p>
+    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+</p>
+<p>
+    Dutch software developer, living, working and playing in New Zealand.
+    Rock climber, and paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock)">Sherlock</a>
+    <a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects
+</p>
+<p>
+    <a href="/about.html">More ...</a>
+</p>
+
+                </div>
+                <div id="sbox2">
+                    <h2>Recent</h2>
+                    <ul class="list-unstyled">
+                            <li><a href="/posts/Updating-blog-to-wyam">Exit Docpad, enter Wyam</a></li>
+                            <li><a href="/posts/nBuildKit-release-V051">nBuildKit release - V0.5.1</a></li>
+                            <li><a href="/posts/nBuildKit-release-V041">nBuildKit release - V0.4.1</a></li>
+                            <li><a href="/posts/Creating-azure-vm-images-with-powershell">Creating Azure VM images with Powershell</a></li>
+                            <li><a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor">Building and delivering nBuildKit with AppVeyor</a></li>
+                            <li><a href="/posts/nBuildKit-release-V032">nBuildKit release - V0.3.2</a></li>
+                            <li><a href="/posts/Adding-pagination-with-DocPad">Adding pagination with DocPad</a></li>
+                            <li><a href="/posts/Blog-archives-by-DocPad">Blog archives by DocPad</a></li>
+                            <li><a href="/posts/nBuildKit-release-V024">nBuildKit release - V0.2.4</a></li>
+                            <li><a href="/posts/nBuildKit-release-V015">nBuildKit release - V0.1.5</a></li>
+                    </ul>
+                </div>
+                <div id="sbox3">
+                    <h2>Tags</h2>
+                    <div>
+                        <ul class="list-unstyled">
+                                <li>
+                                    <a role="button" href="/tags/sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nanicitus" class="btn btn-default btn-sm"> nAnicitus (5)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nadoni" class="btn btn-default btn-sm"> nAdoni (2)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/regression-testing" class="btn btn-default btn-sm"> Regression testing (2)</a>
+                                </li>
+                        </ul>
+                    </div>
+                    <br />
+                    <ul class="pager">
+                        <li class="next">
+                            <a href="/tags">View All Tags &rarr;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="content">
+
+<div id="post">
+    <div id="post-header">
+        <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+Sherlock configuration - Verification</h2>
+<div id="post-meta">
+    <p>
+Tuesday, 24 December 2013
+ |         Posted in                     <a id="post-category" role="button" href="/tags/sherlock" class="btn btn-default btn-xs">Sherlock</a>
+    </p>
+</div>
+
+    </div>
+
+    <div id="post-content">
+        <p>After the configuration of the <a href="/posts/Setting-up-Sherlock-serverside.html">host machine</a> and the
+<a href="/posts/Setting-up-Sherlock-virtualmachines.html">virtual machines</a> the final step in the configuration
+of Sherlock is to verify that everything is configured correctly. This can be done by using the
+verification package that comes with each <a href="https://github.com/pvandervelde/Sherlock/releases">release</a>
+of Sherlock. In order to use the verification package take the following steps:</p>
+<ul>
+<li>Unpack the <strong>verification.zip</strong> package to a directory somewhere (e.g. <code>c:\temp\sherlock</code>).</li>
+<li>Update the configuration file <code>Sherlock.VerificationConfiguration.msbuild</code> with the following settings:
+<ul>
+<li><strong>ConfigurationReportDirectory:</strong> The directory where you want the final report to be placed.
+Note that both the user who requests the test and the user which is used to run the Sherlock
+services need to have access to this directory. The <code>report</code> directory that was created on the
+<a href="/posts/Setting-up-Sherlock-serverside.html">host</a> machine</li>
+<li><strong>ConfigurationServerUrl:</strong> The URL of the web service, e.g. <code>http:\\myhostmachine\sherlock.api</code></li>
+<li><strong>ConfigurationOperatingSystem:</strong> The operating system name that you want to test with. This
+needs to match one of the operating systems that has been registered with the management website
+and which is installed on at least one of your test environments.</li>
+<li><strong>ConfigurationOperatingSystemServicePack:</strong> Can be left empty if the operating system has no
+service pack. If the operating system has a service pack then it needs to match the service
+pack name of the operating system as registered with the management web site.</li>
+<li><strong>ConfigurationOperatingSystemCulture:</strong> The <a href="http://en.wikipedia.org/wiki/IETF_language_tag">culture</a>
+as defined for the registered operating system.</li>
+<li><strong>ConfigurationOperatingSystemPointerSize:</strong> The &lsquo;bitness&rsquo; or pointer size for the operating
+system, either 32 or 64 bits. Should again match the value that was provided when the operating
+system was registered.</li>
+<li><strong>ConfigurationRemotePcWorkingPath:</strong> A path where the test files will be placed on the test
+environment, e.g. <code>c:\temp</code>.</li>
+<li><strong>ConfigurationSherlockConsoleDirectory:</strong> The directory where the console application is
+installed, this may be a UNC path or a normal directory, e.g. <code>\\MyHostMachine\console</code>.</li>
+</ul>
+</li>
+<li>Execute the <code>Sherlock.ExecuteVerificationTests.msbuild</code> script. This script will prepare the files
+to be send across (a test application and some test scripts), start the console application, register
+the test and then wait for the reports to be produced.</li>
+</ul>
+<p>Note that the reports will come back with some errors. The verification was designed this way on
+purpose to make it possible to test the error handling. In the end there should be three reports, one
+for each known test configuration version, i.e. v1.0, v1.1 and v1.2. The reports should show the
+following errors:</p>
+<ul>
+<li>The script execution that executes <code>c:\temp\Sherlock.Verification.Console.exe</code> with the <code>-f</code> command
+line argument. The <code>-f</code> parameter indicates that the process should &lsquo;fail&rsquo; and exit with an exit
+code of 1.</li>
+<li>The script execution for <code>c:\temp\Sherlock.Verfication.Console.exe</code> with parameter <code>-c</code>. The <code>-c</code>
+parameter indicates that the process should exit with an unhandled exception. The exit code for
+the process should be -532462766.</li>
+<li>The application execution <code>c:\temp\Sherlock.Verification.Console.exe</code> with the <code>-f</code> command line argument.</li>
+<li>The application execution for <code>c:\temp\Sherlock.Verfication.Console.exe</code> with parameter <code>-c</code>.</li>
+</ul>
+<h3>Troubleshooting</h3>
+<p>If there are any problems during the verification then the first thing to look at are the debug logs
+which are written by the different applications. The logs are generally found in
+<code>c:\ProgramData\Sherlock\&lt;APP_NAME&gt;\&lt;VERSION&gt;\logs</code>. Notes:</p>
+<ol>
+<li>If there is not enough information in the logs then you can change the log level in the application
+configuration file under the <code>DefaultLogLevel</code> configuration option. The available levels are (from
+most verbose to least verbose):
+<ul>
+<li>Trace</li>
+<li>Debug</li>
+<li>Info</li>
+<li>Warn</li>
+<li>Error</li>
+<li>Fatal</li>
+<li>None</li>
+</ul>
+</li>
+<li>The applications running in the test environment also log but those logs may be removed if the
+test environment is a virtual machine. However version 1.2 of the test configuration file has the
+possibly to copy the logs back to the host machine for inclusion into the test report. For this to
+work set the <code>includesystemlog</code> attribute of the <code>includeinreport</code> element to <code>true</code>.</li>
+</ol>
+<p>Some standard problems that may occur are mentioned below.</p>
+<h4>Console and web service</h4>
+<ul>
+<li>If the console application fails to connect to the web service because it cannot find the web
+service then verify that the web service can be reached. The two main problems that could be the
+root cause of this are either the web service is not running or the user which started the console
+application has no access rights to the web service.</li>
+<li>If the console application crashes due to a URL problem (see the log file) then it is most likely
+that you put a partial URL, e.g. <code>mycoolserver\sherlock.api</code> instead of <code>http://mycoolserver/sherlock.api</code>.</li>
+<li>If the console successfully manages to go through nearly all the test registration steps but fails
+on the transfer of the test files then there is quite likely a problem with the web service permissions
+to write to the <code>App_Data</code> directory.</li>
+<li>If the web service fails on the first call then there is quite likely a problem with the database
+connection. This is most likley either a problem with the connection string or a problem with the
+permissions. In case of a permission issue check if the user which is running the web service can
+access the stored procedures in the database.</li>
+</ul>
+<h4>Update service</h4>
+<ul>
+<li>If the update service is unable to verify the update packages then it is not able to access the
+public key file. Make sure the configuration file points to the public key file and that this file
+is reachable by the service.</li>
+</ul>
+<h4>Master controller</h4>
+<ul>
+<li>If the master controller fails to connect to the database this could point to either a problem with
+the connection string or a problem with the permissions. In case of a permissions problem again check
+that the user running the master controller can access the stored procedures in the database.</li>
+<li>If the master controller is unable to start a virtual machine then the <em>SherlockUser</em> may not have
+<a href="http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/17/allowing-non-administrators-to-control-hyper-v.aspx">permissions</a>
+to start the virtual machines. The log will show this as an error in the environment loading. Probably
+a security exception.</li>
+<li>If the controller is blocked by the firewall, or the firewall on the test environment is blocking,
+then there will be no communication between the test environment and the host. The log shows this
+through the fact that the host will wait an excessive amount of time for the remote &lsquo;endpoint&rsquo; to
+connect. A normal start up takes around 2 minutes for a test environment start, operating system
+load and Sherlock load.</li>
+</ul>
+
+    </div>
+
+    <div id="post-footer">
+        <div>
+    <div class="navlinks">
+                <a href="/posts/nAnicitus-Release-V0140" title="Previous Post: nAnicitus release - V0.1.4.0" class="navlinks-prev">« nAnicitus release - V0.1.4.0</a>
+                <a href="/posts/Sherlock-Release-V0480" title="Next Post: Sherlock release - V0.4.8.0" class="navlinks-next">Sherlock release - V0.4.8.0 »</a>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Setting-up-Sherlock-verification';
+    var disqus_title = 'Sherlock configuration - Verification';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Setting-up-Sherlock-verification';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <footer>
+            <div id="footer" class="container">
+    <div id="fbox1">
+        <h2>Related</h2>
+        <ul>
+            <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
+            <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
+            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
+        </ul>
+    </div>
+    <div id="fbox2">
+        <h2 id="copyright">Copyright</h2>
+        <p>Copyright (c) 2017 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
+
+        <h2 id="disclaimer">Disclaimer</h2>
+        <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
+    </div>
+    <div id="fbox3">
+        <h2 id="media">Media</h2>
+        <p><a href="/feed.atom"><img src="/assets/images/feed.png" alt="Atom feed"></a></p>
+    </div>
+</div>
+<div id="copyright" class="container">
+    <p>
+        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+    </p>
+    <p>
+        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+    </p>
+    <p>Generated by <a href="https://wyam.io" rel="nofollow">Wyam</a> on Wed, 11 Jan 2017 22:29:29 GMT.</p>
+</div>
+
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,521 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+
+    <title>Mind vortex - Sherlock configuration - Server side</title>
+    <meta name="description" content="Welcome!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link type="application/rss+xml" rel="alternate" title="Mind vortex" href="/feed.rss" />
+    <link type="application/atom+xml" rel="alternate" title="Mind vortex" href="/feed.atom" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <link href="/assets/css/normalize.css" rel="stylesheet" />
+    <link href="/assets/css/h5bp.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/override.css" rel="stylesheet" />
+    <link href="/assets/css/github.css" rel="stylesheet" type="text/css">
+
+
+    <meta name="application-name" content="Mind vortex" />
+    <meta name="msapplication-tooltip" content="Mind vortex" />
+    <meta name="msapplication-starturl" content="/" />
+
+    <meta property="og:title" content="Mind vortex - Sherlock configuration - Server side" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Setting-up-Sherlock-serverside" />
+    <!-- TODO: More social graph meta tags -->
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/highlight.pack.js"></script>
+    <script src="/assets/js/clean-blog.js"></script>
+    <script src="/assets/js/d3.v3.min.js"></script>
+    <script src="/assets/js/trianglify.min.js"></script>
+    <script src="/assets/js/Please-compressed.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="/assets/js/html5shiv.js"></script>
+            <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        <div id="header" class="container">
+            <div id="logo">
+                <h1><a href="/">Mind vortex</a></h1>
+            </div>
+            <div id="menu">
+                <ul>
+                                <li class="inactive" >
+                <a href="/">Home</a>
+            </li>
+            <li class="inactive" >
+                <a href="/posts">Archive</a>
+            </li>
+            <li class="inactive" >
+                <a href="/projects">Projects</a>
+            </li>
+            <li class="inactive" >
+                <a href="/about">About</a>
+            </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div id="page" class="container">
+            <div id="sidebar">
+                <div id="sbox1">
+                    <h2>Patrick van der Velde</h2>
+
+<p>
+    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+</p>
+<p>
+    Dutch software developer, living, working and playing in New Zealand.
+    Rock climber, and paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock)">Sherlock</a>
+    <a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects
+</p>
+<p>
+    <a href="/about.html">More ...</a>
+</p>
+
+                </div>
+                <div id="sbox2">
+                    <h2>Recent</h2>
+                    <ul class="list-unstyled">
+                            <li><a href="/posts/Updating-blog-to-wyam">Exit Docpad, enter Wyam</a></li>
+                            <li><a href="/posts/nBuildKit-release-V051">nBuildKit release - V0.5.1</a></li>
+                            <li><a href="/posts/nBuildKit-release-V041">nBuildKit release - V0.4.1</a></li>
+                            <li><a href="/posts/Creating-azure-vm-images-with-powershell">Creating Azure VM images with Powershell</a></li>
+                            <li><a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor">Building and delivering nBuildKit with AppVeyor</a></li>
+                            <li><a href="/posts/nBuildKit-release-V032">nBuildKit release - V0.3.2</a></li>
+                            <li><a href="/posts/Adding-pagination-with-DocPad">Adding pagination with DocPad</a></li>
+                            <li><a href="/posts/Blog-archives-by-DocPad">Blog archives by DocPad</a></li>
+                            <li><a href="/posts/nBuildKit-release-V024">nBuildKit release - V0.2.4</a></li>
+                            <li><a href="/posts/nBuildKit-release-V015">nBuildKit release - V0.1.5</a></li>
+                    </ul>
+                </div>
+                <div id="sbox3">
+                    <h2>Tags</h2>
+                    <div>
+                        <ul class="list-unstyled">
+                                <li>
+                                    <a role="button" href="/tags/sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nanicitus" class="btn btn-default btn-sm"> nAnicitus (5)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nadoni" class="btn btn-default btn-sm"> nAdoni (2)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/regression-testing" class="btn btn-default btn-sm"> Regression testing (2)</a>
+                                </li>
+                        </ul>
+                    </div>
+                    <br />
+                    <ul class="pager">
+                        <li class="next">
+                            <a href="/tags">View All Tags &rarr;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="content">
+
+<div id="post">
+    <div id="post-header">
+        <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+Sherlock configuration - Server side</h2>
+<div id="post-meta">
+    <p>
+Tuesday, 10 December 2013
+ |         Posted in                     <a id="post-category" role="button" href="/tags/sherlock" class="btn btn-default btn-xs">Sherlock</a>
+    </p>
+</div>
+
+    </div>
+
+    <div id="post-content">
+        <p>In this post I will explain how to configure the <a href="/projects/sherlock.html">Sherlock</a> host services,
+which handle test registration and selection and control of the test environments for a test. The
+set-up follows the following steps:</p>
+<ul>
+<li>Preparing the host machine which includes installation of the OS and the required services.</li>
+<li>Installation of database.</li>
+<li>Installation of the web parts.</li>
+<li>Creation of the update files and the update manifests.</li>
+<li>Installation of the services.</li>
+<li>Configuration of the firewall.</li>
+<li>Verification of the configuration.</li>
+</ul>
+<h3>Preparing the host machine</h3>
+<p>The first step in the configuration of the host services is to prepare the machine from which the
+Hyper-V service will be running. Note that Sherlock does not require that all services run on this
+machine but for the purposes of this post I will assume that this is the case. The configuration of
+the host machine consists of:</p>
+<ol>
+<li>Install the host operating system on the machine. Both the machine and the operating system need to
+<a href="http://en.wikipedia.org/wiki/Hyper-V#System_requirements_and_specifications">support Hyper-V</a>. On
+top of that for the very least the master controller service has to be installed on the host machine,
+which means it is not possible to install the core Hyper-V version of Windows.</li>
+<li>Create or associate a user which you will use to run the Sherlock services. It is strongly
+recommended to not run the Sherlock services as local administrator for security reasons. It is
+more suitable to provide a separate user to run the services. Note that this user will need
+permissions to run services, but doesn't need installation permissions etc. For the remainder of
+this post lets call this user the <em>SherlockUser</em>. <em>Note:</em> If you have a specific user that is used
+for your build server then it makes sense to use that user, although that is not required.</li>
+<li>Install the <a href="http://technet.microsoft.com/en-us/library/hh846766.aspx">Hyper-V role</a> on the host machine.</li>
+<li>Grant the <em>SherlockUser</em> <a href="http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/17/allowing-non-administrators-to-control-hyper-v.aspx">permissions</a>
+to start, stop and reset Hyper-V virtual machines.</li>
+<li>Install the <a href="http://www.iis.net/learn/get-started/whats-new-in-iis-8/installing-iis-8-on-windows-server-2012">IIS role</a>
+on the host machine. <em>Note:</em> that in theory (i.e. this has not been tested) IIS can be installed
+on a different machine than the host machine as long as it will be able to reach the database. The
+IIS install will need to have the following parts installed as a minimum:
+<ul>
+<li>ASP .NET 4.5</li>
+<li>Basic authentication</li>
+<li>Windows Authentication</li>
+<li>Management tools</li>
+<li>Http logging and tracing</li>
+</ul>
+</li>
+<li>Install <a href="http://www.microsoft.com/web/platform/database.aspx">MSSQL Express 2012</a> on the host
+machine. <em>Note:</em> As with IIS it is again possible to install the database on any machine as long
+as both IIS and the Hyper-V host can connect to it.</li>
+<li>Create a directory that will hold all the files related to Sherlock, e.g. <code>c:\testing</code>. In that
+directory create the following sub-directories:
+<ul>
+<li><code>appupdate</code> - Contains the application update files and manifests.</li>
+<li><code>console</code> - Contains the binary files for the console application which is used by the user to
+register a test.</li>
+<li><code>service</code> - Contains the binaries for the windows service that will run the controller application.</li>
+<li><code>web.api</code> - Contains the binaries for the web service that interacts with the database on test registration.</li>
+<li><code>web.intranet</code> - Contains the binaries for the management web site.</li>
+<li><code>reports</code> - The location where tests can place their generated reports. Note that Sherlock allows
+placing test reports in any location as long as the service has access to that directory.</li>
+<li><code>temp</code> - The temporary directory used for report generation etc.</li>
+</ul>
+</li>
+<li>Share the <code>reports</code> and <code>console</code> directories so that they can be accessed over the network. The
+<code>console</code> directory will only need read access, the <code>reports</code> directory will need read and write access.</li>
+<li>Install the <a href="https://github.com/pvandervelde/nAdoni">nAdoni</a> manifest signing tool. This application
+will be used sign the update manifest files.</li>
+<li>Generate the update keys by executing the following command line (assuming that you installed
+nadoni in <code>c:\tools\nadoni</code>):</li>
+</ol>
+<pre><code class="language-dos">c:\tools\nadoni\keygenerator\nadoni.keygenerator.exe --private=&lt;PATH_TO_PRIVATE_KEY_FILE&gt; --public=&lt;PATH_TO_PUBLIC_KEY_FILE&gt;
+</code></pre>
+<ol>
+<li>Where <code>&lt;PATH_TO_PRIVATE_KEY_FILE&gt;</code> points to the XML file that will contain the private and public
+parts of the manifest signing key and <code>&lt;PATH_TO_PUBLIC_KEY_FILE&gt;</code> points to the XML file that will
+contain the public part of the manifest signing key.</li>
+</ol>
+<h3>Database</h3>
+<p>The second step in the installation process is to create the Sherlock database.</p>
+<ul>
+<li><p>Unpack the <em>sql.zip</em> file that is part of the <a href="https://github.com/pvandervelde/Sherlock/releases">Sherlock release</a>.</p>
+</li>
+<li><p>Create database called <code>Sherlock</code>.</p>
+</li>
+<li><p>Apply all the SQL scripts from the <em>sql.zip</em> file, starting at the V1 script through to the latest
+upgrade script <em>Sherlock_Upgrade_Vm_To_Vn.sql</em>.</p>
+</li>
+<li><p>Provide permissions for the user that will be connecting to the database. You can either use the
+<em>SherlockUser</em> or you can create an SQL user. Grant this user the following access:</p>
+<ul>
+<li>db_datareader</li>
+<li>db_datawriter</li>
+<li>Grant access to stored procedures. This can be done via:
+<code>GRANT EXEC TO &lt;STORED_PROCEDURE_NAME&gt; TO &lt;SQL_USER&gt;</code>. Given that Sherlock only accesses the
+database through stored procedures, there is no direct table access, there are quite a few
+stored procedures which means it makes sense to create a script in order to grant access to
+the stored procedures. The following SQL script can be used to generate an access script for
+the user:</li>
+</ul>
+<pre><code class="language-sql">SELECT  'GRANT EXEC ON '+ SCHEMA_NAME(schema_id) + '.' + name + ' TO &lt;SQL_USER&gt;'
+from sys.procedures
+ORDER BY 1
+</code></pre>
+</li>
+<li><p>Set-up a back up for the Sherlock database. <em>Note:</em> The test data is only useful to Sherlock and
+then only when tests are either running or haven't been run yet. In other words there is no useful
+information for the user describing test results etc.. However the information describing the available
+test environments should be backed-up.</p>
+</li>
+</ul>
+<h3>IIS</h3>
+<p>Step number three for the installation of Sherlock is to configure the web service, web page and the
+application update location. We'll start with the application update location:</p>
+<ul>
+<li>In IIS Manager create a new virtual directory under the default web site using the following settings
+<ul>
+<li><strong>Alias:</strong> AppUpdate</li>
+<li><strong>Path:</strong> <code>c:\testing\appupdate</code></li>
+<li><strong>Connect as:</strong> <em>SherlockUser</em>. Make sure the <em>SherlockUser</em> has read permissions for the directory.</li>
+</ul>
+</li>
+<li>Allow directory browsing through the <em>IIS -&gt; Directory Browsing</em> Feature.</li>
+<li>Finally test access to this directory via a browser by going to <code>&lt;HOST_ADDRESS&gt;\AppUpdate</code>. This
+should display the contents of the directory.</li>
+</ul>
+<p>Before configuring the web site and the web service create a new application pool with the following
+settings:</p>
+<ul>
+<li><strong>Name:</strong> SherlockAppPool</li>
+<li><strong>.NET Framework version:</strong> V4.0.30319</li>
+<li><strong>Managed pipeline mode:</strong> Integrated</li>
+</ul>
+<p>The next project to configure is the web site that will be used to manage the testing environments.</p>
+<ul>
+<li>Unzip <strong>Sherlock.Web.Intranet.sql</strong> to the <code>c:\testing\web.intranet</code> directory.</li>
+<li>In IIS Manager create a new application under the default web site using the following settings:
+<ul>
+<li><strong>Alias:</strong> Sherlock.Intranet</li>
+<li><strong>Application pool:</strong> SherlockAppPool</li>
+<li><strong>Path:</strong> <code>c:\testing\web.intranet</code></li>
+<li><strong>Connect as:</strong> <em>SherlockUser</em>. Again make sure that the <em>SherlockUser</em> has access to the
+directory containing the web site binaries.</li>
+</ul>
+</li>
+<li>Set the authentication for the web site to be anonymous only.</li>
+<li>Define the connection string to be as given below:</li>
+</ul>
+<p><gist>7866267</gist></p>
+<ul>
+<li>Remove the following sections from the configuration file
+<ul>
+<li>System.Web -&gt; Authentication</li>
+<li>System.Web -&gt; Authorization</li>
+</ul>
+</li>
+</ul>
+<p>The last web project to configure is the web service that will be used to add information about the
+new tests to the database.</p>
+<ul>
+<li>Unzip <strong>Sherlock.Web.Api.zip</strong> to the <code>c:\testing\web.api</code> directory.</li>
+<li>In IIS Manager create a new application under the default web site using the following settings:
+<ul>
+<li><strong>Alias:</strong> Sherlock.Api</li>
+<li><strong>Application pool:</strong> SherlockAppPool</li>
+<li><strong>Path:</strong> <code>c:\testing\web.api</code></li>
+<li><strong>Connect as:</strong> <em>SherlockUser</em>. Again make sure that the <em>SherlockUser</em> has access to the
+directory containing the web service binaries.</li>
+</ul>
+</li>
+<li>Define the connection string to be the same as given for the management website.</li>
+<li>Set the authentication for the web site to be anonymous only.</li>
+</ul>
+<h3>Update manifests and files</h3>
+<p>The two main services for Sherlock, the master controller and the executor controller, are not
+directly installed on either the host machine or the test environments. The Sherlock service probes
+the <code>AppUpdate</code> directory for the binaries of these services. This greatly improves the ease with
+which Sherlock can be upgraded given that an upgrade of Sherlock does not require any changes to
+the test environments.</p>
+<p>To create the necessary upgrade files for the Sherlock services it will be necessary to update the
+configuration file of the master controller which takes the following steps:</p>
+<ul>
+<li>Unzip <strong>Service.Master.zip</strong> into a temporary directory.</li>
+<li>Update the configuration file (<code>Sherlock.Service.Master.exe.config</code>) with the following settings:
+<ul>
+<li><strong>TestDataDirectory:</strong> <code>c:\testing\web.api\App_Data</code></li>
+<li><strong>TestReportFilesDir:</strong> <code>c:\testing\temp</code></li>
+</ul>
+</li>
+<li>Define the connection string to be the same as given for the management website.</li>
+<li>Repackage the binaries into a ZIP archive with the name <strong>Service.Master.zip</strong>.</li>
+</ul>
+<p>The executor controller does not need any changes to the configuration file and can thus be left untouched.</p>
+<p>The next step is to create the manifest files that are used by the update service to determine which
+ZIP archive to use. In order to create the manifests the <a href="https://github.com/pvandervelde/nAdoni">nAdoni</a>
+application is used. This can be done with the following command lines:</p>
+<p>For the master controller:</p>
+<pre><code class="language-dos">C:\tools\nadoni\manifestbuilder\nAdoni.ManifestBuilder.exe -v=&quot;{VERSION}&quot; -n=&quot;Sherlock.Service.Master.exe&quot; -f=&quot;c:\testing\appupdate\service.master.zip&quot; -u=&quot;http://myhostmachine/appupdate/service.master.zip&quot; -k=&quot;C:\mykeydirectory\manifestsigningkey.private.xml&quot; -o=&quot;c:\testing\appupdate\masterservice.manifest&quot;
+</code></pre>
+<p>And for the executor controller:</p>
+<pre><code class="language-dos">C:\tools\nadoni\manifestbuilder\nAdoni.ManifestBuilder.exe -v=&quot;{VERSION}&quot; -n=&quot;Sherlock.Service.Executor.exe&quot; -f=&quot;c:\testing\appupdate\service.executor.zip&quot; -u=&quot;http://myhostmachine/appupdate/service.executor.zip&quot; -k=&quot;C:\mykeydirectory\manifestsigningkey.private.xml&quot; -o=&quot;c:\testing\appupdate\executorservice.manifest&quot;
+</code></pre>
+<p>Another way to create the manifest files is through the use of the following Msbuild script:</p>
+<p><gist>6521946</gist></p>
+<p>In this case the following changes must be made to the file:</p>
+<ul>
+<li><code>${PATH_TO_NADONI_DIRECTORY}$</code> - The path to the directory in which the nAdoni binaries have been placed.</li>
+<li><code>${URL_TO_APP_UPDATE}$</code> - The URL to the <code>AppUpdate</code> directory, e.g. <code>http://myhostmachine/appupdate</code>.</li>
+<li><code>${MANIFEST_SIGNING_KEY_PATH}$</code> - The path to the XML file that contains the private key information.</li>
+</ul>
+<p>And the following properties must be specified on the command line:</p>
+<ul>
+<li><strong>Version:</strong> The version of Sherlock for which the manifest files are generated.</li>
+</ul>
+<h3>Services</h3>
+<p>Finally on the host machine two applications need to be configured. These are the console application
+that will be executed by the user to register a test and the update service that will control the
+master controller application.</p>
+<p>To configure the console application take the following steps:</p>
+<ul>
+<li>Unzip the <strong>console.zip</strong> package into the <code>c:\testing\console</code> directory.</li>
+<li>Open the configuration file (<code>Sherlock.Console.exe.config</code>) and update the following settings:
+<ul>
+<li><strong>WebServiceUrl:</strong> Point this to the <em>Sherlock.Api</em> site, e.g. <code>http://myhostmachine/sherlock.api</code>.</li>
+</ul>
+</li>
+<li>Note that the console needs to be accessed from other machines, e.g.from the build server, so make
+sure that the directory is shared with read-rights for all users that will need access.</li>
+</ul>
+<p>To configure the update service take the following steps:</p>
+<ul>
+<li><p>Unzip the <strong>service.zip</strong> package into the <code>c:\testing\service</code> directory.</p>
+</li>
+<li><p>Open the configuration file (<code>Sherlock.Service.exe.config</code>) and update the following settings:</p>
+<ul>
+<li><strong>ApplicationName:</strong> The name of the application for which updates should be tracked, in this
+case that is: <code>Sherlock.Service.Master.exe</code>.</li>
+<li><strong>UpdateManifestUri:</strong> The URL of the manifest file, in this case: <code>http:\\myhostmachine\appupdate\masterservice.manifest</code></li>
+<li><strong>ManifestPublicKeyFile:</strong> The path to the XML file containing the public key section of the
+manifest signing key, e.g. <code>C:\mykeydirectory\manifestsigningkey.public.xml</code></li>
+</ul>
+</li>
+<li><p>Install the application as a service by opening an elevated command line and navigating to the
+<code>c:\testing\service</code> directory. Then execute the following command line:</p>
+<pre><code>  sherlock.service.exe install -username:SherlockUser -password:SherlockPassword --delayed -servicename:Sherlock
+</code></pre>
+</li>
+<li><p>Go to the Windows services control and start the service. After a short while this will grab the
+latest version of the master controller binaries, drop them in <code>C:\ProgramData\Sherlock\Sherlock.Service.Master</code>
+and then start the master controller application. You can verify that all is well by checking the
+log files which are located in <code>C:\ProgramData\Sherlock\Sherlock.Service\{VERSION}\logs</code> and
+<code>C:\ProgramData\Sherlock\Sherlock.Service.Master\{VERSION}\logs</code> for the service and the master
+controller respectively.</p>
+</li>
+</ul>
+<h3>Firewall</h3>
+<p>The last step is to let the master controller through the firewall. For this create an inbound rule
+that allows <code>Sherlock.Service.Master.exe</code> to connect to all types of protocols. Normally only Domain
+and private networks should be sufficient.</p>
+<p>And with all that done the host machine configuration is completed.</p>
+
+    </div>
+
+    <div id="post-footer">
+        <div>
+    <div class="navlinks">
+                <a href="/posts/PG2-Top-landings" title="Previous Post: PG2 - Top landings?" class="navlinks-prev">« PG2 - Top landings?</a>
+                <a href="/posts/Setting-up-Sherlock-virtualmachines" title="Next Post: Sherlock configuration - Virtual machines" class="navlinks-next">Sherlock configuration - Virtual machines »</a>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Setting-up-Sherlock-serverside';
+    var disqus_title = 'Sherlock configuration - Server side';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Setting-up-Sherlock-serverside';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <footer>
+            <div id="footer" class="container">
+    <div id="fbox1">
+        <h2>Related</h2>
+        <ul>
+            <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
+            <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
+            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
+        </ul>
+    </div>
+    <div id="fbox2">
+        <h2 id="copyright">Copyright</h2>
+        <p>Copyright (c) 2017 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
+
+        <h2 id="disclaimer">Disclaimer</h2>
+        <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
+    </div>
+    <div id="fbox3">
+        <h2 id="media">Media</h2>
+        <p><a href="/feed.atom"><img src="/assets/images/feed.png" alt="Atom feed"></a></p>
+    </div>
+</div>
+<div id="copyright" class="container">
+    <p>
+        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+    </p>
+    <p>
+        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+    </p>
+    <p>Generated by <a href="https://wyam.io" rel="nofollow">Wyam</a> on Wed, 11 Jan 2017 22:29:29 GMT.</p>
+</div>
+
+        </footer>
+    </body>
+</html>

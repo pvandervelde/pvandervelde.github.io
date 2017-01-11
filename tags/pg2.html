@@ -1,675 +1,259 @@
+
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<head> 
-    <!-- Standard Meta -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width" />
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-    <!-- Site Properities -->
-    <title>Tag: PG2 | Mind Vortex</title>
-    <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
-    <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, rock climbing, paragliding" />
-    <meta name="author" content="Petrik van der Velde" />
+    <title>Mind vortex - PG2</title>
+    <meta name="description" content="Welcome!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- DocPad Meta -->
-    <meta name="generator" content="DocPad v6.65.0" />
+    <link type="application/rss+xml" rel="alternate" title="Mind vortex" href="/feed.rss" />
+    <link type="application/atom+xml" rel="alternate" title="Mind vortex" href="/feed.atom" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <!-- DocPad Styles + Our Own -->
-    <style >html.wait {
-	cursor: wait !important;
-	opacity: 0;
-	transition: opacity 0.5s ease;
-}</style><link  rel="stylesheet" href="/vendor/normalize.css" /><link  rel="stylesheet" href="/vendor/h5bp.css" /><link  rel="stylesheet" href="/styles/style.css" /><link  rel="stylesheet" href="/styles/github.css" />
+    <link href="/assets/css/normalize.css" rel="stylesheet" />
+    <link href="/assets/css/h5bp.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/override.css" rel="stylesheet" />
+    <link href="/assets/css/github.css" rel="stylesheet" type="text/css">
 
-    <!-- Icons -->
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="/icons/twister.ico" />
-    
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-</head>
-<body>
-    <!--[if lt IE 7]>
-        <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+
+    <meta name="application-name" content="Mind vortex" />
+    <meta name="msapplication-tooltip" content="Mind vortex" />
+    <meta name="msapplication-starturl" content="/" />
+
+    <meta property="og:title" content="Mind vortex - PG2" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/tags/pg2" />
+    <!-- TODO: More social graph meta tags -->
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/highlight.pack.js"></script>
+    <script src="/assets/js/clean-blog.js"></script>
+    <script src="/assets/js/d3.v3.min.js"></script>
+    <script src="/assets/js/trianglify.min.js"></script>
+    <script src="/assets/js/Please-compressed.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="/assets/js/html5shiv.js"></script>
+            <script src="/assets/js/respond.min.js"></script>
     <![endif]-->
-    
-    <div id="header" class="container">
-        <div id="logo">
-            <h1><a href="/">Mind Vortex</a></h1>
-        </div>
-        <div id="menu">
-            <ul>
-                
-                    <li class="inactive">
-                        
-                            <a href="/index.html">Home</a>
-                        
-                    </li>
-                
-                    <li class="inactive">
-                        
-                            <a href="/projects.html">Projects</a>
-                        
-                    </li>
-                
-                    <li class="inactive">
-                        
-                            <a href="/archives.html">Archives</a>
-                        
-                    </li>
-                
-                    <li class="inactive">
-                        
-                            <a href="/about.html">About</a>
-                        
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
-    <div id="page" class="container">
-        <div id="sidebar">
-            <div id="sbox1">
-                <h2 id="patrick-van-der-velde">Patrick van der Velde</h2>
-<p><img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"> </p>
-<p>Dutch software developer, living, working and playing in New Zealand. 
-Rock climber, and future paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock">Sherlock</a>, 
-<a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects</p>
-<p><a href="/about.html">More ...</a></p>
 
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        <div id="header" class="container">
+            <div id="logo">
+                <h1><a href="/">Mind vortex</a></h1>
             </div>
-            <div id="sbox2">
-                <h2>Recent</h2>
+            <div id="menu">
                 <ul>
-                    
-                        <li><a href="/posts/2015-05-23_nBuildKit-release-V051.html">nBuildKit release - V0.5.1</a></li>
-                    
-                        <li><a href="/posts/2014-11-30_nBuildKit-release-V041.html">nBuildKit release - V0.4.1</a></li>
-                    
-                        <li><a href="/posts/2014-11-10_Creating-azure-vm-images-with-powershell.html">Creating Azure VM images with Powershell</a></li>
-                    
-                        <li><a href="/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html">Building and delivering nBuildKit with AppVeyor</a></li>
-                    
-                        <li><a href="/posts/2014-08-19_nBuildKit-release-V032.html">nBuildKit release - V0.3.2</a></li>
-                    
-                        <li><a href="/posts/2014-07-26_Adding-pagination-with-DocPad.html">Adding pagination with DocPad</a></li>
-                    
-                        <li><a href="/posts/2014-07-24_Blog-archives-by-DocPad.html">Blog archives by DocPad</a></li>
-                    
-                        <li><a href="/posts/2014-07-21_nBuildKit-release-V024.html">nBuildKit release - V0.2.4</a></li>
-                    
-                        <li><a href="/posts/2014-06-16_nBuildKit-release-V015.html">nBuildKit release - V0.1.5</a></li>
-                    
-                        <li><a href="/projects/nbuildkit.html">nBuildKit</a></li>
-                    
+                                <li class="inactive" >
+                <a href="/">Home</a>
+            </li>
+            <li class="inactive" >
+                <a href="/posts">Archive</a>
+            </li>
+            <li class="inactive" >
+                <a href="/projects">Projects</a>
+            </li>
+            <li class="inactive" >
+                <a href="/about">About</a>
+            </li>
+
                 </ul>
             </div>
-            <div id="sbox3">
-                <h2>Tags</h2>
-                
-                    <a href="/tags/apollo.html" style="font-size: 113.13247675185968%">
-                        Apollo
-                    </a>
-                
-                    <a href="/tags/appveyor.html" style="font-size: 100%">
-                        AppVeyor
-                    </a>
-                
-                    <a href="/tags/azure.html" style="font-size: 126.26495350371935%">
-                        Azure
-                    </a>
-                
-                    <a href="/tags/blog.html" style="font-size: 130.49266672559813%">
-                        Blog
-                    </a>
-                
-                    <a href="/tags/climbing.html" style="font-size: 100%">
-                        Climbing
-                    </a>
-                
-                    <a href="/tags/configuration.html" style="font-size: 100%">
-                        Configuration
-                    </a>
-                
-                    <a href="/tags/console.html" style="font-size: 100%">
-                        Console
-                    </a>
-                
-                    <a href="/tags/continous-integration.html" style="font-size: 113.13247675185968%">
-                        Continous integration
-                    </a>
-                
-                    <a href="/tags/docpad.html" style="font-size: 120.81448319328996%">
-                        DocPad
-                    </a>
-                
-                    <a href="/tags/github.html" style="font-size: 100%">
-                        GitHub
-                    </a>
-                
-                    <a href="/tags/gitversion.html" style="font-size: 100%">
-                        GitVersion
-                    </a>
-                
-                    <a href="/tags/jenkins.html" style="font-size: 130.49266672559813%">
-                        Jenkins
-                    </a>
-                
-                    <a href="/tags/job-template.html" style="font-size: 100%">
-                        Job template
-                    </a>
-                
-                    <a href="/tags/msbuild.html" style="font-size: 100%">
-                        MsBuild
-                    </a>
-                
-                    <a href="/tags/nuclei.html" style="font-size: 150%">
-                        Nuclei
-                    </a>
-                
-                    <a href="/tags/pdb.html" style="font-size: 113.13247675185968%">
-                        PDB
-                    </a>
-                
-                    <a href="/tags/pg2.html" style="font-size: 141.62896638657992%">
-                        PG2
-                    </a>
-                
-                    <a href="/tags/paragliding.html" style="font-size: 136.86752324814032%">
-                        Paragliding
-                    </a>
-                
-                    <a href="/tags/powershell.html" style="font-size: 113.13247675185968%">
-                        Powershell
-                    </a>
-                
-                    <a href="/tags/regression-test.html" style="font-size: 100%">
-                        Regression test
-                    </a>
-                
-                    <a href="/tags/regression-testing.html" style="font-size: 113.13247675185968%">
-                        Regression testing
-                    </a>
-                
-                    <a href="/tags/srcsrv.html" style="font-size: 100%">
-                        SRCSRV
-                    </a>
-                
-                    <a href="/tags/scripting.html" style="font-size: 100%">
-                        Scripting
-                    </a>
-                
-                    <a href="/tags/sherlock.html" style="font-size: 148.59593857014607%">
-                        Sherlock
-                    </a>
-                
-                    <a href="/tags/software-delivery.html" style="font-size: 100%">
-                        Software delivery
-                    </a>
-                
-                    <a href="/tags/source-server.html" style="font-size: 100%">
-                        Source server
-                    </a>
-                
-                    <a href="/tags/symstore.html" style="font-size: 100%">
-                        SymStore
-                    </a>
-                
-                    <a href="/tags/symbol-server.html" style="font-size: 100%">
-                        Symbol server
-                    </a>
-                
-                    <a href="/tags/symbol-stream.html" style="font-size: 100%">
-                        Symbol stream
-                    </a>
-                
-                    <a href="/tags/teamcity.html" style="font-size: 100%">
-                        TeamCity
-                    </a>
-                
-                    <a href="/tags/teststack-white.html" style="font-size: 100%">
-                        TestStack.White
-                    </a>
-                
-                    <a href="/tags/ui-test.html" style="font-size: 100%">
-                        UI test
-                    </a>
-                
-                    <a href="/tags/unc.html" style="font-size: 100%">
-                        UNC
-                    </a>
-                
-                    <a href="/tags/wcf.html" style="font-size: 126.26495350371935%">
-                        WCF
-                    </a>
-                
-                    <a href="/tags/waipapa.html" style="font-size: 100%">
-                        Waipapa
-                    </a>
-                
-                    <a href="/tags/writing.html" style="font-size: 100%">
-                        Writing
-                    </a>
-                
-                    <a href="/tags/nadoni.html" style="font-size: 113.13247675185968%">
-                        nAdoni
-                    </a>
-                
-                    <a href="/tags/nanicitus.html" style="font-size: 130.49266672559813%">
-                        nAnicitus
-                    </a>
-                
-                    <a href="/tags/nbuildkit.html" style="font-size: 133.94695994514964%">
-                        nBuildKit
-                    </a>
-                
-                    <a href="/tags/nrefs.html" style="font-size: 100%">
-                        nRefs
-                    </a>
-                
+        </div>
+
+        <div id="page" class="container">
+            <div id="sidebar">
+                <div id="sbox1">
+                    <h2>Patrick van der Velde</h2>
+
+<p>
+    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+</p>
+<p>
+    Dutch software developer, living, working and playing in New Zealand.
+    Rock climber, and paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock)">Sherlock</a>
+    <a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects
+</p>
+<p>
+    <a href="/about.html">More ...</a>
+</p>
+
+                </div>
+                <div id="sbox2">
+                    <h2>Recent</h2>
+                    <ul class="list-unstyled">
+                            <li><a href="/posts/Updating-blog-to-wyam">Exit Docpad, enter Wyam</a></li>
+                            <li><a href="/posts/nBuildKit-release-V051">nBuildKit release - V0.5.1</a></li>
+                            <li><a href="/posts/nBuildKit-release-V041">nBuildKit release - V0.4.1</a></li>
+                            <li><a href="/posts/Creating-azure-vm-images-with-powershell">Creating Azure VM images with Powershell</a></li>
+                            <li><a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor">Building and delivering nBuildKit with AppVeyor</a></li>
+                            <li><a href="/posts/nBuildKit-release-V032">nBuildKit release - V0.3.2</a></li>
+                            <li><a href="/posts/Adding-pagination-with-DocPad">Adding pagination with DocPad</a></li>
+                            <li><a href="/posts/Blog-archives-by-DocPad">Blog archives by DocPad</a></li>
+                            <li><a href="/posts/nBuildKit-release-V024">nBuildKit release - V0.2.4</a></li>
+                            <li><a href="/posts/nBuildKit-release-V015">nBuildKit release - V0.1.5</a></li>
+                    </ul>
+                </div>
+                <div id="sbox3">
+                    <h2>Tags</h2>
+                    <div>
+                        <ul class="list-unstyled">
+                                <li>
+                                    <a role="button" href="/tags/sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nanicitus" class="btn btn-default btn-sm"> nAnicitus (5)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/pdb" class="btn btn-default btn-sm"> PDB (2)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/regression-testing" class="btn btn-default btn-sm"> Regression testing (2)</a>
+                                </li>
+                        </ul>
+                    </div>
+                    <br />
+                    <ul class="pager">
+                        <li class="next">
+                            <a href="/tags">View All Tags &rarr;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="content">
+
+<div id="posts">
+    <h3 id="post-tags-header">Posts tagged with: PG2</h3>
+            <div class="post-list">
+            <a href="/posts/PG2-Site-number-five">
+                <h3 class="post-title">PG2 - Site number five</h3>
+            </a>
+            <p class="post-meta">Posted on Friday, 31 January 2014</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/PG2-Christmas-holiday-antics">
+                <h3 class="post-title">PG2 - Christmas holiday antics</h3>
+            </a>
+            <p class="post-meta">Posted on Tuesday, 21 January 2014</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/PG2-Top-landings">
+                <h3 class="post-title">PG2 - Top landings?</h3>
+            </a>
+            <p class="post-meta">Posted on Thursday, 5 December 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/PG2-Bumpy-air-smooth-air">
+                <h3 class="post-title">PG2 - Bumpy air, smooth air</h3>
+            </a>
+            <p class="post-meta">Posted on Tuesday, 19 November 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/PG2-Up-and-down-the-coast">
+                <h3 class="post-title">PG2 - Up and down the coast</h3>
+            </a>
+            <p class="post-meta">Posted on Monday, 11 November 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/PG2-At-the-top-of-the-stack">
+                <h3 class="post-title">PG2 - At the top of the stack</h3>
+            </a>
+            <p class="post-meta">Posted on Friday, 25 October 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/PG2-Spending-a-weekend-in-the-air">
+                <h3 class="post-title">PG2 - Spending a weekend in the air</h3>
+            </a>
+            <p class="post-meta">Posted on Sunday, 13 October 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/PG2-Second-day-flying">
+                <h3 class="post-title">PG2 - Second day</h3>
+            </a>
+            <p class="post-meta">Posted on Monday, 16 September 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/First-time-paragliding">
+                <h3 class="post-title">First time paragliding</h3>
+            </a>
+            <p class="post-meta">Posted on Tuesday, 3 September 2013</p>            
+        </div>   
+
+</div>
             </div>
         </div>
-        <div id="content">
-            <div id="posts">
-    <h3 id="post-tags-header">Posts tagged with: PG2</h3>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2014-01-31_PG2-Site-number-five.html'>PG2 - Site number five</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Friday, January 31, 2014 | Posted in
-                
-                    <a id="post-category" href="/tags/pg2.html">PG2</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Two weeks ago I managed to fulfil another criteria for my PG2 license by flying at the  <a href="http://paraglidingnewzealand.com/places-to-fly/site/mangawhai-heads">Mangawhai Heads</a> for my fifth site. </p>
-<p>Unlike the other locations the launch site at Mangawhai heads is rather small, just big enough for the glider. Because of the conditions and the amount of space at the launch location I elected to do a forward launch with some assistance of the instructor. That turned out to be a good decision because as soon as the glider was above my head it caught the wind stream and I rocketed off the ground. Unfortunately with all the pre-launch action going on I had neglected to completely check my glider which meant I ended up with a small line tangle in the top C-D line which slowed my glider down a bit during flight. </p>
-<p>After about 20 minutes of flying I started to notice that my ground speed was reducing more and more, at which point I decided it was better to be on the ground wishing I was in the sky than being in the sky wishing I was on the ground and so I landed on the beach.</p>
-<p>The learning points of this flight are:</p>
-<ul>
-<li>Reducing the seat depth of my harness has made flying a lot more comfortable, at least for shorter flights. I guess I will see how comfortable it is during longer flights. </li>
-<li>The addition of a stir-up makes getting into the harness much easier. All I have to do now is stand up on the stir-up and I&#39;m in the seat. I&#39;m still not used to staying on the stir-up during flight though so I will have to work out what to do with that, especially during turns.</li>
-<li>I really should start practising my asymmetrical launches so that I can use those during high wind launch situations to reduce the pressures on the glider and myself during the initial part of the launch.</li>
-</ul>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2014-01-21_PG2-Christmas-holiday-antics.html'>PG2 - Christmas holiday antics</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Tuesday, January 21, 2014 | Posted in
-                
-                    <a id="post-category" href="/tags/pg2.html">PG2</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>During the Christmas holidays a few weeks ago I was planning to get lots of flying done, after all I had two weeks off and the weather had been amazing while I was in the office so what else could be the case? Unfortunately it turned out that the weather gods had other plans and provided generous helpings of wind and rain. That meant I only managed to fly on two different days. </p>
-<p>However that doesn&#39;t mean that the Christmas holidays were lacking paragliding activities. You see my new <a href="http://www.korteldesign.com/spip/?Karma-II-231">harness</a> arrived just before Christmas. It was ordered three or so months ago but it was completely worth the wait. The build quality is very high and the harness felt comfortable straight away. Mind you there is still some set up to be done. There are a lot of different straps on this harness which subtly change the position and shape of the harness. I suspect it will be a while before I find all the right settings.
-The biggest difference so far compared to the school harnesses is that it feels like the harness reacts more to changes in the glider, which at the moment is unsettling but I guess I&#39;ll get used to it. And the second difference is that the harness is harder to get into.   </p>
-<p>Given that I was already spending money I figured I should spend some more ... Actually it was more like there were a few other things that were either <a href="http://en.wikipedia.org/wiki/Altimeter">legally required</a> or <a href="http://en.wikipedia.org/wiki/Parachute">very sensible</a> to have. And so I also bought a <a href="http://www.brauniger.com/en/products/flight-instruments/iq-basic-gps/overview.html">vario</a> and a <a href="http://gingliders.com/rescue-systems/yeti-light-rescue/">reserve</a>. The combination was not cheap but I do feel a lot safer now that I have a way to tell how high I am and a way to come down in case everything goes to custard.</p>
-<p>Finally I also did my PG2 theory exam and scored 97% which I was pretty stoked with. The minimum score to pass is 90% so I managed to get that in the bag pretty easily. There is one more theoretical exam to do which is the <a href="http://en.wikipedia.org/wiki/Visual_flight_rules">VFR</a> exam. For that I am trying to learn all the abbreviations at the moment which might take a bit of time.</p>
-<p>All in all the Christmas holidays turned out to have a decent amount of paragliding related activities.</p>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-12-05_PG2-Top-landings.html'>PG2 - Top landings?</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Thursday, December 05, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/paragliding.html">Paragliding</a>
-                
-                    <a id="post-category" href="/tags/pg2.html">PG2</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Two weeks ago the weather was once again favourable to learn more new skills on my way to my <a href="/tags/PG2.html">PG2 license</a>. When we arrived at Maioro the wind was just enough to soar. Given that the forecast has indicated an increase in wind strength over the afternoon we decided to practise some ground handling first. After about an hour of practising reverse launches and keeping the glider stable above our heads it was time to fly. The wind was still a bit light but with a lot of scratching I still managed to get 40 - 45 minutes of flying in on my first flight, my longest flight until then.</p>
-<p>As the afternoon progressed the wind strength slowly increased and staying up became easier which resulted in another 45 minute flight.</p>
-<p>Later in the afternoon the instructor told me it was possible to get a set of short flights with some top landings in. For my first try I launched, gained some height and then turned in for the top landing and completely stuffed it up. As I started moving over to the landing spot everything accelerated and I tried to slow down and turn at the same time, which meant I was not actually doing either of those things so when I got close to the ground I was still moving at a decent speed and hence I face planted. Fortunately there was no actual damage to either me or the glider.
-After recovering from the jitters for a bit I had a second attempt at top landing which took a lot longer to set up and decent but ended in a perfect touch down. The conclusion of all of this is that I need to focus more on flying the glider till the last minute, stay in the harness to maintain the weight shift and focus on the direction of flight more. Oh so much more to learn. </p>
-<p>The fifth and final flight of the day was flying back to the car park which was quite easy as I only had to fly along the ridges to maintain more than enough height to get to the car park.</p>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-11-19_PG2-Bumpy-air-smooth-air.html'>PG2 - Bumpy air, smooth air</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Tuesday, November 19, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/paragliding.html">Paragliding</a>
-                
-                    <a id="post-category" href="/tags/pg2.html">PG2</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Once more the <a href="/tags/PG2.html">PG2</a> group gathered for some flying over the weekend. The action this time was at Maioro with a southerly wind providing for a very bumpy ride. Because of the angle between the wind and the cliff the lift band was very narrow and so one had to work hard to stay in the air. Over the course of the day I managed to get three long flights in but unfortunately I only managed to top land one of them, on the other two I bombed out and had to do a decent bit of walking to get back to the start place. Overall it was a good learning experience flying in very bumpy air with not much lift.</p>
-<p>As a little treat for myself I had taken the Monday off from work so that I could go flying if the weather proved to be suitable. The weather forecast for Monday showed great promise for some good flying.</p>
-<p>On Monday a <a href="http://en.wikipedia.org/wiki/Convergence_zone">convergence</a> hanging around over the city so our instructor decided that with some luck the wind would turn northerly which would make <a href="http://en.wikipedia.org/wiki/North_Head,_New_Zealand">North head</a> an excellent place to fly. After some para-waiting the weather gods decided that the southerly wind would break through the convergence which thereby ended our hopes for flying at North head. Fortunately there are quite a few places around Auckland where flying is possible so our instructor suggested going to <a href="http://en.wikipedia.org/wiki/Muriwai">Maori bay</a>. When we got to Maori bay it turned out that the wind was smooth and from a suitable direction, so indeed the site was flyable. My first flight was a tandem flight with my instructor. While flying he showed me how to pick the right soaring lines and what to look out for. In the 30 or so minutes that we flew the tandem I learned heaps, and I did most of the flying, except for the start and the landing. </p>
-<p>After the tandem flight I managed to get two shorter flights in with my own glider. The launches were a bit more tricky than I was used to because the start place was on angled ground with the wind coming in slightly off angle. However I managed to get the glider to launch without too much trouble in both situations and I did some amazing flying in yet another beautiful New Zealand beach location.</p>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-11-11_PG2-Up-and-down-the-coast.html'>PG2 - Up and down the coast</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Monday, November 11, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/paragliding.html">Paragliding</a>
-                
-                    <a id="post-category" href="/tags/pg2.html">PG2</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Last weekend once again the wind was suitable for flying at <a href="http://en.wikipedia.org/wiki/Kariotahi_Beach">Kario</a> and so more flying was had. The weather forecast indicated that the wind was going to be pretty strong and as we arrived on the beach that was confirmed by the general feel and the wind socks. </p>
-<p>The first thing I had to deal with was the fact that launching was tricky due to the strong winds. The first launch went off without problems but on the second one I got picked up as the glider rose above my head, causing me to fall on my back (yay for back protectors) and the glider to overshoot and collapse. The conclusion was too much brake and not enough moving towards the glider.
-At that point Eva taught me how to do sideways launch where you lay the glider out at an angle to the wind, pull one end up first and then use brake on the high side to stabilize the glider above your head. Using this method the glider generates less pull and is relatively easy to control during the launching phase. Unlike the reverse launch however you need to be much more aggressive in pulling up the glider because if you are not, you give the low side time to catch up which defeats the entire purpose of using this method. In fact you want the whole thing to come up on an angle so that you can control the inflation speed.
-It took me several attempts at getting the sideways launch right but in the end I got the hang of it well enough to start using them as my launch technique for the day.</p>
-<p>Because the wind was so strong it was easy to get up high it was possible for me to practise big ears again without having to worry about being forced to land. I also got to try a 360 degree turn which looks strange as you look at the ground track because while you are turning through 360 degrees, the ground track is making a rather deformed curl shape. At the end of the turn it even feels like you snap into place.</p>
-<p>Finally at the end of the day we flew back to the car park from the launch site, a flight of about 6 or so kilometres. All in all once again a good days flying.</p>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-10-25_PG2-At-the-top-of-the-stack.html'>PG2 - At the top of the stack</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Friday, October 25, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/paragliding.html">Paragliding</a>
-                
-                    <a id="post-category" href="/tags/pg2.html">PG2</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Last weekend I thought I could repeat the <a href="/posts/2013-10-13_PG2-Spending-a-weekend-in-the-air.html">full weekend flying</a> trick that I pulled a few weeks back. The weather forecast was for sunny and windy, but not too windy. So on Saturday morning we drove out to the beach but when we got to the launch site it became clear that it would be touch-and-go due to the high winds. In the end I only got a little hop while practising my launches. After that I practised my ground handling with a <a href="http://gingliders.com/speedflying/speedriding-gliders/nano/">Gin Nano</a> which is a fun little glider but it did feel more like a kite than a real glider.</p>
-<p>The next day was a different story. The wind died down just enough and the sun stayed, all in all a perfect day for flying. Because there were a large number of people the group was split into two, the absolute beginners and the people who had flown before. The latter group immediately set up for their first flights while the former group started with ground handling exercises. I was with the group of people who got to prepare for their first flights immediately. </p>
-<p>Over the day I managed to get three flights in, all with varying levels of success. On the first flight of the day I too rushed and stuffed several things up. First of all I was too enthusiastic with the initial launch which lead to the glider pulling me off my feet and then over flying me. We both ended lying on the ground. Fortunately only my ego was damaged so another attempt was made. On the second start I was more controlled but still kinda jittery during the launch and the run. To top it off I managed to twist the brake line around the rises. So in the end I just fly a circuit down to the ground and landed. No harm done and lots of lessons learned.</p>
-<p>The second flight was a lot better, much more controlled, although my launch still needs work. I&#39;m not checking the canopy before commencing my launch run and during the run I need to remember to have no pressure on the brakes. During the flight I practised using the speed bar, which is a lot harder to push than I thought, and flying with big ears and speed bar. Turns out on the Atlas the big ears go in very easily (make sure you are really only pulling the outer A&#39;s) but it takes a bit of time for them to come out.</p>
-<p>While the first two flights provided plenty of good (and safe) learning moments, neither flight was very special. However the third flight was one of those magic flights. After checking that the airspace was empty I started my launch, which went smoothly, but then somebody flew too close to the start place for me to continue. The instructor told me to keep my position with the glider above my head while the other paraglider flew by, but my limited skill was no match for the strong desire of my glider to fly and slowly we drifted towards the end of the cliff. A little bit of left brake allowed me to fly away from the other paraglider and then the soaring started. The Atlas climbs and climbs and keeps climbing, going higher and higher. Eventually, mostly thanks to the amazing Atlas, I ended up at the top of the stack looking down onto the start field with its tiny people, a whole bunch of other gliders and looking over the hills to the neighbouring towns. Later on I determined, from looking at the height topo&#39;s online, that I must have been somewhere between 100m and 120m above the beach! That to me was a magic moment.</p>
-<p>Unfortunately all magic moments must end, otherwise they wouldn&#39;t be magic anymore, and in this case it was ended by my instructor who thought it would be wise for me to come down while the wind was still behaving so on with the big ears and the speed bar and down I went.</p>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-10-13_PG2-Spending-a-weekend-in-the-air.html'>PG2 - Spending a weekend in the air</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Sunday, October 13, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/paragliding.html">Paragliding</a>
-                
-                    <a id="post-category" href="/tags/pg2.html">PG2</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Last weekend another episode in my <a href="/tags/PG2.html">PG2 course</a> took place with flights happening on both Saturday <em>and</em> Sunday. Both days started with an off shore breeze but as the day progressed the sea breeze brought six to seven knots of wind from the South-West and we were good to go.</p>
-<p>This time we flew from the high launch at at <a href="http://en.wikipedia.org/wiki/Kariotahi_Beach">Kariotahi</a> which has the lowest point of the launch at about 90m above the beach. The walk up follows a narrow, relatively steep, sandy and muddy path which increased everybody&#39;s desire to top land. Fortunately for us our excellent instructor always managed to get us into a position where top landings were possible, in spite of the sometimes lacking wind strength. </p>
-<p><img align="left" alt="Cruising around on my Gin Atlas" src="/images/paragliding/paraglide_0006.JPG" /></p>
-<p>The main learning point for this weekend was the <a href="http://en.wikipedia.org/wiki/Paragliding#Reverse_launch">reverse launch</a>. The technique I am being taught has, in some places, been called the <a href="http://sydneyparagliding.com/flying-techniques/the-effortless-reverse-launch-technique/">Mitsos reverse launch</a>. The reverse launch method provides a lot more control over the glider while it is on the ground than the forward launch method, not in the least because one can actually see what the glider is doing. </p>
-<p>For me the hardest part of the reverse launch method so far is controlling the glider as it rises above my head. The launch will go well as long as the glider rises evenly, but as soon as it slides to the right or left side it is hard to get it back to the middle. The second area to focus on is coordinating the turn and the drive when actually launching. Normally I can execute the turn without too much trouble but I don&#39;t always drive correctly so a lot more practise is in order. Fortunately the instructors have given me an old harness and an old glider that I can use to practise my ground handling on days that we&#39;re not flying. In fact I would be doing that right now if there wasn&#39;t a near gale force wind outside ...</p>
-<p>Over the course of the two days I managed to do:</p>
-<ul>
-<li>Six flights of differing lengths with one flight of 30 minutes and others between five and ten minutes long.</li>
-<li>Four top landings and two landings near the car park. In all cases the instructor guided me on my landing spot selection and approach paths.</li>
-<li>One forwards launch and five reverse launches which all went well except for one reverse launch where I bounced up and down due to a lacking acceleration run.</li>
-</ul>
-<p>And finally I have to say that the Gin Atlas is an amazing glider. I am by no means a good pilot, after all I&#39;m just learning to fly but the Atlas consistently lets me fly higher than nearly all other gliders, save for some of the super high performance gliders. During the weekend all the other gliders had to, at one point or another, work quite hard to stay at the height of the launch site, or even to scratch their way back up to the launch height. The Atlas just only dropped down to the height of the launch a few times, and each time it did a minor puff of wind allowed it to gain more than sufficient height again.</p>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-09-16_PG2-Second-day-flying.html'>PG2 - Second day</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Monday, September 16, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/paragliding.html">Paragliding</a>
-                
-                    <a id="post-category" href="/tags/pg2.html">PG2</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>On Sunday the weather was good enough for some flying on the west coast. So at 11.30am about 8 of us gathered at <a href="http://en.wikipedia.org/wiki/Kariotahi_Beach">Kario</a> and the second day of my <a href="/tags/PG2.html">PG2</a> had started.</p>
-<p><img align="left" alt="Paraglider soaring high over beautiful west coast" src="/images/paragliding/paraglide_0004.JPG" /></p>
-<p>The first thing to notice about the west coast is that it looks amazing, rugged and empty. It seems that with paragliding besides the flying I also get to look out over the amazing landscapes New Zealand has. Double win!</p>
-<p>But before I get to fly as a qualified pilot a lot more training has to be had and that we did. The day started off with some ground handling exercises on the really old gliders. My first taste of <a href="http://en.wikipedia.org/wiki/Paragliding#Reverse_launch">reverse launching</a> except with out the actual turning around and flying bit. It turns out reverse launching isn&#39;t actually as simple as I thought it would be. Having flown kites for many years I thought I would get the reverse launch down pretty easily but when the gliders get larger and the controls are reversed things get difficult. More practise is required ...</p>
-<p>After the ground handling a few short flights down the slope were made with a larger glider to practise the forward starts and then it was time to get some actual flights done. I managed to get three short flights in where I got to practise forward starts, turning and then landing. Some observations (which are probably obvious to those that have flown paragliders before): </p>
-<ul>
-<li>If there is a distinct edge at the end of the start field then when you fly out over that edge the glider will climb rapidly due to the wind blasting straight up the edge. This is nothing to worry about, although it feels slightly disconcerting at first.</li>
-<li>A paraglider moves around more than you would think, even in a nice constant sea breeze</li>
-<li>If you land at even a slight angle to the wind it gets really hard to put the glider on its back, instead of its side. I got only one landing totally right.</li>
-</ul>
-<p><img align="right" alt="Flying my new Gin Atlas" src="/images/paragliding/paraglide_0005.JPG" /></p>
-<p>And then it was time for the unexpected highlight of the day. When I paid for the PG2 course I paid for a combination package, which includes the PG2 course, a glider and a harness. Now I still haven&#39;t selected a harness but I have selected the glider, a bright red <a href="http://gingliders.com/paragliders/atlas/">Gin Atlas</a>. I didn&#39;t expect to be able to fly it so soon in my course but after my initial three flights both instructors gave me the go ahead to fly it. </p>
-<p>I managed a further two flights with it. The first one was a nice long soaring flight where I got to get a feel for the glider. At the end of the flight I managed to get quite a bit of height. And to top that flight off the instructor guided me in for a top landing upon which I nearly broke my glider by stuffing up the landing. Fortunately no gliders or pilots where hurt.</p>
-<p>The last flight of the day was back down to the beach to pack our equipment and drive home. I set myself up for a landing approach and promptly overshot my selected landing spot by about 100 meters or so. I guess selecting and landing in the right spot is yet another skill I have to work on.</p>
-<p>All in all it was an amazing day of flying, especially the nice soaring flight on my shiny new glider.</p>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-09-03_First-time-paragliding.html'>First time paragliding</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Tuesday, September 03, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/paragliding.html">Paragliding</a>
-                
-                    <a id="post-category" href="/tags/pg2.html">PG2</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>A little while ago I signed up for a <a href="http://paraglidingnewzealand.com/information/learning-to-fly">PG2</a> paragliding course 
-with <a href="http://wingsandwaves.co.nz">Wings and Waves</a>. Unfortunately I signed up just before winter crept in and made it impossible to fly. As
-we are moving towards spring the weather has been getting better and last Sunday the weather was good enough for us (my girlfriend and me) to
-have our first shot at flying a paraglider.</p>
-<p><img align="left" alt="Casey ground handling the old glider" src="/images/paragliding/paraglide_0001.JPG" /></p>
-<p>So on Sunday morning we met up with the Wings and Waves crew and drove over to a nice, if some what soggy, hill somewhere around Pukemore, south of the Bombay hills for the first steps of our training. </p>
-<p>The first part consisted of learning how to ground handle a paraglider. Ground handling is the art of controlling the paraglider while on the ground. This turns out to be harder than it first looks. In the air the pilot will normally be centred underneath the paraglider. On the ground however the pilot may not be directly below the paraglider which means the pilot needs to actively move around to keep the paraglider above them.</p>
-<p><img align="right" alt="Me doing a forward start with the old glider" src="/images/paragliding/paraglide_0002.JPG" /> </p>
-<p>Once we got the hang of the ground handling we started learning forwards starts, or alpine starts. With this method of starting you face forward with the glider behind you. Once you have sorted out the lines you move forwards until the lines are tensioned and then you run at a constant pace. The first glider we used was the really old one we used in ground handling. Given that it was not very large it was pretty easy to run with, and running we did, lots of it.</p>
-<p>Once we got a few good runs in with the old glider the instructor found us a more modern paraglider to play with. This one was considerably larger and far more interesting. Over the remainder of the day we slowly worked our way up the hill, starting from a higher position each time, and being rewarded with a little more flight time and a little more height each time.</p>
-<p><img align="left" alt="Casey having a little flight with the newer glider" src="/images/paragliding/paraglide_0003.JPG" /></p>
-<p>In the beginning both my girl friend and me got to use the same glider but it turns out I&#39;ve got a big fat ass and so I had to upgrade to bigger gliders a few more times. Each time being reminded that bigger gliders also mean more backwards pull on start and higher flights. </p>
-<p>In all it was a good day flying. I still have a lot of work to do on all parts of my launching and flying skills (obviously given that this is the first time), but the one thing I really noticed I need to work on is distance estimation and flare timing. I got that wrong a few times and it was fortunate that the landing area was soggy because it made for nice, if what splashy, landings even if I miscalculated my flare timing. </p>
-<p>All in all a good time was had by all and we are definitely keen for more flying. Hopefully with less running and more flying next time.</p>
- 
-    </div>
-</div>
-        </div>
-    
-</div>
-        </div>
-    </div>
-    <div id="footer" class="container">
-        <div id="fbox1">
-            <h2>Related</h2>
 
-<ul>
-    <li id="first"><a href="https://github.com/pvandervelde">GitHub</a></li>
-    <li><a href="http://www.linkedin.com/profile/view?id=33950311">LinkedIn</a></li>
-    <li><a href="http://stackoverflow.com/users/539846/petrik">StackOverflow</a></li>
-    <li><a href="http://careers.stackoverflow.com/pvandervelde">StackOverflow Careers</a></li>
-    <li><a href="https://plus.google.com/+PatrickvanderVelde/about">Google+</a></li>
-</ul>
-        </div>
-        <div id="fbox2">
-            <h2 id="copyright">Copyright</h2>
-<p>Copyright (c) 2013 <a href="http://www.petrikvandervelde.nl">http://www.petrikvandervelde.nl</a>. All rights reserved.</p>
-<h2 id="disclaimer">Disclaimer</h2>
-<p>The opinions expressed herein are my own personal opinions and do not represent my employer&#39;s view in any way.</p>
-
-        </div>
-        <div id="fbox3">
-            <h2 id="media">Media</h2>
-<p><a href="/atom.xml"><img src="/images/feed.png" alt="Atom feed"></a></p>
-
-        </div>
+        <footer>
+            <div id="footer" class="container">
+    <div id="fbox1">
+        <h2>Related</h2>
+        <ul>
+            <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
+            <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
+            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
+        </ul>
     </div>
-    <div id="copyright" class="container">
-        <p>
-            Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design 
-            by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
-        </p>
-        <p>
-            Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by 
-            <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
-            from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
-        </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Saturday, May 23, 2015.</p>
+    <div id="fbox2">
+        <h2 id="copyright">Copyright</h2>
+        <p>Copyright (c) 2017 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
+
+        <h2 id="disclaimer">Disclaimer</h2>
+        <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
     </div>
+    <div id="fbox3">
+        <h2 id="media">Media</h2>
+        <p><a href="/feed.atom"><img src="/assets/images/feed.png" alt="Atom feed"></a></p>
+    </div>
+</div>
+<div id="copyright" class="container">
+    <p>
+        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+    </p>
+    <p>
+        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+    </p>
+    <p>Generated by <a href="https://wyam.io" rel="nofollow">Wyam</a> on Wed, 11 Jan 2017 22:29:29 GMT.</p>
+</div>
 
-    <!-- jQuery -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/vendor/jquery.js"><\/script>')</script>
-
-    <!-- DocPad Scripts + Our Own -->
-    <script >(function(){
-	/* Did we just livereload? */
-var log = !!(localStorage && console && console.log && true);
-if ( log && localStorage.getItem('/docpad-livereload/reloaded') === 'yes' ) {
-	localStorage.removeItem('/docpad-livereload/reloaded');
-	console.log('LiveReload completed at', new Date())
-}
-
-/* Listen for the regenerated event and perform a reload of the page when the event occurs */
-var listen = function(){
-	var primus = new Primus('/docpad-livereload');
-	primus.on('data', function(data){
-		if ( data && data.message ) {
-			if ( data.message === 'generateBefore' ) {
-				if ( log ) {
-					console.log('LiveReload started at', new Date());
-				}
-				if ( typeof document.getElementsByTagName !== 'undefined' ) {
-	document.getElementsByTagName('html')[0].className += ' wait';
-}
-			}
-			else if ( data.message === 'generateAfter' ) {
-				if ( log ) {
-					localStorage.setItem('/docpad-livereload/reloaded', 'yes');
-				}
-				document.location.reload();
-			}
-		}
-	});
-};
-	/* Inject socket into our page */
-var inject = function(){
-	var t = document.createElement('script');
-	t.type = 'text/javascript';
-	t.async = 'async';
-	t.src = '/primus/primus.js';
-	t.onload = listen;
-	var s = document.getElementsByTagName('script')[0];
-	s.parentNode.insertBefore(t, s);
-};
-	if ( typeof Primus !== 'undefined' ) {
-		listen();
-	} else {
-		inject();
-	}
-})();</script><script >(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-46605109-1');
-ga('send', 'pageview');</script><script defer="defer"  src="/vendor/log.js"></script><script defer="defer"  src="/vendor/modernizr.js"></script><script defer="defer"  src="/scripts/script.js"></script>
-</body>
+        </footer>
+    </body>
 </html>

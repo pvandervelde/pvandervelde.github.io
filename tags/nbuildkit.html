@@ -1,596 +1,241 @@
+
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<head> 
-    <!-- Standard Meta -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width" />
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-    <!-- Site Properities -->
-    <title>Tag: nBuildKit | Mind Vortex</title>
-    <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
-    <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, rock climbing, paragliding" />
-    <meta name="author" content="Petrik van der Velde" />
+    <title>Mind vortex - nBuildKit</title>
+    <meta name="description" content="Welcome!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- DocPad Meta -->
-    <meta name="generator" content="DocPad v6.65.0" />
+    <link type="application/rss+xml" rel="alternate" title="Mind vortex" href="/feed.rss" />
+    <link type="application/atom+xml" rel="alternate" title="Mind vortex" href="/feed.atom" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <!-- DocPad Styles + Our Own -->
-    <style >html.wait {
-	cursor: wait !important;
-	opacity: 0;
-	transition: opacity 0.5s ease;
-}</style><link  rel="stylesheet" href="/vendor/normalize.css" /><link  rel="stylesheet" href="/vendor/h5bp.css" /><link  rel="stylesheet" href="/styles/style.css" /><link  rel="stylesheet" href="/styles/github.css" />
+    <link href="/assets/css/normalize.css" rel="stylesheet" />
+    <link href="/assets/css/h5bp.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/override.css" rel="stylesheet" />
+    <link href="/assets/css/github.css" rel="stylesheet" type="text/css">
 
-    <!-- Icons -->
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="/icons/twister.ico" />
-    
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-</head>
-<body>
-    <!--[if lt IE 7]>
-        <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+
+    <meta name="application-name" content="Mind vortex" />
+    <meta name="msapplication-tooltip" content="Mind vortex" />
+    <meta name="msapplication-starturl" content="/" />
+
+    <meta property="og:title" content="Mind vortex - nBuildKit" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/tags/nbuildkit" />
+    <!-- TODO: More social graph meta tags -->
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/highlight.pack.js"></script>
+    <script src="/assets/js/clean-blog.js"></script>
+    <script src="/assets/js/d3.v3.min.js"></script>
+    <script src="/assets/js/trianglify.min.js"></script>
+    <script src="/assets/js/Please-compressed.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="/assets/js/html5shiv.js"></script>
+            <script src="/assets/js/respond.min.js"></script>
     <![endif]-->
-    
-    <div id="header" class="container">
-        <div id="logo">
-            <h1><a href="/">Mind Vortex</a></h1>
-        </div>
-        <div id="menu">
-            <ul>
-                
-                    <li class="inactive">
-                        
-                            <a href="/index.html">Home</a>
-                        
-                    </li>
-                
-                    <li class="inactive">
-                        
-                            <a href="/projects.html">Projects</a>
-                        
-                    </li>
-                
-                    <li class="inactive">
-                        
-                            <a href="/archives.html">Archives</a>
-                        
-                    </li>
-                
-                    <li class="inactive">
-                        
-                            <a href="/about.html">About</a>
-                        
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
-    <div id="page" class="container">
-        <div id="sidebar">
-            <div id="sbox1">
-                <h2 id="patrick-van-der-velde">Patrick van der Velde</h2>
-<p><img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"> </p>
-<p>Dutch software developer, living, working and playing in New Zealand. 
-Rock climber, and future paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock">Sherlock</a>, 
-<a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects</p>
-<p><a href="/about.html">More ...</a></p>
 
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        <div id="header" class="container">
+            <div id="logo">
+                <h1><a href="/">Mind vortex</a></h1>
             </div>
-            <div id="sbox2">
-                <h2>Recent</h2>
+            <div id="menu">
                 <ul>
-                    
-                        <li><a href="/posts/2015-05-23_nBuildKit-release-V051.html">nBuildKit release - V0.5.1</a></li>
-                    
-                        <li><a href="/posts/2014-11-30_nBuildKit-release-V041.html">nBuildKit release - V0.4.1</a></li>
-                    
-                        <li><a href="/posts/2014-11-10_Creating-azure-vm-images-with-powershell.html">Creating Azure VM images with Powershell</a></li>
-                    
-                        <li><a href="/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html">Building and delivering nBuildKit with AppVeyor</a></li>
-                    
-                        <li><a href="/posts/2014-08-19_nBuildKit-release-V032.html">nBuildKit release - V0.3.2</a></li>
-                    
-                        <li><a href="/posts/2014-07-26_Adding-pagination-with-DocPad.html">Adding pagination with DocPad</a></li>
-                    
-                        <li><a href="/posts/2014-07-24_Blog-archives-by-DocPad.html">Blog archives by DocPad</a></li>
-                    
-                        <li><a href="/posts/2014-07-21_nBuildKit-release-V024.html">nBuildKit release - V0.2.4</a></li>
-                    
-                        <li><a href="/posts/2014-06-16_nBuildKit-release-V015.html">nBuildKit release - V0.1.5</a></li>
-                    
-                        <li><a href="/projects/nbuildkit.html">nBuildKit</a></li>
-                    
+                                <li class="inactive" >
+                <a href="/">Home</a>
+            </li>
+            <li class="inactive" >
+                <a href="/posts">Archive</a>
+            </li>
+            <li class="inactive" >
+                <a href="/projects">Projects</a>
+            </li>
+            <li class="inactive" >
+                <a href="/about">About</a>
+            </li>
+
                 </ul>
             </div>
-            <div id="sbox3">
-                <h2>Tags</h2>
-                
-                    <a href="/tags/apollo.html" style="font-size: 113.13247675185968%">
-                        Apollo
-                    </a>
-                
-                    <a href="/tags/appveyor.html" style="font-size: 100%">
-                        AppVeyor
-                    </a>
-                
-                    <a href="/tags/azure.html" style="font-size: 126.26495350371935%">
-                        Azure
-                    </a>
-                
-                    <a href="/tags/blog.html" style="font-size: 130.49266672559813%">
-                        Blog
-                    </a>
-                
-                    <a href="/tags/climbing.html" style="font-size: 100%">
-                        Climbing
-                    </a>
-                
-                    <a href="/tags/configuration.html" style="font-size: 100%">
-                        Configuration
-                    </a>
-                
-                    <a href="/tags/console.html" style="font-size: 100%">
-                        Console
-                    </a>
-                
-                    <a href="/tags/continous-integration.html" style="font-size: 113.13247675185968%">
-                        Continous integration
-                    </a>
-                
-                    <a href="/tags/docpad.html" style="font-size: 120.81448319328996%">
-                        DocPad
-                    </a>
-                
-                    <a href="/tags/github.html" style="font-size: 100%">
-                        GitHub
-                    </a>
-                
-                    <a href="/tags/gitversion.html" style="font-size: 100%">
-                        GitVersion
-                    </a>
-                
-                    <a href="/tags/jenkins.html" style="font-size: 130.49266672559813%">
-                        Jenkins
-                    </a>
-                
-                    <a href="/tags/job-template.html" style="font-size: 100%">
-                        Job template
-                    </a>
-                
-                    <a href="/tags/msbuild.html" style="font-size: 100%">
-                        MsBuild
-                    </a>
-                
-                    <a href="/tags/nuclei.html" style="font-size: 150%">
-                        Nuclei
-                    </a>
-                
-                    <a href="/tags/pdb.html" style="font-size: 113.13247675185968%">
-                        PDB
-                    </a>
-                
-                    <a href="/tags/pg2.html" style="font-size: 141.62896638657992%">
-                        PG2
-                    </a>
-                
-                    <a href="/tags/paragliding.html" style="font-size: 136.86752324814032%">
-                        Paragliding
-                    </a>
-                
-                    <a href="/tags/powershell.html" style="font-size: 113.13247675185968%">
-                        Powershell
-                    </a>
-                
-                    <a href="/tags/regression-test.html" style="font-size: 100%">
-                        Regression test
-                    </a>
-                
-                    <a href="/tags/regression-testing.html" style="font-size: 113.13247675185968%">
-                        Regression testing
-                    </a>
-                
-                    <a href="/tags/srcsrv.html" style="font-size: 100%">
-                        SRCSRV
-                    </a>
-                
-                    <a href="/tags/scripting.html" style="font-size: 100%">
-                        Scripting
-                    </a>
-                
-                    <a href="/tags/sherlock.html" style="font-size: 148.59593857014607%">
-                        Sherlock
-                    </a>
-                
-                    <a href="/tags/software-delivery.html" style="font-size: 100%">
-                        Software delivery
-                    </a>
-                
-                    <a href="/tags/source-server.html" style="font-size: 100%">
-                        Source server
-                    </a>
-                
-                    <a href="/tags/symstore.html" style="font-size: 100%">
-                        SymStore
-                    </a>
-                
-                    <a href="/tags/symbol-server.html" style="font-size: 100%">
-                        Symbol server
-                    </a>
-                
-                    <a href="/tags/symbol-stream.html" style="font-size: 100%">
-                        Symbol stream
-                    </a>
-                
-                    <a href="/tags/teamcity.html" style="font-size: 100%">
-                        TeamCity
-                    </a>
-                
-                    <a href="/tags/teststack-white.html" style="font-size: 100%">
-                        TestStack.White
-                    </a>
-                
-                    <a href="/tags/ui-test.html" style="font-size: 100%">
-                        UI test
-                    </a>
-                
-                    <a href="/tags/unc.html" style="font-size: 100%">
-                        UNC
-                    </a>
-                
-                    <a href="/tags/wcf.html" style="font-size: 126.26495350371935%">
-                        WCF
-                    </a>
-                
-                    <a href="/tags/waipapa.html" style="font-size: 100%">
-                        Waipapa
-                    </a>
-                
-                    <a href="/tags/writing.html" style="font-size: 100%">
-                        Writing
-                    </a>
-                
-                    <a href="/tags/nadoni.html" style="font-size: 113.13247675185968%">
-                        nAdoni
-                    </a>
-                
-                    <a href="/tags/nanicitus.html" style="font-size: 130.49266672559813%">
-                        nAnicitus
-                    </a>
-                
-                    <a href="/tags/nbuildkit.html" style="font-size: 133.94695994514964%">
-                        nBuildKit
-                    </a>
-                
-                    <a href="/tags/nrefs.html" style="font-size: 100%">
-                        nRefs
-                    </a>
-                
+        </div>
+
+        <div id="page" class="container">
+            <div id="sidebar">
+                <div id="sbox1">
+                    <h2>Patrick van der Velde</h2>
+
+<p>
+    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+</p>
+<p>
+    Dutch software developer, living, working and playing in New Zealand.
+    Rock climber, and paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock)">Sherlock</a>
+    <a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects
+</p>
+<p>
+    <a href="/about.html">More ...</a>
+</p>
+
+                </div>
+                <div id="sbox2">
+                    <h2>Recent</h2>
+                    <ul class="list-unstyled">
+                            <li><a href="/posts/Updating-blog-to-wyam">Exit Docpad, enter Wyam</a></li>
+                            <li><a href="/posts/nBuildKit-release-V051">nBuildKit release - V0.5.1</a></li>
+                            <li><a href="/posts/nBuildKit-release-V041">nBuildKit release - V0.4.1</a></li>
+                            <li><a href="/posts/Creating-azure-vm-images-with-powershell">Creating Azure VM images with Powershell</a></li>
+                            <li><a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor">Building and delivering nBuildKit with AppVeyor</a></li>
+                            <li><a href="/posts/nBuildKit-release-V032">nBuildKit release - V0.3.2</a></li>
+                            <li><a href="/posts/Adding-pagination-with-DocPad">Adding pagination with DocPad</a></li>
+                            <li><a href="/posts/Blog-archives-by-DocPad">Blog archives by DocPad</a></li>
+                            <li><a href="/posts/nBuildKit-release-V024">nBuildKit release - V0.2.4</a></li>
+                            <li><a href="/posts/nBuildKit-release-V015">nBuildKit release - V0.1.5</a></li>
+                    </ul>
+                </div>
+                <div id="sbox3">
+                    <h2>Tags</h2>
+                    <div>
+                        <ul class="list-unstyled">
+                                <li>
+                                    <a role="button" href="/tags/sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nanicitus" class="btn btn-default btn-sm"> nAnicitus (5)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/pdb" class="btn btn-default btn-sm"> PDB (2)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/regression-testing" class="btn btn-default btn-sm"> Regression testing (2)</a>
+                                </li>
+                        </ul>
+                    </div>
+                    <br />
+                    <ul class="pager">
+                        <li class="next">
+                            <a href="/tags">View All Tags &rarr;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="content">
+
+<div id="posts">
+    <h3 id="post-tags-header">Posts tagged with: nBuildKit</h3>
+            <div class="post-list">
+            <a href="/posts/nBuildKit-release-V051">
+                <h3 class="post-title">nBuildKit release - V0.5.1</h3>
+            </a>
+            <p class="post-meta">Posted on Saturday, 23 May 2015</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/nBuildKit-release-V041">
+                <h3 class="post-title">nBuildKit release - V0.4.1</h3>
+            </a>
+            <p class="post-meta">Posted on Sunday, 30 November 2014</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor">
+                <h3 class="post-title">Building and delivering nBuildKit with AppVeyor</h3>
+            </a>
+            <p class="post-meta">Posted on Saturday, 27 September 2014</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/nBuildKit-release-V032">
+                <h3 class="post-title">nBuildKit release - V0.3.2</h3>
+            </a>
+            <p class="post-meta">Posted on Tuesday, 19 August 2014</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/nBuildKit-release-V024">
+                <h3 class="post-title">nBuildKit release - V0.2.4</h3>
+            </a>
+            <p class="post-meta">Posted on Monday, 21 July 2014</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/nBuildKit-release-V015">
+                <h3 class="post-title">nBuildKit release - V0.1.5</h3>
+            </a>
+            <p class="post-meta">Posted on Monday, 16 June 2014</p>            
+        </div>   
+
+</div>
             </div>
         </div>
-        <div id="content">
-            <div id="posts">
-    <h3 id="post-tags-header">Posts tagged with: nBuildKit</h3>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2015-05-23_nBuildKit-release-V051.html'>nBuildKit release - V0.5.1</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Saturday, May 23, 2015 | Posted in
-                
-                    <a id="post-category" href="/tags/nbuildkit.html">nBuildKit</a>
-                
-            </p>
-        </div>
+
+        <footer>
+            <div id="footer" class="container">
+    <div id="fbox1">
+        <h2>Related</h2>
+        <ul>
+            <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
+            <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
+            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
+        </ul>
     </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.5.1">V0.5.1</a> of the <a href="/projects/nbuildkit.html">nBuildKit</a> build library has been released. </p>
-<p>This release adds the following features</p>
-<ul>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/91">91</a>: MsBuild.Projects: Common.props should do a more extensive search for settings.props</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/90">90</a>: MsBuild: Allow pushing symbols via NuGet enhancement</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/89">89</a>: MsBuild: Allow assembly versioning to be more custom defined.</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/87">87</a>: MsBuild: Rename template files to have normal extension</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/86">86</a>: MsBuild: Rename the DirMsBuildShared, DirMsBuildExtensions and DirMsBuildTemplates properties enhancement</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/85">85</a>: Unable to build projects which have a mixture of target frameworks</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/83">83</a>: MsBuild: Allow PreCleanScripts and PreCompilationScripts to define their own properties</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/82">82</a>: MsBuild: Update the Sample custom version files to match the current version gathering capabilities</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/80">80</a>: MsBuild: Combine top-level build.msbuild, deploy.msbuild and shared.locatenbuildkit.msbuild</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/78">78</a>: MsBuild: Automatically include NuGet dependencies if nuspec is in same directory as project</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/72">72</a>: MsBuild: Define default directory paths only in settings.props file</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/68">68</a>: Improve inline documentation of settings.props file</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/66">66</a>: MsBuild: Provide initialization/installation scripts for an empty workspace</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/55">55</a>: MsBuild: Allow assembly copyright to be more custom defined</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/22">22</a>: MsBuild: Allow each file to have their own base directory when creating ZIP archives</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/19">19</a>: MsBuild.Projects: Provide scripts for Visual Basic projects</li>
-</ul>
-<p>And fixes the following issues:</p>
-<ul>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/92">92</a>: MsBuild.Projects: GetVersion, VcsInfo and Generate files also run when they&#39;re disabled in the settings.props file</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/88">88</a>: MsBuild.Projects: Excessive NuGet restore of global packages</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/84">84</a>: Not compatible with ncrunch</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/54">54</a>: MsBuild: First space trimmed from release note content</li>
-</ul>
-<p>Finally the following tasks were completed:</p>
-<ul>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/7">7</a>: MsBuild: Set up tests</li>
-</ul>
- 
+    <div id="fbox2">
+        <h2 id="copyright">Copyright</h2>
+        <p>Copyright (c) 2017 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
+
+        <h2 id="disclaimer">Disclaimer</h2>
+        <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
+    </div>
+    <div id="fbox3">
+        <h2 id="media">Media</h2>
+        <p><a href="/feed.atom"><img src="/assets/images/feed.png" alt="Atom feed"></a></p>
     </div>
 </div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2014-11-30_nBuildKit-release-V041.html'>nBuildKit release - V0.4.1</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Sunday, November 30, 2014 | Posted in
-                
-                    <a id="post-category" href="/tags/nbuildkit.html">nBuildKit</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.4.1">V0.4.1</a> of the <a href="/projects/nbuildkit.html">nBuildKit</a> build library has been released. </p>
-<p>This release introduces the ability to <a href="https://github.com/pvandervelde/nBuildKit/issues/44">mix custom build steps</a> with the default provided ones in <a href="https://github.com/pvandervelde/nBuildKit/issues/47">any order</a> that is desired. On top of that additional changes were made that now make it possible to build <a href="https://github.com/pvandervelde/nBuildKit/issues/46">multiple Visual Studio solutions</a> in a specific order. </p>
-<p>Finally the user can provide one or more scripts that will be called if the build or the deploy process <a href="https://github.com/pvandervelde/nBuildKit/issues/48">fails</a>. These scripts can be used to clean-up resources or provide notification on build failure. Do note that any failure in these scripts will lead to the immediate termination of the process.</p>
- 
-    </div>
+<div id="copyright" class="container">
+    <p>
+        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+    </p>
+    <p>
+        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+    </p>
+    <p>Generated by <a href="https://wyam.io" rel="nofollow">Wyam</a> on Wed, 11 Jan 2017 22:29:29 GMT.</p>
 </div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html'>Building and delivering nBuildKit with AppVeyor</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Saturday, September 27, 2014 | Posted in
-                
-                    <a id="post-category" href="/tags/appveyor.html">AppVeyor</a>
-                
-                    <a id="post-category" href="/tags/continous-integration.html">Continous integration</a>
-                
-                    <a id="post-category" href="/tags/nbuildkit.html">nBuildKit</a>
-                
-                    <a id="post-category" href="/tags/software-delivery.html">Software delivery</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>The build server that is being used to build the packages for <a href="/projects/nbuildkit.html">nBuildKit</a> is <a href="http://www.appveyor.com/">AppVeyor</a>. AppVeyor is an Continuous Integration system in the cloud. The way AppVeyor works is that every time a commit occurs in a GitHub project AppVeyor is notified. AppVeyor then spins up a new clean virtual machine (VM) on which your build scripts are executed. Once the build is done the VM is terminated and thrown away. This way there is no way that the changes made to the build environment by a build will influence future builds.  </p>
-<p>For nBuildKit two builds were configured. The first configuration is the standard <a href="https://ci.appveyor.com/project/pvandervelde/nbuildkit">continuous integration</a> build which generates the version numbers and templates and then creates the NuGet packages. As the final step the build artefacts are archived for later use by the second build configuration.
-For this configuration no special settings are required other then to tell AppVeyor to store the artifacts.</p>
-<p>The second build configuration handles the <a href="https://ci.appveyor.com/project/pvandervelde/nbuildkit-244">delivery</a> of the artefacts. This configuration gathers the build artefacts from the latest build of the first build configuration, tags the revision that was build and then pushes the NuGet packages to <a href="http://www.nuget.org/packages/nbuildkit.msbuild">NuGet.org</a> and marks the given commit as a release in <a href="https://github.com/pvandervelde/nBuildKit/releases">GitHub</a>.</p>
-<p>For this second configuration a few tweaks need to be made to the environment before the build can be executed. The first thing to do is to install the <a href="https://github.com/aktau/github-release">GitHub-release</a> application which provides an easy way to push release information to github. A simple Powershell script is used to set-up this part of the environment: </p>
-<script src='https://gist.github.com/77bd834239d9f67c40d7.js'></script>
 
-<p>Once all the required tools are installed the artefacts of the selected continuous integration build need to be downloaded and placed in the correct directories. For that yet another Powershell script is used:</p>
-<script src='https://gist.github.com/9cf270ef5266b18a1ac9.js'></script>
-
-<p>Once all the artefacts are restored the delivery process can be executed. For nBuildKit the delivery process is executed by nBuildKit itself in the standard dogfooding approach that is so well known in the software business.</p>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2014-08-19_nBuildKit-release-V032.html'>nBuildKit release - V0.3.2</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Tuesday, August 19, 2014 | Posted in
-                
-                    <a id="post-category" href="/tags/nbuildkit.html">nBuildKit</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.3.2">V0.3.2</a> of the <a href="/projects/nbuildkit.html">nBuildKit</a> build library has been released. </p>
-<p>This release introduces a version provider using <a href="https://github.com/Particular/GitVersion">GitVersion</a> and a custom version provider that can be implemented by a user. On top of that the <a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.Common/">nBuildKit.MsBuild.Projects.Common</a> and <a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.Common.Net/">nBuildKit.MsBuild.Projects.Common.Net</a> packages have been merged with the <a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.CSharp/">C#</a> and <a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.WiX/">WiX</a> packages.</p>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2014-07-21_nBuildKit-release-V024.html'>nBuildKit release - V0.2.4</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Monday, July 21, 2014 | Posted in
-                
-                    <a id="post-category" href="/tags/nbuildkit.html">nBuildKit</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.2.4">V0.2.4</a> of the <a href="/projects/nbuildkit.html">nBuildKit</a> build library has been released. </p>
-<p>This release introduces NuGet packages that allow Visual Studio <a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.CSharp/">C#</a> and <a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.WiX/">WiX</a> projects to share a common configuration including code analysis and strong naming capabilities and to generate one or more source files before building the project.</p>
-<p>Both packages provide the ability to share a configuration between multiple projects in a Visual Studio solution. The shared configuration can contain items like Debug and Release settings, targeted .NET framework, code analysis settings and many other options.</p>
-<p>Beyond that the C# NuGet package provides capabilities to:</p>
-<ul>
-<li>Generate <code>AssemblyInfo.XXXX.cs</code> files for:<ul>
-<li><code>AssemblyInfo.VersionNumber.cs</code> contains the version numbers for the project as determined by nBuildKit from the versioning strategies provided. Currently supported are either a version number provided through an MsBuild project file or through <a href="https://github.com/JakeGinnivan/GitHubFlowVersion">GitHubFlowVersion</a>. By allowing nBuildKit to generate the <code>AssemblyInfo.VersionNumber.cs</code> file it is possible to automatically version the binaries the same way as all other artifacts, e.g. NuGet packages, installers, documentation etc. etc.. The version number is currently provided through the <a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblyversionattribute(v=vs.110).aspx">AssemblyVersionAttribute</a> as <code>Major.Minor.0.0</code>; through the <a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblyfileversionattribute(v=vs.110).aspx">AssemblyFileVersionAttribute</a> as <code>Major.Minor.Patch.Build</code>; and through the <a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblyinformationalversionattribute(v=vs.110).aspx">AssemblyInformationalVersionAttribute</a> as the full <a href="http://semver.org/">semantic version</a>.</li>
-<li><code>AssemblyInfo.BuildInformation.cs</code> contains information about the current build of the binaries. This includes the configuration, e.g. Release; the date and time that the binary was compiled and information describing the build number and the commit number that were used to generate the binaries.</li>
-<li><code>AssemblyInfo.InternalsVisibleTo.cs</code> contains the <a href="http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute(v=vs.110).aspx">InternalsVisibleToAttribute</a> values for any assemblies that should have access to the internals of the current assembly for purposes of unit testing.</li>
-<li><code>AssemblyInfo.Company.cs</code> contains the information describing the &#39;company&#39; that created the binaries. The information includes the <a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblycompanyattribute(v=vs.110).aspx">AssemblyCompanyAttribute</a> and the <a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblycopyrightattribute(v=vs.110).aspx">AssemblyCopyrightAttribute</a>.</li>
-</ul>
-</li>
-<li>Generate a <code>CompanyInformation.cs</code> source file that contains an internal static class providing constants for the company name and the company URL.</li>
-<li>Generate a <code>ProductInformation.cs</code> source file that contains an internal static class providing constants for the name of the product. </li>
-<li>Generate an <code>app.manifest</code> file with the current project version number.</li>
-</ul>
-<p>And the WiX NuGet package provides capabilities to</p>
-<ul>
-<li>Generate a <code>VersionNumber.wxi</code> WiX include file that contains the version numbers for the application and the installer.</li>
-<li>Generate a <code>CompanyInformation.wxi</code> WiX include file that contains the name and URL of the company that produces the product.</li>
-<li>Generate a <code>ProductInformation.wxi</code> WiX include file that contains the name and description of the product.</li>
-</ul>
-<p>The generation of all of these files can be enabled through a setting in the <code>settings.props</code> file that is also used by the <a href="https://www.nuget.org/packages/nBuildKit.MsBuild/">nBuildKit.MsBuild</a> NuGet package </p>
-<p>The documentation for this library can be found on the nBuildKit <a href="https://github.com/pvandervelde/nBuildKit/wiki/MsBuild">wiki</a></p>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2014-06-16_nBuildKit-release-V015.html'>nBuildKit release - V0.1.5</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Monday, June 16, 2014 | Posted in
-                
-                    <a id="post-category" href="/tags/nbuildkit.html">nBuildKit</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.1.5">V0.1.5</a> of the <a href="/projects/nbuildkit.html">nBuildKit</a> build library has been released. </p>
-<p>This first release introduces the <a href="https://www.nuget.org/packages/nBuildKit.MsBuild/0.1.5">MsBuild</a> NuGet package. This package contains build scripts that provide the ability to perform a complete build consisting of workspace preparation, compilation of binaries, execution of unit tests, analysis of source code and binaries and finally packing of the binaries as NuGet packages or ZIP archives.
-The <code>nBuildKit.MsBuild</code> NuGet package also provides scripts that can be used to tag a release in the version control system (VCS) and deploy the artifacts to a file server, NuGet feed or a GitHub release.</p>
-<p>The documentation for this library can be found on the nBuildKit <a href="https://github.com/pvandervelde/nBuildKit/wiki/MsBuild">wiki</a></p>
- 
-    </div>
-</div>
-        </div>
-    
-</div>
-        </div>
-    </div>
-    <div id="footer" class="container">
-        <div id="fbox1">
-            <h2>Related</h2>
-
-<ul>
-    <li id="first"><a href="https://github.com/pvandervelde">GitHub</a></li>
-    <li><a href="http://www.linkedin.com/profile/view?id=33950311">LinkedIn</a></li>
-    <li><a href="http://stackoverflow.com/users/539846/petrik">StackOverflow</a></li>
-    <li><a href="http://careers.stackoverflow.com/pvandervelde">StackOverflow Careers</a></li>
-    <li><a href="https://plus.google.com/+PatrickvanderVelde/about">Google+</a></li>
-</ul>
-        </div>
-        <div id="fbox2">
-            <h2 id="copyright">Copyright</h2>
-<p>Copyright (c) 2013 <a href="http://www.petrikvandervelde.nl">http://www.petrikvandervelde.nl</a>. All rights reserved.</p>
-<h2 id="disclaimer">Disclaimer</h2>
-<p>The opinions expressed herein are my own personal opinions and do not represent my employer&#39;s view in any way.</p>
-
-        </div>
-        <div id="fbox3">
-            <h2 id="media">Media</h2>
-<p><a href="/atom.xml"><img src="/images/feed.png" alt="Atom feed"></a></p>
-
-        </div>
-    </div>
-    <div id="copyright" class="container">
-        <p>
-            Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design 
-            by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
-        </p>
-        <p>
-            Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by 
-            <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
-            from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
-        </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Saturday, May 23, 2015.</p>
-    </div>
-
-    <!-- jQuery -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/vendor/jquery.js"><\/script>')</script>
-
-    <!-- DocPad Scripts + Our Own -->
-    <script >(function(){
-	/* Did we just livereload? */
-var log = !!(localStorage && console && console.log && true);
-if ( log && localStorage.getItem('/docpad-livereload/reloaded') === 'yes' ) {
-	localStorage.removeItem('/docpad-livereload/reloaded');
-	console.log('LiveReload completed at', new Date())
-}
-
-/* Listen for the regenerated event and perform a reload of the page when the event occurs */
-var listen = function(){
-	var primus = new Primus('/docpad-livereload');
-	primus.on('data', function(data){
-		if ( data && data.message ) {
-			if ( data.message === 'generateBefore' ) {
-				if ( log ) {
-					console.log('LiveReload started at', new Date());
-				}
-				if ( typeof document.getElementsByTagName !== 'undefined' ) {
-	document.getElementsByTagName('html')[0].className += ' wait';
-}
-			}
-			else if ( data.message === 'generateAfter' ) {
-				if ( log ) {
-					localStorage.setItem('/docpad-livereload/reloaded', 'yes');
-				}
-				document.location.reload();
-			}
-		}
-	});
-};
-	/* Inject socket into our page */
-var inject = function(){
-	var t = document.createElement('script');
-	t.type = 'text/javascript';
-	t.async = 'async';
-	t.src = '/primus/primus.js';
-	t.onload = listen;
-	var s = document.getElementsByTagName('script')[0];
-	s.parentNode.insertBefore(t, s);
-};
-	if ( typeof Primus !== 'undefined' ) {
-		listen();
-	} else {
-		inject();
-	}
-})();</script><script >(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-46605109-1');
-ga('send', 'pageview');</script><script defer="defer"  src="/vendor/log.js"></script><script defer="defer"  src="/vendor/modernizr.js"></script><script defer="defer"  src="/scripts/script.js"></script>
-</body>
+        </footer>
+    </body>
 </html>

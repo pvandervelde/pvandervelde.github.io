@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+
+    <title>Mind vortex - GUI testing with TestStack.White</title>
+    <meta name="description" content="Welcome!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link type="application/rss+xml" rel="alternate" title="Mind vortex" href="/feed.rss" />
+    <link type="application/atom+xml" rel="alternate" title="Mind vortex" href="/feed.atom" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <link href="/assets/css/normalize.css" rel="stylesheet" />
+    <link href="/assets/css/h5bp.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/override.css" rel="stylesheet" />
+    <link href="/assets/css/github.css" rel="stylesheet" type="text/css">
+
+
+    <meta name="application-name" content="Mind vortex" />
+    <meta name="msapplication-tooltip" content="Mind vortex" />
+    <meta name="msapplication-starturl" content="/" />
+
+    <meta property="og:title" content="Mind vortex - GUI testing with TestStack.White" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Regression-testing-gui-applications" />
+    <!-- TODO: More social graph meta tags -->
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/highlight.pack.js"></script>
+    <script src="/assets/js/clean-blog.js"></script>
+    <script src="/assets/js/d3.v3.min.js"></script>
+    <script src="/assets/js/trianglify.min.js"></script>
+    <script src="/assets/js/Please-compressed.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="/assets/js/html5shiv.js"></script>
+            <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        <div id="header" class="container">
+            <div id="logo">
+                <h1><a href="/">Mind vortex</a></h1>
+            </div>
+            <div id="menu">
+                <ul>
+                                <li class="inactive" >
+                <a href="/">Home</a>
+            </li>
+            <li class="inactive" >
+                <a href="/posts">Archive</a>
+            </li>
+            <li class="inactive" >
+                <a href="/projects">Projects</a>
+            </li>
+            <li class="inactive" >
+                <a href="/about">About</a>
+            </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div id="page" class="container">
+            <div id="sidebar">
+                <div id="sbox1">
+                    <h2>Patrick van der Velde</h2>
+
+<p>
+    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+</p>
+<p>
+    Dutch software developer, living, working and playing in New Zealand.
+    Rock climber, and paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock)">Sherlock</a>
+    <a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects
+</p>
+<p>
+    <a href="/about.html">More ...</a>
+</p>
+
+                </div>
+                <div id="sbox2">
+                    <h2>Recent</h2>
+                    <ul class="list-unstyled">
+                            <li><a href="/posts/Updating-blog-to-wyam">Exit Docpad, enter Wyam</a></li>
+                            <li><a href="/posts/nBuildKit-release-V051">nBuildKit release - V0.5.1</a></li>
+                            <li><a href="/posts/nBuildKit-release-V041">nBuildKit release - V0.4.1</a></li>
+                            <li><a href="/posts/Creating-azure-vm-images-with-powershell">Creating Azure VM images with Powershell</a></li>
+                            <li><a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor">Building and delivering nBuildKit with AppVeyor</a></li>
+                            <li><a href="/posts/nBuildKit-release-V032">nBuildKit release - V0.3.2</a></li>
+                            <li><a href="/posts/Adding-pagination-with-DocPad">Adding pagination with DocPad</a></li>
+                            <li><a href="/posts/Blog-archives-by-DocPad">Blog archives by DocPad</a></li>
+                            <li><a href="/posts/nBuildKit-release-V024">nBuildKit release - V0.2.4</a></li>
+                            <li><a href="/posts/nBuildKit-release-V015">nBuildKit release - V0.1.5</a></li>
+                    </ul>
+                </div>
+                <div id="sbox3">
+                    <h2>Tags</h2>
+                    <div>
+                        <ul class="list-unstyled">
+                                <li>
+                                    <a role="button" href="/tags/sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nanicitus" class="btn btn-default btn-sm"> nAnicitus (5)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nadoni" class="btn btn-default btn-sm"> nAdoni (2)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/regression-testing" class="btn btn-default btn-sm"> Regression testing (2)</a>
+                                </li>
+                        </ul>
+                    </div>
+                    <br />
+                    <ul class="pager">
+                        <li class="next">
+                            <a href="/tags">View All Tags &rarr;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="content">
+
+<div id="post">
+    <div id="post-header">
+        <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+GUI testing with TestStack.White</h2>
+<div id="post-meta">
+    <p>
+Monday, 31 March 2014
+ |         Posted in                     <a id="post-category" role="button" href="/tags/apollo" class="btn btn-default btn-xs">Apollo</a>
+                    <a id="post-category" role="button" href="/tags/regression-testing" class="btn btn-default btn-xs">Regression testing</a>
+                    <a id="post-category" role="button" href="/tags/teststack.white" class="btn btn-default btn-xs">TestStack.White</a>
+                    <a id="post-category" role="button" href="/tags/ui-test" class="btn btn-default btn-xs">UI test</a>
+    </p>
+</div>
+
+    </div>
+
+    <div id="post-content">
+        <p>In the <a href="/posts/Regression-testing-console-applications.html">previous</a> post I explained how I
+created the regression tests for a script running application that belongs to the <a href="/projects/apollo.html">Apollo</a>
+project. In this post I will explain how I created the regression tests for an Apollo application
+with a graphical user interface (UI).</p>
+<p>My initial attempt to write a regression test suite for the GUI application was done using the
+<a href="http://www.nunit.org/">NUnit</a> and <a href="http://scriptcs.net/">ScriptCS</a> with the idea that NUnit would
+provide the test execution and validation methods and ScriptCs would provide an easy way to write the
+test scripts without requiring a complete IDE to be used. After some trial-and-error it became clear
+that this approach was not the most suitable solution for the following reasons:</p>
+<ul>
+<li>Using NUnit, or any unit test framework for that matter, complicated things because there is no
+way to take control of the order in which the regression tests are executed. While the ordering of
+unit tests is irrelevant, the ordering of regression tests may not be in that it is accepted that
+regression tests involve the execution multiple, ordered tests for one single activation of the
+application under test (AUT).</li>
+<li>A secondary drawback of using a unit test framework is that there is normally no way to re-run a
+test case if it fails, something which is more acceptable for a regression test than for a unit test.</li>
+<li>The test code got rather complicated due to the many helper methods, script files etc.. While
+ScriptCs coped beautifully with this it turned out to hard for me to work with without the
+organizing features of a complete IDE.</li>
+</ul>
+<p>In the end I wrote a custom (console) application that handles the ordering and execution of the
+different test cases in the way that makes sense for my current requirements.</p>
+<h4>Testing application</h4>
+<p>The testing application executes the tests, collects the results and logs all the outputs. When
+executing the tests each test is executed a maximum of three times before it is marked as a fail.
+The following code is used by the application to execute the test steps and to keep track of the
+number of times a test step is executed.</p>
+<script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Regression_ExecuteTestStep.cs"></script>
+<script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Regression_TestStep.cs"></script>
+<p>The reason for having multiple attempts to complete a test is that the nature of the GUI automation
+testing is that it is not completely <a href="http://www.mathpirate.net/log/2009/12/23/ui-automation-tricks-and-traps/">consistent</a>.
+By allowing a test to fail twice it is possible to work around the problem of inconsistent handling
+of controls.</p>
+<p>The second part of the application keeps track of the test results while the tests are running. The
+application will always try to execute all the tests, irrespective of their final success or failure.
+That way the user will always have a complete report of the state of all the tests.</p>
+<script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Regression_EntryPoint.cs"></script>
+<p>Finally the application provides utility methods for logging which should be used liberally by both
+the application and the test steps.</p>
+<h4>Tests</h4>
+<p>In order for the tests to interact with the GUI I chose to use the <a href="https://github.com/TestStack/White">TestStack.White</a>
+library mainly because it is a mature open source library that has a number of active contributors.
+One thing to keep in mind when selecting a GUI automation library is that the <a href="http://en.wikipedia.org/wiki/Microsoft_UI_Automation">underlying technology</a>
+has some tricky hooks to it that cannot be completely hidden by the automation library. One example
+is that all controls can be found based on their <a href="http://msdn.microsoft.com/en-us/library/aa349646%28v=vs.110%29.aspx">automation ID</a>
+but windows cannot, even if the window in question has an automation ID.</p>
+<p>The main piece of advice for writing UI automation tests is always to write some helper methods to
+hide the underlying complexity of the UI access technology. In my case I took the following steps:</p>
+<ul>
+<li>Control very carefully how your helper methods return information to the caller, either through a
+return value or through exceptions. In my case if a helper method returns a value it should either
+return the requested object or null if it fails to get the requested object. The calling code should
+then always check for null and handle the case of a null return value, e.g. by retrying the method
+call. The only time the method will throw an exception is if the assumed conditions for the method
+are wrong, e.g. the application under test (AUT) has crashed. If the helper method has no return
+value then it may throw if it fails to execute.</li>
+</ul>
+<script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Regression_HelpersForMenu.cs"></script>
+<ul>
+<li>All actions that get a control will try to get the control several times if they fail. Due to the
+nature of UI automation it is possible that the control is not available the first time the code
+tries to get hold of the control. This may be due tot he fact that the automation tests are fast
+enough that they try to get the control in the 0.1 second that the control is not available yet.
+Note that this also makes for some very tricky debugging which requires a decent amount of logging.</li>
+</ul>
+<script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Regression_Retry.cs"></script>
+<p>Note that automation tests are usually linked strongly to a specific version of the software
+because the tests assume the availability of certain automation IDs and controls. Some parts are
+implicitly linked and others can be, but don't have to be, explicitly linked. Examples are:</p>
+<ul>
+<li>The application, product and company names can be shared through a configuration or shared code file:</li>
+</ul>
+<script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Regression_CompanyInformation.cs"></script>
+<ul>
+<li>Automation IDs can be shared via a shared code file. Note that application ID names should be
+pointing to a given area / functionality, not specific controls (Also note that in my case that's
+not always done the right way):</li>
+</ul>
+<script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Regression_AutomationID.cs"></script>
+<script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Explorer_MenuView.xaml"></script>
+<p>When executing the tests it is a good idea to reset your application state either at the end of each
+test or at the start of each test. Or even better both to make sure that you always start a test
+from the same state irrespective of the way the previous test ended, e.g. with an application crash.</p>
+<p>Finally do not give up if you find it hard to make the tests reliable. By continually improving the
+robustness of the test code eventually the tests will start to behave in the way you expect them
+too. Some <a href="http://www.mathpirate.net/log/2009/12/23/ui-automation-tricks-and-traps/">tricks and hacks</a>
+that I found necessary are:</p>
+<ul>
+<li>Time-outs while getting controls, setting values on controls or getting values from controls. While
+these are ugly they are sometimes necessary.</li>
+<li>For each test restart the application if at all possible so that you end up with a known application
+state. This will improve the repeatability of the tests. Note that if the application is slow to start
+up then you can either improve the start up performance of the application or if that is not possible
+then carefully combine tests but be aware that tests may fail due to polluted application state.</li>
+<li>Note that some application state survives restarts, e.g. user and application settings. It would
+be good if you have a way of resetting that state in a relatively sure-fire way. This is something
+I have not implemented yet though.</li>
+</ul>
+<p>And then the last comment must be that the development of these tests has been much more complicated
+than I thought it would be. The approach I used required some coding skills so this may or may not be
+suitable in other situations depending on the skill sets of the testers or developers.</p>
+
+    </div>
+
+    <div id="post-footer">
+        <div>
+    <div class="navlinks">
+                <a href="/posts/Regression-testing-console-applications" title="Previous Post: Regression testing of a console application" class="navlinks-prev">« Regression testing of a console application</a>
+                <a href="/posts/nAnicitus-Release-V015" title="Next Post: nAnicitus release - V0.1.5" class="navlinks-next">nAnicitus release - V0.1.5 »</a>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Regression-testing-gui-applications';
+    var disqus_title = 'GUI testing with TestStack.White';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Regression-testing-gui-applications';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <footer>
+            <div id="footer" class="container">
+    <div id="fbox1">
+        <h2>Related</h2>
+        <ul>
+            <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
+            <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
+            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
+        </ul>
+    </div>
+    <div id="fbox2">
+        <h2 id="copyright">Copyright</h2>
+        <p>Copyright (c) 2017 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
+
+        <h2 id="disclaimer">Disclaimer</h2>
+        <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
+    </div>
+    <div id="fbox3">
+        <h2 id="media">Media</h2>
+        <p><a href="/feed.atom"><img src="/assets/images/feed.png" alt="Atom feed"></a></p>
+    </div>
+</div>
+<div id="copyright" class="container">
+    <p>
+        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+    </p>
+    <p>
+        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+    </p>
+    <p>Generated by <a href="https://wyam.io" rel="nofollow">Wyam</a> on Wed, 11 Jan 2017 22:29:29 GMT.</p>
+</div>
+
+        </footer>
+    </body>
+</html>

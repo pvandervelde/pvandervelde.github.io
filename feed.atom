@@ -1,0 +1,2239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<link rel="self" href="https://www.petrikvandervelde.nl/" />
+	<id>https://www.petrikvandervelde.nl/</id>
+	<title>Mind vortex</title>
+	<rights>2017</rights>
+	<updated>2017-01-11T09:29:30Z</updated>
+	<subtitle>Welcome!</subtitle>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Updating-blog-to-wyam" />
+		<id>https://www.petrikvandervelde.nl/posts/Updating-blog-to-wyam</id>
+		<title>Exit Docpad, enter Wyam</title>
+		<updated>2017-01-11T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Exit Docpad, enter Wyam&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Wednesday, 11 January 2017
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/blog" class="btn btn-default btn-xs"&gt;Blog&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;After not having done anything with my blog for over a year I have returned and will once again try
+to make this blogging thing happen. Part of my goals for 2017 is to start advancing my career
+independent from my job. And one part of that goal is to blog about all the things I'm learning.&lt;/p&gt;
+&lt;p&gt;For about a year and a half &lt;a href="http://docpad.org/"&gt;Docpad&lt;/a&gt; has been very helpful in adding content to
+my blog, however as I was trying to automate my blog more and more I came to the conclusion that
+being on a Windows operating system doesn't make dealing with node and NPM any easier. So I figured
+it might make sense to switch to a &lt;a href=""&gt;static generator&lt;/a&gt; which uses technologies that play better on
+Windows. Enter &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;, a static generator written in .NET, a technology stack
+I'm very familiar with.&lt;/p&gt;
+&lt;h3&gt;Getting started&lt;/h3&gt;
+&lt;p&gt;To get started with Wyam I downloaded the latest version and generated a skeleton directory structure
+by running the &lt;code&gt;wyam.exe new --recipe Blog&lt;/code&gt; command. Once the skeleton has been created you can
+create the pages by running &lt;code&gt;wyam.exe -r Blog -t CleanBlog&lt;/code&gt;, and to create and be able to view
+the pages you can execute &lt;code&gt;wyam -r Blog -t CleanBlog -p&lt;/code&gt;. These commands assume that you store
+your blog source in the &lt;code&gt;input&lt;/code&gt; directory and that the website pages should be placed in the
+&lt;code&gt;output&lt;/code&gt; directory. This however is where the build engineer in me started making
+disapproving sounds so I changed the input and output folders by specifying the appropriate command line
+parameters to make it happy again&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wyam.exe --input src --output build\site -r Blog -t CleanBlog -p
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Good that is much more inline with the standard paths used by &lt;a href="/projects/nbuildkit"&gt;nBuildKit&lt;/a&gt;.
+Another change that needs to be made is where Wyam stores the NuGet packages. Normally Wyam stores
+those in a global location, however I strongly feel that builds should always only write to their
+local workspaces, so lets redirect the packages to a folder that is local to the workspaces&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wyam.exe --input src --output build\site --use-local-packages --packages-path packages -r Blog -t CleanBlog -p
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That command line is getting longer but we can make it shorter again by moving some of the
+standard items into the &lt;a href="https://wyam.io/docs/usage/configuration"&gt;Wyam configuration file&lt;/a&gt;, so
+I created a &lt;code&gt;config.wyam&lt;/code&gt; file in the root of the workspace and added the following lines&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;// Preprocessor directives
+#recipe Blog
+#theme CleanBlog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And with this the command line to generate the website and start a local webserver is&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wyam.exe --input src --output build\site --use-local-packages --packages-path packages
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Moving the existing content&lt;/h3&gt;
+&lt;p&gt;Moving the existing content from the Docpad generated site to the Wyam generated site required a bit
+of work although the initial results were quite easy to achieve. I started off moving the
+post files to the &lt;code&gt;posts&lt;/code&gt; directory and updating all the files to be named so that Wyam is able
+to extract the date and time from the file name. In order for that to work Wyam wants the file
+name to follow the naming convention &lt;code&gt;&amp;lt;YEAR&amp;gt;-&amp;lt;MONTH&amp;gt;-&amp;lt;DAY&amp;gt;-&amp;lt;TITLE&amp;gt;.md&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The next step was to update the front matter in the post files. Wyam would like to see the
+following format:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Title: &amp;lt;POST_TITLE_GOES_HERE&amp;gt;
+Tags:
+  - &amp;lt;TAG_1&amp;gt;
+  - &amp;lt;TAG_2&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With this done Wyam can generate a website with blog posts with the correct titles and dates. This
+is a good start. Next are the non-post pages, like the &lt;a href="/"&gt;home page&lt;/a&gt; and the &lt;a href="/projects"&gt;project pages&lt;/a&gt;.
+These can simply be dropped in the desired directory. Wyam will automatically generate HTML pages
+from any Markdown file and simply copy the other files (like the favicon etc.). Any non-blog post
+pages will show up in the menu bar so for all pages that should not show up in the menu bar you can
+add the &lt;code&gt;ShowInNavBar: false&lt;/code&gt; entry in the page front matter like so:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Title: My page that shouldn't show up in the NavBar
+ShowInNavBar: false
+---
+# Content
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once that was done I created &lt;a href="https://wyam.io/recipes/blog/themes"&gt;overrides&lt;/a&gt; for&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The page and post footers by creating the &lt;code&gt;_Footer.cshml&lt;/code&gt; and &lt;code&gt;_PostFooter.cshtml&lt;/code&gt; files. The page
+footer was straight forward but the post footer required some additional work to get the links
+to the previous and next post to function correctly. Fortunately &lt;a href="https://daveaglick.com/"&gt;Dave Glick&lt;/a&gt;
+was very helpful on the &lt;a href="https://gitter.im/Wyamio/Wyam"&gt;gitter&lt;/a&gt; page for Wyam and pointed out
+that there are collections that you can iterate over to find out what the previous and
+next posts are.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script src="https://gist.github.com/pvandervelde/d2825f2c5d67ab30d15ce179ced4b30f.js"&gt;&lt;/script&gt;
+&lt;ul&gt;
+&lt;li&gt;The sidebar which contains my little ‘about me’ blurp.&lt;/li&gt;
+&lt;li&gt;The navbar which by default orders pages alphabetically and does not contain a link to the home page.
+In my Docpad blog both those things are not true, so I did a bit of Razor coding and generated the
+navbar items myself&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script src="https://gist.github.com/pvandervelde/7645c478ae08c94d3716ca8e8ad41c4c.js"&gt;&lt;/script&gt;
+&lt;p&gt;These changes got most of the pages looking pretty close to what they should be, but yet not quite
+the same as it was.&lt;/p&gt;
+&lt;h3&gt;Tweaking&lt;/h3&gt;
+&lt;p&gt;If you don't have an existing layout for your blog or you don't mind changing the layout then
+after the previous steps you should have a very nice looking blog that works just fine. However it
+turns out I'm stuborn and specific in the way I want things to look. In this case I wanted my blog
+to not look any different than the existing one does, at least for the time being. So that meant
+I had to do a fair amount of tweaking.&lt;/p&gt;
+&lt;p&gt;The first major tweak was to get the sidebar looking like it should. This turned out to be a little
+harder than I expected because it required overriding the &lt;code&gt;_Layout.cshtml&lt;/code&gt; page. While this is a
+bigger step than the other overrides it also meant I was able to make the pages look exactly like
+I wanted and I was able to re-use my CSS files.&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/5e3520e0f150176f529b1972fc2042a7.js"&gt;&lt;/script&gt;
+&lt;p&gt;One of the more tricky parts was to generate a list of the last 10 posts. Originally I was using
+the list of posts, however because this is the layout page that is used for all pages it might
+well be that some pages are generated before the full post list is available (say hello to the
+&lt;a href="/tags"&gt;tags&lt;/a&gt; pages). Once again Dave Glick came through and pointed me to the &lt;a href="https://wyam.io/recipes/blog/pipelines"&gt;RawPosts&lt;/a&gt;
+collection which is generated right at the beginning of the cycle.&lt;/p&gt;
+&lt;p&gt;Once the issues with the sidebar were resolved the next step was to show the last five blog posts
+on the home page. By default Wyam will place excepts on the home page with a link to the actual post
+in the post title. However what I wanted was the full post, excluding the comment section. Once again
+the &lt;code&gt;RawPosts&lt;/code&gt; collection came to the rescue which allowed me to iterate over the last five posts
+and get their pre-rendered content.&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/d0d83eb2c636a5d3b63b5bf0cce6029c.js"&gt;&lt;/script&gt;
+&lt;p&gt;Some additional hacking also allowed me to reuse the &lt;code&gt;_PostHeader.cshtml&lt;/code&gt; file for both the posts
+on the home page, for which the title links to the actual post page, and for the post page in which
+the title is just a header.&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/465c0a2399f135a25e656b0d15c1866a.js"&gt;&lt;/script&gt;
+&lt;p&gt;With these changes the blog looks (almost) exactly like it used to look except that it is now
+being generated by &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;. All in all I have to say I'm pretty happy with the result
+and with how easy it was to move from Docpad to Wyam. And as a bonus I understand much more of
+how Wyam works and how my own blog is generated.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/nBuildKit-release-V051" title="Previous Post: nBuildKit release - V0.5.1" class="navlinks-prev"&gt;« nBuildKit release - V0.5.1&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Updating-blog-to-wyam';
+    var disqus_title = 'Exit Docpad, enter Wyam';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Updating-blog-to-wyam';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/nBuildKit-release-V051" />
+		<id>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V051</id>
+		<title>nBuildKit release - V0.5.1</title>
+		<updated>2015-05-23T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+nBuildKit release - V0.5.1&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Saturday, 23 May 2015
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Version &lt;a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.5.1"&gt;V0.5.1&lt;/a&gt; of the &lt;a href="/projects/nbuildkit.html"&gt;nBuildKit&lt;/a&gt;
+build library has been released.&lt;/p&gt;
+&lt;p&gt;This release adds the following features&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/91"&gt;91&lt;/a&gt;: MsBuild.Projects: Common.props should
+do a more extensive search for settings.props&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/90"&gt;90&lt;/a&gt;: MsBuild: Allow pushing symbols via
+NuGet enhancement&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/89"&gt;89&lt;/a&gt;: MsBuild: Allow assembly versioning to
+be more custom defined.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/87"&gt;87&lt;/a&gt;: MsBuild: Rename template files to have
+normal extension&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/86"&gt;86&lt;/a&gt;: MsBuild: Rename the DirMsBuildShared,
+DirMsBuildExtensions and DirMsBuildTemplates properties enhancement&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/85"&gt;85&lt;/a&gt;: Unable to build projects which have a
+mixture of target frameworks&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/83"&gt;83&lt;/a&gt;: MsBuild: Allow PreCleanScripts and
+PreCompilationScripts to define their own properties&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/82"&gt;82&lt;/a&gt;: MsBuild: Update the Sample custom
+version files to match the current version gathering capabilities&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/80"&gt;80&lt;/a&gt;: MsBuild: Combine top-level build.msbuild,
+deploy.msbuild and shared.locatenbuildkit.msbuild&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/78"&gt;78&lt;/a&gt;: MsBuild: Automatically include NuGet
+dependencies if nuspec is in same directory as project&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/72"&gt;72&lt;/a&gt;: MsBuild: Define default directory
+paths only in settings.props file&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/68"&gt;68&lt;/a&gt;: Improve inline documentation of
+settings.props file&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/66"&gt;66&lt;/a&gt;: MsBuild: Provide initialization/installation
+scripts for an empty workspace&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/55"&gt;55&lt;/a&gt;: MsBuild: Allow assembly copyright to be
+more custom defined&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/22"&gt;22&lt;/a&gt;: MsBuild: Allow each file to have their
+own base directory when creating ZIP archives&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/19"&gt;19&lt;/a&gt;: MsBuild.Projects: Provide scripts for
+Visual Basic projects&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And fixes the following issues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/92"&gt;92&lt;/a&gt;: MsBuild.Projects: GetVersion, VcsInfo and
+Generate files also run when they're disabled in the settings.props file&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/88"&gt;88&lt;/a&gt;: MsBuild.Projects: Excessive NuGet
+restore of global packages&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/84"&gt;84&lt;/a&gt;: Not compatible with ncrunch&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/54"&gt;54&lt;/a&gt;: MsBuild: First space trimmed from
+release note content&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Finally the following tasks were completed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/7"&gt;7&lt;/a&gt;: MsBuild: Set up tests&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/nBuildKit-release-V041" title="Previous Post: nBuildKit release - V0.4.1" class="navlinks-prev"&gt;« nBuildKit release - V0.4.1&lt;/a&gt;
+                &lt;a href="/posts/Updating-blog-to-wyam" title="Next Post: Exit Docpad, enter Wyam" class="navlinks-next"&gt;Exit Docpad, enter Wyam »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'nBuildKit-release-V051';
+    var disqus_title = 'nBuildKit release - V0.5.1';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V051';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/nBuildKit-release-V041" />
+		<id>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V041</id>
+		<title>nBuildKit release - V0.4.1</title>
+		<updated>2014-11-30T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+nBuildKit release - V0.4.1&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Sunday, 30 November 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Version &lt;a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.4.1"&gt;V0.4.1&lt;/a&gt; of the
+&lt;a href="/projects/nbuildkit.html"&gt;nBuildKit&lt;/a&gt; build library has been released.&lt;/p&gt;
+&lt;p&gt;This release introduces the ability to &lt;a href="https://github.com/pvandervelde/nBuildKit/issues/44"&gt;mix custom build steps&lt;/a&gt;
+with the default provided ones in &lt;a href="https://github.com/pvandervelde/nBuildKit/issues/47"&gt;any order&lt;/a&gt;
+that is desired. On top of that additional changes were made that now make it possible to build
+&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/46"&gt;multiple Visual Studio solutions&lt;/a&gt; in a specific
+order.&lt;/p&gt;
+&lt;p&gt;Finally the user can provide one or more scripts that will be called if the build or the deploy process
+&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/48"&gt;fails&lt;/a&gt;. These scripts can be used to clean-up
+resources or provide notification on build failure. Do note that any failure in these scripts will
+lead to the immediate termination of the process.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Creating-azure-vm-images-with-powershell" title="Previous Post: Creating Azure VM images with Powershell" class="navlinks-prev"&gt;« Creating Azure VM images with Powershell&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V051" title="Next Post: nBuildKit release - V0.5.1" class="navlinks-next"&gt;nBuildKit release - V0.5.1 »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'nBuildKit-release-V041';
+    var disqus_title = 'nBuildKit release - V0.4.1';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V041';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Creating-azure-vm-images-with-powershell" />
+		<id>https://www.petrikvandervelde.nl/posts/Creating-azure-vm-images-with-powershell</id>
+		<title>Creating Azure VM images with Powershell</title>
+		<updated>2014-11-10T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Creating Azure VM images with Powershell&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Monday, 10 November 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/azure" class="btn btn-default btn-xs"&gt;Azure&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/powershell" class="btn btn-default btn-xs"&gt;Powershell&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;As part of a new &lt;a href="https://github.com/pvandervelde/azure-jenkins"&gt;project&lt;/a&gt; to create a
+&lt;a href="http://jenkins-ci.org/"&gt;Jenkins CI server&lt;/a&gt; on Azure I am writing a set of powershell scripts to
+control virtual machines on Azure. For this project the plan is to use virtual machine (VM) images
+as a template for an &lt;a href="http://martinfowler.com/bliki/ImmutableServer.html"&gt;‘immutable server’&lt;/a&gt; that
+will contain the Jenkins instance.&lt;/p&gt;
+&lt;p&gt;Now the actual server isn't really ‘immutable’ given that the jenkins instance will update, add and
+delete files on the hard drive which will obviously change the state of the server. As such the immutable
+idea isn't applied to the whole server but more to the configuration part of the server. The idea being
+that the configuration of the server will not be changed once the server is put in production. Any
+configuration changes (e.g. a new version of Jenkins) will be done by creating a new image, spinning
+up a new server based on that image and then destroying the old server and replacing it with the
+new one.&lt;/p&gt;
+&lt;p&gt;So in order to achieve this goal the first step will be to build an image with all the required
+software on it and then verify that this image has indeed been created correctly.&lt;/p&gt;
+&lt;p&gt;To create the image we first obtain a certificate that can be used for the WinRM SSL connection between
+the Azure VM and the local machine that is executing the creation scripts. You can either get an official
+one or you can use a self-signed certificate (which is obviously less secure). Two things of
+interest are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The certificate needs to have an &lt;a href="http://consultingblogs.emc.com/gracemollison/archive/2010/02/19/creating-and-using-self-signed-certificates-for-use-with-azure-service-management-api.aspx"&gt;exportable&lt;/a&gt;
+private key because otherwise it cannot be used for the WinRM connection.&lt;/li&gt;
+&lt;li&gt;The certificate needs to be named after the connection that you expect to make. For a connection to
+an Azure VM this will most likely be something like &lt;code&gt;&amp;lt;RESOURCE_GROUP_NAME&amp;gt;.cloudapp.net&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Once the certificate is installed in the user certificate store we can create a new virtual machine
+from a given base image, e.g. a Windows 2012 R2 server image. The following powershell function creates
+a new windows VM with a WinRM endpoint with the certificate that was created earlier. Note that the
+&lt;a href="http://msdn.microsoft.com/en-us/library/dn495254.aspx"&gt;&lt;code&gt;New-AzureVM&lt;/code&gt;&lt;/a&gt; function can create resource
+and storage groups for the new VM if you don't specify a storage account and a matching resource group.&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/1153f249115780ed2b99.js"&gt;&lt;/script&gt;
+&lt;p&gt;Once the VM is running a new Powershell remote session can be opened to the machine in order to start
+the configuration of the machine. Note that this approach only seems to be working for &lt;code&gt;https&lt;/code&gt; connections
+because the &lt;code&gt;Get-AzureWinRMUri&lt;/code&gt; function only returns the &lt;code&gt;https&lt;/code&gt; URI. Hence the need for a certificate
+that can be used to secure the connection.&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/eb6e28934d5fd16fe186.js"&gt;&lt;/script&gt;
+&lt;p&gt;The next step is to copy all the installer files and configuration scripts to the VM. This can be
+done over the &lt;a href="http://measureofchaos.wordpress.com/2012/09/26/copying-files-via-powershell-remoting-channel/"&gt;remoting channnel&lt;/a&gt;.&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/b2f5b4156e5efe67f495.js"&gt;&lt;/script&gt;
+&lt;p&gt;Once all the required files have been copied to the VM the configuration of the machine can be started.
+This can be done in many different ways, e.g through the use of a &lt;a href="https://www.getchef.com/"&gt;configuration&lt;/a&gt;
+&lt;a href="http://puppetlabs.com/"&gt;management&lt;/a&gt; &lt;a href="http://technet.microsoft.com/en-us/library/dn249912.aspx"&gt;tool&lt;/a&gt;
+or just via the use of plain old scripts. When the configuration is complete and all the necessary
+clean-up has been done the time has come to turn the VM into an image. Before doing that a Windows
+machine will have to be &lt;a href="http://en.wikipedia.org/wiki/Sysprep"&gt;sysprepp'ed&lt;/a&gt; so that there are no
+unique identifiers in the image (and thus in the copies).&lt;/p&gt;
+&lt;p&gt;In order to sysprep an Azure VM it is necessary to execute the sysprep command through a script on the
+VM because sysprep &lt;a href="http://blogs.msdn.com/b/brocode/archive/2014/06/20/how-to-automate-sysprep-of-an-iaas-vm-on-microsoft-azure.aspx"&gt;fails&lt;/a&gt;
+if the command is given directly through the remoting channel. The following function creates a new
+Powershell script which invokes sysprep, copies that to the VM and then executes that script. Once
+sysprep has completed running the machine will be turned off and an image can be created.&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/b2f5b4156e5efe67f495.js"&gt;&lt;/script&gt;
+&lt;p&gt;The next step is to test the new image in order to verify that all configuration changes have been
+applied correctly. The explanation of how the testing of an virtual machine image works is a topic
+for the next blog post.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor" title="Previous Post: Building and delivering nBuildKit with AppVeyor" class="navlinks-prev"&gt;« Building and delivering nBuildKit with AppVeyor&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V041" title="Next Post: nBuildKit release - V0.4.1" class="navlinks-next"&gt;nBuildKit release - V0.4.1 »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Creating-azure-vm-images-with-powershell';
+    var disqus_title = 'Creating Azure VM images with Powershell';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Creating-azure-vm-images-with-powershell';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Building-and-delivering-nBuildKit-with-AppVeyor" />
+		<id>https://www.petrikvandervelde.nl/posts/Building-and-delivering-nBuildKit-with-AppVeyor</id>
+		<title>Building and delivering nBuildKit with AppVeyor</title>
+		<updated>2014-09-27T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Building and delivering nBuildKit with AppVeyor&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Saturday, 27 September 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/appveyor" class="btn btn-default btn-xs"&gt;AppVeyor&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/continous-integration" class="btn btn-default btn-xs"&gt;Continous integration&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/software-delivery" class="btn btn-default btn-xs"&gt;Software delivery&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;The build server that is being used to build the packages for &lt;a href="/projects/nbuildkit.html"&gt;nBuildKit&lt;/a&gt;
+is &lt;a href="http://www.appveyor.com/"&gt;AppVeyor&lt;/a&gt;. AppVeyor is an Continuous Integration system in the cloud.
+The way AppVeyor works is that every time a commit occurs in a GitHub project AppVeyor is notified.
+AppVeyor then spins up a new clean virtual machine (VM) on which your build scripts are executed.
+Once the build is done the VM is terminated and thrown away. This way there is no way that the
+changes made to the build environment by a build will influence future builds.&lt;/p&gt;
+&lt;p&gt;For nBuildKit two builds were configured. The first configuration is the standard
+&lt;a href="https://ci.appveyor.com/project/pvandervelde/nbuildkit"&gt;continuous integration&lt;/a&gt; build which generates
+the version numbers and templates and then creates the NuGet packages. As the final step the build
+artefacts are archived for later use by the second build configuration.
+For this configuration no special settings are required other then to tell AppVeyor to store the artifacts.&lt;/p&gt;
+&lt;p&gt;The second build configuration handles the &lt;a href="https://ci.appveyor.com/project/pvandervelde/nbuildkit-244"&gt;delivery&lt;/a&gt;
+of the artefacts. This configuration gathers the build artefacts from the latest build of the first
+build configuration, tags the revision that was build and then pushes the NuGet packages to
+&lt;a href="http://www.nuget.org/packages/nbuildkit.msbuild"&gt;NuGet.org&lt;/a&gt; and marks the given commit as a release
+in &lt;a href="https://github.com/pvandervelde/nBuildKit/releases"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For this second configuration a few tweaks need to be made to the environment before the build can be
+executed. The first thing to do is to install the &lt;a href="https://github.com/aktau/github-release"&gt;GitHub-release&lt;/a&gt;
+application which provides an easy way to push release information to github. A simple Powershell
+script is used to set-up this part of the environment:&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/77bd834239d9f67c40d7.js"&gt;&lt;/script&gt;
+&lt;p&gt;Once all the required tools are installed the artefacts of the selected continuous integration build
+need to be downloaded and placed in the correct directories. For that yet another Powershell script
+is used:&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/9cf270ef5266b18a1ac9.js"&gt;&lt;/script&gt;
+&lt;p&gt;Once all the artefacts are restored the delivery process can be executed. For nBuildKit the delivery
+process is executed by nBuildKit itself in the standard dogfooding approach that is so well known in
+the software business.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/nBuildKit-release-V032" title="Previous Post: nBuildKit release - V0.3.2" class="navlinks-prev"&gt;« nBuildKit release - V0.3.2&lt;/a&gt;
+                &lt;a href="/posts/Creating-azure-vm-images-with-powershell" title="Next Post: Creating Azure VM images with Powershell" class="navlinks-next"&gt;Creating Azure VM images with Powershell »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Building-and-delivering-nBuildKit-with-AppVeyor';
+    var disqus_title = 'Building and delivering nBuildKit with AppVeyor';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Building-and-delivering-nBuildKit-with-AppVeyor';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/nBuildKit-release-V032" />
+		<id>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V032</id>
+		<title>nBuildKit release - V0.3.2</title>
+		<updated>2014-08-19T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+nBuildKit release - V0.3.2&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Tuesday, 19 August 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Version &lt;a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.3.2"&gt;V0.3.2&lt;/a&gt; of the
+&lt;a href="/projects/nbuildkit.html"&gt;nBuildKit&lt;/a&gt; build library has been released.&lt;/p&gt;
+&lt;p&gt;This release introduces a version provider using &lt;a href="https://github.com/Particular/GitVersion"&gt;GitVersion&lt;/a&gt;
+and a custom version provider that can be implemented by a user. On top of that the
+&lt;a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.Common/"&gt;nBuildKit.MsBuild.Projects.Common&lt;/a&gt;
+and &lt;a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.Common.Net/"&gt;nBuildKit.MsBuild.Projects.Common.Net&lt;/a&gt;
+packages have been merged with the &lt;a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.CSharp/"&gt;C#&lt;/a&gt;
+and &lt;a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.WiX/"&gt;WiX&lt;/a&gt; packages.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Adding-pagination-with-DocPad" title="Previous Post: Adding pagination with DocPad" class="navlinks-prev"&gt;« Adding pagination with DocPad&lt;/a&gt;
+                &lt;a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor" title="Next Post: Building and delivering nBuildKit with AppVeyor" class="navlinks-next"&gt;Building and delivering nBuildKit with AppVeyor »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'nBuildKit-release-V032';
+    var disqus_title = 'nBuildKit release - V0.3.2';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V032';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Adding-pagination-with-DocPad" />
+		<id>https://www.petrikvandervelde.nl/posts/Adding-pagination-with-DocPad</id>
+		<title>Adding pagination with DocPad</title>
+		<updated>2014-07-26T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Adding pagination with DocPad&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Saturday, 26 July 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/blog" class="btn btn-default btn-xs"&gt;Blog&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/docpad" class="btn btn-default btn-xs"&gt;DocPad&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Last year when I started this blog I decided to keep the layout as simple as possible, hence all
+the posts were just added to the home page and to their own page. Over time as more posts were
+written the home page got larger and larger making it slower to load and more difficult to navigate.
+In order to improve this &lt;a href="https://github.com/pvandervelde/mindvortex/commit/9472ad503725eb42d98e30b6c4452d2b6766b344"&gt;pagination&lt;/a&gt;
+of the home page was introduced.&lt;/p&gt;
+&lt;p&gt;Once again &lt;a href="http://docpad.org/"&gt;DocPad&lt;/a&gt; makes this very easy because all you have to do is add the
+&lt;a href="https://github.com/docpad/docpad-plugin-paged"&gt;DocPad-paged&lt;/a&gt; plugin and then update the documents
+you want to split. In the case of this blog only the index page needed to be split. The new index
+page now looks like this:&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/26f698e7c7099033188f.js"&gt;&lt;/script&gt;
+&lt;p&gt;In order to make the paged plugin do its work the following ‘properties’ were added to the header:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;isPaged&lt;/strong&gt; - Indicates that the document should be broken up into multiple pages.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;pageCollection&lt;/strong&gt; - The collection from which the sub-documents that will fill up the current page are taken.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;pageSize&lt;/strong&gt; - The number of sub-documents per page&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Finally two buttons were added to the bottom of the page to naviage to he newer and the older posts.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Blog-archives-by-DocPad" title="Previous Post: Blog archives by DocPad" class="navlinks-prev"&gt;« Blog archives by DocPad&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V032" title="Next Post: nBuildKit release - V0.3.2" class="navlinks-next"&gt;nBuildKit release - V0.3.2 »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Adding-pagination-with-DocPad';
+    var disqus_title = 'Adding pagination with DocPad';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Adding-pagination-with-DocPad';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Blog-archives-by-DocPad" />
+		<id>https://www.petrikvandervelde.nl/posts/Blog-archives-by-DocPad</id>
+		<title>Blog archives by DocPad</title>
+		<updated>2014-07-24T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Blog archives by DocPad&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Thursday, 24 July 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/blog" class="btn btn-default btn-xs"&gt;Blog&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/docpad" class="btn btn-default btn-xs"&gt;DocPad&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;A while ago I decided that it was time to add an &lt;a href="/archives.html"&gt;archive&lt;/a&gt; page to the website so
+that there would be a place to get a quick overview of all the posts that I have written. Fortunately
+setting up an archive page with &lt;a href="http://docpad.org/"&gt;DocPad&lt;/a&gt; is relatively &lt;a href="https://github.com/pvandervelde/mindvortex/commit/31698aa10fd205f41999e0b89792744a2bb8b82b"&gt;simple&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The first step to take was to add a new layout for the archive page.&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/b7434bc8a1b7eb240da9.js"&gt;&lt;/script&gt;
+&lt;p&gt;The layout gets the list of all posts and iterates over them in chronological order. All the posts
+for one year are grouped together under a header titled after the year. In keeping with the layout
+of the rest of the site each post gets a title, the day and month and the tags that belong to that
+post. In order for this specific layout to work you will need to add the &lt;code&gt;moment&lt;/code&gt; node.js package&lt;/p&gt;
+&lt;p&gt;The layout and the CSS for the archive page is heavily based on the layout created by &lt;a href="http://www.jptacek.com/"&gt;John Ptacek&lt;/a&gt;.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/nBuildKit-release-V024" title="Previous Post: nBuildKit release - V0.2.4" class="navlinks-prev"&gt;« nBuildKit release - V0.2.4&lt;/a&gt;
+                &lt;a href="/posts/Adding-pagination-with-DocPad" title="Next Post: Adding pagination with DocPad" class="navlinks-next"&gt;Adding pagination with DocPad »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Blog-archives-by-DocPad';
+    var disqus_title = 'Blog archives by DocPad';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Blog-archives-by-DocPad';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/nBuildKit-release-V024" />
+		<id>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V024</id>
+		<title>nBuildKit release - V0.2.4</title>
+		<updated>2014-07-21T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+nBuildKit release - V0.2.4&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Monday, 21 July 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Version &lt;a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.2.4"&gt;V0.2.4&lt;/a&gt; of the
+&lt;a href="/projects/nbuildkit.html"&gt;nBuildKit&lt;/a&gt; build library has been released.&lt;/p&gt;
+&lt;p&gt;This release introduces NuGet packages that allow Visual Studio &lt;a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.CSharp/"&gt;C#&lt;/a&gt;
+and &lt;a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.WiX/"&gt;WiX&lt;/a&gt; projects to share a common
+configuration including code analysis and strong naming capabilities and to generate one or more source
+files before building the project.&lt;/p&gt;
+&lt;p&gt;Both packages provide the ability to share a configuration between multiple projects in a Visual Studio
+solution. The shared configuration can contain items like Debug and Release settings, targeted .NET
+framework, code analysis settings and many other options.&lt;/p&gt;
+&lt;p&gt;Beyond that the C# NuGet package provides capabilities to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Generate &lt;code&gt;AssemblyInfo.XXXX.cs&lt;/code&gt; files for:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;AssemblyInfo.VersionNumber.cs&lt;/code&gt; contains the version numbers for the project as determined by
+nBuildKit from the versioning strategies provided. Currently supported are either a version number
+provided through an MsBuild project file or through &lt;a href="https://github.com/JakeGinnivan/GitHubFlowVersion"&gt;GitHubFlowVersion&lt;/a&gt;.
+By allowing nBuildKit to generate the &lt;code&gt;AssemblyInfo.VersionNumber.cs&lt;/code&gt; file it is possible to
+automatically version the binaries the same way as all other artifacts, e.g. NuGet packages,
+installers, documentation etc. etc.. The version number is currently provided through the
+&lt;a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblyversionattribute(v=vs.110).aspx"&gt;AssemblyVersionAttribute&lt;/a&gt; as &lt;code&gt;Major.Minor.0.0&lt;/code&gt;; through the
+&lt;a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblyfileversionattribute(v=vs.110).aspx"&gt;AssemblyFileVersionAttribute&lt;/a&gt; as &lt;code&gt;Major.Minor.Patch.Build&lt;/code&gt;;
+and through the &lt;a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblyinformationalversionattribute(v=vs.110).aspx"&gt;AssemblyInformationalVersionAttribute&lt;/a&gt;
+as the full &lt;a href="http://semver.org/"&gt;semantic version&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AssemblyInfo.BuildInformation.cs&lt;/code&gt; contains information about the current build of the binaries.
+This includes the configuration, e.g. Release; the date and time that the binary was compiled
+and information describing the build number and the commit number that were used to generate
+the binaries.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AssemblyInfo.InternalsVisibleTo.cs&lt;/code&gt; contains the &lt;a href="http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute(v=vs.110).aspx"&gt;InternalsVisibleToAttribute&lt;/a&gt;
+values for any assemblies that should have access to the internals of the current assembly for
+purposes of unit testing.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AssemblyInfo.Company.cs&lt;/code&gt; contains the information describing the ‘company’ that created the binaries.
+The information includes the &lt;a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblycompanyattribute(v=vs.110).aspx"&gt;AssemblyCompanyAttribute&lt;/a&gt; and the &lt;a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblycopyrightattribute(v=vs.110).aspx"&gt;AssemblyCopyrightAttribute&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Generate a &lt;code&gt;CompanyInformation.cs&lt;/code&gt; source file that contains an internal static class providing
+constants for the company name and the company URL.&lt;/li&gt;
+&lt;li&gt;Generate a &lt;code&gt;ProductInformation.cs&lt;/code&gt; source file that contains an internal static class providing
+constants for the name of the product.&lt;/li&gt;
+&lt;li&gt;Generate an &lt;code&gt;app.manifest&lt;/code&gt; file with the current project version number.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And the WiX NuGet package provides capabilities to&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Generate a &lt;code&gt;VersionNumber.wxi&lt;/code&gt; WiX include file that contains the version numbers for the application
+and the installer.&lt;/li&gt;
+&lt;li&gt;Generate a &lt;code&gt;CompanyInformation.wxi&lt;/code&gt; WiX include file that contains the name and URL of the company
+that produces the product.&lt;/li&gt;
+&lt;li&gt;Generate a &lt;code&gt;ProductInformation.wxi&lt;/code&gt; WiX include file that contains the name and description of
+the product.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The generation of all of these files can be enabled through a setting in the &lt;code&gt;settings.props&lt;/code&gt; file
+that is also used by the &lt;a href="https://www.nuget.org/packages/nBuildKit.MsBuild/"&gt;nBuildKit.MsBuild&lt;/a&gt;
+NuGet package&lt;/p&gt;
+&lt;p&gt;The documentation for this library can be found on the nBuildKit &lt;a href="https://github.com/pvandervelde/nBuildKit/wiki/MsBuild"&gt;wiki&lt;/a&gt;&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/nBuildKit-release-V015" title="Previous Post: nBuildKit release - V0.1.5" class="navlinks-prev"&gt;« nBuildKit release - V0.1.5&lt;/a&gt;
+                &lt;a href="/posts/Blog-archives-by-DocPad" title="Next Post: Blog archives by DocPad" class="navlinks-next"&gt;Blog archives by DocPad »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'nBuildKit-release-V024';
+    var disqus_title = 'nBuildKit release - V0.2.4';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V024';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/nBuildKit-release-V015" />
+		<id>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V015</id>
+		<title>nBuildKit release - V0.1.5</title>
+		<updated>2014-06-16T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+nBuildKit release - V0.1.5&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Monday, 16 June 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Version &lt;a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.1.5"&gt;V0.1.5&lt;/a&gt; of the &lt;a href="/projects/nbuildkit.html"&gt;nBuildKit&lt;/a&gt;
+build library has been released.&lt;/p&gt;
+&lt;p&gt;This first release introduces the &lt;a href="https://www.nuget.org/packages/nBuildKit.MsBuild/0.1.5"&gt;MsBuild&lt;/a&gt;
+NuGet package. This package contains build scripts that provide the ability to perform a complete build
+consisting of workspace preparation, compilation of binaries, execution of unit tests, analysis of
+source code and binaries and finally packing of the binaries as NuGet packages or ZIP archives.
+The &lt;code&gt;nBuildKit.MsBuild&lt;/code&gt; NuGet package also provides scripts that can be used to tag a release in the
+version control system (VCS) and deploy the artifacts to a file server, NuGet feed or a GitHub release.&lt;/p&gt;
+&lt;p&gt;The documentation for this library can be found on the nBuildKit &lt;a href="https://github.com/pvandervelde/nBuildKit/wiki/MsBuild"&gt;wiki&lt;/a&gt;&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Nuclei-release-V080" title="Previous Post: Nuclei release - V0.8.0" class="navlinks-prev"&gt;« Nuclei release - V0.8.0&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V024" title="Next Post: nBuildKit release - V0.2.4" class="navlinks-next"&gt;nBuildKit release - V0.2.4 »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'nBuildKit-release-V015';
+    var disqus_title = 'nBuildKit release - V0.1.5';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V015';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Nuclei-release-V080" />
+		<id>https://www.petrikvandervelde.nl/posts/Nuclei-release-V080</id>
+		<title>Nuclei release - V0.8.0</title>
+		<updated>2014-05-28T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Nuclei release - V0.8.0&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Wednesday, 28 May 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nuclei" class="btn btn-default btn-xs"&gt;Nuclei&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Version &lt;a href="https://github.com/pvandervelde/Nuclei/releases/tag/0.8.0"&gt;V0.8.0&lt;/a&gt; of the
+&lt;a href="/projects/nuclei.html"&gt;Nuclei&lt;/a&gt; library has been released.&lt;/p&gt;
+&lt;p&gt;This release introduces a few large features to Nuclei.Communication library and adds some minor
+updates to the base Nuclei library.&lt;/p&gt;
+&lt;p&gt;The main focus of this release was adding version tolerance (&lt;a href="https://github.com/pvandervelde/Nuclei/issues/3"&gt;#3&lt;/a&gt;)
+to the different layers of the communication stack:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;The discovery layer&lt;/em&gt; - Provides ways to discover remote endpoints either automatically (via &lt;a href="http://msdn.microsoft.com/en-us/library/dd456782%28v=vs.110%29.aspx"&gt;WCF discovery&lt;/a&gt;)
+or manually.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;The protocol layer&lt;/em&gt; - Provides the means to send messages to one or more remote endpoints and
+handling the responses to those messages if they are expected.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;The interaction layer&lt;/em&gt; -  Provides an abstraction over the &lt;em&gt;protocol layer&lt;/em&gt; in the form of an
+proxy objects that provide user-defined methods which can be invoked on a remote endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In version 0.8.0 of the Nuclei.Communication library each of these layers now supports the ability
+to negotiate with a remote endpoint to determine which communication version will be used to exchange
+data between the endpoints. The  communication version which will be used is the highest (i.e. most
+recent) version that both endpoints support. If the endpoint do not support the same versions then
+communication will not be enabled between the endpoints.&lt;/p&gt;
+&lt;p&gt;The second focus was to improve the robustness of all the network activity. The main changes here were:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Nuclei/issues/7"&gt;#7&lt;/a&gt; - Detection of messages that have not received
+their response within a given time-out.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Nuclei/issues/11"&gt;#11&lt;/a&gt;, &lt;a href="https://github.com/pvandervelde/Nuclei/pull/17"&gt;#17&lt;/a&gt;,
+&lt;a href="https://github.com/pvandervelde/Nuclei/pull/18"&gt;#18&lt;/a&gt; - Method(s) to detect if a remote endpoint is
+still available and discard endpoint information if it is not.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Nuclei/issues/19"&gt;#19&lt;/a&gt;,
+&lt;a href="https://github.com/pvandervelde/Nuclei/issues/23"&gt;#23&lt;/a&gt; - Automatically rebuilding the communication
+channel if it faults during message sending and then resend the message that caused the faulting.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The final focus was on decoupling the interaction interfaces from their implementations. With these
+changes an endpoint does not need to provide concrete implementations of either the command
+(&lt;a href="https://github.com/pvandervelde/Nuclei/pull/6"&gt;#6&lt;/a&gt;) and notification (&lt;a href="https://github.com/pvandervelde/Nuclei/pull/31"&gt;#31&lt;/a&gt;)
+interfaces but can map the members on those interfaces to equivalent members on any given object.&lt;/p&gt;
+&lt;p&gt;Additionally it is now possible for some parameters on a command interface method (ie. the method
+on a command interface) and a command object method (i.e .the concrete instance method that is
+mapped to the given command) to contain parameters that have a special meaning. The available
+options are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For command interface methods (&lt;a href="https://github.com/pvandervelde/Nuclei/issues/23"&gt;#23&lt;/a&gt;)
+&lt;ul&gt;
+&lt;li&gt;Provision of a time-out indicating the maximum amount of time the endpoint should wait for a
+response to the command invocation request.&lt;/li&gt;
+&lt;li&gt;Provision of a retry count indicating the maximum number of times the endpoint should send the
+command invocation request should any errors occur during invocation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;For command instance methods (&lt;a href="https://github.com/pvandervelde/Nuclei/pull/28"&gt;#28&lt;/a&gt;)
+&lt;ul&gt;
+&lt;li&gt;Provision of the ID of the endpoint requesting the invocation of the command method.&lt;/li&gt;
+&lt;li&gt;Provision of the ID of the message that was send to request the invocation of the command method.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Finally the Nuclei library versioning was switched to use &lt;a href="http://semver.org/"&gt;semantic versioning&lt;/a&gt;.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Improvements-to-the-site" title="Previous Post: Improvements to the site" class="navlinks-prev"&gt;« Improvements to the site&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V015" title="Next Post: nBuildKit release - V0.1.5" class="navlinks-next"&gt;nBuildKit release - V0.1.5 »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Nuclei-release-V080';
+    var disqus_title = 'Nuclei release - V0.8.0';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Nuclei-release-V080';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Improvements-to-the-site" />
+		<id>https://www.petrikvandervelde.nl/posts/Improvements-to-the-site</id>
+		<title>Improvements to the site</title>
+		<updated>2014-05-23T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Improvements to the site&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Friday, 23 May 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/blog" class="btn btn-default btn-xs"&gt;Blog&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Over the last few days some changes were made to the structure of this website. Of these changes the
+first change that was made is in the move from the standard GitHub pages URL to my own custom domain
+provided by the amazingly helpful people at &lt;a href="https://dnsimple.com/"&gt;dnsimple&lt;/a&gt;. While the URL for this
+website has changed it is still being hosted by GitHub pages and so the old URL will continue working
+just fine.&lt;/p&gt;
+&lt;p&gt;The only slight catch is that the project pages for my projects now suddenly redirect through my new
+domain as well. Apparently this is due to the way GitHub &lt;a href="https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages#overview"&gt;handles&lt;/a&gt;
+custom domains. For now I will live with this situation but later on my personal projects may be
+moved to separate &lt;a href="https://help.github.com/articles/what-s-the-difference-between-user-and-organization-accounts"&gt;organisations&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The second change is the addition of pagination for the landing page. As I continued to write more
+blog posts this page was getting rather long and slow to load. The new landing page only contains the
+last five blog posts and provides a way to navigate to the previous posts at the bottom of the page.
+This should make the page much quicker to load. I will share the implementation of the pagination in
+a future blog post but for those who are interested the changes necessary to implement pagination in
+&lt;a href="https://github.com/docpad/docpad-plugin-paged/"&gt;DocPad&lt;/a&gt; are pretty minor and can be seen in a single
+&lt;a href="https://github.com/pvandervelde/mindvortex/commit/9472ad503725eb42d98e30b6c4452d2b6766b344"&gt;commit&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Besides setting up the pagination of the landing page I also created an &lt;a href="/archive.html"&gt;archive&lt;/a&gt;
+page which, logically, shows all the blog posts in chronological order. Again a future blog post will
+describe the necessary changes to include the archive page.&lt;/p&gt;
+&lt;p&gt;Last but not least the site has gotten a new &lt;a href="http://en.wikipedia.org/wiki/Favicon"&gt;favicon&lt;/a&gt; which is
+a little more vortex-y than the last icon.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Embedding-symbol-stream-in-pdb" title="Previous Post: Embedding a symbol stream in a PDB file" class="navlinks-prev"&gt;« Embedding a symbol stream in a PDB file&lt;/a&gt;
+                &lt;a href="/posts/Nuclei-release-V080" title="Next Post: Nuclei release - V0.8.0" class="navlinks-next"&gt;Nuclei release - V0.8.0 »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Improvements-to-the-site';
+    var disqus_title = 'Improvements to the site';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Improvements-to-the-site';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Embedding-symbol-stream-in-pdb" />
+		<id>https://www.petrikvandervelde.nl/posts/Embedding-symbol-stream-in-pdb</id>
+		<title>Embedding a symbol stream in a PDB file</title>
+		<updated>2014-05-19T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Embedding a symbol stream in a PDB file&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Monday, 19 May 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nanicitus" class="btn btn-default btn-xs"&gt;nAnicitus&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/pdb" class="btn btn-default btn-xs"&gt;PDB&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/source-server" class="btn btn-default btn-xs"&gt;Source server&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/srcsrv" class="btn btn-default btn-xs"&gt;SRCSRV&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/symbol-stream" class="btn btn-default btn-xs"&gt;Symbol stream&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/unc" class="btn btn-default btn-xs"&gt;UNC&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;The &lt;a href="/projects/nanicitus.html"&gt;nAnicitus&lt;/a&gt; application processes &lt;a href="http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-symbol-package"&gt;NuGet symbol&lt;/a&gt;
+packages to push the symbols and sources up to their respective location for the symbol and source
+servers to work. In order to have a symbol server nothing special needs to be done, just push the
+symbols through the &lt;a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx"&gt;SymStore&lt;/a&gt; application and a nice directory with indexed symbols
+is created. However in order to allow debuggers to obtain the source files related to a given PDB
+some manipulation of the PDB files is necessary. Specifically the SRCSRV stream in the PDB file needs
+to be &lt;a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff552219%28v=vs.85%29.aspx"&gt;modified&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The documentation gives a decent overview of how the source indexing works but it does not actually
+provide the information necessary to determine what should be written to the SRCSRV stream for a
+given PDB file. In fact if you want to know what information should be written to the SRCSRV stream
+if you want to store the indexed source files in a directory instead of getting them from your source
+control system then even the almighty &lt;a href="https://www.google.co.nz/webhp?tab=ww&amp;amp;ei=FwljU6S7J8byoATTxoLIAQ&amp;amp;ved=0CBMQ1S4#q=PDB+SRCSRV+UNC+VERSION%3D2"&gt;google&lt;/a&gt;
+is rather quiet.&lt;/p&gt;
+&lt;p&gt;In order to write to the SRCSRV stream one can use the &lt;a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff558874%28v=vs.85%29.aspx"&gt;PDBStr utility&lt;/a&gt;. However that
+still leaves the question of what to write to the stream. The &lt;a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms680641%28v=vs.85%29.aspx"&gt;source server documentation&lt;/a&gt;
+provides examples for &lt;a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff551958%28v=vs.85%29.aspx"&gt;VERSION 1&lt;/a&gt; streams, i.e. the kind that point the debugger to a
+source control (VCS) command. If however you want to store symbols and sources in a UNC path then you
+need &lt;a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff551966%28v=vs.85%29.aspx"&gt;VERSION 2&lt;/a&gt; streams. With some help from this
+&lt;a href="http://www.jayway.com/2011/06/19/hosting-your-own-source-symbol-server/"&gt;blog post&lt;/a&gt;, some digging
+at MSDN and lots of trial-and-error it seems that the SRCSRV stream should look like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;SRCSRV: ini ------------------------------------------------
+VERSION=2
+INDEXVERSION=2
+VERCTRL=http
+SRCSRV: variables ------------------------------------------
+SRCSRVVERCTRL=http
+UNCROOT= &amp;lt;UNC_SOURCE_PATH&amp;gt;
+HTTP_EXTRACT_TARGET=%UNCROOT%\\ + &amp;lt;UNC_SOURCE_PATH&amp;gt;
+SRCSRVTRG=%http_extract_target%
+SRCSRVCMD=
+SRCSRV: source files ---------------------------------------
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In this stream the &lt;a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff551958%28v=vs.85%29.aspx"&gt;variables mean&lt;/a&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;Version = 2&lt;/code&gt;&lt;/strong&gt; - Indicates the version of the SRCSRV stream&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;VerCtrl = http&lt;/code&gt;&lt;/strong&gt; - ‘Version control’ is done through HTTP. This variable is potentially optional.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;SRCSRVVERCTRL = http&lt;/code&gt;&lt;/strong&gt; - Specifies the VCS in use. In this case that's UNC, potentially over http.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;UNCROOT&lt;/code&gt;&lt;/strong&gt; - ‘Local variable’ indicating what the UNC root path is.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;HTTP_EXTRACT_TARGET&lt;/code&gt;&lt;/strong&gt; - ‘Local variable’ indicating how to determine the path of a source file
+on the server given it's embedded path and SRCSRV information.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;SRCSRVTG&lt;/code&gt;&lt;/strong&gt; - The template used by the debugger to determine the path of the source files based
+on their embedded path and SRCSRV information.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;SRCSRVCMD&lt;/code&gt;&lt;/strong&gt; - The command for the VCS to extract the source files. For UNC this is not required.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When nAnicitus processes a PDB file it generates a SRCSRV file that looks similar to this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;SRCSRV: ini ------------------------------------------------
+VERSION=2
+INDEXVERSION=2
+VERCTRL=http
+SRCSRV: variables ------------------------------------------
+SRCSRVVERCTRL=http
+UNCROOT=\\MyServer\sources
+HTTP_EXTRACT_TARGET=%UNCROOT%\%var2%\%var3%\%var4%
+SRCSRVTRG=%http_extract_target%
+SRCSRVCMD=
+SRCSRV: source files ---------------------------------------
+c:\source\MyProject\MyClass.cs*MyProject*1.2.3.4*MyProject\MyClass.cs
+SRCSRV: end------------------------------------------------
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The redirection of the source paths is handled as &lt;code&gt;&amp;lt;FILE&amp;gt;*&amp;lt;PROJECT&amp;gt;*&amp;lt;VERSION&amp;gt;*&amp;lt;RELATIVE_FILE&amp;gt;&lt;/code&gt; which
+means that the &lt;code&gt;c:\source\MyProject\MyClass.cs&lt;/code&gt; file will be found on the source server at &lt;code&gt;\\MyServer\sources\MyProject\1.2.3.4\MyProject\MyClass.cs&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The process of pushing the symbols and sources up to their respective locations with nAnicitus is
+done via the following steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The user drops the NuGet symbol package containing the binaries, PDB files and source files into
+the designated upload folder for nAnicitus.&lt;/li&gt;
+&lt;li&gt;nAnicitus detects the new NuGet package and pushes the file path onto the queue for processing by
+the indexing thread.&lt;/li&gt;
+&lt;li&gt;The indexing thread pulls the file path from the queue and unzips the NuGet symbol package in a
+temporary location.&lt;/li&gt;
+&lt;li&gt;For each PDB the source paths are extracted from the PDB with &lt;code&gt;scrtool.exe&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;For each source path the matching source file is located by looking at all source files and seeing
+source file path matches the ‘best’, i.e. using the longest common substring approach, starting
+from the end of the path in order to ensure a match on the file name.&lt;/li&gt;
+&lt;li&gt;Once the source file is located the relative file path for the source file on the source server
+is calculated.&lt;/li&gt;
+&lt;li&gt;Once all the source files from the PDB are processed the SRCSRV stream file is created and
+embedded into the PDB with &lt;code&gt;pdbstr.exe&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Once all PDBs have been indexed they are pushed through the &lt;code&gt;symstore.exe&lt;/code&gt; tool to the symbol server.&lt;/li&gt;
+&lt;li&gt;The source files are copied to the desired directory on the source server.&lt;/li&gt;
+&lt;li&gt;Finally the original NuGet symbol package is moved to the directory containing all the processed
+symbol packages.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Note that the path to the source server directory is embedded in the PDB. If the location of the
+source server changes then the information in the PDB files will no longer be correct. While there
+is a way to redirect the embedded paths nAnicitus also stores the processed NuGet symbol packages in
+a designated directory. This makes it possible to re-process the packages should the need ever arise.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/nAnicitus-Release-V015" title="Previous Post: nAnicitus release - V0.1.5" class="navlinks-prev"&gt;« nAnicitus release - V0.1.5&lt;/a&gt;
+                &lt;a href="/posts/Improvements-to-the-site" title="Next Post: Improvements to the site" class="navlinks-next"&gt;Improvements to the site »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Embedding-symbol-stream-in-pdb';
+    var disqus_title = 'Embedding a symbol stream in a PDB file';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Embedding-symbol-stream-in-pdb';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/nAnicitus-Release-V015" />
+		<id>https://www.petrikvandervelde.nl/posts/nAnicitus-Release-V015</id>
+		<title>nAnicitus release - V0.1.5</title>
+		<updated>2014-04-30T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+nAnicitus release - V0.1.5&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Wednesday, 30 April 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nanicitus" class="btn btn-default btn-xs"&gt;nAnicitus&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Version &lt;a href="https://github.com/pvandervelde/nAnicitus/releases/tag/0.1.5"&gt;V0.1.5&lt;/a&gt; of the
+&lt;a href="/projects/nanicitus.html"&gt;nAnicitus&lt;/a&gt; symbol store application has been released.&lt;/p&gt;
+&lt;p&gt;This release fixes the following issues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nAnicitus/issues/4"&gt;#4&lt;/a&gt; - Switch versioning scheme to use Semantic
+Versioning. The version is automatically calculated from the previous version tags in the repository
+with the &lt;a href="https://github.com/JakeGinnivan/GitHubFlowVersion"&gt;GitHubFlowVersion&lt;/a&gt; tool.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nAnicitus/issues/6"&gt;#6&lt;/a&gt; - Mark all files as read-only. All source
+files which are copied to the the UNC directory are now marked as read-only so that users won't be
+able to change them.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nAnicitus/issues/7"&gt;#7&lt;/a&gt; - Srctool last message not stripped when
+finding source paths in PDB&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nAnicitus/issues/8"&gt;#8&lt;/a&gt; - PDB embedded sourceserver file path
+calculation doesn't match server path. The source server file path is now calculated for each
+embedded file, instead of using a single directory reference for all files.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nAnicitus/issues/10"&gt;#10&lt;/a&gt; - Automatically create release notes
+from resolved GitHub issues. The release notes are created by finding all issues that have been
+closed between the previous and the current tag. This is using
+&lt;a href="https://github.com/JakeGinnivan/GitReleaseNotes"&gt;GitReleaseNote&lt;/a&gt; tool.&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Regression-testing-gui-applications" title="Previous Post: GUI testing with TestStack.White" class="navlinks-prev"&gt;« GUI testing with TestStack.White&lt;/a&gt;
+                &lt;a href="/posts/Embedding-symbol-stream-in-pdb" title="Next Post: Embedding a symbol stream in a PDB file" class="navlinks-next"&gt;Embedding a symbol stream in a PDB file »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'nAnicitus-Release-V015';
+    var disqus_title = 'nAnicitus release - V0.1.5';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nAnicitus-Release-V015';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Regression-testing-gui-applications" />
+		<id>https://www.petrikvandervelde.nl/posts/Regression-testing-gui-applications</id>
+		<title>GUI testing with TestStack.White</title>
+		<updated>2014-03-31T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+GUI testing with TestStack.White&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Monday, 31 March 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/apollo" class="btn btn-default btn-xs"&gt;Apollo&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/regression-testing" class="btn btn-default btn-xs"&gt;Regression testing&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/teststack.white" class="btn btn-default btn-xs"&gt;TestStack.White&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/ui-test" class="btn btn-default btn-xs"&gt;UI test&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;In the &lt;a href="/posts/Regression-testing-console-applications.html"&gt;previous&lt;/a&gt; post I explained how I
+created the regression tests for a script running application that belongs to the &lt;a href="/projects/apollo.html"&gt;Apollo&lt;/a&gt;
+project. In this post I will explain how I created the regression tests for an Apollo application
+with a graphical user interface (UI).&lt;/p&gt;
+&lt;p&gt;My initial attempt to write a regression test suite for the GUI application was done using the
+&lt;a href="http://www.nunit.org/"&gt;NUnit&lt;/a&gt; and &lt;a href="http://scriptcs.net/"&gt;ScriptCS&lt;/a&gt; with the idea that NUnit would
+provide the test execution and validation methods and ScriptCs would provide an easy way to write the
+test scripts without requiring a complete IDE to be used. After some trial-and-error it became clear
+that this approach was not the most suitable solution for the following reasons:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Using NUnit, or any unit test framework for that matter, complicated things because there is no
+way to take control of the order in which the regression tests are executed. While the ordering of
+unit tests is irrelevant, the ordering of regression tests may not be in that it is accepted that
+regression tests involve the execution multiple, ordered tests for one single activation of the
+application under test (AUT).&lt;/li&gt;
+&lt;li&gt;A secondary drawback of using a unit test framework is that there is normally no way to re-run a
+test case if it fails, something which is more acceptable for a regression test than for a unit test.&lt;/li&gt;
+&lt;li&gt;The test code got rather complicated due to the many helper methods, script files etc.. While
+ScriptCs coped beautifully with this it turned out to hard for me to work with without the
+organizing features of a complete IDE.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In the end I wrote a custom (console) application that handles the ordering and execution of the
+different test cases in the way that makes sense for my current requirements.&lt;/p&gt;
+&lt;h4&gt;Testing application&lt;/h4&gt;
+&lt;p&gt;The testing application executes the tests, collects the results and logs all the outputs. When
+executing the tests each test is executed a maximum of three times before it is marked as a fail.
+The following code is used by the application to execute the test steps and to keep track of the
+number of times a test step is executed.&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Regression_ExecuteTestStep.cs"&gt;&lt;/script&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Regression_TestStep.cs"&gt;&lt;/script&gt;
+&lt;p&gt;The reason for having multiple attempts to complete a test is that the nature of the GUI automation
+testing is that it is not completely &lt;a href="http://www.mathpirate.net/log/2009/12/23/ui-automation-tricks-and-traps/"&gt;consistent&lt;/a&gt;.
+By allowing a test to fail twice it is possible to work around the problem of inconsistent handling
+of controls.&lt;/p&gt;
+&lt;p&gt;The second part of the application keeps track of the test results while the tests are running. The
+application will always try to execute all the tests, irrespective of their final success or failure.
+That way the user will always have a complete report of the state of all the tests.&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Regression_EntryPoint.cs"&gt;&lt;/script&gt;
+&lt;p&gt;Finally the application provides utility methods for logging which should be used liberally by both
+the application and the test steps.&lt;/p&gt;
+&lt;h4&gt;Tests&lt;/h4&gt;
+&lt;p&gt;In order for the tests to interact with the GUI I chose to use the &lt;a href="https://github.com/TestStack/White"&gt;TestStack.White&lt;/a&gt;
+library mainly because it is a mature open source library that has a number of active contributors.
+One thing to keep in mind when selecting a GUI automation library is that the &lt;a href="http://en.wikipedia.org/wiki/Microsoft_UI_Automation"&gt;underlying technology&lt;/a&gt;
+has some tricky hooks to it that cannot be completely hidden by the automation library. One example
+is that all controls can be found based on their &lt;a href="http://msdn.microsoft.com/en-us/library/aa349646%28v=vs.110%29.aspx"&gt;automation ID&lt;/a&gt;
+but windows cannot, even if the window in question has an automation ID.&lt;/p&gt;
+&lt;p&gt;The main piece of advice for writing UI automation tests is always to write some helper methods to
+hide the underlying complexity of the UI access technology. In my case I took the following steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Control very carefully how your helper methods return information to the caller, either through a
+return value or through exceptions. In my case if a helper method returns a value it should either
+return the requested object or null if it fails to get the requested object. The calling code should
+then always check for null and handle the case of a null return value, e.g. by retrying the method
+call. The only time the method will throw an exception is if the assumed conditions for the method
+are wrong, e.g. the application under test (AUT) has crashed. If the helper method has no return
+value then it may throw if it fails to execute.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Regression_HelpersForMenu.cs"&gt;&lt;/script&gt;
+&lt;ul&gt;
+&lt;li&gt;All actions that get a control will try to get the control several times if they fail. Due to the
+nature of UI automation it is possible that the control is not available the first time the code
+tries to get hold of the control. This may be due tot he fact that the automation tests are fast
+enough that they try to get the control in the 0.1 second that the control is not available yet.
+Note that this also makes for some very tricky debugging which requires a decent amount of logging.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Regression_Retry.cs"&gt;&lt;/script&gt;
+&lt;p&gt;Note that automation tests are usually linked strongly to a specific version of the software
+because the tests assume the availability of certain automation IDs and controls. Some parts are
+implicitly linked and others can be, but don't have to be, explicitly linked. Examples are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The application, product and company names can be shared through a configuration or shared code file:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Regression_CompanyInformation.cs"&gt;&lt;/script&gt;
+&lt;ul&gt;
+&lt;li&gt;Automation IDs can be shared via a shared code file. Note that application ID names should be
+pointing to a given area / functionality, not specific controls (Also note that in my case that's
+not always done the right way):&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Regression_AutomationID.cs"&gt;&lt;/script&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8995455.js?file=Apollo_Explorer_MenuView.xaml"&gt;&lt;/script&gt;
+&lt;p&gt;When executing the tests it is a good idea to reset your application state either at the end of each
+test or at the start of each test. Or even better both to make sure that you always start a test
+from the same state irrespective of the way the previous test ended, e.g. with an application crash.&lt;/p&gt;
+&lt;p&gt;Finally do not give up if you find it hard to make the tests reliable. By continually improving the
+robustness of the test code eventually the tests will start to behave in the way you expect them
+too. Some &lt;a href="http://www.mathpirate.net/log/2009/12/23/ui-automation-tricks-and-traps/"&gt;tricks and hacks&lt;/a&gt;
+that I found necessary are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Time-outs while getting controls, setting values on controls or getting values from controls. While
+these are ugly they are sometimes necessary.&lt;/li&gt;
+&lt;li&gt;For each test restart the application if at all possible so that you end up with a known application
+state. This will improve the repeatability of the tests. Note that if the application is slow to start
+up then you can either improve the start up performance of the application or if that is not possible
+then carefully combine tests but be aware that tests may fail due to polluted application state.&lt;/li&gt;
+&lt;li&gt;Note that some application state survives restarts, e.g. user and application settings. It would
+be good if you have a way of resetting that state in a relatively sure-fire way. This is something
+I have not implemented yet though.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And then the last comment must be that the development of these tests has been much more complicated
+than I thought it would be. The approach I used required some coding skills so this may or may not be
+suitable in other situations depending on the skill sets of the testers or developers.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Regression-testing-console-applications" title="Previous Post: Regression testing of a console application" class="navlinks-prev"&gt;« Regression testing of a console application&lt;/a&gt;
+                &lt;a href="/posts/nAnicitus-Release-V015" title="Next Post: nAnicitus release - V0.1.5" class="navlinks-next"&gt;nAnicitus release - V0.1.5 »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Regression-testing-gui-applications';
+    var disqus_title = 'GUI testing with TestStack.White';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Regression-testing-gui-applications';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Regression-testing-console-applications" />
+		<id>https://www.petrikvandervelde.nl/posts/Regression-testing-console-applications</id>
+		<title>Regression testing of a console application</title>
+		<updated>2014-02-18T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Regression testing of a console application&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Tuesday, 18 February 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/apollo" class="btn btn-default btn-xs"&gt;Apollo&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/console" class="btn btn-default btn-xs"&gt;Console&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/regression-testing" class="btn btn-default btn-xs"&gt;Regression testing&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/scripting" class="btn btn-default btn-xs"&gt;Scripting&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;After &lt;a href="/posts/Regression-testing-with-Sherlock.html"&gt;setting up&lt;/a&gt; &lt;a href="/projects/sherlock.html"&gt;Sherlock&lt;/a&gt;
+you will need to create some tests that you can execute with Sherlock. In this post I will describe
+how I created the regression tests for the command line application of &lt;a href="/projects/apollo.html"&gt;Apollo&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For this case the application-under-test (AUT) is the Apollo console application which provides the
+user with a way to control the capabilities of Apollo, e.g. running a fluid dynamics simulation, by
+executing a Python script. The goal of the regression test for the console application is to execute
+a large part of the API which is used by scripts to interact with the different parts of Apollo.&lt;/p&gt;
+&lt;p&gt;In order to test the scripting API I wrote several scripts that will be executed during the test.
+Each script exercises several parts of the API and checks after each action that the state of the
+application is as expected. An example of a test script is given in the following code segment:&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8995251.js"&gt;&lt;/script&gt;
+&lt;p&gt;This test script:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Verifies that no project exists at start-up. If one exists the test is considered failed and the
+script forces the application to exit with a non-zero exit code.&lt;/li&gt;
+&lt;li&gt;Creates a new project and obtains a reference to the new project. If either step fails then once
+again the application is forced to exit with a non-zero exit code.&lt;/li&gt;
+&lt;li&gt;The name of the project is changed and the script verifies that the new name has been stored.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Obviously the script given here is a rather trivial and somewhat naive test script however it does
+provide an idea of what a test script should do.&lt;/p&gt;
+&lt;p&gt;In order to inform Sherlock that the script execution has failed the script can either write to the
+error stream or it can force the application to exit with a non-zero error code. To provide data for
+fault analysis a test script can write to both the standard output stream and the error data stream.
+Information gathered from either stream will be placed in the Sherlock log, which can be copied back
+to the report location by setting the correct switches. Additionally any data on the error stream
+will be written to the test report.&lt;/p&gt;
+&lt;p&gt;It is important to note that the test script should be robust enough to handle any kind of problem
+encountered because there is no guarantee that the application will behave in the appropriate manner,
+after all the application is being tested to see if it is fit for purpose.&lt;/p&gt;
+&lt;p&gt;Once the test scripts are written you can create a test configuration for the different test steps.
+An example is given below:&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8995455.js"&gt;&lt;/script&gt;
+&lt;p&gt;The important things to note in this configuration are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Each test step copies back the system log files which include:
+&lt;ul&gt;
+&lt;li&gt;The Sherlock log file written on the test environment.&lt;/li&gt;
+&lt;li&gt;Any MSI install log files.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The test script executing test step also copies the log files written by the console application.&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/PG2-Site-number-five" title="Previous Post: PG2 - Site number five" class="navlinks-prev"&gt;« PG2 - Site number five&lt;/a&gt;
+                &lt;a href="/posts/Regression-testing-gui-applications" title="Next Post: GUI testing with TestStack.White" class="navlinks-next"&gt;GUI testing with TestStack.White »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Regression-testing-console-applications';
+    var disqus_title = 'Regression testing of a console application';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Regression-testing-console-applications';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/PG2-Site-number-five" />
+		<id>https://www.petrikvandervelde.nl/posts/PG2-Site-number-five</id>
+		<title>PG2 - Site number five</title>
+		<updated>2014-01-31T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+PG2 - Site number five&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Friday, 31 January 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/paragliding" class="btn btn-default btn-xs"&gt;Paragliding&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/pg2" class="btn btn-default btn-xs"&gt;PG2&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Two weeks ago I managed to fulfil another criteria for my PG2 license by flying at the
+&lt;a href="http://paraglidingnewzealand.com/places-to-fly/site/mangawhai-heads"&gt;Mangawhai Heads&lt;/a&gt; for my fifth site.&lt;/p&gt;
+&lt;p&gt;Unlike the other locations the launch site at Mangawhai heads is rather small, just big enough for
+the glider. Because of the conditions and the amount of space at the launch location I elected to do
+a forward launch with some assistance of the instructor. That turned out to be a good decision because
+as soon as the glider was above my head it caught the wind stream and I rocketed off the ground.
+Unfortunately with all the pre-launch action going on I had neglected to completely check my glider
+which meant I ended up with a small line tangle in the top C-D line which slowed my glider down a
+bit during flight.&lt;/p&gt;
+&lt;p&gt;After about 20 minutes of flying I started to notice that my ground speed was reducing more and more,
+at which point I decided it was better to be on the ground wishing I was in the sky than being in the
+sky wishing I was on the ground and so I landed on the beach.&lt;/p&gt;
+&lt;p&gt;The learning points of this flight are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Reducing the seat depth of my harness has made flying a lot more comfortable, at least for shorter
+flights. I guess I will see how comfortable it is during longer flights.&lt;/li&gt;
+&lt;li&gt;The addition of a stir-up makes getting into the harness much easier. All I have to do now is
+stand up on the stir-up and I'm in the seat. I'm still not used to staying on the stir-up during
+flight though so I will have to work out what to do with that, especially during turns.&lt;/li&gt;
+&lt;li&gt;I really should start practising my asymmetrical launches so that I can use those during high wind
+launch situations to reduce the pressures on the glider and myself during the initial part of the launch.&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/PG2-Christmas-holiday-antics" title="Previous Post: PG2 - Christmas holiday antics" class="navlinks-prev"&gt;« PG2 - Christmas holiday antics&lt;/a&gt;
+                &lt;a href="/posts/Regression-testing-console-applications" title="Next Post: Regression testing of a console application" class="navlinks-next"&gt;Regression testing of a console application »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'PG2-Site-number-five';
+    var disqus_title = 'PG2 - Site number five';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/PG2-Site-number-five';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/PG2-Christmas-holiday-antics" />
+		<id>https://www.petrikvandervelde.nl/posts/PG2-Christmas-holiday-antics</id>
+		<title>PG2 - Christmas holiday antics</title>
+		<updated>2014-01-21T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+PG2 - Christmas holiday antics&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Tuesday, 21 January 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/paragliding" class="btn btn-default btn-xs"&gt;Paragliding&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/pg2" class="btn btn-default btn-xs"&gt;PG2&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;During the Christmas holidays a few weeks ago I was planning to get lots of flying done, after all
+I had two weeks off and the weather had been amazing while I was in the office so what else could be
+the case? Unfortunately it turned out that the weather gods had other plans and provided generous
+helpings of wind and rain. That meant I only managed to fly on two different days.&lt;/p&gt;
+&lt;p&gt;However that doesn't mean that the Christmas holidays were lacking paragliding activities. You see my
+new &lt;a href="http://www.korteldesign.com/spip/?Karma-II-231"&gt;harness&lt;/a&gt; arrived just before Christmas. It was
+ordered three or so months ago but it was completely worth the wait. The build quality is very high
+and the harness felt comfortable straight away. Mind you there is still some set up to be done.
+There are a lot of different straps on this harness which subtly change the position and shape of
+the harness. I suspect it will be a while before I find all the right settings.
+The biggest difference so far compared to the school harnesses is that it feels like the harness
+reacts more to changes in the glider, which at the moment is unsettling but I guess I'll get used
+to it. And the second difference is that the harness is harder to get into.&lt;/p&gt;
+&lt;p&gt;Given that I was already spending money I figured I should spend some more ... Actually it was more
+like there were a few other things that were either &lt;a href="http://en.wikipedia.org/wiki/Altimeter"&gt;legally required&lt;/a&gt;
+or &lt;a href="http://en.wikipedia.org/wiki/Parachute"&gt;very sensible&lt;/a&gt; to have. And so I also bought a
+&lt;a href="http://www.brauniger.com/en/products/flight-instruments/iq-basic-gps/overview.html"&gt;vario&lt;/a&gt; and a
+&lt;a href="http://gingliders.com/rescue-systems/yeti-light-rescue/"&gt;reserve&lt;/a&gt;. The combination was not cheap
+but I do feel a lot safer now that I have a way to tell how high I am and a way to come down in case
+everything goes to custard.&lt;/p&gt;
+&lt;p&gt;Finally I also did my PG2 theory exam and scored 97% which I was pretty stoked with. The minimum
+score to pass is 90% so I managed to get that in the bag pretty easily. There is one more theoretical
+exam to do which is the &lt;a href="http://en.wikipedia.org/wiki/Visual_flight_rules"&gt;VFR&lt;/a&gt; exam. For that I am
+trying to learn all the abbreviations at the moment which might take a bit of time.&lt;/p&gt;
+&lt;p&gt;All in all the Christmas holidays turned out to have a decent amount of paragliding related activities.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Integrating-Sherlock-with-a-build-server" title="Previous Post: Sherlock configuration - Build server integration" class="navlinks-prev"&gt;« Sherlock configuration - Build server integration&lt;/a&gt;
+                &lt;a href="/posts/PG2-Site-number-five" title="Next Post: PG2 - Site number five" class="navlinks-next"&gt;PG2 - Site number five »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'PG2-Christmas-holiday-antics';
+    var disqus_title = 'PG2 - Christmas holiday antics';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/PG2-Christmas-holiday-antics';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Integrating-Sherlock-with-a-build-server" />
+		<id>https://www.petrikvandervelde.nl/posts/Integrating-Sherlock-with-a-build-server</id>
+		<title>Sherlock configuration - Build server integration</title>
+		<updated>2014-01-13T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Sherlock configuration - Build server integration&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Monday, 13 January 2014
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/jenkins" class="btn btn-default btn-xs"&gt;Jenkins&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/msbuild" class="btn btn-default btn-xs"&gt;MsBuild&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/sherlock" class="btn btn-default btn-xs"&gt;Sherlock&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/teamcity" class="btn btn-default btn-xs"&gt;TeamCity&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Once the configuration of &lt;a href="/projects/sherlock.html"&gt;Sherlock&lt;/a&gt; is complete the last step needed to
+make use of automatic regression testing is to integrate with a build server. In this post I will
+explain which steps need to be taken to integrate Sherlock with a build server. Examples will be
+given for &lt;a href="http://jenkins-ci.org/"&gt;Jenkins&lt;/a&gt;, which is used at my work, and
+&lt;a href="http://www.jetbrains.com/teamcity/"&gt;TeamCity&lt;/a&gt;, which I use personally.&lt;/p&gt;
+&lt;p&gt;In order to integrate with a build server you will need to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Create at least one test configuration&lt;/li&gt;
+&lt;li&gt;Write the build scripts necessary to register a test, wait for the completion of the test and
+process the results.&lt;/li&gt;
+&lt;li&gt;Set up a job on the build server to execute the test.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Test configurations&lt;/h3&gt;
+&lt;p&gt;In order to execute a test the first thing you need to decide on is the test configuration which
+will be executed. In Sherlock the test configuration is described by a XML file similar to the
+following gist:&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8346703.js"&gt;&lt;/script&gt;)
+&lt;p&gt;In this configuration file replace all instances of &lt;code&gt;${SOME_TEXT}$&lt;/code&gt; with the appropriate information.
+Note that some configuration settings should be templated so that those values can be supplied by the
+build system, e.g. the application version number:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Provide an application name and version for use in the test report.&lt;/li&gt;
+&lt;li&gt;Provide a compact description. This will be used as the title of the test report&lt;/li&gt;
+&lt;li&gt;Provide each environment with a name. It doesn't matter what that name is as long as it is
+consistently used throughout the configuration file. All test steps which should be executed on
+the same environment should be linked to the same environment name. Note that while it is possible
+to request multiple environments to be started in a test, it is not possible to synchronize those
+environments. In other words each environment will exit as soon as it completes the test steps
+assigned to it, no environment will wait for other environments to complete their work.&lt;/li&gt;
+&lt;li&gt;For each test step that needs to be executed provide the order (integer number starting at 0,
+incrementing for each step), the name of the environment in which the step should be executed, the
+failure mode, either Stop or Continue and the correct file paths. Note that the test steps use the
+following definitions for their file paths:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;msi:&lt;/strong&gt; &lt;code&gt;file&lt;/code&gt; is the absolute path to the MSI file as on the machine that is used to register
+the test (i.e. the origin).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;x-copy:&lt;/strong&gt; &lt;code&gt;destination&lt;/code&gt; is the absolute path to the directory that will hold all the x-copy
+results on the test environment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;x-copy:&lt;/strong&gt; &lt;code&gt;base&lt;/code&gt; is the absolute path to the directory that holds the files / directories to
+be x-copied on the origin.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;x-copy:&lt;/strong&gt; &lt;code&gt;paths&lt;/code&gt; contains the absolute paths to the files / directories that should be
+x-copied. It is expected that these all reside in the &lt;code&gt;base&lt;/code&gt; directory at some level.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;script:&lt;/strong&gt; &lt;code&gt;file&lt;/code&gt; is the absolute path to the script file on the origin.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;console:&lt;/strong&gt; &lt;code&gt;exe&lt;/code&gt; is the absolute path to the executable that should be executed on the test
+environment. Note that the path is also pointed to the test environment. Hence the &lt;code&gt;CONSOLE&lt;/code&gt;
+test step is the only test step that doesn't copy files.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;All test steps:&lt;/strong&gt; All files and directories that should be included in the report are
+absolute paths on the test environment.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;notification:&lt;/strong&gt; The absolute path where the final report should be placed. This path should
+be accessible to both Sherlock (the master controller) and the application that will process the test results.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;It makes sense to always copy back any logs that are written during the test. If you don't need
+them for test failure diagnosis then it is easy to delete them later, however you can't copy them
+from the test environment after the test has completed because the test environment will be reset
+to its original state upon shut down.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you need tests to run in different environments or with different test steps then you will need to
+create a configuration file for each environment / set of test steps.&lt;/p&gt;
+&lt;h3&gt;Build scripts&lt;/h3&gt;
+&lt;p&gt;The easiest way to execute the test from a build server is to create a set of build scripts that can
+do the work for you. In this example I will be using MsBuild as the scripting language.&lt;/p&gt;
+&lt;p&gt;In order to create the configuration file from the template it is necessary to replace all the
+templated configuration settings with their current values. The following gist shows an inline
+MsBuild task that does exactly that:&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8277812.js?file=TemplateFile.xml"&gt;&lt;/script&gt;
+&lt;p&gt;In order to use this task create an &lt;code&gt;ItemGroup&lt;/code&gt; with the identifiers of the settings and their
+replacement values. For example:&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8277812.js?file=HowToUseTemplateFile.xml"&gt;&lt;/script&gt;
+&lt;p&gt;If this example is used on the following template file:&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8277812.js?file=BeforeReplacement.xml"&gt;&lt;/script&gt;
+&lt;p&gt;Then the outcome is the following output file:&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8277812.js?file=AfterReplacement.xml"&gt;&lt;/script&gt;
+&lt;p&gt;The next step will be to create a build script that can register the test with the Sherlock system.
+This can either be done with a call to the
+&lt;a href="http://msdn.microsoft.com/en-us/library/x8zx72cd.aspx"&gt;exec&lt;/a&gt; task or with the following inline
+MsBuild task:&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8346876.js"&gt;&lt;/script&gt;
+&lt;p&gt;The next step is a little tricky in that it is now necessary to wait for Sherlock to execute the
+test and create the test report. The tricky bit due to the fact that Sherlock will only execute the
+tests when a suitable test environment is available. That means that tests could be executed almost
+immediately if an environment is directly available, or not for a long time if all environments are
+busy. On top of that MsBuild does not have the ability to watch specific files. The following inline
+task allows you to wait for certain files to be created. Note that you need to provide a time-out
+which determines how long this task will wait for the report files. How long this time-out should be
+depends on:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;How long it takes for the tests to execute.&lt;/li&gt;
+&lt;li&gt;How many tests will be executed on the same test environments. Tests executing on different test
+environments can be run in parallel provided the hardware will stand up to it.&lt;/li&gt;
+&lt;li&gt;How many other tests may potentially be executing at the same time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8346893.js"&gt;&lt;/script&gt;
+&lt;p&gt;Finally the report files need to be checked for success or failure. For each test Sherlock produces
+a HTML and an XML report. The easiest way to find the outcome of a test is to parse the XML report
+and search for the &lt;code&gt;result&lt;/code&gt; element. The value of this element will either be &lt;code&gt;Passed&lt;/code&gt; or &lt;code&gt;Failed&lt;/code&gt;.
+The following inline task will accomplish this goal:&lt;/p&gt;
+&lt;script src="https://gist.github.com/pvandervelde/8346900.js"&gt;&lt;/script&gt;
+&lt;h3&gt;Build jobs&lt;/h3&gt;
+&lt;p&gt;The final task is to setup one or more build jobs for the build server to execute. While you can
+combine the testing steps with the build steps it is in general advisable to have a separate job for
+the testing steps. The main reason for that is that the the testing steps can take quite a while to
+execute, ranging from several minutes to hours, which slows down the continuous integration feedback
+cycle considerably. Based on the idea that the tests should be contained in their own build job the
+following set-up is proposed.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Define three different build jobs for the build, test and deploy stages of the process. This means
+that each job will be responsible for a specific task. Individual jobs will be use the artefacts
+produced by the other jobs.&lt;/li&gt;
+&lt;li&gt;Set up dependencies between the different builds where required. For instance the test job will
+depend on the artefacts produced by the build job.&lt;/li&gt;
+&lt;li&gt;The build job can be run both as continuous integration build, i.e. execute the build job each
+time a commit to the source control system is detected, and as pre-requisite to the test job.&lt;/li&gt;
+&lt;li&gt;Similarly the test job could be run nightly to provide relatively quick feedback on regression
+problems while also acting as pre-requisite to the deploy job.&lt;/li&gt;
+&lt;li&gt;If the version number includes either the build counter of the build job or the revision number of
+the source control commit then special care needs to be taken for the test and deploy jobs in
+order to ensure that they get the same numbers as the build job did.&lt;/li&gt;
+&lt;li&gt;In a similar fashion it will be necessary to control the version control settings so that all builds
+pull in the same revision. One solution would be to store the revision index in the first job in
+the chain and then transfer that to the other jobs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For the two build systems I have specifically worked with the following additional notes can be made:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://jenkins-ci.org/"&gt;Jenkins&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;In addition to the three standard jobs you will probably need a &lt;a href="https://wiki.jenkins-ci.org/display/JENKINS/Build+Flow+Plugin"&gt;Build flow&lt;/a&gt;
+job to trigger the different standard jobs in the right order. This has to be done because at
+the moment it does not seem possible in Jenkins to trigger pre-requisite builds without having
+the downstream project taking up one of the build executors. The build flow jobs live outside
+the actual build executors which makes it possible to optimize the use of the executors.&lt;/li&gt;
+&lt;li&gt;In order to deal with the build number problems as specified above the simplest way is to write
+the number to a file in the upstream job, archive that and then pull it out in the downstream jobs.
+The same goes for the version control information.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.jetbrains.com/teamcity/"&gt;TeamCity&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;Downstream jobs have both a snapshot dependency and an artefact dependency on the upstream job.
+The &lt;a href="http://confluence.jetbrains.com/display/TCD8/Configuring+Dependencies"&gt;snapshot dependency&lt;/a&gt;
+takes care of the synchronization of the version control revision. Note that you should create
+different VCS roots for each project, otherwise the projects all share a single check-out directory.
+By sharing a single directory it is possible that upon starting the second job the directory is
+cleaned which will likely remove the artefacts from the first job.&lt;/li&gt;
+&lt;li&gt;The build number can be copied easily by &lt;a href="http://confluence.jetbrains.com/display/TCD8/Configuring+General+Settings#ConfiguringGeneralSettings-BuildNumberFormat"&gt;synchronizing&lt;/a&gt;
+the build numbers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Sherlock-Release-V0480" title="Previous Post: Sherlock release - V0.4.8.0" class="navlinks-prev"&gt;« Sherlock release - V0.4.8.0&lt;/a&gt;
+                &lt;a href="/posts/PG2-Christmas-holiday-antics" title="Next Post: PG2 - Christmas holiday antics" class="navlinks-next"&gt;PG2 - Christmas holiday antics »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Integrating-Sherlock-with-a-build-server';
+    var disqus_title = 'Sherlock configuration - Build server integration';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Integrating-Sherlock-with-a-build-server';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Sherlock-Release-V0480" />
+		<id>https://www.petrikvandervelde.nl/posts/Sherlock-Release-V0480</id>
+		<title>Sherlock release - V0.4.8.0</title>
+		<updated>2013-12-27T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Sherlock release - V0.4.8.0&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Friday, 27 December 2013
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/sherlock" class="btn btn-default btn-xs"&gt;Sherlock&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Version &lt;a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.8.0"&gt;V0.4.8.0&lt;/a&gt; of the
+&lt;a href="/projects/sherlock.html"&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release
+provides the following issues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Sherlock/issues/13"&gt;#13&lt;/a&gt; - Provide setup verification&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Sherlock/issues/14"&gt;#14&lt;/a&gt; - Add license and readme to all
+downloadable files&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Sherlock/issues/15"&gt;#15&lt;/a&gt; - Include test purpose in final test report&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Sherlock/issues/22"&gt;#22&lt;/a&gt; - Add NuGet symbols package for easy
+upload to a symbol server&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Sherlock/issues/23"&gt;#23&lt;/a&gt; - OutOfMemoryException in Sherlock.Service.Master&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Sherlock/issues/24"&gt;#24&lt;/a&gt; - Hyper-V: If a virtual machine is
+running when a new test is started terminate the current run&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Sherlock/issues/26"&gt;#26&lt;/a&gt; - Hyper-V: Handle state change result code&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Setting-up-Sherlock-verification" title="Previous Post: Sherlock configuration - Verification" class="navlinks-prev"&gt;« Sherlock configuration - Verification&lt;/a&gt;
+                &lt;a href="/posts/Integrating-Sherlock-with-a-build-server" title="Next Post: Sherlock configuration - Build server integration" class="navlinks-next"&gt;Sherlock configuration - Build server integration »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Sherlock-Release-V0480';
+    var disqus_title = 'Sherlock release - V0.4.8.0';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Sherlock-Release-V0480';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
+</feed>

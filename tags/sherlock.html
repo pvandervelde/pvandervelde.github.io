@@ -1,1182 +1,283 @@
+
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<head> 
-    <!-- Standard Meta -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width" />
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-    <!-- Site Properities -->
-    <title>Tag: Sherlock | Mind Vortex</title>
-    <meta name="description" content="The place where I ramble on about software development, fluid dynamics, flying and climbing." />
-    <meta name="keywords" content="Patrick van der Velde, Petrik, Nuclei, Sherlock, nAnicitus, nAdoni, nTreva, rock climbing, paragliding" />
-    <meta name="author" content="Petrik van der Velde" />
+    <title>Mind vortex - Sherlock</title>
+    <meta name="description" content="Welcome!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- DocPad Meta -->
-    <meta name="generator" content="DocPad v6.65.0" />
+    <link type="application/rss+xml" rel="alternate" title="Mind vortex" href="/feed.rss" />
+    <link type="application/atom+xml" rel="alternate" title="Mind vortex" href="/feed.atom" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <!-- DocPad Styles + Our Own -->
-    <style >html.wait {
-	cursor: wait !important;
-	opacity: 0;
-	transition: opacity 0.5s ease;
-}</style><link  rel="stylesheet" href="/vendor/normalize.css" /><link  rel="stylesheet" href="/vendor/h5bp.css" /><link  rel="stylesheet" href="/styles/style.css" /><link  rel="stylesheet" href="/styles/github.css" />
+    <link href="/assets/css/normalize.css" rel="stylesheet" />
+    <link href="/assets/css/h5bp.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/override.css" rel="stylesheet" />
+    <link href="/assets/css/github.css" rel="stylesheet" type="text/css">
 
-    <!-- Icons -->
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="/icons/twister.ico" />
-    
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-</head>
-<body>
-    <!--[if lt IE 7]>
-        <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+
+    <meta name="application-name" content="Mind vortex" />
+    <meta name="msapplication-tooltip" content="Mind vortex" />
+    <meta name="msapplication-starturl" content="/" />
+
+    <meta property="og:title" content="Mind vortex - Sherlock" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/tags/sherlock" />
+    <!-- TODO: More social graph meta tags -->
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/highlight.pack.js"></script>
+    <script src="/assets/js/clean-blog.js"></script>
+    <script src="/assets/js/d3.v3.min.js"></script>
+    <script src="/assets/js/trianglify.min.js"></script>
+    <script src="/assets/js/Please-compressed.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="/assets/js/html5shiv.js"></script>
+            <script src="/assets/js/respond.min.js"></script>
     <![endif]-->
-    
-    <div id="header" class="container">
-        <div id="logo">
-            <h1><a href="/">Mind Vortex</a></h1>
-        </div>
-        <div id="menu">
-            <ul>
-                
-                    <li class="inactive">
-                        
-                            <a href="/index.html">Home</a>
-                        
-                    </li>
-                
-                    <li class="inactive">
-                        
-                            <a href="/projects.html">Projects</a>
-                        
-                    </li>
-                
-                    <li class="inactive">
-                        
-                            <a href="/archives.html">Archives</a>
-                        
-                    </li>
-                
-                    <li class="inactive">
-                        
-                            <a href="/about.html">About</a>
-                        
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
-    <div id="page" class="container">
-        <div id="sidebar">
-            <div id="sbox1">
-                <h2 id="patrick-van-der-velde">Patrick van der Velde</h2>
-<p><img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"> </p>
-<p>Dutch software developer, living, working and playing in New Zealand. 
-Rock climber, and future paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock">Sherlock</a>, 
-<a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects</p>
-<p><a href="/about.html">More ...</a></p>
 
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        <div id="header" class="container">
+            <div id="logo">
+                <h1><a href="/">Mind vortex</a></h1>
             </div>
-            <div id="sbox2">
-                <h2>Recent</h2>
+            <div id="menu">
                 <ul>
-                    
-                        <li><a href="/posts/2015-05-23_nBuildKit-release-V051.html">nBuildKit release - V0.5.1</a></li>
-                    
-                        <li><a href="/posts/2014-11-30_nBuildKit-release-V041.html">nBuildKit release - V0.4.1</a></li>
-                    
-                        <li><a href="/posts/2014-11-10_Creating-azure-vm-images-with-powershell.html">Creating Azure VM images with Powershell</a></li>
-                    
-                        <li><a href="/posts/2014-09-27_Building-and-delivering-nBuildKit-with-AppVeyor.html">Building and delivering nBuildKit with AppVeyor</a></li>
-                    
-                        <li><a href="/posts/2014-08-19_nBuildKit-release-V032.html">nBuildKit release - V0.3.2</a></li>
-                    
-                        <li><a href="/posts/2014-07-26_Adding-pagination-with-DocPad.html">Adding pagination with DocPad</a></li>
-                    
-                        <li><a href="/posts/2014-07-24_Blog-archives-by-DocPad.html">Blog archives by DocPad</a></li>
-                    
-                        <li><a href="/posts/2014-07-21_nBuildKit-release-V024.html">nBuildKit release - V0.2.4</a></li>
-                    
-                        <li><a href="/posts/2014-06-16_nBuildKit-release-V015.html">nBuildKit release - V0.1.5</a></li>
-                    
-                        <li><a href="/projects/nbuildkit.html">nBuildKit</a></li>
-                    
+                                <li class="inactive" >
+                <a href="/">Home</a>
+            </li>
+            <li class="inactive" >
+                <a href="/posts">Archive</a>
+            </li>
+            <li class="inactive" >
+                <a href="/projects">Projects</a>
+            </li>
+            <li class="inactive" >
+                <a href="/about">About</a>
+            </li>
+
                 </ul>
             </div>
-            <div id="sbox3">
-                <h2>Tags</h2>
-                
-                    <a href="/tags/apollo.html" style="font-size: 113.13247675185968%">
-                        Apollo
-                    </a>
-                
-                    <a href="/tags/appveyor.html" style="font-size: 100%">
-                        AppVeyor
-                    </a>
-                
-                    <a href="/tags/azure.html" style="font-size: 126.26495350371935%">
-                        Azure
-                    </a>
-                
-                    <a href="/tags/blog.html" style="font-size: 130.49266672559813%">
-                        Blog
-                    </a>
-                
-                    <a href="/tags/climbing.html" style="font-size: 100%">
-                        Climbing
-                    </a>
-                
-                    <a href="/tags/configuration.html" style="font-size: 100%">
-                        Configuration
-                    </a>
-                
-                    <a href="/tags/console.html" style="font-size: 100%">
-                        Console
-                    </a>
-                
-                    <a href="/tags/continous-integration.html" style="font-size: 113.13247675185968%">
-                        Continous integration
-                    </a>
-                
-                    <a href="/tags/docpad.html" style="font-size: 120.81448319328996%">
-                        DocPad
-                    </a>
-                
-                    <a href="/tags/github.html" style="font-size: 100%">
-                        GitHub
-                    </a>
-                
-                    <a href="/tags/gitversion.html" style="font-size: 100%">
-                        GitVersion
-                    </a>
-                
-                    <a href="/tags/jenkins.html" style="font-size: 130.49266672559813%">
-                        Jenkins
-                    </a>
-                
-                    <a href="/tags/job-template.html" style="font-size: 100%">
-                        Job template
-                    </a>
-                
-                    <a href="/tags/msbuild.html" style="font-size: 100%">
-                        MsBuild
-                    </a>
-                
-                    <a href="/tags/nuclei.html" style="font-size: 150%">
-                        Nuclei
-                    </a>
-                
-                    <a href="/tags/pdb.html" style="font-size: 113.13247675185968%">
-                        PDB
-                    </a>
-                
-                    <a href="/tags/pg2.html" style="font-size: 141.62896638657992%">
-                        PG2
-                    </a>
-                
-                    <a href="/tags/paragliding.html" style="font-size: 136.86752324814032%">
-                        Paragliding
-                    </a>
-                
-                    <a href="/tags/powershell.html" style="font-size: 113.13247675185968%">
-                        Powershell
-                    </a>
-                
-                    <a href="/tags/regression-test.html" style="font-size: 100%">
-                        Regression test
-                    </a>
-                
-                    <a href="/tags/regression-testing.html" style="font-size: 113.13247675185968%">
-                        Regression testing
-                    </a>
-                
-                    <a href="/tags/srcsrv.html" style="font-size: 100%">
-                        SRCSRV
-                    </a>
-                
-                    <a href="/tags/scripting.html" style="font-size: 100%">
-                        Scripting
-                    </a>
-                
-                    <a href="/tags/sherlock.html" style="font-size: 148.59593857014607%">
-                        Sherlock
-                    </a>
-                
-                    <a href="/tags/software-delivery.html" style="font-size: 100%">
-                        Software delivery
-                    </a>
-                
-                    <a href="/tags/source-server.html" style="font-size: 100%">
-                        Source server
-                    </a>
-                
-                    <a href="/tags/symstore.html" style="font-size: 100%">
-                        SymStore
-                    </a>
-                
-                    <a href="/tags/symbol-server.html" style="font-size: 100%">
-                        Symbol server
-                    </a>
-                
-                    <a href="/tags/symbol-stream.html" style="font-size: 100%">
-                        Symbol stream
-                    </a>
-                
-                    <a href="/tags/teamcity.html" style="font-size: 100%">
-                        TeamCity
-                    </a>
-                
-                    <a href="/tags/teststack-white.html" style="font-size: 100%">
-                        TestStack.White
-                    </a>
-                
-                    <a href="/tags/ui-test.html" style="font-size: 100%">
-                        UI test
-                    </a>
-                
-                    <a href="/tags/unc.html" style="font-size: 100%">
-                        UNC
-                    </a>
-                
-                    <a href="/tags/wcf.html" style="font-size: 126.26495350371935%">
-                        WCF
-                    </a>
-                
-                    <a href="/tags/waipapa.html" style="font-size: 100%">
-                        Waipapa
-                    </a>
-                
-                    <a href="/tags/writing.html" style="font-size: 100%">
-                        Writing
-                    </a>
-                
-                    <a href="/tags/nadoni.html" style="font-size: 113.13247675185968%">
-                        nAdoni
-                    </a>
-                
-                    <a href="/tags/nanicitus.html" style="font-size: 130.49266672559813%">
-                        nAnicitus
-                    </a>
-                
-                    <a href="/tags/nbuildkit.html" style="font-size: 133.94695994514964%">
-                        nBuildKit
-                    </a>
-                
-                    <a href="/tags/nrefs.html" style="font-size: 100%">
-                        nRefs
-                    </a>
-                
+        </div>
+
+        <div id="page" class="container">
+            <div id="sidebar">
+                <div id="sbox1">
+                    <h2>Patrick van der Velde</h2>
+
+<p>
+    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+</p>
+<p>
+    Dutch software developer, living, working and playing in New Zealand.
+    Rock climber, and paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock)">Sherlock</a>
+    <a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects
+</p>
+<p>
+    <a href="/about.html">More ...</a>
+</p>
+
+                </div>
+                <div id="sbox2">
+                    <h2>Recent</h2>
+                    <ul class="list-unstyled">
+                            <li><a href="/posts/Updating-blog-to-wyam">Exit Docpad, enter Wyam</a></li>
+                            <li><a href="/posts/nBuildKit-release-V051">nBuildKit release - V0.5.1</a></li>
+                            <li><a href="/posts/nBuildKit-release-V041">nBuildKit release - V0.4.1</a></li>
+                            <li><a href="/posts/Creating-azure-vm-images-with-powershell">Creating Azure VM images with Powershell</a></li>
+                            <li><a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor">Building and delivering nBuildKit with AppVeyor</a></li>
+                            <li><a href="/posts/nBuildKit-release-V032">nBuildKit release - V0.3.2</a></li>
+                            <li><a href="/posts/Adding-pagination-with-DocPad">Adding pagination with DocPad</a></li>
+                            <li><a href="/posts/Blog-archives-by-DocPad">Blog archives by DocPad</a></li>
+                            <li><a href="/posts/nBuildKit-release-V024">nBuildKit release - V0.2.4</a></li>
+                            <li><a href="/posts/nBuildKit-release-V015">nBuildKit release - V0.1.5</a></li>
+                    </ul>
+                </div>
+                <div id="sbox3">
+                    <h2>Tags</h2>
+                    <div>
+                        <ul class="list-unstyled">
+                                <li>
+                                    <a role="button" href="/tags/sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nanicitus" class="btn btn-default btn-sm"> nAnicitus (5)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/pdb" class="btn btn-default btn-sm"> PDB (2)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/regression-testing" class="btn btn-default btn-sm"> Regression testing (2)</a>
+                                </li>
+                        </ul>
+                    </div>
+                    <br />
+                    <ul class="pager">
+                        <li class="next">
+                            <a href="/tags">View All Tags &rarr;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="content">
+
+<div id="posts">
+    <h3 id="post-tags-header">Posts tagged with: Sherlock</h3>
+            <div class="post-list">
+            <a href="/posts/Integrating-Sherlock-with-a-build-server">
+                <h3 class="post-title">Sherlock configuration - Build server integration</h3>
+            </a>
+            <p class="post-meta">Posted on Monday, 13 January 2014</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/Sherlock-Release-V0480">
+                <h3 class="post-title">Sherlock release - V0.4.8.0</h3>
+            </a>
+            <p class="post-meta">Posted on Friday, 27 December 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/Setting-up-Sherlock-verification">
+                <h3 class="post-title">Sherlock configuration - Verification</h3>
+            </a>
+            <p class="post-meta">Posted on Tuesday, 24 December 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/Setting-up-Sherlock-virtualmachines">
+                <h3 class="post-title">Sherlock configuration - Virtual machines</h3>
+            </a>
+            <p class="post-meta">Posted on Wednesday, 11 December 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/Setting-up-Sherlock-serverside">
+                <h3 class="post-title">Sherlock configuration - Server side</h3>
+            </a>
+            <p class="post-meta">Posted on Tuesday, 10 December 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/Regression-testing-with-Sherlock">
+                <h3 class="post-title">Regression testing with Sherlock</h3>
+            </a>
+            <p class="post-meta">Posted on Wednesday, 4 December 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/Sherlock-Release-V0470">
+                <h3 class="post-title">Sherlock release - V0.4.7.0</h3>
+            </a>
+            <p class="post-meta">Posted on Wednesday, 30 October 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/Sherlock-Release-V0460">
+                <h3 class="post-title">Sherlock release - V0.4.6.0</h3>
+            </a>
+            <p class="post-meta">Posted on Thursday, 24 October 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/Sherlock-Release-V0450">
+                <h3 class="post-title">Sherlock release - V0.4.5.0</h3>
+            </a>
+            <p class="post-meta">Posted on Wednesday, 23 October 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/Sherlock-Release-v0440">
+                <h3 class="post-title">Sherlock release - V0.4.4.0</h3>
+            </a>
+            <p class="post-meta">Posted on Saturday, 21 September 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/Sherlock-Release-v0430">
+                <h3 class="post-title">Sherlock release - V0.4.3.0</h3>
+            </a>
+            <p class="post-meta">Posted on Saturday, 14 September 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/Sherlock-Release-v0420">
+                <h3 class="post-title">Sherlock release - V0.4.2.0</h3>
+            </a>
+            <p class="post-meta">Posted on Wednesday, 11 September 2013</p>            
+        </div>   
+        <div class="post-list">
+            <a href="/posts/Sherlock-Release-v0401">
+                <h3 class="post-title">Sherlock release - V0.4.0.1</h3>
+            </a>
+            <p class="post-meta">Posted on Sunday, 8 September 2013</p>            
+        </div>   
+
+</div>
             </div>
         </div>
-        <div id="content">
-            <div id="posts">
-    <h3 id="post-tags-header">Posts tagged with: Sherlock</h3>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2014-01-13_Integrating-Sherlock-with-a-build-server.html'>Sherlock configuration - Build server integration</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Monday, January 13, 2014 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-                    <a id="post-category" href="/tags/jenkins.html">Jenkins</a>
-                
-                    <a id="post-category" href="/tags/teamcity.html">TeamCity</a>
-                
-                    <a id="post-category" href="/tags/msbuild.html">MsBuild</a>
-                
-            </p>
-        </div>
+
+        <footer>
+            <div id="footer" class="container">
+    <div id="fbox1">
+        <h2>Related</h2>
+        <ul>
+            <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
+            <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
+            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
+        </ul>
     </div>
-    <div id="post-content">
-        <p>Once the configuration of <a href="/projects/sherlock.html">Sherlock</a> is complete the last step needed to make use of automatic regression testing is to integrate with a build server. In this post I will explain which steps need to be taken to integrate Sherlock with a build server. Examples will be given for <a href="http://jenkins-ci.org/">Jenkins</a>, which is used at my work, and <a href="http://www.jetbrains.com/teamcity/">TeamCity</a>, which I use personally. </p>
-<p>In order to integrate with a build server you will need to: </p>
-<ul>
-<li>Create at least one test configuration</li>
-<li>Write the build scripts necessary to register a test, wait for the completion of the test and process the results.</li>
-<li>Set up a job on the build server to execute the test.  </li>
-</ul>
-<h3 id="test-configurations">Test configurations</h3>
-<p>In order to execute a test the first thing you need to decide on is the test configuration which will be executed. In Sherlock the test configuration is described by a XML file similar to the following gist: </p>
-<script src='https://gist.github.com/8346703.js'></script>
+    <div id="fbox2">
+        <h2 id="copyright">Copyright</h2>
+        <p>Copyright (c) 2017 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
 
-<p>In this configuration file replace all instances of <code>${SOME_TEXT}$</code> with the appropriate information. Note that some configuration settings should be templated so that those values can be supplied by the build system, e.g. the application version number:</p>
-<ul>
-<li>Provide an application name and version for use in the test report.</li>
-<li>Provide a compact description. This will be used as the title of the test report</li>
-<li>Provide each environment with a name. It doesn&#39;t matter what that name is as long as it is consistently used throughout the configuration file. All test steps which should be executed on the same environment should be linked to the same environment name. Note that while it is possible to request multiple environments to be started in a test, it is not possible to synchronize those environments. In other words each environment will exit as soon as it completes the test steps assigned to it, no environment will wait for other environments to complete their work.</li>
-<li>For each test step that needs to be executed provide the order (integer number starting at 0, incrementing for each step), the name of the environment in which the step should be executed, the failure mode, either Stop or Continue and the correct file paths. Note that the test steps use the following definitions for their file paths:<ul>
-<li><strong>msi:</strong> <code>file</code> is the absolute path to the MSI file as on the machine that is used to register the test (i.e. the origin).</li>
-<li><strong>x-copy:</strong> <code>destination</code> is the absolute path to the directory that will hold all the x-copy results on the test environment.</li>
-<li><strong>x-copy:</strong> <code>base</code> is the absolute path to the directory that holds the files / directories to be x-copied on the origin.</li>
-<li><strong>x-copy:</strong> <code>paths</code> contains the absolute paths to the files / directories that should be x-copied. It is expected that these all reside in the <code>base</code> directory at some level.</li>
-<li><strong>script:</strong> <code>file</code> is the absolute path to the script file on the origin.</li>
-<li><strong>console:</strong> <code>exe</code> is the absolute path to the executable that should be executed on the test environment. Note that the path is also pointed to the test environment. Hence the <code>CONSOLE</code> test step is the only test step that doesn&#39;t copy files.</li>
-<li><strong>All test steps:</strong> All files and directories that should be included in the report are absolute paths on the test environment.</li>
-<li><strong>notification:</strong> The absolute path where the final report should be placed. This path should be accessible to both Sherlock (the master controller) and the application that will process the test results.</li>
-</ul>
-</li>
-<li>It makes sense to always copy back any logs that are written during the test. If you don&#39;t need them for test failure diagnosis then it is easy to delete them later, however you can&#39;t copy them from the test environment after the test has completed because the test environment will be reset to its original state upon shut down. </li>
-</ul>
-<p>If you need tests to run in different environments or with different test steps then you will need to create a configuration file for each environment / set of test steps.  </p>
-<h3 id="build-scripts">Build scripts</h3>
-<p>The easiest way to execute the test from a build server is to create a set of build scripts that can do the work for you. In this example I will be using MsBuild as the scripting language.</p>
-<p>In order to create the configuration file from the template it is necessary to replace all the templated configuration settings with their current values. The following gist shows an inline MsBuild task that does exactly that:</p>
-<script src='https://gist.github.com/8277812.js?file=TemplateFile.xml'></script>
-
-<p>In order to use this task create an <code>ItemGroup</code> with the identifiers of the settings and their replacement values. For example:</p>
-<script src='https://gist.github.com/8277812.js?file=HowToUseTemplateFile.xml'></script>
-
-<p>If this example is used on the following template file:</p>
-<script src='https://gist.github.com/8277812.js?file=BeforeReplacement.xml'></script>
-
-<p>Then the outcome is the following output file:</p>
-<script src='https://gist.github.com/8277812.js?file=AfterReplacement.xml'></script>
-
-<p>The next step will be to create a build script that can register the test with the Sherlock system. This can either be done with a call to the <a href="http://msdn.microsoft.com/en-us/library/x8zx72cd.aspx">exec</a> task or with the following inline MsBuild task:</p>
-<script src='https://gist.github.com/8346876.js'></script>
-
-<p>The next step is a little tricky in that it is now necessary to wait for Sherlock to execute the test and create the test report. The tricky bit due to the fact that Sherlock will only execute the tests when a suitable test environment is available. That means that tests could be executed almost immediately if an environment is directly available, or not for a long time if all environments are busy. On top of that MsBuild does not have the ability to watch specific files. The following inline task allows you to wait for certain files to be created. Note that you need to provide a time-out which determines how long this task will wait for the report files. How long this time-out should be depends on:</p>
-<ul>
-<li>How long it takes for the tests to execute.</li>
-<li>How many tests will be executed on the same test environments. Tests executing on different test environments can be run in parallel provided the hardware will stand up to it.</li>
-<li>How many other tests may potentially be executing at the same time.</li>
-</ul>
-<script src='https://gist.github.com/8346893.js'></script>
-
-<p>Finally the report files need to be checked for success or failure. For each test Sherlock produces a HTML and an XML report. The easiest way to find the outcome of a test is to parse the XML report and search for the <code>result</code> element. The value of this element will either be <code>Passed</code> or <code>Failed</code>. The following inline task will accomplish this goal:</p>
-<script src='https://gist.github.com/8346900.js'></script>
-
-<h3 id="build-jobs">Build jobs</h3>
-<p>The final task is to setup one or more build jobs for the build server to execute. While you can combine the testing steps with the build steps it is in general advisable to have a separate job for the testing steps. The main reason for that is that the the testing steps can take quite a while to execute, ranging from several minutes to hours, which slows down the continuous integration feedback cycle considerably. Based on the idea that the tests should be contained in their own build job the following set-up is proposed. </p>
-<ul>
-<li>Define three different build jobs for the build, test and deploy stages of the process. This means that each job will be responsible for a specific task. Individual jobs will be use the artefacts produced by the other jobs.</li>
-<li>Set up dependencies between the different builds where required. For instance the test job will depend on the artefacts produced by the build job.</li>
-<li>The build job can be run both as continuous integration build, i.e. execute the build job each time a commit to the source control system is detected, and as pre-requisite to the test job.</li>
-<li>Similarly the test job could be run nightly to provide relatively quick feedback on regression problems while also acting as pre-requisite to the deploy job. </li>
-<li>If the version number includes either the build counter of the build job or the revision number of the source control commit then special care needs to be taken for the test and deploy jobs in order to ensure that they get the same numbers as the build job did.</li>
-<li>In a similar fashion it will be necessary to control the version control settings so that all builds pull in the same revision. One solution would be to store the revision index in the first job in the chain and then transfer that to the other jobs.</li>
-</ul>
-<p>For the two build systems I have specifically worked with the following additional notes can be made:</p>
-<ul>
-<li><a href="http://jenkins-ci.org/">Jenkins</a><ul>
-<li>In addition to the three standard jobs you will probably need a <a href="https://wiki.jenkins-ci.org/display/JENKINS/Build+Flow+Plugin">Build flow</a> job to trigger the different standard jobs in the right order. This has to be done because at the moment it does not seem possible in Jenkins to trigger pre-requisite builds without having the downstream project taking up one of the build executors. The build flow jobs live outside the actual build executors which makes it possible to optimize the use of the executors.</li>
-<li>In order to deal with the build number problems as specified above the simplest way is to write the number to a file in the upstream job, archive that and then pull it out in the downstream jobs. The same goes for the version control information.</li>
-</ul>
-</li>
-<li><a href="http://www.jetbrains.com/teamcity/">TeamCity</a><ul>
-<li>Downstream jobs have both a snapshot dependency and an artefact dependency on the upstream job. The <a href="http://confluence.jetbrains.com/display/TCD8/Configuring+Dependencies">snapshot dependency</a> takes care of the synchronization of the version control revision. Note that you should create different VCS roots for each project, otherwise the projects all share a single check-out directory. By sharing a single directory it is possible that upon starting the second job the directory is cleaned which will likely remove the artefacts from the first job. </li>
-<li>The build number can be copied easily by <a href="http://confluence.jetbrains.com/display/TCD8/Configuring+General+Settings#ConfiguringGeneralSettings-BuildNumberFormat">synchronizing</a> the build numbers.</li>
-</ul>
-</li>
-</ul>
- 
+        <h2 id="disclaimer">Disclaimer</h2>
+        <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
+    </div>
+    <div id="fbox3">
+        <h2 id="media">Media</h2>
+        <p><a href="/feed.atom"><img src="/assets/images/feed.png" alt="Atom feed"></a></p>
     </div>
 </div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-12-27_Sherlock-Release-V0480.html'>Sherlock release - V0.4.8.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Friday, December 27, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.8.0">V0.4.8.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides the following issues:</p>
-<ul>
-<li><a href="https://github.com/pvandervelde/Sherlock/issues/13">#13</a> - Provide setup verification</li>
-<li><a href="https://github.com/pvandervelde/Sherlock/issues/14">#14</a> - Add license and readme to all downloadable files</li>
-<li><a href="https://github.com/pvandervelde/Sherlock/issues/15">#15</a> - Include test purpose in final test report</li>
-<li><a href="https://github.com/pvandervelde/Sherlock/issues/22">#22</a> - Add NuGet symbols package for easy upload to a symbol server</li>
-<li><a href="https://github.com/pvandervelde/Sherlock/issues/23">#23</a> - OutOfMemoryException in Sherlock.Service.Master</li>
-<li><a href="https://github.com/pvandervelde/Sherlock/issues/24">#24</a> - Hyper-V: If a virtual machine is running when a new test is started terminate the current run</li>
-<li><a href="https://github.com/pvandervelde/Sherlock/issues/26">#26</a> - Hyper-V: Handle state change result code</li>
-</ul>
- 
-    </div>
+<div id="copyright" class="container">
+    <p>
+        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+    </p>
+    <p>
+        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+    </p>
+    <p>Generated by <a href="https://wyam.io" rel="nofollow">Wyam</a> on Wed, 11 Jan 2017 22:29:29 GMT.</p>
 </div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-12-24_Setting-up-Sherlock-verification.html'>Sherlock configuration - Verification</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Tuesday, December 24, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>After the configuration of the <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">host machine</a> and the <a href="/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html">virtual machines</a> the final step in the configuration of Sherlock is to verify that everything is configured correctly. This can be done by using the verification package that comes with each <a href="https://github.com/pvandervelde/Sherlock/releases">release</a> of Sherlock. In order to use the verification package take the following steps:</p>
-<ul>
-<li>Unpack the <strong>verification.zip</strong> package to a directory somewhere (e.g. <code>c:\temp\sherlock</code>).</li>
-<li>Update the configuration file <code>Sherlock.VerificationConfiguration.msbuild</code> with the following settings:<ul>
-<li><strong>ConfigurationReportDirectory:</strong> The directory where you want the final report to be placed. Note that both the user who requests the test and the user which is used to run the Sherlock services need to have access to this directory. The <code>report</code> directory that was created on the <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">host</a> machine</li>
-<li><strong>ConfigurationServerUrl:</strong> The URL of the web service, e.g. <code>http:\\myhostmachine\sherlock.api</code></li>
-<li><strong>ConfigurationOperatingSystem:</strong> The operating system name that you want to test with. This needs to match one of the operating systems that has been registered with the management website and which is installed on at least one of your test environments.</li>
-<li><strong>ConfigurationOperatingSystemServicePack:</strong> Can be left empty if the operating system has no service pack. If the operating system has a service pack then it needs to match the service pack name of the operating system as registered with the management web site.</li>
-<li><strong>ConfigurationOperatingSystemCulture:</strong> The <a href="http://en.wikipedia.org/wiki/IETF_language_tag">culture</a> as defined for the registered operating system.</li>
-<li><strong>ConfigurationOperatingSystemPointerSize:</strong> The &#39;bitness&#39; or pointer size for the operating system, either 32 or 64 bits. Should again match the value that was provided when the operating system was registered.</li>
-<li><strong>ConfigurationRemotePcWorkingPath:</strong> A path where the test files will be placed on the test environment, e.g. <code>c:\temp</code>.</li>
-<li><strong>ConfigurationSherlockConsoleDirectory:</strong> The directory where the console application is installed, this may be a UNC path or a normal directory, e.g. <code>\\MyHostMachine\console</code>.</li>
-</ul>
-</li>
-<li>Execute the <code>Sherlock.ExecuteVerificationTests.msbuild</code> script. This script will prepare the files to be send across (a test application and some test scripts), start the console application, register the test and then wait for the reports to be produced. </li>
-</ul>
-<p>Note that the reports will come back with some errors. The verification was designed this way on purpose to make it possible to test the error handling. In the end there should be three reports, one for each known test configuration version, i.e. v1.0, v1.1 and v1.2. The reports should show the following errors:</p>
-<ul>
-<li>The script execution that executes <code>c:\temp\Sherlock.Verification.Console.exe</code> with the <code>-f</code> command line argument. The <code>-f</code> parameter indicates that the process should &#39;fail&#39; and exit with an exit code of 1.</li>
-<li>The script execution for <code>c:\temp\Sherlock.Verfication.Console.exe</code> with parameter <code>-c</code>. The <code>-c</code> parameter indicates that the process should exit with an unhandled exception. The exit code for the process should be -532462766.</li>
-<li>The application execution <code>c:\temp\Sherlock.Verification.Console.exe</code> with the <code>-f</code> command line argument. </li>
-<li>The application execution for <code>c:\temp\Sherlock.Verfication.Console.exe</code> with parameter <code>-c</code>. </li>
-</ul>
-<h3 id="troubleshooting">Troubleshooting</h3>
-<p>If there are any problems during the verification then the first thing to look at are the debug logs which are written by the different applications. The logs are generally found in <code>c:\ProgramData\Sherlock\&lt;APP_NAME&gt;\&lt;VERSION&gt;\logs</code>. Notes:</p>
-<ol>
-<li>If there is not enough information in the logs then you can change the log level in the application configuration file under the <code>DefaultLogLevel</code> configuration option. The available levels are (from most verbose to least verbose):<ul>
-<li>Trace </li>
-<li>Debug</li>
-<li>Info</li>
-<li>Warn</li>
-<li>Error</li>
-<li>Fatal</li>
-<li>None</li>
-</ul>
-</li>
-<li>The applications running in the test environment also log but those logs may be removed if the test environment is a virtual machine. However version 1.2 of the test configuration file has the possibly to copy the logs back to the host machine for inclusion into the test report. For this to work set the <code>includesystemlog</code> attribute of the <code>includeinreport</code> element to <code>true</code>.</li>
-</ol>
-<p>Some standard problems that may occur are mentioned below.</p>
-<h4 id="console-and-web-service">Console and web service</h4>
-<ul>
-<li>If the console application fails to connect to the web service because it cannot find the web service then verify that the web service can be reached. The two main problems that could be the root cause of this are either the web service is not running or the user which started the console application has no access rights to the web service.</li>
-<li>If the console application crashes due to a URL problem (see the log file) then it is most likely that you put a partial URL, e.g. <code>mycoolserver\sherlock.api</code> instead of <code>http://mycoolserver/sherlock.api</code>.</li>
-<li>If the console successfully manages to go through nearly all the test registration steps but fails on the transfer of the test files then there is quite likely a problem with the web service permissions to write to the <code>App_Data</code> directory.</li>
-<li>If the web service fails on the first call then there is quite likely a problem with the database connection. This is most likley either a problem with the connection string or a problem with the permissions. In case of a permission issue check if the user which is running the web service can access the stored procedures in the database.</li>
-</ul>
-<h4 id="update-service">Update service</h4>
-<ul>
-<li>If the update service is unable to verify the update packages then it is not able to access the public key file. Make sure the configuration file points to the public key file and that this file is reachable by the service.</li>
-</ul>
-<h4 id="master-controller">Master controller</h4>
-<ul>
-<li>If the master controller fails to connect to the database this could point to either a problem with the connection string or a problem with the permissions. In case of a permissions problem again check that the user running the master controller can access the stored procedures in the database.</li>
-<li>If the master controller is unable to start a virtual machine then the <em>SherlockUser</em> may not have <a href="http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/17/allowing-non-administrators-to-control-hyper-v.aspx">permissions</a> to start the virtual machines. The log will show this as an error in the environment loading. Probably a security exception.</li>
-<li>If the controller is blocked by the firewall, or the firewall on the test environment is blocking, then there will be no communication between the test environment and the host. The log shows this through the fact that the host will wait an excessive amount of time for the remote &#39;endpoint&#39; to connect. A normal start up takes around 2 minutes for a test environment start, operating system load and Sherlock load.</li>
-</ul>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html'>Sherlock configuration - Virtual machines</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, December 11, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>After <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">setting up the host machine</a> the next step in the <a href="/posts/2013-12-04_Regression-testing-with-Sherlock.html">configuration</a> of Sherlock is to set up one or more virtual machines. Each virtual machine will have the following applications installed:</p>
-<ul>
-<li>The update service which handles the installation of the latest available Sherlock binaries. </li>
-<li>The executor service which handles the communication with the master controller, handles the download and upload of test files and test reports and controls the test execution. </li>
-<li>The application which executes the test steps. This has been separated from the service so that: <ul>
-<li>It is possible to run the application on the desktop while the executor service is running as a Windows service.</li>
-<li>Any fatal errors in the test application don&#39;t affect the service, thereby maintaining communication with the master controller, and thus allowing error reports to be send.</li>
-<li>It is possible to run multiple applications under different accounts (planned in future releases).</li>
-</ul>
-</li>
-</ul>
-<p>The configuration process for a virtual machine consists of the following steps:</p>
-<ul>
-<li>Create a new virtual machine and install the operating system</li>
-<li>Configure the operating system on the virtual machine</li>
-<li>Install and configure the Sherlock applications on the virtual machine</li>
-<li>Store information about the virtual machine in the host database</li>
-</ul>
-<h3 id="preparing-the-virtual-machine">Preparing the virtual machine</h3>
-<p>The first step is to create a <a href="http://technet.microsoft.com/en-us/library/cc772480.aspx">new virtual machine</a> and install the operating system. This should be straight forward but there a few things to look out for:</p>
-<ul>
-<li>The operating system must (currently) support <a href="http://en.wikipedia.org/wiki/.NET_Framework_version_history#.NET_Framework_4.5">.NET 4.5</a> because that is what Sherlock is needs to run on.</li>
-<li>The network for the virtual machine must be set up so that it can at the very least see the host machine and the other virtual machines stored on the same host machine.<ul>
-<li><strong>Note:</strong> Windows networks can <a href="http://www.petri.co.il/working-with-domain-member-virtual-machines-and-snapshots.htm">deny access</a> to the test virtual machines after being used for a while (usually 30 days) due to the fact that the test machine is reset after each test, thereby not allowing it to handle the renewal of network identification keys correctly.</li>
-</ul>
-</li>
-</ul>
-<h3 id="preparing-the-operating-system">Preparing the operating system</h3>
-<p>After the creation of the virtual machine and the installation of the operating system it is necessary to configure the operating system. Some of the changes are necessary for Sherlock to function while others are necessary only from a test perspective.</p>
-<p>Lets first start with the changes required for Sherlock to function. </p>
-<ul>
-<li>If .NET 4.5 is not already installed, then install it. Without it Sherlock won&#39;t run at all.</li>
-<li>Create a new user that will be used to execute the tests. This user needs to be an administrator so that the execution of an MSI install can succeed without the need for elevation (which is <a href="http://stackoverflow.com/questions/5098121/how-can-i-get-elevated-permissions-uac-via-impersonation-under-a-non-interacti">a bit tricky</a> from an application). The user can be either a machine local administrator or a domain user  which is granted administration rights on the machine.<ul>
-<li>Note that there might a difference between a domain user with administrative rights on the computer and a local administrator. If you turn UAC off then in general a local administrator is running all applications elevated while the applications started by the domain user run with no elevation only to be silently elevated if requested to do so. Unfortunately this means that the domain user will not be able to run a silent install from a command line unless that command line is explicitly elevated (which is not possible from an application).</li>
-</ul>
-</li>
-<li>Disable User Access Control (UAC) so that Sherlock can execute MSI installations. <strong>Note:</strong> In some cases corporate network controls and/or group policies override local settings. In those cases talk to the local IT people regarding UAC. Also note that on Windows 8 it is not possible to turn off the UAC by moving the &#39;UAC slider&#39; all the way down. This is because Metro applications require some form of UAC to exist in order for them to work.</li>
-</ul>
-<p>Finally before installing Sherlock a few tweaks should be made to the operating system configuration so that the automated tests can proceed. Note that for all the following changes there may be group policies in place put there by your local IT service. It may be necessary to talk to the IT people about the settings you want to change and the <a href="http://www.brianbondy.com/blog/id/100/">reason</a> you need to change those settings.</p>
-<ul>
-<li><strong>Interactive user:</strong> If you need to run interactive tests, e.g. UI tests, then you need to make sure a user is logged in. Use <a href="http://technet.microsoft.com/en-us/sysinternals/bb963905.aspx">Autologon</a> to automatically log your user in when the computer starts while still maintaining password security.</li>
-<li><strong>Windows 8 switch to desktop:</strong> If you are on Windows 8 you need to make sure that the desktop is <a href="http://www.7tutorials.com/how-boot-desktop-windows-8-skip-start-screen">available</a> for interactive applications to execute on.</li>
-<li><strong>Screen saver:</strong> In order to prevent any interactive tests from failing due to a <a href="http://windows.microsoft.com/en-nz/windows-vista/turn-your-screen-saver-on-or-off">screensaver</a> or the <a href="http://answers.microsoft.com/en-us/windows/forum/windows_7-security/disable-automatic-lock-with-windows-7/daef8f0a-810f-46e8-9420-3c32c4bd6479">automatic locking of the desktop</a> both those features need to be turned off. </li>
-<li><strong>Windows error reporting:</strong> Any tests that run on the desktop may hang eternally if the application under tests fails and displays the Windows Error Reporting (WER) dialog. In order to prevent this from happening <a href="http://4sysops.com/archives/how-to-disable-windows-error-reporting/">WER should be disabled</a>. The most efficient way of doing this is to use the group policy controls to disable the following elements:<ul>
-<li>In <code>Computer Configuration\Administrative Templates\System\Internet Communication Management\Internet Communication settings</code> enable the setting: <code>Turn off Windows Error Reporting</code>.</li>
-<li>In <code>Computer Configuration\Administrative Templates\Windows Components\Windows Error Reporting</code> enable the settings <code>Disable Windows error reporting</code> and <code>Prevent display of the user interface for critical errors</code>, and disable the setting <code>Display error notification</code>.</li>
-</ul>
-</li>
-<li><strong>Automatic updates:</strong> Automatic updates can be disabled because they will never be deployed due to the fact that the machine is reset after each test.</li>
-</ul>
-<h3 id="configuring-sherlock">Configuring Sherlock</h3>
-<p>Once the operating system is configured <a href="/projects/sherlock.html">Sherlock</a> can be installed and configured. </p>
-<ul>
-<li>Unzip the <strong>service.zip</strong> package into the <code>c:\sherlock</code> directory.</li>
-<li>Copy the XML file containing the public key used to sign the manifests to the virtual machine and place it in the <code>c:\sherlock</code> directory.</li>
-<li>Open the configuration file (<code>Sherlock.Service.exe.config</code>) and update the following settings:<ul>
-<li><strong>ApplicationName:</strong> The name of the application for which updates should be tracked, in this case that is: <code>Sherlock.Service.Executor.exe</code>.</li>
-<li><strong>UpdateManifestUri:</strong> The URL of the manifest file, in this case: <code>http:\\myhostmachine\appupdate\executorservice.manifest</code></li>
-<li><strong>ManifestPublicKeyFile:</strong> The path to the XML file containing the public key section of the manifest signing key, e.g. <code>C:\sherlock\manifestsigningkey.public.xml</code></li>
-</ul>
-</li>
-<li>Set the update service to start automatically when the computer starts. This can be done as an actual service (in case no interactive tests will be executed) or by automatically starting the application when the user logs on to windows (in case interactive tests need to be executed).</li>
-<li>The last step is to let the executor controller through the firewall. For this create an inbound rule that allows <code>c:\ProgramData\Sherlock\Sherlock.Service.Executor\{VERSION}\Sherlock.Service.Executor.exe</code> to connect to all types of protocols. Normally only Domain and private networks should be sufficient.</li>
-</ul>
-<h3 id="testing">Testing</h3>
-<p>Once the operating system and Sherlock have been configured it is sensible to test the configurations to make sure it all works. In order to do this take the following steps:</p>
-<ul>
-<li>Restart the virtual machine. Once the machine starts up it should (depending on your configuration)<ul>
-<li>Automatically log on the test user</li>
-<li>On windows 8 switch to the desktop</li>
-<li>Start the Sherlock update service. The service should download the latest version of the executor controller and start it. You can verify this by looking at the logs which can be found in <code>c:\programdata\sherlock\sherlock.service\{VERSION}\logs</code> and <code>c:\programdata\sherlock\sherlock.service.executor\{VERSION}\logs</code> for the update service and the executor controller respectively.</li>
-</ul>
-</li>
-<li>After both applications have started stop them both by stopping the update service (<code>Sherlock.Service</code>).</li>
-<li>Once the applications have been stopped remove the data from the directory <code>c:\ProgramData\Sherlock</code>.</li>
-<li>Shut down the machine.</li>
-<li>Take a <a href="http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/16/managing-snapshots-with-hyper-v.aspx">snapshot</a> of the current state of the virtual machine and give it a sensible name.</li>
-</ul>
-<h3 id="host-configuration">Host configuration</h3>
-<p>Finally the last step in the configuration of a new test environment is to register the environment with Sherlock through the management website.</p>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-12-10_Setting-up-Sherlock-serverside.html'>Sherlock configuration - Server side</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Tuesday, December 10, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>In this post I will explain how to configure the <a href="/projects/sherlock.html">Sherlock</a> host services, which handle test registration and selection and control of the test environments for a test. The set-up follows the following steps:</p>
-<ul>
-<li>Preparing the host machine which includes installation of the OS and the required services.</li>
-<li>Installation of database.</li>
-<li>Installation of the web parts.</li>
-<li>Creation of the update files and the update manifests.</li>
-<li>Installation of the services.</li>
-<li>Configuration of the firewall.</li>
-<li>Verification of the configuration.</li>
-</ul>
-<h3 id="preparing-the-host-machine">Preparing the host machine</h3>
-<p>The first step in the configuration of the host services is to prepare the machine from which the Hyper-V service will be running. Note that Sherlock does not require that all services run on this machine but for the purposes of this post I will assume that this is the case. The configuration of the host machine consists of:</p>
-<ol>
-<li>Install the host operating system on the machine. Both the machine and the operating system need to <a href="http://en.wikipedia.org/wiki/Hyper-V#System_requirements_and_specifications">support Hyper-V</a>. On top of that for the very least the master controller service has to be installed on the host machine, which means it is not possible to install the core Hyper-V version of Windows.</li>
-<li>Create or associate a user which you will use to run the Sherlock services. It is strongly recommended to not run the Sherlock services as local administrator for security reasons. It is more suitable to provide a separate user to run the services. Note that this user will need permissions to run services, but doesn&#39;t need installation permissions etc. For the remainder of this post lets call this user the <em>SherlockUser</em>. <em>Note:</em> If you have a specific user that is used for your build server then it makes sense to use that user, although that is not required.</li>
-<li>Install the <a href="http://technet.microsoft.com/en-us/library/hh846766.aspx">Hyper-V role</a> on the host machine.</li>
-<li>Grant the <em>SherlockUser</em> <a href="http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/17/allowing-non-administrators-to-control-hyper-v.aspx">permissions</a> to start, stop and reset Hyper-V virtual machines.</li>
-<li>Install the <a href="http://www.iis.net/learn/get-started/whats-new-in-iis-8/installing-iis-8-on-windows-server-2012">IIS role</a> on the host machine. <em>Note:</em> that in theory (i.e. this has not been tested) IIS can be installed on a different machine than the host machine as long as it will be able to reach the database. The IIS install will need to have the following parts installed as a minimum:<ul>
-<li>ASP .NET 4.5</li>
-<li>Basic authentication</li>
-<li>Windows Authentication</li>
-<li>Management tools</li>
-<li>Http logging and tracing</li>
-</ul>
-</li>
-<li>Install <a href="http://www.microsoft.com/web/platform/database.aspx">MSSQL Express 2012</a> on the host machine. <em>Note:</em> As with IIS it is again possible to install the database on any machine as long as both IIS and the Hyper-V host can connect to it.</li>
-<li>Create a directory that will hold all the files related to Sherlock, e.g. <code>c:\testing</code>. In that directory create the following sub-directories:<ul>
-<li><code>appupdate</code> - Contains the application update files and manifests.</li>
-<li><code>console</code> - Contains the binary files for the console application which is used by the user to register a test.</li>
-<li><code>service</code> - Contains the binaries for the windows service that will run the controller application.</li>
-<li><code>web.api</code> - Contains the binaries for the web service that interacts with the database on test registration.</li>
-<li><code>web.intranet</code> - Contains the binaries for the management web site.</li>
-<li><code>reports</code> - The location where tests can place their generated reports. Note that Sherlock allows placing test reports in any location as long as the service has access to that directory.</li>
-<li><code>temp</code> - The temporary directory used for report generation etc.</li>
-</ul>
-</li>
-<li>Share the <code>reports</code> and <code>console</code> directories so that they can be accessed over the network. The <code>console</code> directory will only need read access, the <code>reports</code> directory will need read and write access.</li>
-<li>Install the <a href="https://github.com/pvandervelde/nAdoni">nAdoni</a> manifest signing tool. This application will be used sign the update manifest files.</li>
-<li>Generate the update keys by executing the following command line (assuming that you installed nadoni in <code>c:\tools\nadoni</code>):<pre class="highlight"><code class="hljs dos">c:\tools\nadoni\keygenerator\nadoni.keygenerator.exe --private=&lt;PATH_TO_PRIVATE_KEY_FILE&gt; --public=&lt;PATH_TO_PUBLIC_KEY_FILE&gt;
-</code></pre>
-<ul>
-<li>Where <code>&lt;PATH_TO_PRIVATE_KEY_FILE&gt;</code> points to the XML file that will contain the private and public parts of the manifest signing key and <code>&lt;PATH_TO_PUBLIC_KEY_FILE&gt;</code> points to the XML file that will contain the public part of the manifest signing key. </li>
-</ul>
-</li>
-</ol>
-<h3 id="database">Database</h3>
-<p>The second step in the installation process is to create the Sherlock database.</p>
-<ul>
-<li>Unpack the <em>sql.zip</em> file that is part of the <a href="https://github.com/pvandervelde/Sherlock/releases">Sherlock release</a>.</li>
-<li>Create database called <code>Sherlock</code>.</li>
-<li>Apply all the SQL scripts from the <em>sql.zip</em> file, starting at the V1 script through to the latest upgrade script <em>Sherlock_Upgrade_Vm_To_Vn.sql</em>.</li>
-<li><p>Provide permissions for the user that will be connecting to the database. You can either use the <em>SherlockUser</em> or you can create an SQL user. Grant this user the following access:</p>
-<ul>
-<li>db_datareader</li>
-<li>db_datawriter</li>
-<li>Grant access to stored procedures. This can be done via: <code>GRANT EXEC TO &lt;STORED_PROCEDURE_NAME&gt; TO &lt;SQL_USER&gt;</code>. Given that Sherlock only accesses the database through stored procedures, there is no direct table access, there are quite a few stored procedures which means it makes sense to create a script in order to grant access to the stored procedures. The following SQL script can be used to generate an access script for the user:<pre class="highlight"><code class="hljs sql"><span class="hljs-operator"><span class="hljs-keyword">SELECT</span>  <span class="hljs-string">'GRANT EXEC ON '</span>+ SCHEMA_NAME(schema_id) + <span class="hljs-string">'.'</span> + name + <span class="hljs-string">' TO &lt;SQL_USER&gt;'</span>
-<span class="hljs-keyword">from</span> sys.procedures
-<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">1</span>
-</span></code></pre>
-</li>
-</ul>
-</li>
-<li><p>Set-up a back up for the Sherlock database. <em>Note:</em> The test data is only useful to Sherlock and then only when tests are either running or haven&#39;t been run yet. In other words there is no useful information for the user describing test results etc.. However the information describing the available test environments should be backed-up.</p>
-</li>
-</ul>
-<h3 id="iis">IIS</h3>
-<p>Step number three for the installation of Sherlock is to configure the web service, web page and the application update location. We&#39;ll start with the application update location:</p>
-<ul>
-<li>In IIS Manager create a new virtual directory under the default web site using the following settings <ul>
-<li><strong>Alias:</strong> AppUpdate</li>
-<li><strong>Path:</strong> <code>c:\testing\appupdate</code></li>
-<li><strong>Connect as:</strong> <em>SherlockUser</em>. Make sure the <em>SherlockUser</em> has read permissions for the directory.</li>
-</ul>
-</li>
-<li>Allow directory browsing through the <em>IIS -&gt; Directory Browsing</em> Feature.</li>
-<li>Finally test access to this directory via a browser by going to <code>&lt;HOST_ADDRESS&gt;\AppUpdate</code>. This should display the contents of the directory.</li>
-</ul>
-<p>Before configuring the web site and the web service create a new application pool with the following settings:</p>
-<ul>
-<li><strong>Name:</strong> SherlockAppPool</li>
-<li><strong>.NET Framework version:</strong> V4.0.30319</li>
-<li><strong>Managed pipeline mode:</strong> Integrated </li>
-</ul>
-<p>The next project to configure is the web site that will be used to manage the testing environments. </p>
-<ul>
-<li>Unzip <strong>Sherlock.Web.Intranet.sql</strong> to the <code>c:\testing\web.intranet</code> directory.</li>
-<li>In IIS Manager create a new application under the default web site using the following settings:<ul>
-<li><strong>Alias:</strong> Sherlock.Intranet</li>
-<li><strong>Application pool:</strong> SherlockAppPool</li>
-<li><strong>Path:</strong> <code>c:\testing\web.intranet</code></li>
-<li><strong>Connect as:</strong> <em>SherlockUser</em>. Again make sure that the <em>SherlockUser</em> has access to the directory containing the web site binaries.</li>
-</ul>
-</li>
-<li>Set the authentication for the web site to be anonymous only.</li>
-<li>Define the connection string to be as given below:</li>
-</ul>
-<script src='https://gist.github.com/7866267.js'></script>
 
-<ul>
-<li>Remove the following sections from the configuration file<ul>
-<li>System.Web -&gt; Authentication</li>
-<li>System.Web -&gt; Authorization</li>
-</ul>
-</li>
-</ul>
-<p>The last web project to configure is the web service that will be used to add information about the new tests to the database.</p>
-<ul>
-<li>Unzip <strong>Sherlock.Web.Api.zip</strong> to the <code>c:\testing\web.api</code> directory.</li>
-<li>In IIS Manager create a new application under the default web site using the following settings:<ul>
-<li><strong>Alias:</strong> Sherlock.Api</li>
-<li><strong>Application pool:</strong> SherlockAppPool</li>
-<li><strong>Path:</strong> <code>c:\testing\web.api</code></li>
-<li><strong>Connect as:</strong> <em>SherlockUser</em>. Again make sure that the <em>SherlockUser</em> has access to the directory containing the web service binaries.</li>
-</ul>
-</li>
-<li>Define the connection string to be the same as given for the management website.</li>
-<li>Set the authentication for the web site to be anonymous only. </li>
-</ul>
-<h3 id="update-manifests-and-files">Update manifests and files</h3>
-<p>The two main services for Sherlock, the master controller and the executor controller, are not directly installed on either the host machine or the test environments. The Sherlock service probes the <code>AppUpdate</code> directory for the binaries of these services. This greatly improves the ease with which Sherlock can be upgraded given that an upgrade of Sherlock does not require any changes to the test environments.</p>
-<p>To create the necessary upgrade files for the Sherlock services it will be necessary to update the configuration file of the master controller which takes the following steps:</p>
-<ul>
-<li>Unzip <strong>Service.Master.zip</strong> into a temporary directory.</li>
-<li>Update the configuration file (<code>Sherlock.Service.Master.exe.config</code>) with the following settings:<ul>
-<li><strong>TestDataDirectory:</strong> <code>c:\testing\web.api\App_Data</code></li>
-<li><strong>TestReportFilesDir:</strong> <code>c:\testing\temp</code> </li>
-</ul>
-</li>
-<li>Define the connection string to be the same as given for the management website. </li>
-<li>Repackage the binaries into a ZIP archive with the name <strong>Service.Master.zip</strong>.</li>
-</ul>
-<p>The executor controller does not need any changes to the configuration file and can thus be left untouched.</p>
-<p>The next step is to create the manifest files that are used by the update service to determine which ZIP archive to use. In order to create the manifests the <a href="https://github.com/pvandervelde/nAdoni">nAdoni</a> application is used. This can be done with the following command lines:</p>
-<p>For the master controller:</p>
-<pre class="highlight"><code class="hljs dos">C:\tools\nadoni\manifestbuilder\nAdoni.ManifestBuilder.exe -v="{VERSION}" -n="Sherlock.Service.Master.exe" -f="c:\testing\appupdate\service.master.zip" -u="http://myhostmachine/appupdate/service.master.zip" -k="C:\mykeydirectory\manifestsigningkey.private.xml" -o="c:\testing\appupdate\masterservice.manifest"
-</code></pre>
-<p>And for the executor controller:</p>
-<pre class="highlight"><code class="hljs dos">C:\tools\nadoni\manifestbuilder\nAdoni.ManifestBuilder.exe -v="{VERSION}" -n="Sherlock.Service.Executor.exe" -f="c:\testing\appupdate\service.executor.zip" -u="http://myhostmachine/appupdate/service.executor.zip" -k="C:\mykeydirectory\manifestsigningkey.private.xml" -o="c:\testing\appupdate\executorservice.manifest"
-</code></pre>
-<p>Another way to create the manifest files is through the use of the following Msbuild script: </p>
-<script src='https://gist.github.com/6521946.js'></script>
-
-<p>In this case the following changes must be made to the file:</p>
-<ul>
-<li><code>${PATH_TO_NADONI_DIRECTORY}$</code> - The path to the directory in which the nAdoni binaries have been placed.</li>
-<li><code>${URL_TO_APP_UPDATE}$</code> - The URL to the <code>AppUpdate</code> directory, e.g. <code>http://myhostmachine/appupdate</code>.</li>
-<li><code>${MANIFEST_SIGNING_KEY_PATH}$</code> - The path to the XML file that contains the private key information.</li>
-</ul>
-<p>And the following properties must be specified on the command line:</p>
-<ul>
-<li><strong>Version:</strong> The version of Sherlock for which the manifest files are generated.</li>
-</ul>
-<h3 id="services">Services</h3>
-<p>Finally on the host machine two applications need to be configured. These are the console application that will be executed by the user to register a test and the update service that will control the master controller application.</p>
-<p>To configure the console application take the following steps:  </p>
-<ul>
-<li>Unzip the <strong>console.zip</strong> package into the <code>c:\testing\console</code> directory.</li>
-<li>Open the configuration file (<code>Sherlock.Console.exe.config</code>) and update the following settings:<ul>
-<li><strong>WebServiceUrl:</strong> Point this to the <em>Sherlock.Api</em> site, e.g. <code>http://myhostmachine/sherlock.api</code>.</li>
-</ul>
-</li>
-<li>Note that the console needs to be accessed from other machines, e.g.from the build server, so make sure that the directory is shared with read-rights for all users that will need access. </li>
-</ul>
-<p>To configure the update service take the following steps:</p>
-<ul>
-<li>Unzip the <strong>service.zip</strong> package into the <code>c:\testing\service</code> directory.</li>
-<li>Open the configuration file (<code>Sherlock.Service.exe.config</code>) and update the following settings:<ul>
-<li><strong>ApplicationName:</strong> The name of the application for which updates should be tracked, in this case that is: <code>Sherlock.Service.Master.exe</code>.</li>
-<li><strong>UpdateManifestUri:</strong> The URL of the manifest file, in this case: <code>http:\\myhostmachine\appupdate\masterservice.manifest</code></li>
-<li><strong>ManifestPublicKeyFile:</strong> The path to the XML file containing the public key section of the manifest signing key, e.g. <code>C:\mykeydirectory\manifestsigningkey.public.xml</code></li>
-</ul>
-</li>
-<li><p>Install the application as a service by opening an elevated command line and navigating to the <code>c:\testing\service</code> directory. Then execute the following command line:</p>
-<pre class="highlight"><code class="hljs css">  <span class="hljs-tag">sherlock</span><span class="hljs-class">.service</span><span class="hljs-class">.exe</span> <span class="hljs-tag">install</span> <span class="hljs-tag">-username</span><span class="hljs-pseudo">:SherlockUser</span> <span class="hljs-tag">-password</span><span class="hljs-pseudo">:SherlockPassword</span> <span class="hljs-tag">--delayed</span> <span class="hljs-tag">-servicename</span><span class="hljs-pseudo">:Sherlock</span>
-</code></pre></li>
-<li>Go to the Windows services control and start the service. After a short while this will grab the latest version of the master controller binaries, drop them in <code>C:\ProgramData\Sherlock\Sherlock.Service.Master</code> and then start the master controller application. You can verify that all is well by checking the log files which are located in <code>C:\ProgramData\Sherlock\Sherlock.Service\{VERSION}\logs</code> and <code>C:\ProgramData\Sherlock\Sherlock.Service.Master\{VERSION}\logs</code> for the service and the master controller respectively.</li>
-</ul>
-<h3 id="firewall">Firewall</h3>
-<p>The last step is to let the master controller through the firewall. For this create an inbound rule that allows <code>Sherlock.Service.Master.exe</code> to connect to all types of protocols. Normally only Domain and private networks should be sufficient.</p>
-<p>And with all that done the host machine configuration is completed.</p>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-12-04_Regression-testing-with-Sherlock.html'>Regression testing with Sherlock</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, December 04, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-                    <a id="post-category" href="/tags/regression-test.html">Regression test</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Over a series of posts I hope to explain how to set up and use the <a href="/projects/sherlock.html">Sherlock</a> test environment system. The idea is to follow the set up procedure I used both at home for the <a href="/projects/apollo.html">Apollo</a> project and the proof of concept I am working on at my work place. But first lets start with a short explanation of what Sherlock is and what it does. </p>
-<h3 id="what-is-sherlock">What is Sherlock</h3>
-<p>Sherlock consists of a set of applications and services that provide test environment organisation and automatic execution of a set of tests on one or more test environments. The organisation part consists of:</p>
-<ul>
-<li>Keeping track of which environments exist, which are available for testing and which are not, e.g. for maintenance reasons.</li>
-<li>What operating system is loaded onto each environment.</li>
-<li>Which applications are pre-loaded onto each environment.</li>
-<li>Relationships between virtual machines and their (physical) host machine. </li>
-</ul>
-<p>The test execution part consists of:</p>
-<ul>
-<li>Selection of the most suitable environment for a test based on the desired combination of operating system and available applications.</li>
-<li>Preparing of the environment for test. This includes loading test environments, i.e. waking up physical test environments through the <a href="http://en.wikipedia.org/wiki/Wake-on-LAN">Wake-on-LAN</a> approach and starting virtual machines, and sending over the test data, e.g. installer files.</li>
-<li>Triggering test execution on the active test environment.</li>
-<li>Processing test status and test report information.</li>
-<li>Post test environment clean-up. This currently only includes resetting virtual machine disks back to the pre-test state.</li>
-<li>Accumulation of test events and generation of the final test report.</li>
-</ul>
-<p>In general the Sherlock system will consist of at least one <a href="http://en.wikipedia.org/wiki/Hyper-V">Hyper-V</a> host machine and a set of one or more Hyper-V virtual machines. In this arrangement the host machine handles the test organisation and part of the test execution, while the virtual machines serve as test environments. </p>
-<p>While it is possible for Sherlock to execute tests on physical machines it is advised to only execute on virtual machines because of the inability to reset a physical machine back to the pre-test state. Virtual machines on the other hand can easily be restored to the pre-test state through the use of snapshots.</p>
-<h3 id="the-life-of-a-test">The life of a test</h3>
-<p>When executing a test with Sherlock the following steps are present: </p>
-<ol>
-<li>The user creates a test configuration file which describes all requirements for the test environment, which steps should be executed and where the report should be placed.</li>
-<li>The user registers the test with Sherlock via the console application.</li>
-<li>Some time after the registration of the test completed the Sherlock host service loads test information and selects one or more suitable environments to execute the test steps on. The time between the completion of the test registration and the starting of the test execution depends on whether suitable test environments are available and how busy they are.</li>
-<li>The selected test environments are prepared for the test execution. This preparation includes activating the environment and transferring the test data for each environment (e.g. installer files etc.).</li>
-<li>Each environment executes the desired test steps and reports back on the success or failure of each test step.</li>
-<li>Once an environment has completed its test steps it will report the completion the test, upon which the host service will terminate the environment and restore it to the original state.</li>
-<li>Once all environments have completed their test steps the test is marked as completed and the test report is compiled and placed in the predetermined location.  </li>
-</ol>
-<h3 id="pre-requisites">Pre-requisites</h3>
-<p>The first pre-requisite in the configuration is the <a href="https://github.com/pvandervelde/Sherlock/releases">latest release</a> of sherlock. A release consists of a number of ZIP packages including:</p>
-<ul>
-<li><strong>console.zip</strong> - Contains the binaries and configuration files for the console application which is used to register a test.</li>
-<li><strong>sherlock.web.api.zip</strong> - The web service that will store information about a new test in the database.</li>
-<li><strong>sherlock.web.intranet.zip</strong> - The management web site that can be used to add or remove test environments.</li>
-<li><strong>service.zip</strong> - The windows service that is used to run the <em>master controller</em> or the <em>executor controller</em>.</li>
-<li><strong>service.master.zip</strong> - The master controller application which handles the scheduling of tests, loading and unloading of test environments and processing of the test reports. </li>
-<li><strong>service.executor.zip</strong> - The executor controller application which controls the execution of a test on a test environment.</li>
-<li><strong>sql.zip</strong> - The SQL change scripts for the database.</li>
-</ul>
-<p>The second pre-requisite is the availability of a physical machine on which a Windows version with <a href="http://en.wikipedia.org/wiki/Hyper-V#System_requirements_and_specifications">Hyper-V</a> can be installed.</p>
-<h3 id="planned-posts-">Planned posts:</h3>
-<p>The next following posts will describe:</p>
-<ol>
-<li>How to set up the <a href="/posts/2013-12-10_Setting-up-Sherlock-serverside.html">Hyper-V host machine</a>.</li>
-<li>How to prepare a virtual machine for use as a <a href="/posts/2013-12-11_Setting-up-Sherlock-virtualmachines.html">testing environment</a>.</li>
-<li>How to <a href="/posts/2013-12-24_Setting-up-Sherlock-verification.html">verify</a>  that all the environments have been configured correctly.</li>
-<li>How to integrate with a <a href="/posts/2014-01-13_Integrating-Sherlock-with-a-build-server.html">build server</a>. This will discuss build jobs, build scripts and test configuration.</li>
-<li>A description on how I used Sherlock to <a href="/posts/2014-02-18_Regression-testing-console-applications.html">perform integration tests</a> on the console application of <a href="/projects/apollo.html">Apollo</a>.</li>
-<li>And a description on how I used Sherlock to <a href="/posts/2014-03-31_Regression-testing-gui-applications.html">perform integration tests</a> on a WPF application of <a href="/projects/apollo.html">Apollo</a>.</li>
-</ol>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-10-30_Sherlock-Release-V0470.html'>Sherlock release - V0.4.7.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, October 30, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.7.0">V0.4.7.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides one bug fix:</p>
-<ul>
-<li>The Windows job object created by the Sherlock service to ensure termination of the Sherlock.Service.Master and Sherlock.Service.Executor applications is now set to only include direct children (i.e. Sherlock.Service.Master / Sherlock.Service.Executor) in the job and not the indirect children. This allows the application under test to create its own job objects even on Windows 7 (which does not allow nesting of job objects) (<a href="https://github.com/pvandervelde/Sherlock/issues/11">issue #11</a>).</li>
-</ul>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-10-24_Sherlock-Release-V0460.html'>Sherlock release - V0.4.6.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Thursday, October 24, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.6.0">V0.4.6.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides two bug fixes:</p>
-<ul>
-<li>The MSI installer now verifies that all directories exist before writing to them (<a href="https://github.com/pvandervelde/Sherlock/issues/9">issue #9</a>)</li>
-<li>The X-copy installer now verifies that the destination directory exists before copying files to it (<a href="https://github.com/pvandervelde/Sherlock/issues/10">issue #10</a>)</li>
-</ul>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-10-23_Sherlock-Release-V0450.html'>Sherlock release - V0.4.5.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, October 23, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.5.0">V0.4.5.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides one improvement and one bug fix:</p>
-<ul>
-<li>The test report can now include files generated during the test (<a href="https://github.com/pvandervelde/Sherlock/issues/5">issue #5</a>)</li>
-<li>Sherlock.Service no longer includes a manifest signing key, instead the key is obtained via a configuration setting (<a href="https://github.com/pvandervelde/Sherlock/issues/8">issue #8</a>)</li>
-</ul>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-09-21_Sherlock-Release-v0440.html'>Sherlock release - V0.4.4.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Saturday, September 21, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.4.0">V0.4.4.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides two improvements:</p>
-<ul>
-<li>The test output now includes an XML report with all the messages and an indication of test success or failure.</li>
-<li>Removed the Test data directory settings from the web service because test packages are now always dropped in the App_Data directory</li>
-</ul>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-09-14_Sherlock-Release-v0430.html'>Sherlock release - V0.4.3.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Saturday, September 14, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.3.0">V0.4.3.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release provides several bug fixes for:</p>
-<ul>
-<li>The console application: Changed the way the REST URLs are constructed so that it works if the web service on a sub-part of a domain, e.g. <code>http://myserver/sherlock</code> works now</li>
-<li>The web service: Added Trace.Write statements for ease of debugging</li>
-<li>The windows service: Fixed a dead-lock bug in the shut-down process and linked all processes via a Windows Job Object to ensure that all child processes are terminated if the service is terminated.</li>
-</ul>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-09-11_Sherlock-Release-v0420.html'>Sherlock release - V0.4.2.0</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Wednesday, September 11, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.2.0">V0.4.2.0</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release adds one bug fix and one improvement.</p>
-<p>The bug fix is a change to the <code>IsHyperVMachine</code> and <code>IsPhysicalMachine</code> stored procedures in order to make them easier to use correctly.</p>
-<p>The improvement is the addition of build steps that package the web projects into a ZIP file for easier deployment. These zip files can now also be retrieved from the <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.2.0">release note</a></p>
- 
-    </div>
-</div>
-        </div>
-    
-        <div id="post-spacer">
-            <div id="post">
-    <div id="post-header">
-        <h2>
-            
-                <a href='/posts/2013-09-08_Sherlock-Release-v0401.html'>Sherlock release - V0.4.0.1</a>
-            
-        </h2>
-        <div id="post-meta">
-            <p>
-                Sunday, September 08, 2013 | Posted in
-                
-                    <a id="post-category" href="/tags/sherlock.html">Sherlock</a>
-                
-            </p>
-        </div>
-    </div>
-    <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.0.1">V0.4.0.1</a> of the <a href="/projects/sherlock.html">Sherlock</a> regression testing application has been released. This release adds two new features and one improvement.</p>
-<p>The new features are:</p>
-<ul>
-<li>The ability to continue with a test sequence after a test step has failed. The test step should indicate that the failure mode is &#39;continue&#39;. Other option is &#39;stop&#39;</li>
-<li>Added a test step that allows executing a console application with a set of input parameters</li>
-</ul>
-<p>The following gist gives an overview of what the configuration for the new console test step looks like</p>
-<script src='https://gist.github.com/6483292.js'></script>
-
-<p>The improvement is in the HTML output report which is has been overhauled to improve the layout and readability.</p>
- 
-    </div>
-</div>
-        </div>
-    
-</div>
-        </div>
-    </div>
-    <div id="footer" class="container">
-        <div id="fbox1">
-            <h2>Related</h2>
-
-<ul>
-    <li id="first"><a href="https://github.com/pvandervelde">GitHub</a></li>
-    <li><a href="http://www.linkedin.com/profile/view?id=33950311">LinkedIn</a></li>
-    <li><a href="http://stackoverflow.com/users/539846/petrik">StackOverflow</a></li>
-    <li><a href="http://careers.stackoverflow.com/pvandervelde">StackOverflow Careers</a></li>
-    <li><a href="https://plus.google.com/+PatrickvanderVelde/about">Google+</a></li>
-</ul>
-        </div>
-        <div id="fbox2">
-            <h2 id="copyright">Copyright</h2>
-<p>Copyright (c) 2013 <a href="http://www.petrikvandervelde.nl">http://www.petrikvandervelde.nl</a>. All rights reserved.</p>
-<h2 id="disclaimer">Disclaimer</h2>
-<p>The opinions expressed herein are my own personal opinions and do not represent my employer&#39;s view in any way.</p>
-
-        </div>
-        <div id="fbox3">
-            <h2 id="media">Media</h2>
-<p><a href="/atom.xml"><img src="/images/feed.png" alt="Atom feed"></a></p>
-
-        </div>
-    </div>
-    <div id="copyright" class="container">
-        <p>
-            Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design 
-            by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
-        </p>
-        <p>
-            Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by 
-            <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a> 
-            from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
-        </p>
-        <p>Generated by <a href="http://docpad.org/" rel="nofollow">DocPad</a> on Saturday, May 23, 2015.</p>
-    </div>
-
-    <!-- jQuery -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/vendor/jquery.js"><\/script>')</script>
-
-    <!-- DocPad Scripts + Our Own -->
-    <script >(function(){
-	/* Did we just livereload? */
-var log = !!(localStorage && console && console.log && true);
-if ( log && localStorage.getItem('/docpad-livereload/reloaded') === 'yes' ) {
-	localStorage.removeItem('/docpad-livereload/reloaded');
-	console.log('LiveReload completed at', new Date())
-}
-
-/* Listen for the regenerated event and perform a reload of the page when the event occurs */
-var listen = function(){
-	var primus = new Primus('/docpad-livereload');
-	primus.on('data', function(data){
-		if ( data && data.message ) {
-			if ( data.message === 'generateBefore' ) {
-				if ( log ) {
-					console.log('LiveReload started at', new Date());
-				}
-				if ( typeof document.getElementsByTagName !== 'undefined' ) {
-	document.getElementsByTagName('html')[0].className += ' wait';
-}
-			}
-			else if ( data.message === 'generateAfter' ) {
-				if ( log ) {
-					localStorage.setItem('/docpad-livereload/reloaded', 'yes');
-				}
-				document.location.reload();
-			}
-		}
-	});
-};
-	/* Inject socket into our page */
-var inject = function(){
-	var t = document.createElement('script');
-	t.type = 'text/javascript';
-	t.async = 'async';
-	t.src = '/primus/primus.js';
-	t.onload = listen;
-	var s = document.getElementsByTagName('script')[0];
-	s.parentNode.insertBefore(t, s);
-};
-	if ( typeof Primus !== 'undefined' ) {
-		listen();
-	} else {
-		inject();
-	}
-})();</script><script >(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-46605109-1');
-ga('send', 'pageview');</script><script defer="defer"  src="/vendor/log.js"></script><script defer="defer"  src="/vendor/modernizr.js"></script><script defer="defer"  src="/scripts/script.js"></script>
-</body>
+        </footer>
+    </body>
 </html>

@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+
+    <title>Mind vortex - Exit Docpad, enter Wyam</title>
+    <meta name="description" content="Welcome!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link type="application/rss+xml" rel="alternate" title="Mind vortex" href="/feed.rss" />
+    <link type="application/atom+xml" rel="alternate" title="Mind vortex" href="/feed.atom" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <link href="/assets/css/normalize.css" rel="stylesheet" />
+    <link href="/assets/css/h5bp.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/override.css" rel="stylesheet" />
+    <link href="/assets/css/github.css" rel="stylesheet" type="text/css">
+
+
+    <meta name="application-name" content="Mind vortex" />
+    <meta name="msapplication-tooltip" content="Mind vortex" />
+    <meta name="msapplication-starturl" content="/" />
+
+    <meta property="og:title" content="Mind vortex - Exit Docpad, enter Wyam" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Updating-blog-to-wyam" />
+    <!-- TODO: More social graph meta tags -->
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/highlight.pack.js"></script>
+    <script src="/assets/js/clean-blog.js"></script>
+    <script src="/assets/js/d3.v3.min.js"></script>
+    <script src="/assets/js/trianglify.min.js"></script>
+    <script src="/assets/js/Please-compressed.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="/assets/js/html5shiv.js"></script>
+            <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        <div id="header" class="container">
+            <div id="logo">
+                <h1><a href="/">Mind vortex</a></h1>
+            </div>
+            <div id="menu">
+                <ul>
+                                <li class="inactive" >
+                <a href="/">Home</a>
+            </li>
+            <li class="inactive" >
+                <a href="/posts">Archive</a>
+            </li>
+            <li class="inactive" >
+                <a href="/projects">Projects</a>
+            </li>
+            <li class="inactive" >
+                <a href="/about">About</a>
+            </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div id="page" class="container">
+            <div id="sidebar">
+                <div id="sbox1">
+                    <h2>Patrick van der Velde</h2>
+
+<p>
+    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+</p>
+<p>
+    Dutch software developer, living, working and playing in New Zealand.
+    Rock climber, and paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock)">Sherlock</a>
+    <a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects
+</p>
+<p>
+    <a href="/about.html">More ...</a>
+</p>
+
+                </div>
+                <div id="sbox2">
+                    <h2>Recent</h2>
+                    <ul class="list-unstyled">
+                            <li><a href="/posts/Updating-blog-to-wyam">Exit Docpad, enter Wyam</a></li>
+                            <li><a href="/posts/nBuildKit-release-V051">nBuildKit release - V0.5.1</a></li>
+                            <li><a href="/posts/nBuildKit-release-V041">nBuildKit release - V0.4.1</a></li>
+                            <li><a href="/posts/Creating-azure-vm-images-with-powershell">Creating Azure VM images with Powershell</a></li>
+                            <li><a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor">Building and delivering nBuildKit with AppVeyor</a></li>
+                            <li><a href="/posts/nBuildKit-release-V032">nBuildKit release - V0.3.2</a></li>
+                            <li><a href="/posts/Adding-pagination-with-DocPad">Adding pagination with DocPad</a></li>
+                            <li><a href="/posts/Blog-archives-by-DocPad">Blog archives by DocPad</a></li>
+                            <li><a href="/posts/nBuildKit-release-V024">nBuildKit release - V0.2.4</a></li>
+                            <li><a href="/posts/nBuildKit-release-V015">nBuildKit release - V0.1.5</a></li>
+                    </ul>
+                </div>
+                <div id="sbox3">
+                    <h2>Tags</h2>
+                    <div>
+                        <ul class="list-unstyled">
+                                <li>
+                                    <a role="button" href="/tags/sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nanicitus" class="btn btn-default btn-sm"> nAnicitus (5)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nadoni" class="btn btn-default btn-sm"> nAdoni (2)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/regression-testing" class="btn btn-default btn-sm"> Regression testing (2)</a>
+                                </li>
+                        </ul>
+                    </div>
+                    <br />
+                    <ul class="pager">
+                        <li class="next">
+                            <a href="/tags">View All Tags &rarr;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="content">
+
+<div id="post">
+    <div id="post-header">
+        <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+Exit Docpad, enter Wyam</h2>
+<div id="post-meta">
+    <p>
+Wednesday, 11 January 2017
+ |         Posted in                     <a id="post-category" role="button" href="/tags/blog" class="btn btn-default btn-xs">Blog</a>
+    </p>
+</div>
+
+    </div>
+
+    <div id="post-content">
+        <p>After not having done anything with my blog for over a year I have returned and will once again try
+to make this blogging thing happen. Part of my goals for 2017 is to start advancing my career
+independent from my job. And one part of that goal is to blog about all the things I'm learning.</p>
+<p>For about a year and a half <a href="http://docpad.org/">Docpad</a> has been very helpful in adding content to
+my blog, however as I was trying to automate my blog more and more I came to the conclusion that
+being on a Windows operating system doesn't make dealing with node and NPM any easier. So I figured
+it might make sense to switch to a <a href="">static generator</a> which uses technologies that play better on
+Windows. Enter <a href="https://wyam.io">Wyam</a>, a static generator written in .NET, a technology stack
+I'm very familiar with.</p>
+<h3>Getting started</h3>
+<p>To get started with Wyam I downloaded the latest version and generated a skeleton directory structure
+by running the <code>wyam.exe new --recipe Blog</code> command. Once the skeleton has been created you can
+create the pages by running <code>wyam.exe -r Blog -t CleanBlog</code>, and to create and be able to view
+the pages you can execute <code>wyam -r Blog -t CleanBlog -p</code>. These commands assume that you store
+your blog source in the <code>input</code> directory and that the website pages should be placed in the
+<code>output</code> directory. This however is where the build engineer in me started making
+disapproving sounds so I changed the input and output folders by specifying the appropriate command line
+parameters to make it happy again</p>
+<pre><code>wyam.exe --input src --output build\site -r Blog -t CleanBlog -p
+</code></pre>
+<p>Good that is much more inline with the standard paths used by <a href="/projects/nbuildkit">nBuildKit</a>.
+Another change that needs to be made is where Wyam stores the NuGet packages. Normally Wyam stores
+those in a global location, however I strongly feel that builds should always only write to their
+local workspaces, so lets redirect the packages to a folder that is local to the workspaces</p>
+<pre><code>wyam.exe --input src --output build\site --use-local-packages --packages-path packages -r Blog -t CleanBlog -p
+</code></pre>
+<p>That command line is getting longer but we can make it shorter again by moving some of the
+standard items into the <a href="https://wyam.io/docs/usage/configuration">Wyam configuration file</a>, so
+I created a <code>config.wyam</code> file in the root of the workspace and added the following lines</p>
+<pre><code>// Preprocessor directives
+#recipe Blog
+#theme CleanBlog
+</code></pre>
+<p>And with this the command line to generate the website and start a local webserver is</p>
+<pre><code>wyam.exe --input src --output build\site --use-local-packages --packages-path packages
+</code></pre>
+<h3>Moving the existing content</h3>
+<p>Moving the existing content from the Docpad generated site to the Wyam generated site required a bit
+of work although the initial results were quite easy to achieve. I started off moving the
+post files to the <code>posts</code> directory and updating all the files to be named so that Wyam is able
+to extract the date and time from the file name. In order for that to work Wyam wants the file
+name to follow the naming convention <code>&lt;YEAR&gt;-&lt;MONTH&gt;-&lt;DAY&gt;-&lt;TITLE&gt;.md</code>.</p>
+<p>The next step was to update the front matter in the post files. Wyam would like to see the
+following format:</p>
+<pre><code>Title: &lt;POST_TITLE_GOES_HERE&gt;
+Tags:
+  - &lt;TAG_1&gt;
+  - &lt;TAG_2&gt;
+</code></pre>
+<p>With this done Wyam can generate a website with blog posts with the correct titles and dates. This
+is a good start. Next are the non-post pages, like the <a href="/">home page</a> and the <a href="/projects">project pages</a>.
+These can simply be dropped in the desired directory. Wyam will automatically generate HTML pages
+from any Markdown file and simply copy the other files (like the favicon etc.). Any non-blog post
+pages will show up in the menu bar so for all pages that should not show up in the menu bar you can
+add the <code>ShowInNavBar: false</code> entry in the page front matter like so:</p>
+<pre><code>Title: My page that shouldn't show up in the NavBar
+ShowInNavBar: false
+---
+# Content
+</code></pre>
+<p>Once that was done I created <a href="https://wyam.io/recipes/blog/themes">overrides</a> for</p>
+<ul>
+<li>The page and post footers by creating the <code>_Footer.cshml</code> and <code>_PostFooter.cshtml</code> files. The page
+footer was straight forward but the post footer required some additional work to get the links
+to the previous and next post to function correctly. Fortunately <a href="https://daveaglick.com/">Dave Glick</a>
+was very helpful on the <a href="https://gitter.im/Wyamio/Wyam">gitter</a> page for Wyam and pointed out
+that there are collections that you can iterate over to find out what the previous and
+next posts are.</li>
+</ul>
+<script src="https://gist.github.com/pvandervelde/d2825f2c5d67ab30d15ce179ced4b30f.js"></script>
+<ul>
+<li>The sidebar which contains my little &lsquo;about me&rsquo; blurp.</li>
+<li>The navbar which by default orders pages alphabetically and does not contain a link to the home page.
+In my Docpad blog both those things are not true, so I did a bit of Razor coding and generated the
+navbar items myself</li>
+</ul>
+<script src="https://gist.github.com/pvandervelde/7645c478ae08c94d3716ca8e8ad41c4c.js"></script>
+<p>These changes got most of the pages looking pretty close to what they should be, but yet not quite
+the same as it was.</p>
+<h3>Tweaking</h3>
+<p>If you don't have an existing layout for your blog or you don't mind changing the layout then
+after the previous steps you should have a very nice looking blog that works just fine. However it
+turns out I'm stuborn and specific in the way I want things to look. In this case I wanted my blog
+to not look any different than the existing one does, at least for the time being. So that meant
+I had to do a fair amount of tweaking.</p>
+<p>The first major tweak was to get the sidebar looking like it should. This turned out to be a little
+harder than I expected because it required overriding the <code>_Layout.cshtml</code> page. While this is a
+bigger step than the other overrides it also meant I was able to make the pages look exactly like
+I wanted and I was able to re-use my CSS files.</p>
+<script src="https://gist.github.com/pvandervelde/5e3520e0f150176f529b1972fc2042a7.js"></script>
+<p>One of the more tricky parts was to generate a list of the last 10 posts. Originally I was using
+the list of posts, however because this is the layout page that is used for all pages it might
+well be that some pages are generated before the full post list is available (say hello to the
+<a href="/tags">tags</a> pages). Once again Dave Glick came through and pointed me to the <a href="https://wyam.io/recipes/blog/pipelines">RawPosts</a>
+collection which is generated right at the beginning of the cycle.</p>
+<p>Once the issues with the sidebar were resolved the next step was to show the last five blog posts
+on the home page. By default Wyam will place excepts on the home page with a link to the actual post
+in the post title. However what I wanted was the full post, excluding the comment section. Once again
+the <code>RawPosts</code> collection came to the rescue which allowed me to iterate over the last five posts
+and get their pre-rendered content.</p>
+<script src="https://gist.github.com/pvandervelde/d0d83eb2c636a5d3b63b5bf0cce6029c.js"></script>
+<p>Some additional hacking also allowed me to reuse the <code>_PostHeader.cshtml</code> file for both the posts
+on the home page, for which the title links to the actual post page, and for the post page in which
+the title is just a header.</p>
+<script src="https://gist.github.com/pvandervelde/465c0a2399f135a25e656b0d15c1866a.js"></script>
+<p>With these changes the blog looks (almost) exactly like it used to look except that it is now
+being generated by <a href="https://wyam.io">Wyam</a>. All in all I have to say I'm pretty happy with the result
+and with how easy it was to move from Docpad to Wyam. And as a bonus I understand much more of
+how Wyam works and how my own blog is generated.</p>
+
+    </div>
+
+    <div id="post-footer">
+        <div>
+    <div class="navlinks">
+                <a href="/posts/nBuildKit-release-V051" title="Previous Post: nBuildKit release - V0.5.1" class="navlinks-prev">« nBuildKit release - V0.5.1</a>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Updating-blog-to-wyam';
+    var disqus_title = 'Exit Docpad, enter Wyam';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Updating-blog-to-wyam';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <footer>
+            <div id="footer" class="container">
+    <div id="fbox1">
+        <h2>Related</h2>
+        <ul>
+            <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
+            <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
+            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
+        </ul>
+    </div>
+    <div id="fbox2">
+        <h2 id="copyright">Copyright</h2>
+        <p>Copyright (c) 2017 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
+
+        <h2 id="disclaimer">Disclaimer</h2>
+        <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
+    </div>
+    <div id="fbox3">
+        <h2 id="media">Media</h2>
+        <p><a href="/feed.atom"><img src="/assets/images/feed.png" alt="Atom feed"></a></p>
+    </div>
+</div>
+<div id="copyright" class="container">
+    <p>
+        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+    </p>
+    <p>
+        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+    </p>
+    <p>Generated by <a href="https://wyam.io" rel="nofollow">Wyam</a> on Wed, 11 Jan 2017 22:29:29 GMT.</p>
+</div>
+
+        </footer>
+    </body>
+</html>

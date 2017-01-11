@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+
+    <title>Mind vortex - Embedding a symbol stream in a PDB file</title>
+    <meta name="description" content="Welcome!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link type="application/rss+xml" rel="alternate" title="Mind vortex" href="/feed.rss" />
+    <link type="application/atom+xml" rel="alternate" title="Mind vortex" href="/feed.atom" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <link href="/assets/css/normalize.css" rel="stylesheet" />
+    <link href="/assets/css/h5bp.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/override.css" rel="stylesheet" />
+    <link href="/assets/css/github.css" rel="stylesheet" type="text/css">
+
+
+    <meta name="application-name" content="Mind vortex" />
+    <meta name="msapplication-tooltip" content="Mind vortex" />
+    <meta name="msapplication-starturl" content="/" />
+
+    <meta property="og:title" content="Mind vortex - Embedding a symbol stream in a PDB file" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Embedding-symbol-stream-in-pdb" />
+    <!-- TODO: More social graph meta tags -->
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/highlight.pack.js"></script>
+    <script src="/assets/js/clean-blog.js"></script>
+    <script src="/assets/js/d3.v3.min.js"></script>
+    <script src="/assets/js/trianglify.min.js"></script>
+    <script src="/assets/js/Please-compressed.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="/assets/js/html5shiv.js"></script>
+            <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        <div id="header" class="container">
+            <div id="logo">
+                <h1><a href="/">Mind vortex</a></h1>
+            </div>
+            <div id="menu">
+                <ul>
+                                <li class="inactive" >
+                <a href="/">Home</a>
+            </li>
+            <li class="inactive" >
+                <a href="/posts">Archive</a>
+            </li>
+            <li class="inactive" >
+                <a href="/projects">Projects</a>
+            </li>
+            <li class="inactive" >
+                <a href="/about">About</a>
+            </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div id="page" class="container">
+            <div id="sidebar">
+                <div id="sbox1">
+                    <h2>Patrick van der Velde</h2>
+
+<p>
+    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+</p>
+<p>
+    Dutch software developer, living, working and playing in New Zealand.
+    Rock climber, and paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock)">Sherlock</a>
+    <a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects
+</p>
+<p>
+    <a href="/about.html">More ...</a>
+</p>
+
+                </div>
+                <div id="sbox2">
+                    <h2>Recent</h2>
+                    <ul class="list-unstyled">
+                            <li><a href="/posts/Updating-blog-to-wyam">Exit Docpad, enter Wyam</a></li>
+                            <li><a href="/posts/nBuildKit-release-V051">nBuildKit release - V0.5.1</a></li>
+                            <li><a href="/posts/nBuildKit-release-V041">nBuildKit release - V0.4.1</a></li>
+                            <li><a href="/posts/Creating-azure-vm-images-with-powershell">Creating Azure VM images with Powershell</a></li>
+                            <li><a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor">Building and delivering nBuildKit with AppVeyor</a></li>
+                            <li><a href="/posts/nBuildKit-release-V032">nBuildKit release - V0.3.2</a></li>
+                            <li><a href="/posts/Adding-pagination-with-DocPad">Adding pagination with DocPad</a></li>
+                            <li><a href="/posts/Blog-archives-by-DocPad">Blog archives by DocPad</a></li>
+                            <li><a href="/posts/nBuildKit-release-V024">nBuildKit release - V0.2.4</a></li>
+                            <li><a href="/posts/nBuildKit-release-V015">nBuildKit release - V0.1.5</a></li>
+                    </ul>
+                </div>
+                <div id="sbox3">
+                    <h2>Tags</h2>
+                    <div>
+                        <ul class="list-unstyled">
+                                <li>
+                                    <a role="button" href="/tags/sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nanicitus" class="btn btn-default btn-sm"> nAnicitus (5)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nadoni" class="btn btn-default btn-sm"> nAdoni (2)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/regression-testing" class="btn btn-default btn-sm"> Regression testing (2)</a>
+                                </li>
+                        </ul>
+                    </div>
+                    <br />
+                    <ul class="pager">
+                        <li class="next">
+                            <a href="/tags">View All Tags &rarr;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="content">
+
+<div id="post">
+    <div id="post-header">
+        <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+Embedding a symbol stream in a PDB file</h2>
+<div id="post-meta">
+    <p>
+Monday, 19 May 2014
+ |         Posted in                     <a id="post-category" role="button" href="/tags/nanicitus" class="btn btn-default btn-xs">nAnicitus</a>
+                    <a id="post-category" role="button" href="/tags/pdb" class="btn btn-default btn-xs">PDB</a>
+                    <a id="post-category" role="button" href="/tags/source-server" class="btn btn-default btn-xs">Source server</a>
+                    <a id="post-category" role="button" href="/tags/srcsrv" class="btn btn-default btn-xs">SRCSRV</a>
+                    <a id="post-category" role="button" href="/tags/symbol-stream" class="btn btn-default btn-xs">Symbol stream</a>
+                    <a id="post-category" role="button" href="/tags/unc" class="btn btn-default btn-xs">UNC</a>
+    </p>
+</div>
+
+    </div>
+
+    <div id="post-content">
+        <p>The <a href="/projects/nanicitus.html">nAnicitus</a> application processes <a href="http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-symbol-package">NuGet symbol</a>
+packages to push the symbols and sources up to their respective location for the symbol and source
+servers to work. In order to have a symbol server nothing special needs to be done, just push the
+symbols through the <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx">SymStore</a> application and a nice directory with indexed symbols
+is created. However in order to allow debuggers to obtain the source files related to a given PDB
+some manipulation of the PDB files is necessary. Specifically the SRCSRV stream in the PDB file needs
+to be <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff552219%28v=vs.85%29.aspx">modified</a>.</p>
+<p>The documentation gives a decent overview of how the source indexing works but it does not actually
+provide the information necessary to determine what should be written to the SRCSRV stream for a
+given PDB file. In fact if you want to know what information should be written to the SRCSRV stream
+if you want to store the indexed source files in a directory instead of getting them from your source
+control system then even the almighty <a href="https://www.google.co.nz/webhp?tab=ww&amp;ei=FwljU6S7J8byoATTxoLIAQ&amp;ved=0CBMQ1S4#q=PDB+SRCSRV+UNC+VERSION%3D2">google</a>
+is rather quiet.</p>
+<p>In order to write to the SRCSRV stream one can use the <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff558874%28v=vs.85%29.aspx">PDBStr utility</a>. However that
+still leaves the question of what to write to the stream. The <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms680641%28v=vs.85%29.aspx">source server documentation</a>
+provides examples for <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff551958%28v=vs.85%29.aspx">VERSION 1</a> streams, i.e. the kind that point the debugger to a
+source control (VCS) command. If however you want to store symbols and sources in a UNC path then you
+need <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff551966%28v=vs.85%29.aspx">VERSION 2</a> streams. With some help from this
+<a href="http://www.jayway.com/2011/06/19/hosting-your-own-source-symbol-server/">blog post</a>, some digging
+at MSDN and lots of trial-and-error it seems that the SRCSRV stream should look like:</p>
+<pre><code>SRCSRV: ini ------------------------------------------------
+VERSION=2
+INDEXVERSION=2
+VERCTRL=http
+SRCSRV: variables ------------------------------------------
+SRCSRVVERCTRL=http
+UNCROOT= &lt;UNC_SOURCE_PATH&gt;
+HTTP_EXTRACT_TARGET=%UNCROOT%\\ + &lt;UNC_SOURCE_PATH&gt;
+SRCSRVTRG=%http_extract_target%
+SRCSRVCMD=
+SRCSRV: source files ---------------------------------------
+</code></pre>
+<p>In this stream the <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff551958%28v=vs.85%29.aspx">variables mean</a>:</p>
+<ul>
+<li><strong><code>Version = 2</code></strong> - Indicates the version of the SRCSRV stream</li>
+<li><strong><code>VerCtrl = http</code></strong> - &lsquo;Version control&rsquo; is done through HTTP. This variable is potentially optional.</li>
+<li><strong><code>SRCSRVVERCTRL = http</code></strong> - Specifies the VCS in use. In this case that's UNC, potentially over http.</li>
+<li><strong><code>UNCROOT</code></strong> - &lsquo;Local variable&rsquo; indicating what the UNC root path is.</li>
+<li><strong><code>HTTP_EXTRACT_TARGET</code></strong> - &lsquo;Local variable&rsquo; indicating how to determine the path of a source file
+on the server given it's embedded path and SRCSRV information.</li>
+<li><strong><code>SRCSRVTG</code></strong> - The template used by the debugger to determine the path of the source files based
+on their embedded path and SRCSRV information.</li>
+<li><strong><code>SRCSRVCMD</code></strong> - The command for the VCS to extract the source files. For UNC this is not required.</li>
+</ul>
+<p>When nAnicitus processes a PDB file it generates a SRCSRV file that looks similar to this:</p>
+<pre><code>SRCSRV: ini ------------------------------------------------
+VERSION=2
+INDEXVERSION=2
+VERCTRL=http
+SRCSRV: variables ------------------------------------------
+SRCSRVVERCTRL=http
+UNCROOT=\\MyServer\sources
+HTTP_EXTRACT_TARGET=%UNCROOT%\%var2%\%var3%\%var4%
+SRCSRVTRG=%http_extract_target%
+SRCSRVCMD=
+SRCSRV: source files ---------------------------------------
+c:\source\MyProject\MyClass.cs*MyProject*1.2.3.4*MyProject\MyClass.cs
+SRCSRV: end------------------------------------------------
+</code></pre>
+<p>The redirection of the source paths is handled as <code>&lt;FILE&gt;*&lt;PROJECT&gt;*&lt;VERSION&gt;*&lt;RELATIVE_FILE&gt;</code> which
+means that the <code>c:\source\MyProject\MyClass.cs</code> file will be found on the source server at <code>\\MyServer\sources\MyProject\1.2.3.4\MyProject\MyClass.cs</code></p>
+<p>The process of pushing the symbols and sources up to their respective locations with nAnicitus is
+done via the following steps:</p>
+<ol>
+<li>The user drops the NuGet symbol package containing the binaries, PDB files and source files into
+the designated upload folder for nAnicitus.</li>
+<li>nAnicitus detects the new NuGet package and pushes the file path onto the queue for processing by
+the indexing thread.</li>
+<li>The indexing thread pulls the file path from the queue and unzips the NuGet symbol package in a
+temporary location.</li>
+<li>For each PDB the source paths are extracted from the PDB with <code>scrtool.exe</code>.</li>
+<li>For each source path the matching source file is located by looking at all source files and seeing
+source file path matches the &lsquo;best&rsquo;, i.e. using the longest common substring approach, starting
+from the end of the path in order to ensure a match on the file name.</li>
+<li>Once the source file is located the relative file path for the source file on the source server
+is calculated.</li>
+<li>Once all the source files from the PDB are processed the SRCSRV stream file is created and
+embedded into the PDB with <code>pdbstr.exe</code>.</li>
+<li>Once all PDBs have been indexed they are pushed through the <code>symstore.exe</code> tool to the symbol server.</li>
+<li>The source files are copied to the desired directory on the source server.</li>
+<li>Finally the original NuGet symbol package is moved to the directory containing all the processed
+symbol packages.</li>
+</ol>
+<p>Note that the path to the source server directory is embedded in the PDB. If the location of the
+source server changes then the information in the PDB files will no longer be correct. While there
+is a way to redirect the embedded paths nAnicitus also stores the processed NuGet symbol packages in
+a designated directory. This makes it possible to re-process the packages should the need ever arise.</p>
+
+    </div>
+
+    <div id="post-footer">
+        <div>
+    <div class="navlinks">
+                <a href="/posts/nAnicitus-Release-V015" title="Previous Post: nAnicitus release - V0.1.5" class="navlinks-prev">« nAnicitus release - V0.1.5</a>
+                <a href="/posts/Improvements-to-the-site" title="Next Post: Improvements to the site" class="navlinks-next">Improvements to the site »</a>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Embedding-symbol-stream-in-pdb';
+    var disqus_title = 'Embedding a symbol stream in a PDB file';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Embedding-symbol-stream-in-pdb';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <footer>
+            <div id="footer" class="container">
+    <div id="fbox1">
+        <h2>Related</h2>
+        <ul>
+            <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
+            <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
+            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
+        </ul>
+    </div>
+    <div id="fbox2">
+        <h2 id="copyright">Copyright</h2>
+        <p>Copyright (c) 2017 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
+
+        <h2 id="disclaimer">Disclaimer</h2>
+        <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
+    </div>
+    <div id="fbox3">
+        <h2 id="media">Media</h2>
+        <p><a href="/feed.atom"><img src="/assets/images/feed.png" alt="Atom feed"></a></p>
+    </div>
+</div>
+<div id="copyright" class="container">
+    <p>
+        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+    </p>
+    <p>
+        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+    </p>
+    <p>Generated by <a href="https://wyam.io" rel="nofollow">Wyam</a> on Wed, 11 Jan 2017 22:29:29 GMT.</p>
+</div>
+
+        </footer>
+    </body>
+</html>

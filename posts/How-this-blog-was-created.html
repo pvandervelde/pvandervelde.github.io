@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+
+    <title>Mind vortex - How this blog was created</title>
+    <meta name="description" content="Welcome!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link type="application/rss+xml" rel="alternate" title="Mind vortex" href="/feed.rss" />
+    <link type="application/atom+xml" rel="alternate" title="Mind vortex" href="/feed.atom" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <link href="/assets/css/normalize.css" rel="stylesheet" />
+    <link href="/assets/css/h5bp.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="/assets/css/override.css" rel="stylesheet" />
+    <link href="/assets/css/github.css" rel="stylesheet" type="text/css">
+
+
+    <meta name="application-name" content="Mind vortex" />
+    <meta name="msapplication-tooltip" content="Mind vortex" />
+    <meta name="msapplication-starturl" content="/" />
+
+    <meta property="og:title" content="Mind vortex - How this blog was created" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/How-this-blog-was-created" />
+    <!-- TODO: More social graph meta tags -->
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/highlight.pack.js"></script>
+    <script src="/assets/js/clean-blog.js"></script>
+    <script src="/assets/js/d3.v3.min.js"></script>
+    <script src="/assets/js/trianglify.min.js"></script>
+    <script src="/assets/js/Please-compressed.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="/assets/js/html5shiv.js"></script>
+            <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        <div id="header" class="container">
+            <div id="logo">
+                <h1><a href="/">Mind vortex</a></h1>
+            </div>
+            <div id="menu">
+                <ul>
+                                <li class="inactive" >
+                <a href="/">Home</a>
+            </li>
+            <li class="inactive" >
+                <a href="/posts">Archive</a>
+            </li>
+            <li class="inactive" >
+                <a href="/projects">Projects</a>
+            </li>
+            <li class="inactive" >
+                <a href="/about">About</a>
+            </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div id="page" class="container">
+            <div id="sidebar">
+                <div id="sbox1">
+                    <h2>Patrick van der Velde</h2>
+
+<p>
+    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+</p>
+<p>
+    Dutch software developer, living, working and playing in New Zealand.
+    Rock climber, and paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock)">Sherlock</a>
+    <a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects
+</p>
+<p>
+    <a href="/about.html">More ...</a>
+</p>
+
+                </div>
+                <div id="sbox2">
+                    <h2>Recent</h2>
+                    <ul class="list-unstyled">
+                            <li><a href="/posts/Updating-blog-to-wyam">Exit Docpad, enter Wyam</a></li>
+                            <li><a href="/posts/nBuildKit-release-V051">nBuildKit release - V0.5.1</a></li>
+                            <li><a href="/posts/nBuildKit-release-V041">nBuildKit release - V0.4.1</a></li>
+                            <li><a href="/posts/Creating-azure-vm-images-with-powershell">Creating Azure VM images with Powershell</a></li>
+                            <li><a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor">Building and delivering nBuildKit with AppVeyor</a></li>
+                            <li><a href="/posts/nBuildKit-release-V032">nBuildKit release - V0.3.2</a></li>
+                            <li><a href="/posts/Adding-pagination-with-DocPad">Adding pagination with DocPad</a></li>
+                            <li><a href="/posts/Blog-archives-by-DocPad">Blog archives by DocPad</a></li>
+                            <li><a href="/posts/nBuildKit-release-V024">nBuildKit release - V0.2.4</a></li>
+                            <li><a href="/posts/nBuildKit-release-V015">nBuildKit release - V0.1.5</a></li>
+                    </ul>
+                </div>
+                <div id="sbox3">
+                    <h2>Tags</h2>
+                    <div>
+                        <ul class="list-unstyled">
+                                <li>
+                                    <a role="button" href="/tags/sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nanicitus" class="btn btn-default btn-sm"> nAnicitus (5)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nadoni" class="btn btn-default btn-sm"> nAdoni (2)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/regression-testing" class="btn btn-default btn-sm"> Regression testing (2)</a>
+                                </li>
+                        </ul>
+                    </div>
+                    <br />
+                    <ul class="pager">
+                        <li class="next">
+                            <a href="/tags">View All Tags &rarr;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="content">
+
+<div id="post">
+    <div id="post-header">
+        <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+How this blog was created</h2>
+<div id="post-meta">
+    <p>
+Wednesday, 25 September 2013
+ |         Posted in                     <a id="post-category" role="button" href="/tags/blog" class="btn btn-default btn-xs">Blog</a>
+                    <a id="post-category" role="button" href="/tags/docpad" class="btn btn-default btn-xs">DocPad</a>
+                    <a id="post-category" role="button" href="/tags/github" class="btn btn-default btn-xs">GitHub</a>
+    </p>
+</div>
+
+    </div>
+
+    <div id="post-content">
+        <p>A long time ago, in a location far, far, far away there was a hero in search for a quest ...</p>
+<p>And he searched ...</p>
+<p>And he searched .&hellip;</p>
+<p>And .. oh never mind, our hero he is not the object of this current post, thus we shall be leaving
+him in some weird limbo looking for his quest&hellip; oh well. The topic of this post is how this blog /
+website was build. It turns out that building anything in HTML, CSS, Node.js and all the other cool
+web technologies isn't really my strong suit. However I'm hoping that the description of how I build
+this site may be useful to somebody at some point in time, if only to have a good laugh at my lack of
+CSS skills.</p>
+<p>As much as I love writing code, the idea of writing my content in an angle bracket language didn't
+really attract me so the plan was hatched (it came out of a purple egg, by the way) to write (nearly)
+all content in <a href="http://daringfireball.net/projects/markdown/">Markdown</a> by using <a href="http://docpad.org">Docpad</a>.
+Given that I've recently started using <a href="http://github.com">GitHub</a> for my open source projects why
+not use it for version control and GitHub pages to serve my website.</p>
+<p>I won't bore you with the details on how to install Docpad, the Docpad website has an excellent
+introduction to all those things. Once the initial install is done Docpad allows you to create a
+skeleton website by executing the following command</p>
+<pre><code class="language-dos">Docpad run
+</code></pre>
+<p>At which point Docpad presents a list of possible skeletons to use. In my case I selected the
+<a href="http://html5boilerplate.com/">HTML5 boilerplate template</a>. In order to get a nice layout quickly I
+also used the <a href="http://www.freecsstemplates.org/previews/opentools/">Open tools</a> template.</p>
+<p>Once I had the basic site layout sorted it was time to focus creating my own sections. Fortunately
+Docpad has a large number of plugins that provide useful additions to the generation process. For
+the generation of this site the following plugins are used:</p>
+<ul>
+<li><a href="https://github.com/grassator/docpad-plugin-datefromfilename">datefromfilename</a> - Extracts the date
+of a post from the file name.</li>
+<li><a href="http://docpad.org/plugin/gist/">gist</a> - Adds <a href="https://gist.github.com/">GitHub gists</a> to a page.</li>
+<li><a href="http://docpad.org/plugin/highlightjs/">highlightjs</a> - Provides syntax highlighting for code samples.
+My current plan is to use this for the smaller samples and use GitHub gists for the larger ones.</li>
+<li><a href="https://github.com/lucor/docpad-plugin-navlinks">navlinks</a> - Adds navigation links to the bottom
+of each post, pointing at the previous and next post.</li>
+<li><a href="http://docpad.org/plugin/related/">related</a> - Allows you to find all related documents based on a
+given set of tags.</li>
+<li><a href="https://github.com/rantecki/docpad-plugin-tagging">tagging</a> - Generates the tag cloud for the sidebar.</li>
+</ul>
+<p>With all the toys sorted it was time to integrate them in the templates.</p>
+<h3>Menu</h3>
+<p>The top level menu is based on a collection which contains all pages that have their <code>isPage</code> flag
+set to <code>true</code>. Note that we also assume that these pages have the default layout. One thing to note
+is that the docpad.coffee configuration file seems to be sensitive to the type of whitespace you use.
+Either use spaces or tabs, but don't mix them, otherwise you may get some weird errors.</p>
+<script src="https://gist.github.com/pvandervelde/6375681.js?file=collections.pages.docpad.coffee"></script>
+<p>Once the collection has been filled with pages it is used to create an unordered list with an
+additional highlight placed on the currently active page</p>
+<script src="https://gist.github.com/pvandervelde/6375681.js?file=menu.default.html"></script>
+<h3>Sidebar</h3>
+<p>The sidebar contains three different sections. The first section is the about section which is
+nothing special. The <em>recent</em> and <em>tags</em> sections are more interesting from a website construction
+perspective. The <em>recent</em> section based on the <em>frontpage</em> collection which grabs all items from the
+posts and projects subdirectories and then sorts them by date. The <em>recent</em> section only display the
+last 10 items in that collection.</p>
+<script src="https://gist.github.com/pvandervelde/6375681.js?file=recent.default.html"></script>
+<p>The <em>tags</em> section is based on a collection provided by the tagging plugin. The font-size of the
+tag is based on the weight assigned to the tag by the tagging plugin.</p>
+<script src="https://gist.github.com/pvandervelde/6375681.js?file=tags.default.html"></script>
+<p>Each tag links to a page that contains all the posts that contain that tag.</p>
+<h3>Projects, tag indexes and posts</h3>
+<p>The project pages all have a shared layout which provides them with a title and a section that lists
+all the posts tagged with the name of the project</p>
+<script src="https://gist.github.com/pvandervelde/6375681.js?file=project-linkedposts.html"></script>
+<p>Posts are displayed in three different places:</p>
+<ul>
+<li>The home page</li>
+<li>The tag index page, containing all posts with a given tag</li>
+<li>The post page</li>
+</ul>
+<p>All pages use the same partial layout file in order to display the post.</p>
+<script src="https://gist.github.com/pvandervelde/6375681.js?file=post-content.html"></script>
+<p>The only difference between the post page and the other pages is that the post page will display all
+the comments. The comment system is based on
+<a href="http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html">comments on a GitHub issue</a>
+and uses a small amount of Javascript to pull the comments across into the comment list.</p>
+<script src="https://gist.github.com/pvandervelde/6375681.js?file=post.html"></script>
+<h3>Acknowledgements</h3>
+<p>Finally there some people that have provided some descriptions of how their own blogs were created
+with Docpad (or other static generators). Below are the posts that I used to assemble my own blog.
+A big thank you to the original posters!</p>
+<ul>
+<li><a href="http://ivanzuzak.info/2011/02/18/github-hosted-comments-for-github-hosted-blogs.html">Ivan Zuzak</a>
+for his post describing how to use GitHub issues as a way to provide comments on a blog post.</li>
+<li><a href="http://takitapart.com">takitapart</a> provided an <a href="http://takitapart.com/posts/organizing-docpad/">excellent</a>
+post describing how to organise content in a Docpad website.</li>
+<li><a href="http://lucor.github.io">Luca's forge</a> provided a good start to using Docpad in his
+<a href="http://lucor.github.io/post/migrating-from-octopress-to-docpad/">migration</a> post. This site also
+provides some very nice ideas around the way posts and tags should look.</li>
+<li><a href="http://www.delarre.net">Ben Delarre</a> provided a nice
+<a href="http://www.delarre.net/posts/blogging-with-docpad/">summary</a> of his own Docpad setup.</li>
+</ul>
+
+    </div>
+
+    <div id="post-footer">
+        <div>
+    <div class="navlinks">
+                <a href="/posts/Sherlock-Release-v0440" title="Previous Post: Sherlock release - V0.4.4.0" class="navlinks-prev">« Sherlock release - V0.4.4.0</a>
+                <a href="/posts/nRefs-Release-v0100" title="Next Post: nRefs release - V0.1.0.0" class="navlinks-next">nRefs release - V0.1.0.0 »</a>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'How-this-blog-was-created';
+    var disqus_title = 'How this blog was created';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/How-this-blog-was-created';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <footer>
+            <div id="footer" class="container">
+    <div id="fbox1">
+        <h2>Related</h2>
+        <ul>
+            <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
+            <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
+            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
+        </ul>
+    </div>
+    <div id="fbox2">
+        <h2 id="copyright">Copyright</h2>
+        <p>Copyright (c) 2017 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
+
+        <h2 id="disclaimer">Disclaimer</h2>
+        <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
+    </div>
+    <div id="fbox3">
+        <h2 id="media">Media</h2>
+        <p><a href="/feed.atom"><img src="/assets/images/feed.png" alt="Atom feed"></a></p>
+    </div>
+</div>
+<div id="copyright" class="container">
+    <p>
+        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+    </p>
+    <p>
+        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+    </p>
+    <p>Generated by <a href="https://wyam.io" rel="nofollow">Wyam</a> on Wed, 11 Jan 2017 22:29:29 GMT.</p>
+</div>
+
+        </footer>
+    </body>
+</html>
