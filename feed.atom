@@ -4,8 +4,139 @@
 	<id>https://www.petrikvandervelde.nl/</id>
 	<title>Mind vortex</title>
 	<rights>2017</rights>
-	<updated>2017-01-11T09:29:30Z</updated>
+	<updated>2017-01-13T22:07:58Z</updated>
 	<subtitle>Welcome!</subtitle>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Goals-for-2017" />
+		<id>https://www.petrikvandervelde.nl/posts/Goals-for-2017</id>
+		<title>Goals for 2017</title>
+		<updated>2017-01-13T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Goals for 2017&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Friday, 13 January 2017
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/goals" class="btn btn-default btn-xs"&gt;Goals&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/life" class="btn btn-default btn-xs"&gt;Life&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;In 2016 set myself a bunch of goals for the year for different areas of my life. Of all the goals
+I only managed to achieve one successfully but am still pretty happy with how the year turned
+out. Overall improvements were made and new things were learned so what that concerns it was
+a successful year.&lt;/p&gt;
+&lt;p&gt;Given that setting goals did sort of work for me in 2016 going into 2017 I decided to do this again
+and set some goals in order to actively progress in different areas. This time I also decided to
+write the goals down somewhere public.&lt;/p&gt;
+&lt;p&gt;For 2017 my goals are&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Improve my overall fitness while maintaining my weight at or below 80kg.&lt;/p&gt;
+&lt;p&gt;In 2016 my goal was to improve my fitness and lose some weight. Due to a shoulder and elbow injury
+I actually gained weight in the first half of the year but over the course of the last 6 months
+I managed to lose about 5kgs thanks to a lot of exercise and an improvement in my eating habits.
+As a bonus I gained a lot of strength and general endurance. Overall these improvements have made
+me feel a lot better, have a more defined set of muscles and helped me in my outdoor spot pursuits
+as well.&lt;/p&gt;
+&lt;p&gt;For 2017 the goal is to keep the weight the same, just below 80kgs, while improving my general
+strength and fitness.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Make my career independent from my job&lt;/p&gt;
+&lt;p&gt;The last two years I have been working for &lt;a href="https://vista.co"&gt;Vista&lt;/a&gt; as a software / build engineer
+responsible for the development tooling and infrastructure. While this has been a bit of a change
+from my previous jobs as software developer it has been a great experience. I have learned about
+many new technologies, created some awesome tooling and have many more things still to learn and
+create. However with this change from general developer to more of an internal tooling / infrastructure
+person it has also become clear to me that my technical capabilities will improve more if I make
+my toughts, opinions and code available for public scrutiny by the larger development community.
+I already have a &lt;a href="/projects"&gt;number of open source projects&lt;/a&gt; but for 2017 I also plan to write
+and potentially speak more about the things I'm working on. One part of that is re-re-activating
+my blog and writing new posts about some of the cool technologies I'm currently working with and on.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Simplify life and my surroundings.&lt;/p&gt;
+&lt;p&gt;The first few years after I moved to New Zealand I didn't have very much in the way of material
+possessions, after all I had just moved to the other side of the world with only the things I could
+take on the airplane. Additionally I moved almost every year to a new house so getting rid of
+useless possessions meant I had to move less stuff from the old house to the new one. Over time
+though I have acquired more things both materially and in habits. Some of those things are
+&lt;a href="/tags/paragliding"&gt;highly&lt;/a&gt; &lt;a href="/tags/climbing"&gt;prized&lt;/a&gt; however some things are a waste of time and
+space. The goal for 2017 is to minimize the amount of useless stuff I have, like pieces of furniture
+which are never used, and useless things I do so that there is  more time and space to spend on
+things that are useful and improve my life.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Improve my confidence, in general in life but especially for climbing and paragliding&lt;/p&gt;
+&lt;p&gt;In general in life having confidence in yourself and your skills is important. For my outdoor
+activities, climbing and paragliding, it is even more important. Without confidence in yourself and
+your skils it is not possible to perform well in either activity. Due to injuries and some
+intense experiences my confidence in either my climbing or flying skills isn't very high at the
+moment so 2017 is the year that I will do my utmost best to improve my confidence in my professional
+skills, my climbing and paragliding capabilities and life in general.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Sports / achievment goals&lt;/p&gt;
+&lt;p&gt;The final goals for 2017, at least as far as this list goes, is to actively improve my skils
+in climbing and flying.&lt;/p&gt;
+&lt;p&gt;For a while I have been trying to improve my climbing skills, strength and endurance enough to
+be able to climb a &lt;a href="https://en.wikipedia.org/wiki/Grade_(climbing)"&gt;grade 24&lt;/a&gt;
+&lt;a href="https://en.wikipedia.org/wiki/Sport_climbing"&gt;sports climb&lt;/a&gt;. So for 2017 that will be my goal, to
+improve enoguh to finally be able to climb a 24. Additionally over the last few years I have been
+doing more &lt;a href="https://en.wikipedia.org/wiki/Traditional_climbing"&gt;trad climbing&lt;/a&gt; I am also going to
+try to improve my skills in that area by setting myself a goal of climbing a grade 20 on trad.&lt;/p&gt;
+&lt;p&gt;In my other outdoor activity, paragliding, the general goals are related to the distance your
+can fly &lt;a href="https://en.wikipedia.org/wiki/Paragliding#Cross-country_flying"&gt;cross country (XC)&lt;/a&gt;. As I
+have so far not managed to get away from launch at all my goal for 2017 is to do an XC flight of
+more than 5km.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Updating-blog-to-wyam" title="Previous Post: Exit Docpad, enter Wyam" class="navlinks-prev"&gt;« Exit Docpad, enter Wyam&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Goals-for-2017';
+    var disqus_title = 'Goals for 2017';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Goals-for-2017';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>&lt;p&gt;
+    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
+&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<link href="https://www.petrikvandervelde.nl/posts/Updating-blog-to-wyam" />
 		<id>https://www.petrikvandervelde.nl/posts/Updating-blog-to-wyam</id>
@@ -147,6 +278,7 @@ how Wyam works and how my own blog is generated.&lt;/p&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/nBuildKit-release-V051" title="Previous Post: nBuildKit release - V0.5.1" class="navlinks-prev"&gt;« nBuildKit release - V0.5.1&lt;/a&gt;
+                &lt;a href="/posts/Goals-for-2017" title="Next Post: Goals for 2017" class="navlinks-next"&gt;Goals for 2017 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -2131,87 +2263,6 @@ the build numbers.&lt;/li&gt;
     var disqus_identifier = 'Integrating-Sherlock-with-a-build-server';
     var disqus_title = 'Sherlock configuration - Build server integration';
     var disqus_url = 'https://www.petrikvandervelde.nl/posts/Integrating-Sherlock-with-a-build-server';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content>
-		<summary>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<link href="https://www.petrikvandervelde.nl/posts/Sherlock-Release-V0480" />
-		<id>https://www.petrikvandervelde.nl/posts/Sherlock-Release-V0480</id>
-		<title>Sherlock release - V0.4.8.0</title>
-		<updated>2013-12-27T00:00:00Z</updated>
-		<content>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Sherlock release - V0.4.8.0&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Friday, 27 December 2013
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/sherlock" class="btn btn-default btn-xs"&gt;Sherlock&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Version &lt;a href="https://github.com/pvandervelde/Sherlock/releases/tag/v0.4.8.0"&gt;V0.4.8.0&lt;/a&gt; of the
-&lt;a href="/projects/sherlock.html"&gt;Sherlock&lt;/a&gt; regression testing application has been released. This release
-provides the following issues:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Sherlock/issues/13"&gt;#13&lt;/a&gt; - Provide setup verification&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Sherlock/issues/14"&gt;#14&lt;/a&gt; - Add license and readme to all
-downloadable files&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Sherlock/issues/15"&gt;#15&lt;/a&gt; - Include test purpose in final test report&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Sherlock/issues/22"&gt;#22&lt;/a&gt; - Add NuGet symbols package for easy
-upload to a symbol server&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Sherlock/issues/23"&gt;#23&lt;/a&gt; - OutOfMemoryException in Sherlock.Service.Master&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Sherlock/issues/24"&gt;#24&lt;/a&gt; - Hyper-V: If a virtual machine is
-running when a new test is started terminate the current run&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Sherlock/issues/26"&gt;#26&lt;/a&gt; - Hyper-V: Handle state change result code&lt;/li&gt;
-&lt;/ul&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Setting-up-Sherlock-verification" title="Previous Post: Sherlock configuration - Verification" class="navlinks-prev"&gt;« Sherlock configuration - Verification&lt;/a&gt;
-                &lt;a href="/posts/Integrating-Sherlock-with-a-build-server" title="Next Post: Sherlock configuration - Build server integration" class="navlinks-next"&gt;Sherlock configuration - Build server integration »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Sherlock-Release-V0480';
-    var disqus_title = 'Sherlock release - V0.4.8.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Sherlock-Release-V0480';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
