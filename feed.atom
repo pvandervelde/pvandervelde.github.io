@@ -4,7 +4,7 @@
 	<id>https://www.petrikvandervelde.nl/</id>
 	<title>Mind vortex</title>
 	<rights>2017</rights>
-	<updated>2017-01-13T22:07:58Z</updated>
+	<updated>2017-01-16T06:56:25Z</updated>
 	<subtitle>Welcome!</subtitle>
 	<entry>
 		<link href="https://www.petrikvandervelde.nl/posts/Goals-for-2017" />
@@ -23,7 +23,7 @@
 Goals for 2017&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Friday, 13 January 2017
+Friday, January 13, 2017
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/goals" class="btn btn-default btn-xs"&gt;Goals&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/life" class="btn btn-default btn-xs"&gt;Life&lt;/a&gt;
     &lt;/p&gt;
@@ -154,7 +154,7 @@ more than 5km.&lt;/p&gt;
 Exit Docpad, enter Wyam&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Wednesday, 11 January 2017
+Wednesday, January 11, 2017
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/blog" class="btn btn-default btn-xs"&gt;Blog&lt;/a&gt;
     &lt;/p&gt;
 &lt;/div&gt;
@@ -329,7 +329,7 @@ how Wyam works and how my own blog is generated.&lt;/p&gt;
 nBuildKit release - V0.5.1&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Saturday, 23 May 2015
+Saturday, May 23, 2015
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
     &lt;/p&gt;
 &lt;/div&gt;
@@ -446,7 +446,7 @@ release note content&lt;/li&gt;
 nBuildKit release - V0.4.1&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Sunday, 30 November 2014
+Sunday, November 30, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
     &lt;/p&gt;
 &lt;/div&gt;
@@ -523,7 +523,7 @@ lead to the immediate termination of the process.&lt;/p&gt;
 Creating Azure VM images with Powershell&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Monday, 10 November 2014
+Monday, November 10, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/azure" class="btn btn-default btn-xs"&gt;Azure&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/powershell" class="btn btn-default btn-xs"&gt;Powershell&lt;/a&gt;
     &lt;/p&gt;
@@ -644,7 +644,7 @@ for the next blog post.&lt;/p&gt;
 Building and delivering nBuildKit with AppVeyor&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Saturday, 27 September 2014
+Saturday, September 27, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/appveyor" class="btn btn-default btn-xs"&gt;AppVeyor&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/continous-integration" class="btn btn-default btn-xs"&gt;Continous integration&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
@@ -741,7 +741,7 @@ the software business.&lt;/p&gt;
 nBuildKit release - V0.3.2&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Tuesday, 19 August 2014
+Tuesday, August 19, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
     &lt;/p&gt;
 &lt;/div&gt;
@@ -815,7 +815,7 @@ and &lt;a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.WiX/"&
 Adding pagination with DocPad&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Saturday, 26 July 2014
+Saturday, July 26, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/blog" class="btn btn-default btn-xs"&gt;Blog&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/docpad" class="btn btn-default btn-xs"&gt;DocPad&lt;/a&gt;
     &lt;/p&gt;
@@ -899,7 +899,7 @@ page now looks like this:&lt;/p&gt;
 Blog archives by DocPad&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Thursday, 24 July 2014
+Thursday, July 24, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/blog" class="btn btn-default btn-xs"&gt;Blog&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/docpad" class="btn btn-default btn-xs"&gt;DocPad&lt;/a&gt;
     &lt;/p&gt;
@@ -976,7 +976,7 @@ post. In order for this specific layout to work you will need to add the &lt;cod
 nBuildKit release - V0.2.4&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Monday, 21 July 2014
+Monday, July 21, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
     &lt;/p&gt;
 &lt;/div&gt;
@@ -1095,7 +1095,7 @@ NuGet package&lt;/p&gt;
 nBuildKit release - V0.1.5&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Monday, 16 June 2014
+Monday, June 16, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
     &lt;/p&gt;
 &lt;/div&gt;
@@ -1170,7 +1170,7 @@ version control system (VCS) and deploy the artifacts to a file server, NuGet fe
 Nuclei release - V0.8.0&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Wednesday, 28 May 2014
+Wednesday, May 28, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nuclei" class="btn btn-default btn-xs"&gt;Nuclei&lt;/a&gt;
     &lt;/p&gt;
 &lt;/div&gt;
@@ -1291,7 +1291,7 @@ command invocation request should any errors occur during invocation.&lt;/li&gt;
 Improvements to the site&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Friday, 23 May 2014
+Friday, May 23, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/blog" class="btn btn-default btn-xs"&gt;Blog&lt;/a&gt;
     &lt;/p&gt;
 &lt;/div&gt;
@@ -1378,7 +1378,7 @@ a little more vortex-y than the last icon.&lt;/p&gt;
 Embedding a symbol stream in a PDB file&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Monday, 19 May 2014
+Monday, May 19, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nanicitus" class="btn btn-default btn-xs"&gt;nAnicitus&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/pdb" class="btn btn-default btn-xs"&gt;PDB&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/source-server" class="btn btn-default btn-xs"&gt;Source server&lt;/a&gt;
@@ -1536,7 +1536,7 @@ a designated directory. This makes it possible to re-process the packages should
 nAnicitus release - V0.1.5&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Wednesday, 30 April 2014
+Wednesday, April 30, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nanicitus" class="btn btn-default btn-xs"&gt;nAnicitus&lt;/a&gt;
     &lt;/p&gt;
 &lt;/div&gt;
@@ -1622,7 +1622,7 @@ closed between the previous and the current tag. This is using
 GUI testing with TestStack.White&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Monday, 31 March 2014
+Monday, March 31, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/apollo" class="btn btn-default btn-xs"&gt;Apollo&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/regression-testing" class="btn btn-default btn-xs"&gt;Regression testing&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/teststack.white" class="btn btn-default btn-xs"&gt;TestStack.White&lt;/a&gt;
@@ -1793,7 +1793,7 @@ suitable in other situations depending on the skill sets of the testers or devel
 Regression testing of a console application&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Tuesday, 18 February 2014
+Tuesday, February 18, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/apollo" class="btn btn-default btn-xs"&gt;Apollo&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/console" class="btn btn-default btn-xs"&gt;Console&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/regression-testing" class="btn btn-default btn-xs"&gt;Regression testing&lt;/a&gt;
@@ -1905,7 +1905,7 @@ An example is given below:&lt;/p&gt;
 PG2 - Site number five&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Friday, 31 January 2014
+Friday, January 31, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/paragliding" class="btn btn-default btn-xs"&gt;Paragliding&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/pg2" class="btn btn-default btn-xs"&gt;PG2&lt;/a&gt;
     &lt;/p&gt;
@@ -1994,7 +1994,7 @@ launch situations to reduce the pressures on the glider and myself during the in
 PG2 - Christmas holiday antics&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Tuesday, 21 January 2014
+Tuesday, January 21, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/paragliding" class="btn btn-default btn-xs"&gt;Paragliding&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/pg2" class="btn btn-default btn-xs"&gt;PG2&lt;/a&gt;
     &lt;/p&gt;
@@ -2086,7 +2086,7 @@ trying to learn all the abbreviations at the moment which might take a bit of ti
 Sherlock configuration - Build server integration&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Monday, 13 January 2014
+Monday, January 13, 2014
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/jenkins" class="btn btn-default btn-xs"&gt;Jenkins&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/msbuild" class="btn btn-default btn-xs"&gt;MsBuild&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/sherlock" class="btn btn-default btn-xs"&gt;Sherlock&lt;/a&gt;
