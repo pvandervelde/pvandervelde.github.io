@@ -5,8 +5,8 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2017</copyright>
-		<pubDate>Thu, 19 Jan 2017 08:39:04 GMT</pubDate>
-		<lastBuildDate>Thu, 19 Jan 2017 08:39:04 GMT</lastBuildDate>
+		<pubDate>Fri, 20 Jan 2017 07:47:27 GMT</pubDate>
+		<lastBuildDate>Fri, 20 Jan 2017 07:47:27 GMT</lastBuildDate>
 		<item>
 			<title>Blog publishing with AppVeyor</title>
 			<link>https://www.petrikvandervelde.nl/posts/Blog-publishing-with-AppVeyor</link>
@@ -43,7 +43,7 @@ Monday, January 16, 2017
 post more to this blog about the work that I am doing and the code and skills that come from this
 work. Unfortunately at the moment writing is still more of a chore than it is a pleasure so that
 means that if I want to publish more I need to make it very easy for me to do so, otherwise the publishing
-process will just add yet another obstacle that I need to get past while producting content.&lt;/p&gt;
+process will just add yet another obstacle that I need to get past while producing content.&lt;/p&gt;
 &lt;p&gt;With me being a build engineer by profession the obvious solution was not to follow the
 &lt;a href="https://www.troyhunt.com/its-a-new-blog/"&gt;sensible path&lt;/a&gt; of a managed system but to create some
 kind of build system to automatically build and publish my blog posts. Troy Hunt is right in
