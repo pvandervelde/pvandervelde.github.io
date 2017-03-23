@@ -5,14 +5,137 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2017</copyright>
-		<pubDate>Fri, 20 Jan 2017 07:47:27 GMT</pubDate>
-		<lastBuildDate>Fri, 20 Jan 2017 07:47:27 GMT</lastBuildDate>
+		<pubDate>Thu, 23 Mar 2017 09:44:07 GMT</pubDate>
+		<lastBuildDate>Thu, 23 Mar 2017 09:44:07 GMT</lastBuildDate>
+		<item>
+			<title>Updating my Hyper-V server to Windows 2016</title>
+			<link>https://www.petrikvandervelde.nl/posts/Updating-Hyper-v-server-to-Windows2016</link>
+			<description>Welcome!</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Updating-Hyper-v-server-to-Windows2016</guid>
+			<pubDate>Sat, 18 Mar 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Updating my Hyper-V server to Windows 2016&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Saturday, March 18, 2017
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/hyper-v" class="btn btn-default btn-xs"&gt;Hyper-V&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/windows2016" class="btn btn-default btn-xs"&gt;Windows2016&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;One of the computers I have in my home is a Hyper-V server which I use to experiment with all things
+virtual machines, e.g. &lt;a href="https://www.thoughtworks.com/insights/blog/infrastructure-code-reason-smile"&gt;infrastructure-as-code&lt;/a&gt;.
+This server was until recently running Windows 2012R2 with the associated version of Hyper-V. With
+the release of Windows 2016 a new version of Hyper-V was available which had some interesting
+features, like &lt;a href="https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/user-guide/nested-virtualization"&gt;nested virtualization&lt;/a&gt;
+which allows running VMs on VMs and running Hyper-V containers. All in all enough interesting features
+to warrant upgrading my server.&lt;/p&gt;
+&lt;p&gt;There are however some issues to deal with. The first one being, which version of Windows 2016 are
+we going to install? The ideal version to install would be the &lt;a href="https://technet.microsoft.com/en-us/hyper-v-server-docs/hyper-v-server-2016?f=255&amp;amp;MSPPError=-2147217396"&gt;bare metal Hyper-V&lt;/a&gt;
+option with &lt;a href="https://technet.microsoft.com/en-us/windows-server-docs/get-started/windows-server-2016"&gt;Windows 2016 server Core&lt;/a&gt;
+being the second best option. The problem with these version is that it might be harder to
+configure the network and attach the machine to the active directory. I currently don't have enough
+experience managing Windows through (remote) powershell in order to be able to resolve those kinds
+of issues without a large amount of help from Google or Bing. The goal for this exercise is to get
+the machine updated so that we can use it, not to get the most lean version of Windows installed, so
+I opted to go for the full GUI version of Windows 2016.&lt;/p&gt;
+&lt;p&gt;To make things more interesting my Active Directory server is a VM running on the Hyper-V server.
+And yes I know there should be at least two Active Directory servers on different physical machines
+but until I have lots of money and can afford to have multiple servers in my house I will work
+with having a single AD server.&lt;/p&gt;
+&lt;p&gt;The approach I followed to upgrade the operating system on my server to Windows 2016 was as follows.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Make backups of everything and be ready to spend some time restoring the AD server, i.e. this is
+probably better done as a weekend job.&lt;/li&gt;
+&lt;li&gt;Create a &lt;a href="https://www.microsoft.com/en-us/download/windows-usb-dvd-download-tool"&gt;bootable USB&lt;/a&gt;
+with the Windows2016 installer.&lt;/li&gt;
+&lt;li&gt;Attach a keyboard, mouse and monitor to the server so that we can log in to the server directly.
+Installing Windows remotely is not possible with my local configuration.&lt;/li&gt;
+&lt;li&gt;Insert the USB drive, reboot the server and make sure it boots from the USB key&lt;/li&gt;
+&lt;li&gt;After the Windows installation starts make sure to remove the existing partitions on the original
+OS drive. While the OS could be upgraded that also leaves a lot of unused files around. Unfortunately
+in that case it will be hard to determine if these files can be deleted or not. By doing a clean
+install we can be sure that there will not be any left-overs from the upgrade.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Once the new operating system is installed the next step is to restore the VMs. Because all the
+VM information was stored on physically different disks than the OS disk all the virtual hard drives
+and VM configuration files still exist. In this case it is easy to import the old virtual machines
+via the Hyper-V manager.&lt;/p&gt;
+&lt;p&gt;Once all the VMs were up and running again the last step was to attach the Hyper-V machine to the
+domain so that it is easy to use the remote desktop capabilities. Now attaching the machine to
+the domain is easy, the problem occurs when you have to restart the Hyper-V machine because after
+the reboot the network connection will be set to the public profile instead of the domain profile
+which means remote desktop and friends are all blocked. This is all caused by the fact that when the
+Hyper-V machine boots up it doesn't have connection to the AD server, because that is a VM running
+on the Hyper-V machine, and thus the network profile is set to be public for security purposes.&lt;/p&gt;
+&lt;p&gt;In order to fix this we need to either force the &lt;a href="https://newsignature.com/articles/network-location-awareness-service-can-ruin-day-fix/"&gt;Network Location Awareness service&lt;/a&gt; to run
+after the AD server has started, or we need to restart the service after a short period. In my case
+setting the service start in delayed mode didn't really work so I created a scheduled task which
+restarted the service by calling the following command line&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -nologo -command "restart-service nlasvc -force"
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Over all the upgrade was easier than I thought and there were only minor set backs. Some of the lessons
+that were learned are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Ideally for jobs like this you would have an extra keyboard, mouse and monitor around, that way you
+can still use the normal PC for googling issues that you come across.&lt;/li&gt;
+&lt;li&gt;Importing old VMs in Hyper-V is easy as long as you make sure that you know where all the files
+are.&lt;/li&gt;
+&lt;li&gt;Ideally you would have multiple AD servers, running of different physical machines. Then again
+ideally I'd also have lots of money to pay for all these physical machines 😉&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Blog-publishing-with-AppVeyor" title="Previous Post: Blog publishing with AppVeyor" class="navlinks-prev"&gt;« Blog publishing with AppVeyor&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Updating-Hyper-v-server-to-Windows2016';
+    var disqus_title = 'Updating my Hyper-V server to Windows 2016';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Updating-Hyper-v-server-to-Windows2016';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content:encoded>
+		</item>
 		<item>
 			<title>Blog publishing with AppVeyor</title>
 			<link>https://www.petrikvandervelde.nl/posts/Blog-publishing-with-AppVeyor</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Blog-publishing-with-AppVeyor</guid>
 			<pubDate>Mon, 16 Jan 2017 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -156,6 +279,7 @@ of the key so that git can push the changes to the repository via SSH.&lt;/p&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/Goals-for-2017" title="Previous Post: Goals for 2017" class="navlinks-prev"&gt;« Goals for 2017&lt;/a&gt;
+                &lt;a href="/posts/Updating-Hyper-v-server-to-Windows2016" title="Next Post: Updating my Hyper-V server to Windows 2016" class="navlinks-next"&gt;Updating my Hyper-V server to Windows 2016 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -189,9 +313,7 @@ of the key so that git can push the changes to the repository via SSH.&lt;/p&gt;
 		<item>
 			<title>Goals for 2017</title>
 			<link>https://www.petrikvandervelde.nl/posts/Goals-for-2017</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Goals-for-2017</guid>
 			<pubDate>Fri, 13 Jan 2017 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -321,9 +443,7 @@ more than 5km.&lt;/p&gt;
 		<item>
 			<title>Exit Docpad, enter Wyam</title>
 			<link>https://www.petrikvandervelde.nl/posts/Updating-blog-to-wyam</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Updating-blog-to-wyam</guid>
 			<pubDate>Wed, 11 Jan 2017 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -496,9 +616,7 @@ how Wyam works and how my own blog is generated.&lt;/p&gt;
 		<item>
 			<title>nBuildKit release - V0.5.1</title>
 			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V051</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V051</guid>
 			<pubDate>Sat, 23 May 2015 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -613,9 +731,7 @@ release note content&lt;/li&gt;
 		<item>
 			<title>nBuildKit release - V0.4.1</title>
 			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V041</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V041</guid>
 			<pubDate>Sun, 30 Nov 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -690,9 +806,7 @@ lead to the immediate termination of the process.&lt;/p&gt;
 		<item>
 			<title>Creating Azure VM images with Powershell</title>
 			<link>https://www.petrikvandervelde.nl/posts/Creating-azure-vm-images-with-powershell</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Creating-azure-vm-images-with-powershell</guid>
 			<pubDate>Mon, 10 Nov 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -811,9 +925,7 @@ for the next blog post.&lt;/p&gt;
 		<item>
 			<title>Building and delivering nBuildKit with AppVeyor</title>
 			<link>https://www.petrikvandervelde.nl/posts/Building-and-delivering-nBuildKit-with-AppVeyor</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Building-and-delivering-nBuildKit-with-AppVeyor</guid>
 			<pubDate>Sat, 27 Sep 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -908,9 +1020,7 @@ the software business.&lt;/p&gt;
 		<item>
 			<title>nBuildKit release - V0.3.2</title>
 			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V032</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V032</guid>
 			<pubDate>Tue, 19 Aug 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -982,9 +1092,7 @@ and &lt;a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.WiX/"&
 		<item>
 			<title>Adding pagination with DocPad</title>
 			<link>https://www.petrikvandervelde.nl/posts/Adding-pagination-with-DocPad</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Adding-pagination-with-DocPad</guid>
 			<pubDate>Sat, 26 Jul 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -1066,9 +1174,7 @@ page now looks like this:&lt;/p&gt;
 		<item>
 			<title>Blog archives by DocPad</title>
 			<link>https://www.petrikvandervelde.nl/posts/Blog-archives-by-DocPad</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Blog-archives-by-DocPad</guid>
 			<pubDate>Thu, 24 Jul 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -1143,9 +1249,7 @@ post. In order for this specific layout to work you will need to add the &lt;cod
 		<item>
 			<title>nBuildKit release - V0.2.4</title>
 			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V024</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V024</guid>
 			<pubDate>Mon, 21 Jul 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -1262,9 +1366,7 @@ NuGet package&lt;/p&gt;
 		<item>
 			<title>nBuildKit release - V0.1.5</title>
 			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V015</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V015</guid>
 			<pubDate>Mon, 16 Jun 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -1337,9 +1439,7 @@ version control system (VCS) and deploy the artifacts to a file server, NuGet fe
 		<item>
 			<title>Nuclei release - V0.8.0</title>
 			<link>https://www.petrikvandervelde.nl/posts/Nuclei-release-V080</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Nuclei-release-V080</guid>
 			<pubDate>Wed, 28 May 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -1458,9 +1558,7 @@ command invocation request should any errors occur during invocation.&lt;/li&gt;
 		<item>
 			<title>Improvements to the site</title>
 			<link>https://www.petrikvandervelde.nl/posts/Improvements-to-the-site</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Improvements-to-the-site</guid>
 			<pubDate>Fri, 23 May 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -1545,9 +1643,7 @@ a little more vortex-y than the last icon.&lt;/p&gt;
 		<item>
 			<title>Embedding a symbol stream in a PDB file</title>
 			<link>https://www.petrikvandervelde.nl/posts/Embedding-symbol-stream-in-pdb</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Embedding-symbol-stream-in-pdb</guid>
 			<pubDate>Mon, 19 May 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -1703,9 +1799,7 @@ a designated directory. This makes it possible to re-process the packages should
 		<item>
 			<title>nAnicitus release - V0.1.5</title>
 			<link>https://www.petrikvandervelde.nl/posts/nAnicitus-Release-V015</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/nAnicitus-Release-V015</guid>
 			<pubDate>Wed, 30 Apr 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -1789,9 +1883,7 @@ closed between the previous and the current tag. This is using
 		<item>
 			<title>GUI testing with TestStack.White</title>
 			<link>https://www.petrikvandervelde.nl/posts/Regression-testing-gui-applications</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Regression-testing-gui-applications</guid>
 			<pubDate>Mon, 31 Mar 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -1960,9 +2052,7 @@ suitable in other situations depending on the skill sets of the testers or devel
 		<item>
 			<title>Regression testing of a console application</title>
 			<link>https://www.petrikvandervelde.nl/posts/Regression-testing-console-applications</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Regression-testing-console-applications</guid>
 			<pubDate>Tue, 18 Feb 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -2072,9 +2162,7 @@ An example is given below:&lt;/p&gt;
 		<item>
 			<title>PG2 - Site number five</title>
 			<link>https://www.petrikvandervelde.nl/posts/PG2-Site-number-five</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
+			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/PG2-Site-number-five</guid>
 			<pubDate>Fri, 31 Jan 2014 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
@@ -2137,98 +2225,6 @@ launch situations to reduce the pressures on the glider and myself during the in
     var disqus_identifier = 'PG2-Site-number-five';
     var disqus_title = 'PG2 - Site number five';
     var disqus_url = 'https://www.petrikvandervelde.nl/posts/PG2-Site-number-five';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
-		</item>
-		<item>
-			<title>PG2 - Christmas holiday antics</title>
-			<link>https://www.petrikvandervelde.nl/posts/PG2-Christmas-holiday-antics</link>
-			<description>&lt;p&gt;
-    &lt;img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde"&gt;
-&lt;/p&gt;</description>
-			<guid>https://www.petrikvandervelde.nl/posts/PG2-Christmas-holiday-antics</guid>
-			<pubDate>Tue, 21 Jan 2014 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-PG2 - Christmas holiday antics&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Tuesday, January 21, 2014
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/paragliding" class="btn btn-default btn-xs"&gt;Paragliding&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/pg2" class="btn btn-default btn-xs"&gt;PG2&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;During the Christmas holidays a few weeks ago I was planning to get lots of flying done, after all
-I had two weeks off and the weather had been amazing while I was in the office so what else could be
-the case? Unfortunately it turned out that the weather gods had other plans and provided generous
-helpings of wind and rain. That meant I only managed to fly on two different days.&lt;/p&gt;
-&lt;p&gt;However that doesn't mean that the Christmas holidays were lacking paragliding activities. You see my
-new &lt;a href="http://www.korteldesign.com/spip/?Karma-II-231"&gt;harness&lt;/a&gt; arrived just before Christmas. It was
-ordered three or so months ago but it was completely worth the wait. The build quality is very high
-and the harness felt comfortable straight away. Mind you there is still some set up to be done.
-There are a lot of different straps on this harness which subtly change the position and shape of
-the harness. I suspect it will be a while before I find all the right settings.
-The biggest difference so far compared to the school harnesses is that it feels like the harness
-reacts more to changes in the glider, which at the moment is unsettling but I guess I'll get used
-to it. And the second difference is that the harness is harder to get into.&lt;/p&gt;
-&lt;p&gt;Given that I was already spending money I figured I should spend some more ... Actually it was more
-like there were a few other things that were either &lt;a href="http://en.wikipedia.org/wiki/Altimeter"&gt;legally required&lt;/a&gt;
-or &lt;a href="http://en.wikipedia.org/wiki/Parachute"&gt;very sensible&lt;/a&gt; to have. And so I also bought a
-&lt;a href="http://www.brauniger.com/en/products/flight-instruments/iq-basic-gps/overview.html"&gt;vario&lt;/a&gt; and a
-&lt;a href="http://gingliders.com/rescue-systems/yeti-light-rescue/"&gt;reserve&lt;/a&gt;. The combination was not cheap
-but I do feel a lot safer now that I have a way to tell how high I am and a way to come down in case
-everything goes to custard.&lt;/p&gt;
-&lt;p&gt;Finally I also did my PG2 theory exam and scored 97% which I was pretty stoked with. The minimum
-score to pass is 90% so I managed to get that in the bag pretty easily. There is one more theoretical
-exam to do which is the &lt;a href="http://en.wikipedia.org/wiki/Visual_flight_rules"&gt;VFR&lt;/a&gt; exam. For that I am
-trying to learn all the abbreviations at the moment which might take a bit of time.&lt;/p&gt;
-&lt;p&gt;All in all the Christmas holidays turned out to have a decent amount of paragliding related activities.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Integrating-Sherlock-with-a-build-server" title="Previous Post: Sherlock configuration - Build server integration" class="navlinks-prev"&gt;« Sherlock configuration - Build server integration&lt;/a&gt;
-                &lt;a href="/posts/PG2-Site-number-five" title="Next Post: PG2 - Site number five" class="navlinks-next"&gt;PG2 - Site number five »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'PG2-Christmas-holiday-antics';
-    var disqus_title = 'PG2 - Christmas holiday antics';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/PG2-Christmas-holiday-antics';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

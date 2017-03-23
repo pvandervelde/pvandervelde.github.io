@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-    <title>Mind vortex</title>
+    <title>Mind vortex - Mind vortex</title>
     <meta name="description" content="Welcome!" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,7 +27,7 @@
     <meta name="msapplication-tooltip" content="Mind vortex" />
     <meta name="msapplication-starturl" content="/" />
 
-    <meta property="og:title" content="Mind vortex" />
+    <meta property="og:title" content="Mind vortex - Mind vortex" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.petrikvandervelde.nl/" />
     <!-- TODO: More social graph meta tags -->
@@ -58,11 +58,11 @@
             </div>
             <div id="menu">
                 <ul>
-                                <li class="active" >
-                Home
-            </li>
-            <li class="inactive" >
+                                <li class="inactive" >
                 <a href="/projects">Projects</a>
+            </li>
+            <li class="active" >
+                Mind vortex
             </li>
             <li class="inactive" >
                 <a href="/posts">Archive</a>
@@ -96,6 +96,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Updating-Hyper-v-server-to-Windows2016">Updating my Hyper-V server to Windows 2016</a></li>
                             <li><a href="/posts/Blog-publishing-with-AppVeyor">Blog publishing with AppVeyor</a></li>
                             <li><a href="/posts/Goals-for-2017">Goals for 2017</a></li>
                             <li><a href="/posts/Updating-blog-to-wyam">Exit Docpad, enter Wyam</a></li>
@@ -105,7 +106,6 @@
                             <li><a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor">Building and delivering nBuildKit with AppVeyor</a></li>
                             <li><a href="/posts/nBuildKit-release-V032">nBuildKit release - V0.3.2</a></li>
                             <li><a href="/posts/Adding-pagination-with-DocPad">Adding pagination with DocPad</a></li>
-                            <li><a href="/posts/Blog-archives-by-DocPad">Blog archives by DocPad</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -122,10 +122,10 @@
                                     <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (7)</a>
+                                    <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (7)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (7)</a>
+                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (7)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
@@ -137,10 +137,10 @@
                                     <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/regression-testing" class="btn btn-default btn-sm"> Regression testing (2)</a>
+                                    <a role="button" href="/tags/nadoni" class="btn btn-default btn-sm"> nAdoni (2)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/pdb" class="btn btn-default btn-sm"> PDB (2)</a>
+                                    <a role="button" href="/tags/appveyor" class="btn btn-default btn-sm"> AppVeyor (2)</a>
                                 </li>
                         </ul>
                     </div>
@@ -154,6 +154,93 @@
             </div>
 
             <div id="content">
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Updating-Hyper-v-server-to-Windows2016">Updating my Hyper-V server to Windows 2016</a>
+</h2>
+<div id="post-meta">
+    <p>
+Saturday, March 18, 2017
+ |         Posted in                     <a id="post-category" role="button" href="/tags/hyper-v" class="btn btn-default btn-xs">Hyper-V</a>
+                    <a id="post-category" role="button" href="/tags/windows2016" class="btn btn-default btn-xs">Windows2016</a>
+    </p>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>One of the computers I have in my home is a Hyper-V server which I use to experiment with all things
+virtual machines, e.g. <a href="https://www.thoughtworks.com/insights/blog/infrastructure-code-reason-smile">infrastructure-as-code</a>.
+This server was until recently running Windows 2012R2 with the associated version of Hyper-V. With
+the release of Windows 2016 a new version of Hyper-V was available which had some interesting
+features, like <a href="https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/user-guide/nested-virtualization">nested virtualization</a>
+which allows running VMs on VMs and running Hyper-V containers. All in all enough interesting features
+to warrant upgrading my server.</p>
+<p>There are however some issues to deal with. The first one being, which version of Windows 2016 are
+we going to install? The ideal version to install would be the <a href="https://technet.microsoft.com/en-us/hyper-v-server-docs/hyper-v-server-2016?f=255&amp;MSPPError=-2147217396">bare metal Hyper-V</a>
+option with <a href="https://technet.microsoft.com/en-us/windows-server-docs/get-started/windows-server-2016">Windows 2016 server Core</a>
+being the second best option. The problem with these version is that it might be harder to
+configure the network and attach the machine to the active directory. I currently don't have enough
+experience managing Windows through (remote) powershell in order to be able to resolve those kinds
+of issues without a large amount of help from Google or Bing. The goal for this exercise is to get
+the machine updated so that we can use it, not to get the most lean version of Windows installed, so
+I opted to go for the full GUI version of Windows 2016.</p>
+<p>To make things more interesting my Active Directory server is a VM running on the Hyper-V server.
+And yes I know there should be at least two Active Directory servers on different physical machines
+but until I have lots of money and can afford to have multiple servers in my house I will work
+with having a single AD server.</p>
+<p>The approach I followed to upgrade the operating system on my server to Windows 2016 was as follows.</p>
+<ul>
+<li>Make backups of everything and be ready to spend some time restoring the AD server, i.e. this is
+probably better done as a weekend job.</li>
+<li>Create a <a href="https://www.microsoft.com/en-us/download/windows-usb-dvd-download-tool">bootable USB</a>
+with the Windows2016 installer.</li>
+<li>Attach a keyboard, mouse and monitor to the server so that we can log in to the server directly.
+Installing Windows remotely is not possible with my local configuration.</li>
+<li>Insert the USB drive, reboot the server and make sure it boots from the USB key</li>
+<li>After the Windows installation starts make sure to remove the existing partitions on the original
+OS drive. While the OS could be upgraded that also leaves a lot of unused files around. Unfortunately
+in that case it will be hard to determine if these files can be deleted or not. By doing a clean
+install we can be sure that there will not be any left-overs from the upgrade.</li>
+</ul>
+<p>Once the new operating system is installed the next step is to restore the VMs. Because all the
+VM information was stored on physically different disks than the OS disk all the virtual hard drives
+and VM configuration files still exist. In this case it is easy to import the old virtual machines
+via the Hyper-V manager.</p>
+<p>Once all the VMs were up and running again the last step was to attach the Hyper-V machine to the
+domain so that it is easy to use the remote desktop capabilities. Now attaching the machine to
+the domain is easy, the problem occurs when you have to restart the Hyper-V machine because after
+the reboot the network connection will be set to the public profile instead of the domain profile
+which means remote desktop and friends are all blocked. This is all caused by the fact that when the
+Hyper-V machine boots up it doesn't have connection to the AD server, because that is a VM running
+on the Hyper-V machine, and thus the network profile is set to be public for security purposes.</p>
+<p>In order to fix this we need to either force the <a href="https://newsignature.com/articles/network-location-awareness-service-can-ruin-day-fix/">Network Location Awareness service</a> to run
+after the AD server has started, or we need to restart the service after a short period. In my case
+setting the service start in delayed mode didn't really work so I created a scheduled task which
+restarted the service by calling the following command line</p>
+<pre><code>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -nologo -command &quot;restart-service nlasvc -force&quot;
+</code></pre>
+<p>Over all the upgrade was easier than I thought and there were only minor set backs. Some of the lessons
+that were learned are:</p>
+<ul>
+<li>Ideally for jobs like this you would have an extra keyboard, mouse and monitor around, that way you
+can still use the normal PC for googling issues that you come across.</li>
+<li>Importing old VMs in Hyper-V is easy as long as you make sure that you know where all the files
+are.</li>
+<li>Ideally you would have multiple AD servers, running of different physical machines. Then again
+ideally I'd also have lots of money to pay for all these physical machines 😉</li>
+</ul>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -594,42 +681,6 @@ release note content</li>
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/nBuildKit-release-V041">nBuildKit release - V0.4.1</a>
-</h2>
-<div id="post-meta">
-    <p>
-Sunday, November 30, 2014
- |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
-    </p>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>Version <a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.4.1">V0.4.1</a> of the
-<a href="/projects/nbuildkit.html">nBuildKit</a> build library has been released.</p>
-<p>This release introduces the ability to <a href="https://github.com/pvandervelde/nBuildKit/issues/44">mix custom build steps</a>
-with the default provided ones in <a href="https://github.com/pvandervelde/nBuildKit/issues/47">any order</a>
-that is desired. On top of that additional changes were made that now make it possible to build
-<a href="https://github.com/pvandervelde/nBuildKit/issues/46">multiple Visual Studio solutions</a> in a specific
-order.</p>
-<p>Finally the user can provide one or more scripts that will be called if the build or the deploy process
-<a href="https://github.com/pvandervelde/nBuildKit/issues/48">fails</a>. These scripts can be used to clean-up
-resources or provide notification on build failure. Do note that any failure in these scripts will
-lead to the immediate termination of the process.</p>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -661,9 +712,9 @@ lead to the immediate termination of the process.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Fri, 20 Jan 2017 07:47:27 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Thu, 23 Mar 2017 09:44:08 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/59b89c615df4c7a9e7799efa351ee050fbc3a6e3">59b89c615df4c7a9e7799efa351ee050fbc3a6e3</a> at version 2.1.3.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/36937b6f588f627b5f02cf020ea5e6443463fddf">36937b6f588f627b5f02cf020ea5e6443463fddf</a> at version 2.2.0.        </p>
     </div>
 
     <p>
