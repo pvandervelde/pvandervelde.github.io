@@ -5,8 +5,134 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2017</copyright>
-		<pubDate>Thu, 23 Mar 2017 09:44:07 GMT</pubDate>
-		<lastBuildDate>Thu, 23 Mar 2017 09:44:07 GMT</lastBuildDate>
+		<pubDate>Wed, 05 Apr 2017 10:04:23 GMT</pubDate>
+		<lastBuildDate>Wed, 05 Apr 2017 10:04:23 GMT</lastBuildDate>
+		<item>
+			<title>nBuildKit release - V0.9.0</title>
+			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090</link>
+			<description>Welcome!</description>
+			<guid>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090</guid>
+			<pubDate>Mon, 03 Apr 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+nBuildKit release - V0.9.0&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Monday, April 3, 2017
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.0"&gt;0.9.0&lt;/a&gt; of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt;
+has been released. The last release I talked about on this blog was &lt;a href="posts/nBuildKit-release-V051"&gt;0.5.1&lt;/a&gt;.
+Since then a &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases"&gt;lot more versions&lt;/a&gt; have been
+released. The &lt;code&gt;0.9.0&lt;/code&gt; release was supposed to be a stabilization release but there were many major
+improvements which makes this a major change release.&lt;/p&gt;
+&lt;p&gt;The highlights are&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The settings describing artefacts, e.g. the nuspec and zip archive files to build, have moved to
+a &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/215"&gt;separate file&lt;/a&gt; &lt;code&gt;artefacts.settings.props&lt;/code&gt;.
+This allows each of the different stages, build, test and release, to easily use these settings
+without having to load configuration files from the other stages.&lt;/li&gt;
+&lt;li&gt;All user specific configuration files now have a &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/224"&gt;version number&lt;/a&gt;
+which indicates for which version of nBuildKit they were created. This will allow nBuildKit to
+transform older configuration files prior to using them.&lt;/li&gt;
+&lt;li&gt;The inline tasks have been &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/230"&gt;moved to a .NET assembly&lt;/a&gt;.
+This simplifies the project includes that need to be made to get all the required tasks loaded.
+Additionally more complex tasks can be created and &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/234"&gt;unit tests can be written and executed&lt;/a&gt;
+which should improve the quality of the tasks.&lt;/li&gt;
+&lt;li&gt;User &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/191"&gt;defined location&lt;/a&gt; and
+&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/192"&gt;transformation&lt;/a&gt; of the configuration
+files prior to starting the build. In combination with the version numbers in the configuration
+files this allows nBuildKit to use configuration files from a previous version while still using
+the most recent version of nBuildKit. Note that it is currently not possible to upgrade the old
+(0.8.3 and prior) configurations to 0.9.0 this way.&lt;/li&gt;
+&lt;li&gt;Build, test and deploy steps can define &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/196"&gt;pre- and post-steps&lt;/a&gt;
+which are executed before and after the execution of the step. Additionally global pre- and post-steps
+can be defined which areo executed before and after each step. These pre- and post-steps can for
+instance be used to &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/185"&gt;write information to a log file&lt;/a&gt;
+or to gather post step information.&lt;/li&gt;
+&lt;li&gt;The &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/206"&gt;build server specific code&lt;/a&gt; was
+moved into separate NuGet packages so that these can be pulled down on the build server only. Three
+different packages have been created for &lt;a href="https://jenkins.io/"&gt;Jenkins&lt;/a&gt;,
+&lt;a href="https://msdn.microsoft.com/library/ms181709%28v=vs.120%29.aspx?f=255&amp;amp;MSPPError=-2147217396"&gt;TFS2013&lt;/a&gt;
+and &lt;a href="https://www.visualstudio.com/en-us/docs/build/overview"&gt;TFS2015 / TFS2017&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;The layout of the scripts and NuGet packages has changed so that it is easier to create a
+&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/220"&gt;new set of build tools based on nBuildKit&lt;/a&gt;.
+With this change it is now possible to create a build / test / deploy library that includes all or
+some of the nBuildKit capabilities while providing its own additional capabilities. An example is
+the &lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;ops-tools-build&lt;/a&gt; library which is being used
+in the &lt;a href="https://en.wikipedia.org/wiki/Infrastructure_as_Code"&gt;infrastructure-as-code&lt;/a&gt; work I'm doing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In addition to the major changes some additional build, test and deploy steps have also been defined:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Complete a &lt;a href="https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow"&gt;gitflow&lt;/a&gt;
+stage, e.g. finishing the feature, hotfix or release branch, to verify that the pending merge will
+not break the build. Additionally the results of the merge can be captured, by archiving the
+&lt;code&gt;.git&lt;/code&gt; folder, and can later be used in the deploy process to push the merge to a git remote.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/255"&gt;Copying files&lt;/a&gt; from the file system or
+from a NuGet package.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/238"&gt;ILMerge&lt;/a&gt; one or more assemblies into a
+target assembly.&lt;/li&gt;
+&lt;li&gt;Generating a targets file from an assembly containing MsBuild tasks.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/146"&gt;Invoking&lt;/a&gt; &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;
+during the build process. Note that this is a late addition and hasn't been tested completely yet&lt;/li&gt;
+&lt;li&gt;Invoking &lt;a href="https://github.com/pester/Pester"&gt;Pester&lt;/a&gt; during the test phase.&lt;/li&gt;
+&lt;li&gt;Pushing files to a git branch during the deploy stage.&lt;/li&gt;
+&lt;li&gt;Pushing an entire repository to a git remote during the deploy stage.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Finally the performance of the whole build process has been improved by changing how the template
+tokens are &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/242"&gt;generated and loaded&lt;/a&gt;. The
+overall speed up for the nBuildKit build itself is about a factor two.&lt;/p&gt;
+&lt;p&gt;All the work items that have been closed for this release can be found on
+&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/26?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Updating-Hyper-v-server-to-Windows2016" title="Previous Post: Updating my Hyper-V server to Windows 2016" class="navlinks-prev"&gt;« Updating my Hyper-V server to Windows 2016&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'nBuildKit-release-V090';
+    var disqus_title = 'nBuildKit release - V0.9.0';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content:encoded>
+		</item>
 		<item>
 			<title>Updating my Hyper-V server to Windows 2016</title>
 			<link>https://www.petrikvandervelde.nl/posts/Updating-Hyper-v-server-to-Windows2016</link>
@@ -102,6 +228,7 @@ ideally I'd also have lots of money to pay for all these physical machines 😉&
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/Blog-publishing-with-AppVeyor" title="Previous Post: Blog publishing with AppVeyor" class="navlinks-prev"&gt;« Blog publishing with AppVeyor&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V090" title="Next Post: nBuildKit release - V0.9.0" class="navlinks-next"&gt;nBuildKit release - V0.9.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -2138,93 +2265,6 @@ An example is given below:&lt;/p&gt;
     var disqus_identifier = 'Regression-testing-console-applications';
     var disqus_title = 'Regression testing of a console application';
     var disqus_url = 'https://www.petrikvandervelde.nl/posts/Regression-testing-console-applications';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
-		</item>
-		<item>
-			<title>PG2 - Site number five</title>
-			<link>https://www.petrikvandervelde.nl/posts/PG2-Site-number-five</link>
-			<description>Welcome!</description>
-			<guid>https://www.petrikvandervelde.nl/posts/PG2-Site-number-five</guid>
-			<pubDate>Fri, 31 Jan 2014 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-PG2 - Site number five&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Friday, January 31, 2014
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/paragliding" class="btn btn-default btn-xs"&gt;Paragliding&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/pg2" class="btn btn-default btn-xs"&gt;PG2&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Two weeks ago I managed to fulfil another criteria for my PG2 license by flying at the
-&lt;a href="http://paraglidingnewzealand.com/places-to-fly/site/mangawhai-heads"&gt;Mangawhai Heads&lt;/a&gt; for my fifth site.&lt;/p&gt;
-&lt;p&gt;Unlike the other locations the launch site at Mangawhai heads is rather small, just big enough for
-the glider. Because of the conditions and the amount of space at the launch location I elected to do
-a forward launch with some assistance of the instructor. That turned out to be a good decision because
-as soon as the glider was above my head it caught the wind stream and I rocketed off the ground.
-Unfortunately with all the pre-launch action going on I had neglected to completely check my glider
-which meant I ended up with a small line tangle in the top C-D line which slowed my glider down a
-bit during flight.&lt;/p&gt;
-&lt;p&gt;After about 20 minutes of flying I started to notice that my ground speed was reducing more and more,
-at which point I decided it was better to be on the ground wishing I was in the sky than being in the
-sky wishing I was on the ground and so I landed on the beach.&lt;/p&gt;
-&lt;p&gt;The learning points of this flight are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Reducing the seat depth of my harness has made flying a lot more comfortable, at least for shorter
-flights. I guess I will see how comfortable it is during longer flights.&lt;/li&gt;
-&lt;li&gt;The addition of a stir-up makes getting into the harness much easier. All I have to do now is
-stand up on the stir-up and I'm in the seat. I'm still not used to staying on the stir-up during
-flight though so I will have to work out what to do with that, especially during turns.&lt;/li&gt;
-&lt;li&gt;I really should start practising my asymmetrical launches so that I can use those during high wind
-launch situations to reduce the pressures on the glider and myself during the initial part of the launch.&lt;/li&gt;
-&lt;/ul&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/PG2-Christmas-holiday-antics" title="Previous Post: PG2 - Christmas holiday antics" class="navlinks-prev"&gt;« PG2 - Christmas holiday antics&lt;/a&gt;
-                &lt;a href="/posts/Regression-testing-console-applications" title="Next Post: Regression testing of a console application" class="navlinks-next"&gt;Regression testing of a console application »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'PG2-Site-number-five';
-    var disqus_title = 'PG2 - Site number five';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/PG2-Site-number-five';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

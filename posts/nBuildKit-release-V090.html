@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-    <title>Mind vortex - Blog publishing with AppVeyor</title>
+    <title>Mind vortex - nBuildKit release - V0.9.0</title>
     <meta name="description" content="Welcome!" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,9 +27,9 @@
     <meta name="msapplication-tooltip" content="Mind vortex" />
     <meta name="msapplication-starturl" content="/" />
 
-    <meta property="og:title" content="Mind vortex - Blog publishing with AppVeyor" />
+    <meta property="og:title" content="Mind vortex - nBuildKit release - V0.9.0" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Blog-publishing-with-AppVeyor" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090" />
     <!-- TODO: More social graph meta tags -->
 
     <script src="/assets/js/jquery.min.js"></script>
@@ -164,148 +164,96 @@
 
 
 <h2>
-Blog publishing with AppVeyor</h2>
+nBuildKit release - V0.9.0</h2>
 <div id="post-meta">
     <p>
-Monday, January 16, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/appveyor" class="btn btn-default btn-xs">AppVeyor</a>
-                    <a id="post-category" role="button" href="/tags/blog" class="btn btn-default btn-xs">Blog</a>
-                    <a id="post-category" role="button" href="/tags/build" class="btn btn-default btn-xs">Build</a>
-                    <a id="post-category" role="button" href="/tags/deploy" class="btn btn-default btn-xs">Deploy</a>
-                    <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
+Monday, April 3, 2017
+ |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
     </p>
 </div>
 
     </div>
 
     <div id="post-content">
-        <p>One part of <a href="/posts/Goals-for-2017">improving my career and increasing my professional reach</a> is to
-post more to this blog about the work that I am doing and the code and skills that come from this
-work. Unfortunately at the moment writing is still more of a chore than it is a pleasure so that
-means that if I want to publish more I need to make it very easy for me to do so, otherwise the publishing
-process will just add yet another obstacle that I need to get past while producing content.</p>
-<p>With me being a build engineer by profession the obvious solution was not to follow the
-<a href="https://www.troyhunt.com/its-a-new-blog/">sensible path</a> of a managed system but to create some
-kind of build system to automatically build and publish my blog posts. Troy Hunt is right in
-that a managed system is far quicker and easier to use, thereby saving time that you can use for
-improvements elsewhere. In my case however I feel that there is something additional to be gotten from
-setting my blog up to be automatically build and deployed. To be specific additional learning experiences,
-more knowledge and a new blog post about how I achieved the goal. I hope that those things will
-make up for the extra work I have to do in maintaining my own blog.</p>
-<p>So the goals for this project were</p>
+        <p>Version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.0">0.9.0</a> of <a href="https://github.com/nbuildkit/nBuildKit.MsBuild">nBuildKit</a>
+has been released. The last release I talked about on this blog was <a href="posts/nBuildKit-release-V051">0.5.1</a>.
+Since then a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases">lot more versions</a> have been
+released. The <code>0.9.0</code> release was supposed to be a stabilization release but there were many major
+improvements which makes this a major change release.</p>
+<p>The highlights are</p>
 <ul>
-<li>Build every time I push to the <a href="https://github.com/pvandervelde/mindvortex">source repository</a> on
-an independent environment so that I can be sure that I can always build my blog and nothing is
-dependent on my machine being available.</li>
-<li>Publishing should involve a minimal amount of work done from my side. Ideally all I would have to
-do is commit my changes, merge them to the <a href="https://github.com/pvandervelde/mindvortex">master branch</a>
-of the source repository and then sit back and see the new post appear online.</li>
-<li>No maintenance is necessary for what ever system I use to achive this goal. When I build new versions
-of one of my libraries, applications or infrastructure resources I want full control over the
-build, test and deployment environments. For building my blog that is far less important because
-it is a simple process which does not require many different steps.</li>
-<li>Finally it would be nice to make it interesting enough to get a blog post out of it.</li>
+<li>The settings describing artefacts, e.g. the nuspec and zip archive files to build, have moved to
+a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/215">separate file</a> <code>artefacts.settings.props</code>.
+This allows each of the different stages, build, test and release, to easily use these settings
+without having to load configuration files from the other stages.</li>
+<li>All user specific configuration files now have a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/224">version number</a>
+which indicates for which version of nBuildKit they were created. This will allow nBuildKit to
+transform older configuration files prior to using them.</li>
+<li>The inline tasks have been <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/230">moved to a .NET assembly</a>.
+This simplifies the project includes that need to be made to get all the required tasks loaded.
+Additionally more complex tasks can be created and <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/234">unit tests can be written and executed</a>
+which should improve the quality of the tasks.</li>
+<li>User <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/191">defined location</a> and
+<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/192">transformation</a> of the configuration
+files prior to starting the build. In combination with the version numbers in the configuration
+files this allows nBuildKit to use configuration files from a previous version while still using
+the most recent version of nBuildKit. Note that it is currently not possible to upgrade the old
+(0.8.3 and prior) configurations to 0.9.0 this way.</li>
+<li>Build, test and deploy steps can define <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/196">pre- and post-steps</a>
+which are executed before and after the execution of the step. Additionally global pre- and post-steps
+can be defined which areo executed before and after each step. These pre- and post-steps can for
+instance be used to <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/185">write information to a log file</a>
+or to gather post step information.</li>
+<li>The <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/206">build server specific code</a> was
+moved into separate NuGet packages so that these can be pulled down on the build server only. Three
+different packages have been created for <a href="https://jenkins.io/">Jenkins</a>,
+<a href="https://msdn.microsoft.com/library/ms181709%28v=vs.120%29.aspx?f=255&amp;MSPPError=-2147217396">TFS2013</a>
+and <a href="https://www.visualstudio.com/en-us/docs/build/overview">TFS2015 / TFS2017</a>.</li>
+<li>The layout of the scripts and NuGet packages has changed so that it is easier to create a
+<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/220">new set of build tools based on nBuildKit</a>.
+With this change it is now possible to create a build / test / deploy library that includes all or
+some of the nBuildKit capabilities while providing its own additional capabilities. An example is
+the <a href="https://github.com/ops-resource/ops-tools-build">ops-tools-build</a> library which is being used
+in the <a href="https://en.wikipedia.org/wiki/Infrastructure_as_Code">infrastructure-as-code</a> work I'm doing.</li>
 </ul>
-<p>After a few hours of tinkering that is where we are now, this blog post was build and published
-using a combination of <a href="https://www.appveyor.com/">AppVeyor</a> as the build server and
-<a href="/projects/nBuildKit">nBuildKit</a> for the build and deploy scripts.</p>
-<p>In order to achieve this the first step that I took was to set up the build scripts so that I could
-build on my local machine. Having a build that executes in the same way on a developer machine
-and the build server has many benefits.</p>
+<p>In addition to the major changes some additional build, test and deploy steps have also been defined:</p>
 <ul>
-<li>Familiarity: developers understand what the build server does because it works exactly as on their
-machine.</li>
-<li>Ease of debugging: it is easier to discover the source of any errors if you can execute the scripts
-on a developers machine because then you have have full access to the workspace which may not be
-the case on a build machine.</li>
-<li>Ease of testing: even build scripts need to be tested. If this is done on a developer machine then
-the testing will most likely be able to be executed much quicker because there is less need to
-commit every change, push it to the server and wait for the build server to execute the build.</li>
+<li>Complete a <a href="https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow">gitflow</a>
+stage, e.g. finishing the feature, hotfix or release branch, to verify that the pending merge will
+not break the build. Additionally the results of the merge can be captured, by archiving the
+<code>.git</code> folder, and can later be used in the deploy process to push the merge to a git remote.</li>
+<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/255">Copying files</a> from the file system or
+from a NuGet package.</li>
+<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/238">ILMerge</a> one or more assemblies into a
+target assembly.</li>
+<li>Generating a targets file from an assembly containing MsBuild tasks.</li>
+<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/146">Invoking</a> <a href="https://wyam.io">Wyam</a>
+during the build process. Note that this is a late addition and hasn't been tested completely yet</li>
+<li>Invoking <a href="https://github.com/pester/Pester">Pester</a> during the test phase.</li>
+<li>Pushing files to a git branch during the deploy stage.</li>
+<li>Pushing an entire repository to a git remote during the deploy stage.</li>
 </ul>
-<p>Configuring <code>nBuildKit</code> means copying the <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/tree/master/src/samples">sample files</a>
-to the root of the workspace and updating them with values relevant to the project.</p>
-<p>In this case I updated the <code>settings.props</code> file, which contains the general information about the
-build, test and deploy processes, with <a href="https://gist.github.com/pvandervelde/88aa8f644148b4cdb9fa909fe3ff8f69">product information</a>.</p>
-<p>I also <a href="https://gist.github.com/pvandervelde/9853b15889ccf67bafa5fa2e93594ca2">enabled the automatic merging</a>
-for the <a href="http://nvie.com/posts/a-successful-git-branching-model/">GitFlow</a> process. This allows
-nBuildKit to automatically complete feature, hotfix and release branches when running on a build
-server so that each build also verifies that the final merge will be successful and the changes will
-not break anything after the merge.</p>
-<p>The next file to update was the <code>build.settings.props</code> file, which describes what needs to be done
-during the build process, was updated. The first part of that was to define which <a href="https://gist.github.com/pvandervelde/015611f5355b07e1b3246ae81bf2ea0a">steps should be
-taken during the build process</a>.</p>
-<ul>
-<li>Clear the workspace. While this is not necessary on a build server, after all a fresh workspace
-is used for each build, it is necessary on a developer machine because old artefacts may still
-be present.</li>
-<li>Ensure that the build server has configured the workspace with the correct source control information.
-Many build systems do not perform a full clone at the start of a build but rather get only the
-minimal source control information in addition to the source files. This reduces time and IO
-demands, especially for repositories with extensive history. Different build systems have a
-different approach to what steps exactly are taken. The lack of source control information, e.g.
-the state of different branches, or the branch that the current commit is part of, is not a
-problem if the only step is to compiling code however issues can occur if the state of the local
-workspace is used to determine version numbers or VCS information. In those cases it is better to
-ensure that the workspace is in the same state as it was on the developers machine.</li>
-<li>Gather VCS information like the current commit ID and the branch name. For my blog this information
-is embedded in the footer of every page to indicate which commit was build and what version
-of the blog you are looking at.</li>
-<li>Complete the active <code>GitFlow</code> branch, if there is one, by merging the active branch to the
-appropriate target branches and adding tags if necessary.</li>
-<li>Get version information with <a href="https://github.com/GitTools/GitVersion">GitVersion</a>. This
-is done after the merge process so that the version number is the release version.</li>
-<li><a href="https://gist.github.com/pvandervelde/813a19ff4861470ba03591a5ecc4b910">Build the pages</a> with Wyam.</li>
-<li>Zip up the generated pages</li>
-</ul>
-<p>The final change to the <code>build.settings.props</code> file was to enable the generation of the archive
-files by <a href="https://gist.github.com/pvandervelde/d1ec2c78fc560bd20ef1ef7a375eee30">uncommenting the <code>ArchivePackageSpecs</code> section</a>.</p>
-<p>The last file to be changed was the <code>deploy.settings.props</code> file which describes what needs to be
-done during the deploy process. As with the <code>build.settings.props</code> file the first step here was
-to select the <a href="https://gist.github.com/pvandervelde/8ee5a1dc96d0835bb8b3aa6354896ba7">steps that should be taken during the deploy process</a>.</p>
-<ul>
-<li>Once again ensure that the build server workspace is configured with the correct source control
-information.</li>
-<li>Gather version information in the same way as was done during the build process.</li>
-<li><a href="https://gist.github.com/pvandervelde/c6490e33fd73d0f7afc15677a4bf2e8b">Push the archive files</a>
-to AppVeyor.</li>
-<li>Push the files contained in the archive file to the <a href="https://github.com/pvandervelde/pvandervelde.github.io">repository</a>
-that contains the generated pages. This was simply done by enabling the <code>DeployStepsPushToGitBranch</code>
-deploy step and <a href="https://gist.github.com/pvandervelde/9a2dd811faf4d0e56ef3b5069d2e7d3c">providing information about the repository and branch</a>
-that the files should be pushed to. The commit message for this process currently comes from a text
-file in the root of the repository. Ideally there would be some way to discover a decent commit
-message, e.g. the name of the most recent post, however many different changes are pushed to the
-source repository so selecting the correct commit message is somewhat difficult.</li>
-</ul>
-<p>By updating these three files we have provided <code>nBuildKit</code> with enough information to execute both
-the build and deploy processes.</p>
-<p>Once the build scripts were complete and tested the only thing that remained was to configure
-AppVeyor. This can either be done through the <a href="https://www.appveyor.com/docs/build-configuration/">UI or a YAML file</a>.
-In this case I elected to use the <a href="https://gist.github.com/pvandervelde/4171a3b81776132e2800a3f9b802fa43">YAML file</a>
-so that all information describing my build and deployment process would exist in the repository.</p>
-<p>In order to create the configuration file I copied the <a href="https://www.appveyor.com/docs/appveyor-yml/">reference file</a>
-and then removed all the bits I didn't need. The only tricky bit was setting up the AppVeyor
-environment so that the deploy process could push the final results back to GitHub. For that I
-added a <a href="https://github.com/blog/2024-read-only-deploy-keys">deploy key</a> to the target repository.
-The private part of this key was then encrypted and placed in the YAML file. Some <code>before_deploy</code>
-<a href="https://www.appveyor.com/docs/how-to/private-git-sub-modules/">script magic</a> allows the decryption
-of the key so that git can push the changes to the repository via SSH.</p>
+<p>Finally the performance of the whole build process has been improved by changing how the template
+tokens are <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/242">generated and loaded</a>. The
+overall speed up for the nBuildKit build itself is about a factor two.</p>
+<p>All the work items that have been closed for this release can be found on
+<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/26?closed=1">github</a>.</p>
 
     </div>
 
     <div id="post-footer">
         <div>
     <div class="navlinks">
-                <a href="/posts/Goals-for-2017" title="Previous Post: Goals for 2017" class="navlinks-prev">« Goals for 2017</a>
-                <a href="/posts/Updating-Hyper-v-server-to-Windows2016" title="Next Post: Updating my Hyper-V server to Windows 2016" class="navlinks-next">Updating my Hyper-V server to Windows 2016 »</a>
+                <a href="/posts/Updating-Hyper-v-server-to-Windows2016" title="Previous Post: Updating my Hyper-V server to Windows 2016" class="navlinks-prev">« Updating my Hyper-V server to Windows 2016</a>
     </div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Blog-publishing-with-AppVeyor';
-    var disqus_title = 'Blog publishing with AppVeyor';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Blog-publishing-with-AppVeyor';
+    var disqus_identifier = 'nBuildKit-release-V090';
+    var disqus_title = 'nBuildKit release - V0.9.0';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

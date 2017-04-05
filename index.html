@@ -58,11 +58,11 @@
             </div>
             <div id="menu">
                 <ul>
-                                <li class="inactive" >
-                <a href="/projects">Projects</a>
-            </li>
-            <li class="active" >
+                                <li class="active" >
                 Mind vortex
+            </li>
+            <li class="inactive" >
+                <a href="/projects">Projects</a>
             </li>
             <li class="inactive" >
                 <a href="/posts">Archive</a>
@@ -96,6 +96,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/nBuildKit-release-V090">nBuildKit release - V0.9.0</a></li>
                             <li><a href="/posts/Updating-Hyper-v-server-to-Windows2016">Updating my Hyper-V server to Windows 2016</a></li>
                             <li><a href="/posts/Blog-publishing-with-AppVeyor">Blog publishing with AppVeyor</a></li>
                             <li><a href="/posts/Goals-for-2017">Goals for 2017</a></li>
@@ -105,7 +106,6 @@
                             <li><a href="/posts/Creating-azure-vm-images-with-powershell">Creating Azure VM images with Powershell</a></li>
                             <li><a href="/posts/Building-and-delivering-nBuildKit-with-AppVeyor">Building and delivering nBuildKit with AppVeyor</a></li>
                             <li><a href="/posts/nBuildKit-release-V032">nBuildKit release - V0.3.2</a></li>
-                            <li><a href="/posts/Adding-pagination-with-DocPad">Adding pagination with DocPad</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -122,10 +122,10 @@
                                     <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (7)</a>
+                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (8)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (7)</a>
+                                    <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (7)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
@@ -137,10 +137,10 @@
                                     <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/nadoni" class="btn btn-default btn-sm"> nAdoni (2)</a>
+                                    <a role="button" href="/tags/appveyor" class="btn btn-default btn-sm"> AppVeyor (2)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/appveyor" class="btn btn-default btn-sm"> AppVeyor (2)</a>
+                                    <a role="button" href="/tags/pdb" class="btn btn-default btn-sm"> PDB (2)</a>
                                 </li>
                         </ul>
                     </div>
@@ -154,6 +154,94 @@
             </div>
 
             <div id="content">
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/nBuildKit-release-V090">nBuildKit release - V0.9.0</a>
+</h2>
+<div id="post-meta">
+    <p>
+Monday, April 3, 2017
+ |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
+    </p>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>Version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.0">0.9.0</a> of <a href="https://github.com/nbuildkit/nBuildKit.MsBuild">nBuildKit</a>
+has been released. The last release I talked about on this blog was <a href="posts/nBuildKit-release-V051">0.5.1</a>.
+Since then a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases">lot more versions</a> have been
+released. The <code>0.9.0</code> release was supposed to be a stabilization release but there were many major
+improvements which makes this a major change release.</p>
+<p>The highlights are</p>
+<ul>
+<li>The settings describing artefacts, e.g. the nuspec and zip archive files to build, have moved to
+a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/215">separate file</a> <code>artefacts.settings.props</code>.
+This allows each of the different stages, build, test and release, to easily use these settings
+without having to load configuration files from the other stages.</li>
+<li>All user specific configuration files now have a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/224">version number</a>
+which indicates for which version of nBuildKit they were created. This will allow nBuildKit to
+transform older configuration files prior to using them.</li>
+<li>The inline tasks have been <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/230">moved to a .NET assembly</a>.
+This simplifies the project includes that need to be made to get all the required tasks loaded.
+Additionally more complex tasks can be created and <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/234">unit tests can be written and executed</a>
+which should improve the quality of the tasks.</li>
+<li>User <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/191">defined location</a> and
+<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/192">transformation</a> of the configuration
+files prior to starting the build. In combination with the version numbers in the configuration
+files this allows nBuildKit to use configuration files from a previous version while still using
+the most recent version of nBuildKit. Note that it is currently not possible to upgrade the old
+(0.8.3 and prior) configurations to 0.9.0 this way.</li>
+<li>Build, test and deploy steps can define <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/196">pre- and post-steps</a>
+which are executed before and after the execution of the step. Additionally global pre- and post-steps
+can be defined which areo executed before and after each step. These pre- and post-steps can for
+instance be used to <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/185">write information to a log file</a>
+or to gather post step information.</li>
+<li>The <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/206">build server specific code</a> was
+moved into separate NuGet packages so that these can be pulled down on the build server only. Three
+different packages have been created for <a href="https://jenkins.io/">Jenkins</a>,
+<a href="https://msdn.microsoft.com/library/ms181709%28v=vs.120%29.aspx?f=255&amp;MSPPError=-2147217396">TFS2013</a>
+and <a href="https://www.visualstudio.com/en-us/docs/build/overview">TFS2015 / TFS2017</a>.</li>
+<li>The layout of the scripts and NuGet packages has changed so that it is easier to create a
+<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/220">new set of build tools based on nBuildKit</a>.
+With this change it is now possible to create a build / test / deploy library that includes all or
+some of the nBuildKit capabilities while providing its own additional capabilities. An example is
+the <a href="https://github.com/ops-resource/ops-tools-build">ops-tools-build</a> library which is being used
+in the <a href="https://en.wikipedia.org/wiki/Infrastructure_as_Code">infrastructure-as-code</a> work I'm doing.</li>
+</ul>
+<p>In addition to the major changes some additional build, test and deploy steps have also been defined:</p>
+<ul>
+<li>Complete a <a href="https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow">gitflow</a>
+stage, e.g. finishing the feature, hotfix or release branch, to verify that the pending merge will
+not break the build. Additionally the results of the merge can be captured, by archiving the
+<code>.git</code> folder, and can later be used in the deploy process to push the merge to a git remote.</li>
+<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/255">Copying files</a> from the file system or
+from a NuGet package.</li>
+<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/238">ILMerge</a> one or more assemblies into a
+target assembly.</li>
+<li>Generating a targets file from an assembly containing MsBuild tasks.</li>
+<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/146">Invoking</a> <a href="https://wyam.io">Wyam</a>
+during the build process. Note that this is a late addition and hasn't been tested completely yet</li>
+<li>Invoking <a href="https://github.com/pester/Pester">Pester</a> during the test phase.</li>
+<li>Pushing files to a git branch during the deploy stage.</li>
+<li>Pushing an entire repository to a git remote during the deploy stage.</li>
+</ul>
+<p>Finally the performance of the whole build process has been improved by changing how the template
+tokens are <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/242">generated and loaded</a>. The
+overall speed up for the nBuildKit build itself is about a factor two.</p>
+<p>All the work items that have been closed for this release can be found on
+<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/26?closed=1">github</a>.</p>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -605,82 +693,6 @@ how Wyam works and how my own blog is generated.</p>
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/nBuildKit-release-V051">nBuildKit release - V0.5.1</a>
-</h2>
-<div id="post-meta">
-    <p>
-Saturday, May 23, 2015
- |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
-    </p>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>Version <a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.5.1">V0.5.1</a> of the <a href="/projects/nbuildkit.html">nBuildKit</a>
-build library has been released.</p>
-<p>This release adds the following features</p>
-<ul>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/91">91</a>: MsBuild.Projects: Common.props should
-do a more extensive search for settings.props</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/90">90</a>: MsBuild: Allow pushing symbols via
-NuGet enhancement</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/89">89</a>: MsBuild: Allow assembly versioning to
-be more custom defined.</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/87">87</a>: MsBuild: Rename template files to have
-normal extension</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/86">86</a>: MsBuild: Rename the DirMsBuildShared,
-DirMsBuildExtensions and DirMsBuildTemplates properties enhancement</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/85">85</a>: Unable to build projects which have a
-mixture of target frameworks</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/83">83</a>: MsBuild: Allow PreCleanScripts and
-PreCompilationScripts to define their own properties</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/82">82</a>: MsBuild: Update the Sample custom
-version files to match the current version gathering capabilities</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/80">80</a>: MsBuild: Combine top-level build.msbuild,
-deploy.msbuild and shared.locatenbuildkit.msbuild</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/78">78</a>: MsBuild: Automatically include NuGet
-dependencies if nuspec is in same directory as project</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/72">72</a>: MsBuild: Define default directory
-paths only in settings.props file</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/68">68</a>: Improve inline documentation of
-settings.props file</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/66">66</a>: MsBuild: Provide initialization/installation
-scripts for an empty workspace</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/55">55</a>: MsBuild: Allow assembly copyright to be
-more custom defined</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/22">22</a>: MsBuild: Allow each file to have their
-own base directory when creating ZIP archives</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/19">19</a>: MsBuild.Projects: Provide scripts for
-Visual Basic projects</li>
-</ul>
-<p>And fixes the following issues:</p>
-<ul>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/92">92</a>: MsBuild.Projects: GetVersion, VcsInfo and
-Generate files also run when they're disabled in the settings.props file</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/88">88</a>: MsBuild.Projects: Excessive NuGet
-restore of global packages</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/84">84</a>: Not compatible with ncrunch</li>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/54">54</a>: MsBuild: First space trimmed from
-release note content</li>
-</ul>
-<p>Finally the following tasks were completed:</p>
-<ul>
-<li><a href="https://github.com/pvandervelde/nBuildKit/issues/7">7</a>: MsBuild: Set up tests</li>
-</ul>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -712,9 +724,9 @@ release note content</li>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Thu, 23 Mar 2017 09:44:08 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Wed, 05 Apr 2017 10:04:24 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/36937b6f588f627b5f02cf020ea5e6443463fddf">36937b6f588f627b5f02cf020ea5e6443463fddf</a> at version 2.2.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/96c4086f068d3ea00ae893a2b789bf939d92eb5b">96c4086f068d3ea00ae893a2b789bf939d92eb5b</a> at version 2.3.0.        </p>
     </div>
 
     <p>
