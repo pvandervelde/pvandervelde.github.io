@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-    <title>Mind vortex - nBuildKit release - V0.9.0</title>
+    <title>Mind vortex - Setting up a home network with Ubiquiti</title>
     <meta name="description" content="Welcome!" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,9 +27,9 @@
     <meta name="msapplication-tooltip" content="Mind vortex" />
     <meta name="msapplication-starturl" content="/" />
 
-    <meta property="og:title" content="Mind vortex - nBuildKit release - V0.9.0" />
+    <meta property="og:title" content="Mind vortex - Setting up a home network with Ubiquiti" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Ubiquiti-networking-gear" />
     <!-- TODO: More social graph meta tags -->
 
     <script src="/assets/js/jquery.min.js"></script>
@@ -164,97 +164,120 @@
 
 
 <h2>
-nBuildKit release - V0.9.0</h2>
+Setting up a home network with Ubiquiti</h2>
 <div id="post-meta">
     <p>
-Monday, April 3, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
+Friday, April 7, 2017
+ |         Posted in                     <a id="post-category" role="button" href="/tags/hardware" class="btn btn-default btn-xs">Hardware</a>
+                    <a id="post-category" role="button" href="/tags/home-network" class="btn btn-default btn-xs">Home network</a>
+                    <a id="post-category" role="button" href="/tags/ubiquiti" class="btn btn-default btn-xs">Ubiquiti</a>
     </p>
 </div>
 
     </div>
 
     <div id="post-content">
-        <p>Version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.0">0.9.0</a> of <a href="https://github.com/nbuildkit/nBuildKit.MsBuild">nBuildKit</a>
-has been released. The last release I talked about on this blog was <a href="posts/nBuildKit-release-V051">0.5.1</a>.
-Since then a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases">lot more versions</a> have been
-released. The <code>0.9.0</code> release was supposed to be a stabilization release but there were many major
-improvements which makes this a major change release.</p>
-<p>The highlights are</p>
+        <p>A little while back we finally got fibre in our street. After spending many years on ADSL (we don't
+talk about the time of dial-up ...) it was finally time for some decent network speeds at home. As
+the fibre was being installed in my house it was also time to evaluate the networking gear I was
+using. Until now I had always used the modem / router provided by the ISP with an additional cheap
+switch. The gear always worked fine, but didn't provide configuration options other than the ones that
+describe the connection to the ISP. As I was starting to use my <a href="./posts/Updating-Hyper-v-server-to-Windows2016">Hyper-V server</a>
+a lot more and was starting to run multiple VM's it would be nice to get some better control over
+the network. Additionally based on one of <a href="https://www.troyhunt.com/no-you-cant-join-my-wifi-network/">Troy Hunt's</a>
+blog posts I would also like to set up a separate guest network.</p>
+<h3>The selection</h3>
+<p>The prolific Troy Hunt has written about his <a href="https://www.troyhunt.com/ubiquiti-all-the-things-how-i-finally-fixed-my-dodgy-wifi/">network</a>
+setup so I used that as my starting point for finding some new network gear. Fortunately (or unfortunately)
+I don't have as much area to cover as Troy does so I didn't need nearly as much hardware. The parts
+I got are:</p>
 <ul>
-<li>The settings describing artefacts, e.g. the nuspec and zip archive files to build, have moved to
-a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/215">separate file</a> <code>artefacts.settings.props</code>.
-This allows each of the different stages, build, test and release, to easily use these settings
-without having to load configuration files from the other stages.</li>
-<li>All user specific configuration files now have a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/224">version number</a>
-which indicates for which version of nBuildKit they were created. This will allow nBuildKit to
-transform older configuration files prior to using them.</li>
-<li>The inline tasks have been <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/230">moved to a .NET assembly</a>.
-This simplifies the project includes that need to be made to get all the required tasks loaded.
-Additionally more complex tasks can be created and <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/234">unit tests can be written and executed</a>
-which should improve the quality of the tasks.</li>
-<li>User <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/191">defined location</a> and
-<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/192">transformation</a> of the configuration
-files prior to starting the build. In combination with the version numbers in the configuration
-files this allows nBuildKit to use configuration files from a previous version while still using
-the most recent version of nBuildKit. Note that it is currently not possible to upgrade the old
-(0.8.3 and prior) configurations to 0.9.0 this way.</li>
-<li>Build, test and deploy steps can define <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/196">pre- and post-steps</a>
-which are executed before and after the execution of the step. Additionally global pre- and post-steps
-can be defined which areo executed before and after each step. These pre- and post-steps can for
-instance be used to <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/185">write information to a log file</a>
-or to gather post step information.</li>
-<li>The <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/206">build server specific code</a> was
-moved into separate NuGet packages so that these can be pulled down on the build server only. Three
-different packages have been created for <a href="https://jenkins.io/">Jenkins</a>,
-<a href="https://msdn.microsoft.com/library/ms181709%28v=vs.120%29.aspx?f=255&amp;MSPPError=-2147217396">TFS2013</a>
-and <a href="https://www.visualstudio.com/en-us/docs/build/overview">TFS2015 / TFS2017</a>.</li>
-<li>The layout of the scripts and NuGet packages has changed so that it is easier to create a
-<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/220">new set of build tools based on nBuildKit</a>.
-With this change it is now possible to create a build / test / deploy library that includes all or
-some of the nBuildKit capabilities while providing its own additional capabilities. An example is
-the <a href="https://github.com/ops-resource/ops-tools-build">ops-tools-build</a> library which is being used
-in the <a href="https://en.wikipedia.org/wiki/Infrastructure_as_Code">infrastructure-as-code</a> work I'm doing.</li>
+<li><a href="https://www.ubnt.com/unifi-routing/usg/">Unifi security gateway</a>: The router which provides amongst
+other things a firewall, subnet capabilities and DHCP.</li>
+<li><a href="https://www.ubnt.com/unifi-switching/unifi-switch-8/">Unifi switch 8 (US-8-60W)</a>: The managed switch
+which has 4 <a href="https://en.wikipedia.org/wiki/Power_over_Ethernet">PoE</a> ports.</li>
+<li><a href="https://www.ubnt.com/unifi/unifi-ap-ac-lite/">Unifi AP AC LITE</a>: The smallest indoor access point
+available from Ubiquiti. Given that my apartment is relatively small I don't have to worry about
+covering a lot of area, and smaller access points are cheaper.</li>
+<li><a href="https://www.ubnt.com/unifi/unifi-cloud-key/">Unifi cloud key</a>: The management device which runs
+the Unfi software for managing the network.</li>
 </ul>
-<p>In addition to the major changes some additional build, test and deploy steps have also been defined:</p>
+<p>Except for the cloud key this is pretty much the minimal set of hardware required. The cloud key runs
+the unifi software which is used to manage the network configuration. You can install the unifi
+software on a PC but then you need an extra PC or VM running. While I have a Hyper-V server it was easier
+just to pay for the cloud key and have a separate controller for the network. Note that the network
+functions just fine without any configuration. However if you want to make changes the easiest way
+to do so is through the unifi software, although you could do it by SSH-ing into each device.</p>
+<p>Another thing to note is that the the 60W switch has 4 PoE ports of the 802.3af kind. Unfortunately
+the access point requires 24V passive PoE. So either you have to:</p>
 <ul>
-<li>Complete a <a href="https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow">gitflow</a>
-stage, e.g. finishing the feature, hotfix or release branch, to verify that the pending merge will
-not break the build. Additionally the results of the merge can be captured, by archiving the
-<code>.git</code> folder, and can later be used in the deploy process to push the merge to a git remote.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/255">Copying files</a> from the file system or
-from a NuGet package.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/238">ILMerge</a> one or more assemblies into a
-target assembly.</li>
-<li>Generating a targets file from an assembly containing MsBuild tasks.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/146">Invoking</a> <a href="https://wyam.io">Wyam</a>
-during the build process. Note that this is a late addition and hasn't been tested completely yet</li>
-<li>Invoking <a href="https://github.com/pester/Pester">Pester</a> during the test phase.</li>
-<li>Pushing files to a git branch during the deploy stage.</li>
-<li>Pushing an entire repository to a git remote during the deploy stage.</li>
+<li>Power the access point of the converter that you get with the access point.</li>
+<li>Upgrade the access point to the <a href="https://www.ubnt.com/unifi/unifi-ap-ac-pro/">UAP-AC-PRO</a></li>
+<li>Upgrade the switch to the <a href="https://www.ubnt.com/unifi-switching/unifi-switch-8-150w/">US-8-150W</a>
+switch which has both 802.3af PoE and 24V passive PoE.</li>
 </ul>
-<p>Finally the performance of the whole build process has been improved by changing how the template
-tokens are <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/242">generated and loaded</a>. The
-overall speed up for the nBuildKit build itself is about a factor two.</p>
-<p>All the work items that have been closed for this release can be found on
-<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/26?closed=1">github</a>.</p>
+<p>As much as I would like to power the access point of the switch I still opted for the first option,
+the additional investment wasn't quite worth having one less cable around.</p>
+<h3>Configuration</h3>
+<p>The actual configuration was pretty easy, plug in all the parts and things start working, at least
+for the internal network. Once this is done you can configure the network through the unifi software.
+To do so the first thing to do is to to find the cloud key. There's a useful plugin for
+<a href="https://chrome.google.com/webstore/detail/ubiquiti-device-discovery/hmpigflbjeapnknladcfphgkemopofig?utm_source=chrome-app-launcher-info-dialog">chrome</a>
+that allows you to find any Ubiquiti devices on your local network, otherwise you can try to guess
+the IP address of the cloud key. If you only have 4 devices like I do that shouldn't take very long.
+The gateway by default assumes you are using the <code>192.168.1.0/24</code> subnet and the gateway is always
+the first one.</p>
+<p>Once you are logged on to the unifi software it makes sense to give the cloud key a fixed IP address
+I gave mine the 192.168.1.2 IP address as I am using the <code>192.168.1.1/24</code> subnet for all my networking
+gear. And yes I know I don't have enough networking devices for them to warrant being on their own
+subnet but it makes things a little easier and it allows me to learn about <a href="https://en.wikipedia.org/wiki/Subnetwork">subnetting</a>
+and <a href="https://en.wikipedia.org/wiki/Virtual_LAN">vlans</a>.</p>
+<h3>Subnetting adventures</h3>
+<p>As mentioned in the introduction one of the changes I wanted to make was to create a separate guest
+network. By default a vlan only guest network is created, however I wanted to move the guests onto
+their own subnet so I created a new network with the <code>192.168.5.1/24</code> subnet. I also set the vlan
+specifier to <code>1685</code>. And finally I marked this network as a guest network so that the controller
+applies the guest firewall rules.</p>
+<p>Then I created a wireless guest network with the same vlan. What confused me initially is that there
+is no relation between the wireless network and the subnet other than the vlan tag. Somehow having the
+same vlan tag is enough to direct the clients onto the the correct subnet.</p>
+<p>The last step of the configuration of the guest network is to configure the switch. Because the
+access point has three different subnets going to it, the managment subnet for the access point itself,
+the guest wifi and the internal wifi, you need to create a custom &lsquo;network&rsquo; on the switch which carries
+all three networks, making sure that the untagged network is the one on which you want the access
+point to get an IP address.</p>
+<p>Another item I found was that for some purposes the standard IP lease of 24 hours is a bit long. One
+of the things I'm currently working on is building VM images of different services for use in a test
+build environment. While doing that I'm creating <a href="https://github.com/Calvinverse">base boxes</a> for
+Windows and Linux which involves spinning up a VM, installing the OS, configuring it and capturing
+the image. While working on the code to automate this process I spin up and shut down VMs quite a lot.
+If you're using the gateway as the DHCP server and use the standard IP lease time then you run through
+IP addresses quite quickly. So I created have a separate IP subnet for those VMs where the IP lease
+time is 2 hours (which is more than long enough to create a VM and capture a base image).</p>
+<h3>In the end</h3>
+<p>In conclusion it's a good set of hardware and software and as a bonus, there are updates which apply
+without problems. There is something reassuring in the fact that the manufacturer actually cares enough
+about their product that they want to keep it running, unlike much of the consumer gear.</p>
+<p>The unifi software provides a lot of useful and interesting capabilities and it's obviously aimed
+at the business / educational environment. There are a lot of of features that I don't need, but they
+are fun to play with</p>
 
     </div>
 
     <div id="post-footer">
         <div>
     <div class="navlinks">
-                <a href="/posts/Updating-Hyper-v-server-to-Windows2016" title="Previous Post: Updating my Hyper-V server to Windows 2016" class="navlinks-prev">« Updating my Hyper-V server to Windows 2016</a>
-                <a href="/posts/Ubiquiti-networking-gear" title="Next Post: Setting up a home network with Ubiquiti" class="navlinks-next">Setting up a home network with Ubiquiti »</a>
+                <a href="/posts/nBuildKit-release-V090" title="Previous Post: nBuildKit release - V0.9.0" class="navlinks-prev">« nBuildKit release - V0.9.0</a>
+                <a href="/posts/Ops-Tools-Build-release-V011" title="Next Post: Ops-Tools-Build release - V0.1.0 and V0.1.1" class="navlinks-next">Ops-Tools-Build release - V0.1.0 and V0.1.1 »</a>
     </div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'nBuildKit-release-V090';
-    var disqus_title = 'nBuildKit release - V0.9.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090';
+    var disqus_identifier = 'Ubiquiti-networking-gear';
+    var disqus_title = 'Setting up a home network with Ubiquiti';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ubiquiti-networking-gear';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

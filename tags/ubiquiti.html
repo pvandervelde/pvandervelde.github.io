@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-    <title>Mind vortex - nBuildKit release - V0.9.0</title>
+    <title>Mind vortex - Ubiquiti</title>
     <meta name="description" content="Welcome!" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,9 +27,9 @@
     <meta name="msapplication-tooltip" content="Mind vortex" />
     <meta name="msapplication-starturl" content="/" />
 
-    <meta property="og:title" content="Mind vortex - nBuildKit release - V0.9.0" />
+    <meta property="og:title" content="Mind vortex - Ubiquiti" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/tags/ubiquiti" />
     <!-- TODO: More social graph meta tags -->
 
     <script src="/assets/js/jquery.min.js"></script>
@@ -137,10 +137,10 @@
                                     <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/regression-testing" class="btn btn-default btn-sm"> Regression testing (2)</a>
+                                    <a role="button" href="/tags/appveyor" class="btn btn-default btn-sm"> AppVeyor (2)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/appveyor" class="btn btn-default btn-sm"> AppVeyor (2)</a>
+                                    <a role="button" href="/tags/pdb" class="btn btn-default btn-sm"> PDB (2)</a>
                                 </li>
                         </ul>
                     </div>
@@ -155,133 +155,16 @@
 
             <div id="content">
 
-<div id="post">
-    <div id="post-header">
-        <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
+<div id="posts">
+    <h3 id="post-tags-header">Posts tagged with: Ubiquiti</h3>
+            <div class="post-list">
+            <a href="/posts/Ubiquiti-networking-gear">
+                <h3 class="post-title">Setting up a home network with Ubiquiti</h3>
+            </a>
+            <p class="post-meta">Posted on Friday, April 7, 2017</p>            
+        </div>   
 
-
-<h2>
-nBuildKit release - V0.9.0</h2>
-<div id="post-meta">
-    <p>
-Monday, April 3, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
-    </p>
 </div>
-
-    </div>
-
-    <div id="post-content">
-        <p>Version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.0">0.9.0</a> of <a href="https://github.com/nbuildkit/nBuildKit.MsBuild">nBuildKit</a>
-has been released. The last release I talked about on this blog was <a href="posts/nBuildKit-release-V051">0.5.1</a>.
-Since then a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases">lot more versions</a> have been
-released. The <code>0.9.0</code> release was supposed to be a stabilization release but there were many major
-improvements which makes this a major change release.</p>
-<p>The highlights are</p>
-<ul>
-<li>The settings describing artefacts, e.g. the nuspec and zip archive files to build, have moved to
-a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/215">separate file</a> <code>artefacts.settings.props</code>.
-This allows each of the different stages, build, test and release, to easily use these settings
-without having to load configuration files from the other stages.</li>
-<li>All user specific configuration files now have a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/224">version number</a>
-which indicates for which version of nBuildKit they were created. This will allow nBuildKit to
-transform older configuration files prior to using them.</li>
-<li>The inline tasks have been <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/230">moved to a .NET assembly</a>.
-This simplifies the project includes that need to be made to get all the required tasks loaded.
-Additionally more complex tasks can be created and <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/234">unit tests can be written and executed</a>
-which should improve the quality of the tasks.</li>
-<li>User <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/191">defined location</a> and
-<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/192">transformation</a> of the configuration
-files prior to starting the build. In combination with the version numbers in the configuration
-files this allows nBuildKit to use configuration files from a previous version while still using
-the most recent version of nBuildKit. Note that it is currently not possible to upgrade the old
-(0.8.3 and prior) configurations to 0.9.0 this way.</li>
-<li>Build, test and deploy steps can define <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/196">pre- and post-steps</a>
-which are executed before and after the execution of the step. Additionally global pre- and post-steps
-can be defined which areo executed before and after each step. These pre- and post-steps can for
-instance be used to <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/185">write information to a log file</a>
-or to gather post step information.</li>
-<li>The <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/206">build server specific code</a> was
-moved into separate NuGet packages so that these can be pulled down on the build server only. Three
-different packages have been created for <a href="https://jenkins.io/">Jenkins</a>,
-<a href="https://msdn.microsoft.com/library/ms181709%28v=vs.120%29.aspx?f=255&amp;MSPPError=-2147217396">TFS2013</a>
-and <a href="https://www.visualstudio.com/en-us/docs/build/overview">TFS2015 / TFS2017</a>.</li>
-<li>The layout of the scripts and NuGet packages has changed so that it is easier to create a
-<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/220">new set of build tools based on nBuildKit</a>.
-With this change it is now possible to create a build / test / deploy library that includes all or
-some of the nBuildKit capabilities while providing its own additional capabilities. An example is
-the <a href="https://github.com/ops-resource/ops-tools-build">ops-tools-build</a> library which is being used
-in the <a href="https://en.wikipedia.org/wiki/Infrastructure_as_Code">infrastructure-as-code</a> work I'm doing.</li>
-</ul>
-<p>In addition to the major changes some additional build, test and deploy steps have also been defined:</p>
-<ul>
-<li>Complete a <a href="https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow">gitflow</a>
-stage, e.g. finishing the feature, hotfix or release branch, to verify that the pending merge will
-not break the build. Additionally the results of the merge can be captured, by archiving the
-<code>.git</code> folder, and can later be used in the deploy process to push the merge to a git remote.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/255">Copying files</a> from the file system or
-from a NuGet package.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/238">ILMerge</a> one or more assemblies into a
-target assembly.</li>
-<li>Generating a targets file from an assembly containing MsBuild tasks.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/146">Invoking</a> <a href="https://wyam.io">Wyam</a>
-during the build process. Note that this is a late addition and hasn't been tested completely yet</li>
-<li>Invoking <a href="https://github.com/pester/Pester">Pester</a> during the test phase.</li>
-<li>Pushing files to a git branch during the deploy stage.</li>
-<li>Pushing an entire repository to a git remote during the deploy stage.</li>
-</ul>
-<p>Finally the performance of the whole build process has been improved by changing how the template
-tokens are <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/242">generated and loaded</a>. The
-overall speed up for the nBuildKit build itself is about a factor two.</p>
-<p>All the work items that have been closed for this release can be found on
-<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/26?closed=1">github</a>.</p>
-
-    </div>
-
-    <div id="post-footer">
-        <div>
-    <div class="navlinks">
-                <a href="/posts/Updating-Hyper-v-server-to-Windows2016" title="Previous Post: Updating my Hyper-V server to Windows 2016" class="navlinks-prev">« Updating my Hyper-V server to Windows 2016</a>
-                <a href="/posts/Ubiquiti-networking-gear" title="Next Post: Setting up a home network with Ubiquiti" class="navlinks-next">Setting up a home network with Ubiquiti »</a>
-    </div>
-</div>
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'nBuildKit-release-V090';
-    var disqus_title = 'nBuildKit release - V0.9.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-    </div>
-</div>
-
-
-
-
-
-
-
             </div>
         </div>
 
@@ -313,7 +196,7 @@ overall speed up for the nBuildKit build itself is about a factor two.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 09 Apr 2017 02:48:46 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 09 Apr 2017 02:48:45 GMT
 
  from commit <a href="https://github.com/pvandervelde/mindvortex/tree/0b8680dc37d0018d6764ee341287ed559c1b4b2f">0b8680dc37d0018d6764ee341287ed559c1b4b2f</a> at version 2.4.0.        </p>
     </div>

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-    <title>Mind vortex - nBuildKit release - V0.9.0</title>
+    <title>Mind vortex - nBuildKit release - V0.9.1</title>
     <meta name="description" content="Welcome!" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,9 +27,9 @@
     <meta name="msapplication-tooltip" content="Mind vortex" />
     <meta name="msapplication-starturl" content="/" />
 
-    <meta property="og:title" content="Mind vortex - nBuildKit release - V0.9.0" />
+    <meta property="og:title" content="Mind vortex - nBuildKit release - V0.9.1" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091" />
     <!-- TODO: More social graph meta tags -->
 
     <script src="/assets/js/jquery.min.js"></script>
@@ -164,10 +164,10 @@
 
 
 <h2>
-nBuildKit release - V0.9.0</h2>
+nBuildKit release - V0.9.1</h2>
 <div id="post-meta">
     <p>
-Monday, April 3, 2017
+Sunday, April 9, 2017
  |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
     </p>
 </div>
@@ -175,86 +175,52 @@ Monday, April 3, 2017
     </div>
 
     <div id="post-content">
-        <p>Version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.0">0.9.0</a> of <a href="https://github.com/nbuildkit/nBuildKit.MsBuild">nBuildKit</a>
-has been released. The last release I talked about on this blog was <a href="posts/nBuildKit-release-V051">0.5.1</a>.
-Since then a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases">lot more versions</a> have been
-released. The <code>0.9.0</code> release was supposed to be a stabilization release but there were many major
-improvements which makes this a major change release.</p>
-<p>The highlights are</p>
-<ul>
-<li>The settings describing artefacts, e.g. the nuspec and zip archive files to build, have moved to
-a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/215">separate file</a> <code>artefacts.settings.props</code>.
-This allows each of the different stages, build, test and release, to easily use these settings
-without having to load configuration files from the other stages.</li>
-<li>All user specific configuration files now have a <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/224">version number</a>
-which indicates for which version of nBuildKit they were created. This will allow nBuildKit to
-transform older configuration files prior to using them.</li>
-<li>The inline tasks have been <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/230">moved to a .NET assembly</a>.
-This simplifies the project includes that need to be made to get all the required tasks loaded.
-Additionally more complex tasks can be created and <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/234">unit tests can be written and executed</a>
-which should improve the quality of the tasks.</li>
-<li>User <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/191">defined location</a> and
-<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/192">transformation</a> of the configuration
-files prior to starting the build. In combination with the version numbers in the configuration
-files this allows nBuildKit to use configuration files from a previous version while still using
-the most recent version of nBuildKit. Note that it is currently not possible to upgrade the old
-(0.8.3 and prior) configurations to 0.9.0 this way.</li>
-<li>Build, test and deploy steps can define <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/196">pre- and post-steps</a>
-which are executed before and after the execution of the step. Additionally global pre- and post-steps
-can be defined which areo executed before and after each step. These pre- and post-steps can for
-instance be used to <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/185">write information to a log file</a>
-or to gather post step information.</li>
-<li>The <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/206">build server specific code</a> was
-moved into separate NuGet packages so that these can be pulled down on the build server only. Three
-different packages have been created for <a href="https://jenkins.io/">Jenkins</a>,
-<a href="https://msdn.microsoft.com/library/ms181709%28v=vs.120%29.aspx?f=255&amp;MSPPError=-2147217396">TFS2013</a>
-and <a href="https://www.visualstudio.com/en-us/docs/build/overview">TFS2015 / TFS2017</a>.</li>
-<li>The layout of the scripts and NuGet packages has changed so that it is easier to create a
-<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/220">new set of build tools based on nBuildKit</a>.
-With this change it is now possible to create a build / test / deploy library that includes all or
-some of the nBuildKit capabilities while providing its own additional capabilities. An example is
-the <a href="https://github.com/ops-resource/ops-tools-build">ops-tools-build</a> library which is being used
-in the <a href="https://en.wikipedia.org/wiki/Infrastructure_as_Code">infrastructure-as-code</a> work I'm doing.</li>
-</ul>
-<p>In addition to the major changes some additional build, test and deploy steps have also been defined:</p>
-<ul>
-<li>Complete a <a href="https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow">gitflow</a>
-stage, e.g. finishing the feature, hotfix or release branch, to verify that the pending merge will
-not break the build. Additionally the results of the merge can be captured, by archiving the
-<code>.git</code> folder, and can later be used in the deploy process to push the merge to a git remote.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/255">Copying files</a> from the file system or
-from a NuGet package.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/238">ILMerge</a> one or more assemblies into a
-target assembly.</li>
-<li>Generating a targets file from an assembly containing MsBuild tasks.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/146">Invoking</a> <a href="https://wyam.io">Wyam</a>
-during the build process. Note that this is a late addition and hasn't been tested completely yet</li>
-<li>Invoking <a href="https://github.com/pester/Pester">Pester</a> during the test phase.</li>
-<li>Pushing files to a git branch during the deploy stage.</li>
-<li>Pushing an entire repository to a git remote during the deploy stage.</li>
-</ul>
-<p>Finally the performance of the whole build process has been improved by changing how the template
-tokens are <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/242">generated and loaded</a>. The
-overall speed up for the nBuildKit build itself is about a factor two.</p>
+        <p>Hot on the heels of the last release version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.1">0.9.1</a>
+of <a href="https://github.com/nbuildkit/nBuildKit.MsBuild">nBuildKit</a> has been released. This release fixes
+two bugs and adds a few internal improvements.</p>
 <p>All the work items that have been closed for this release can be found on
-<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/26?closed=1">github</a>.</p>
+<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/29?closed=1">github</a>.</p>
+<h3>Bugs fixed</h3>
+<ul>
+<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/273">273</a> - The <code>CalculateSemanticVersionWithGitVersion</code>
+task used the current directory as the working directory. While that is correct in most cases
+there are some cases, especially when running the integration tests, where that is not correct.
+This has been fixed by requiring the specification of the working directory.</li>
+<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/277">277</a> - In the same way all NuGet tasks
+now need a working directory specified in order to make sure that the correct workspace is used
+when interacting with the NuGet command line.</li>
+</ul>
+<h3>Improvements</h3>
+<ul>
+<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/272">272</a> - The
+<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/blob/master/src/tests/TestFunctions.PrepareWorkspace.ps1">TestFunctions.PrepareWorkspace.ps1</a>
+and the <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/blob/master/src/tests/TestFunctions.Git.ps1">TestFunctions.Git.ps1</a>
+have been updated with additional functions and checks so that when creating a test workspace the
+existing git flow process is only completed if the specified branch exists on the remote. This changes
+the completion of the git flow process from mandatory to optional.</li>
+<li>Additionally the <code>IsMasterBranch</code> and <code>IsDevelopBranch</code> properties have been defined in the settings
+file. These two properties indicate whether or not the current branch is the <code>master</code> or <code>develop</code>
+branch respectively.</li>
+<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/69">69</a> - The documentation for nBuildKit itself
+is being moved from the wiki to a GitHub pages website. As of this release the build for nBuildKit
+will generate the website using <a href="https://wyam.io">Wyam</a>.</li>
+</ul>
 
     </div>
 
     <div id="post-footer">
         <div>
     <div class="navlinks">
-                <a href="/posts/Updating-Hyper-v-server-to-Windows2016" title="Previous Post: Updating my Hyper-V server to Windows 2016" class="navlinks-prev">« Updating my Hyper-V server to Windows 2016</a>
-                <a href="/posts/Ubiquiti-networking-gear" title="Next Post: Setting up a home network with Ubiquiti" class="navlinks-next">Setting up a home network with Ubiquiti »</a>
+                <a href="/posts/Ops-Tools-Build-release-V011" title="Previous Post: Ops-Tools-Build release - V0.1.0 and V0.1.1" class="navlinks-prev">« Ops-Tools-Build release - V0.1.0 and V0.1.1</a>
     </div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'nBuildKit-release-V090';
-    var disqus_title = 'nBuildKit release - V0.9.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090';
+    var disqus_identifier = 'nBuildKit-release-V091';
+    var disqus_title = 'nBuildKit release - V0.9.1';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
