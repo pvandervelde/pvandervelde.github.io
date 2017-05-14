@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-    <title>Mind vortex - nBuildKit release - V0.9.1</title>
+    <title>Mind vortex - Ops-Tools-Build release - V0.2.0</title>
     <meta name="description" content="Welcome!" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,9 +27,9 @@
     <meta name="msapplication-tooltip" content="Mind vortex" />
     <meta name="msapplication-starturl" content="/" />
 
-    <meta property="og:title" content="Mind vortex - nBuildKit release - V0.9.1" />
+    <meta property="og:title" content="Mind vortex - Ops-Tools-Build release - V0.2.0" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020" />
     <!-- TODO: More social graph meta tags -->
 
     <script src="/assets/js/jquery.min.js"></script>
@@ -164,46 +164,35 @@
 
 
 <h2>
-nBuildKit release - V0.9.1</h2>
+Ops-Tools-Build release - V0.2.0</h2>
 <div id="post-meta">
     <p>
-Sunday, April 9, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
+Sunday, May 14, 2017
+ |         Posted in                     <a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs">Ops-Tools-Build</a>
     </p>
 </div>
 
     </div>
 
     <div id="post-content">
-        <p>Hot on the heels of the last release version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.1">0.9.1</a>
-of <a href="https://github.com/nbuildkit/nBuildKit.MsBuild">nBuildKit</a> has been released. This release fixes
-two bugs and adds a few internal improvements.</p>
-<p>All the work items that have been closed for this release can be found on
-<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/29?closed=1">github</a>.</p>
-<h3>Bugs fixed</h3>
+        <p>Version <a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0">0.2.0</a> of the
+<a href="https://github.com/ops-resource/ops-tools-build">Ops-Tools-Build</a> toolkit was released.</p>
+<p>This release was focussed on providing the capabilities to use the Chef toolset to create new
+resources. All the work items that have been closed for this release can be found on
+<a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1">github</a>.</p>
+<h3>New functionality</h3>
 <ul>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/273">273</a> - The <code>CalculateSemanticVersionWithGitVersion</code>
-task used the current directory as the working directory. While that is correct in most cases
-there are some cases, especially when running the integration tests, where that is not correct.
-This has been fixed by requiring the specification of the working directory.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/277">277</a> - In the same way all NuGet tasks
-now need a working directory specified in order to make sure that the correct workspace is used
-when interacting with the NuGet command line.</li>
-</ul>
-<h3>Improvements</h3>
-<ul>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/272">272</a> - The
-<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/blob/master/src/tests/TestFunctions.PrepareWorkspace.ps1">TestFunctions.PrepareWorkspace.ps1</a>
-and the <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/blob/master/src/tests/TestFunctions.Git.ps1">TestFunctions.Git.ps1</a>
-have been updated with additional functions and checks so that when creating a test workspace the
-existing git flow process is only completed if the specified branch exists on the remote. This changes
-the completion of the git flow process from mandatory to optional.</li>
-<li>Additionally the <code>IsMasterBranch</code> and <code>IsDevelopBranch</code> properties have been defined in the settings
-file. These two properties indicate whether or not the current branch is the <code>master</code> or <code>develop</code>
-branch respectively.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/69">69</a> - The documentation for nBuildKit itself
-is being moved from the wiki to a GitHub pages website. As of this release the build for nBuildKit
-will generate the website using <a href="https://wyam.io">Wyam</a>.</li>
+<li><a href="https://github.com/ops-resource/ops-tools-build/issues/5">5</a> - A new function which provides
+the ability to execute <a href="https://github.com/sethvargo/chefspec">ChefSpec</a> tests.</li>
+<li><a href="https://github.com/ops-resource/ops-tools-build/issues/6">6</a> - A new function which
+invokes the Chef linting tool <a href="http://www.foodcritic.io/">Foodcritic</a> on the selected Chef cookbooks.</li>
+<li><a href="https://github.com/ops-resource/ops-tools-build/issues/7">7</a> - A new function which invokes the
+Ruby linting tool <a href="https://github.com/bbatsov/rubocop">RuboCop</a> on selected Ruby source files.</li>
+<li><a href="https://github.com/ops-resource/ops-tools-build/issues/20">20</a> - A new package restore script
+was added to allow restoring Chef cookbooks via <a href="https://github.com/berkshelf/berkshelf">Berkshelf</a>.</li>
+<li><a href="https://github.com/ops-resource/ops-tools-build/issues/21">21</a> - A new switch was added to the
+packer function which allows keeping the resources generated with packer in case the packer
+build fails. This improves the ability to debug issues in the packer build.</li>
 </ul>
 
     </div>
@@ -211,17 +200,16 @@ will generate the website using <a href="https://wyam.io">Wyam</a>.</li>
     <div id="post-footer">
         <div>
     <div class="navlinks">
-                <a href="/posts/Ops-Tools-Build-release-V011" title="Previous Post: Ops-Tools-Build release - V0.1.0 and V0.1.1" class="navlinks-prev">« Ops-Tools-Build release - V0.1.0 and V0.1.1</a>
-                <a href="/posts/nBuildKit-release-V092" title="Next Post: nBuildKit release - V0.9.2" class="navlinks-next">nBuildKit release - V0.9.2 »</a>
+                <a href="/posts/nBuildKit-release-V092" title="Previous Post: nBuildKit release - V0.9.2" class="navlinks-prev">« nBuildKit release - V0.9.2</a>
     </div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'nBuildKit-release-V091';
-    var disqus_title = 'nBuildKit release - V0.9.1';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091';
+    var disqus_identifier = 'Ops-Tools-Build-release-V020';
+    var disqus_title = 'Ops-Tools-Build release - V0.2.0';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
