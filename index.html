@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-    <title>Mind vortex - Mind vortex</title>
+    <title>Mind vortex - Home</title>
     <meta name="description" content="Welcome!" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,7 +27,7 @@
     <meta name="msapplication-tooltip" content="Mind vortex" />
     <meta name="msapplication-starturl" content="/" />
 
-    <meta property="og:title" content="Mind vortex - Mind vortex" />
+    <meta property="og:title" content="Mind vortex - Home" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.petrikvandervelde.nl/" />
     <!-- TODO: More social graph meta tags -->
@@ -59,7 +59,7 @@
             <div id="menu">
                 <ul>
                                 <li class="active" >
-                Mind vortex
+                Home
             </li>
             <li class="inactive" >
                 <a href="/projects">Projects</a>
@@ -85,8 +85,9 @@
 </p>
 <p>
     Dutch software developer, living, working and playing in New Zealand.
-    Rock climber, and paragliding pilot. Developer of <a href="http://pvandervelde.github.io/Sherlock)">Sherlock</a>
-    <a href="http://pvandervelde.github.io/Nuclei">Nuclei</a> and other projects
+    Rock climber, and paragliding pilot. Developer of
+    <a href="http://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
+    <a href="https://github.com/Calvinverse">the Calvinverse resources</a> and other projects
 </p>
 <p>
     <a href="/about.html">More ...</a>
@@ -96,16 +97,16 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
-                            <li><a href="/posts/Ops-Tools-Build-release-V020">Ops-Tools-Build release - V0.2.0</a></li>
+                            <li><a href="/posts/Software-development-pipeline-Design-introduction">Software development pipeline - Design introduction</a></li>
+                            <li><a href="/posts/nBuildkit-release-V0100">nBuildKit release - V0.10.0</a></li>
+                            <li><a href="/posts/Ops-Tools-Build-release-V030">Ops-Tools-Build release - V0.3.0</a></li>
                             <li><a href="/posts/nBuildKit-release-V092">nBuildKit release - V0.9.2</a></li>
+                            <li><a href="/posts/Ops-Tools-Build-release-V020">Ops-Tools-Build release - V0.2.0</a></li>
                             <li><a href="/posts/nBuildKit-release-V091">nBuildKit release - V0.9.1</a></li>
                             <li><a href="/posts/Ops-Tools-Build-release-V011">Ops-Tools-Build release - V0.1.0 and V0.1.1</a></li>
                             <li><a href="/posts/Ubiquiti-networking-gear">Setting up a home network with Ubiquiti</a></li>
                             <li><a href="/posts/nBuildKit-release-V090">nBuildKit release - V0.9.0</a></li>
                             <li><a href="/posts/Updating-Hyper-v-server-to-Windows2016">Updating my Hyper-V server to Windows 2016</a></li>
-                            <li><a href="/posts/Blog-publishing-with-AppVeyor">Blog publishing with AppVeyor</a></li>
-                            <li><a href="/posts/Goals-for-2017">Goals for 2017</a></li>
-                            <li><a href="/posts/Updating-blog-to-wyam">Exit Docpad, enter Wyam</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -116,13 +117,13 @@
                                     <a role="button" href="/tags/sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (10)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (7)</a>
@@ -134,13 +135,13 @@
                                     <a role="button" href="/tags/nanicitus" class="btn btn-default btn-sm"> nAnicitus (5)</a>
                                 </li>
                                 <li>
+                                    <a role="button" href="/tags/ops-resource" class="btn btn-default btn-sm"> Ops-Resource (3)</a>
+                                </li>
+                                <li>
                                     <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/ops-tools-build" class="btn btn-default btn-sm"> Ops-Tools-Build (2)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/pdb" class="btn btn-default btn-sm"> PDB (2)</a>
+                                    <a role="button" href="/tags/ops-tools-build" class="btn btn-default btn-sm"> Ops-Tools-Build (3)</a>
                                 </li>
                         </ul>
                     </div>
@@ -154,6 +155,7 @@
             </div>
 
             <div id="content">
+
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -164,35 +166,193 @@
 
 
 <h2>
-            <a href="/posts/Ops-Tools-Build-release-V020">Ops-Tools-Build release - V0.2.0</a>
+            <a href="/posts/Software-development-pipeline-Design-introduction">Software development pipeline - Design introduction</a>
 </h2>
 <div id="post-meta">
     <p>
-Sunday, May 14, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs">Ops-Tools-Build</a>
+Monday, August 21, 2017
+ |         Posted in                     <a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs">Delivering software</a>
+                    <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
+                    <a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs">Pipeline design</a>
+                    <a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs">Software development pipeline</a>
     </p>
 </div>
 
                 </div>
                 <div id="post-content">
-                    <p>Version <a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0">0.2.0</a> of the
+                    <p>In order to deliver new or improved software applications within the desired
+time span while maintaining or improving quality modern development moves towards
+<a href="https://techbeacon.com/doing-continuous-delivery-focus-first-reducing-release-cycle-times">shorter development and delivery</a>
+cycles. This is often achieved through the use of agile processes and a development
+workflow including <a href="https://en.wikipedia.org/wiki/Continuous_integration">Continuous Integration</a>,
+<a href="https://en.wikipedia.org/wiki/Continuous_delivery">Continuous Delivery</a>
+or even <a href="https://www.agilealliance.org/glossary/continuous-deployment">Continuous deployment</a>.</p>
+<p>One of the consequences of this desire to reduce the development cycle time on the
+development process is that more tasks in the development workflow
+have to be automated in order to reduce the time taken for the specific task.
+One way this automation can be achieved is by creating a
+<a href="http://www.informit.com/articles/article.aspx?p=1621865&amp;seqNum=2">development pipeline</a> which
+takes the source code and moves it through a set of largely automatic transformations, e.g. compilation,
+testing, packaging and potentially deployment, to obtain a validated, and potentially deployed, application.</p>
+<p>In order to configure a development pipeline, whether that is on-prem or in the cloud, for
+one or more development teams one will have to understand what the requirements are which
+are placed on the pipeline, which tooling is available to create the pipeline, whether the
+pipeline will be situated on-prem, in the cloud or a combination and
+how the pipeline will be assembled and managed. In this post series some of
+these issues will be discussed starting with the requirements or considerations that need
+to be given to the characteristics or behaviours of the development pipeline.</p>
+<p>Prior to discussing what the considerations are for selecting tooling and infrastructure
+for a development pipeline, it is important to decide what elements are part of the pipeline
+and which elements are not. For the remainder of this
+post series the development pipeline is considered to consist of:</p>
+<ul>
+<li>The scripts that are used during the different parts of the cycle, i.e. the build, test
+and release scripts.</li>
+<li>The continuous integration system which is used to execute the different scripts.</li>
+<li>The tools, like the compiler, test frameworks, etc.</li>
+</ul>
+<p>Items like version control, package management, issue tracking, system monitoring,
+customer support and others are not included in the discussion. While these systems
+are essential in application development and deployment each of these systems spans
+a large enough area that it warrants a more thorough discussion than can be given in
+this post series.</p>
+<p>Additionally, the following terms will be used throughout the series:</p>
+<ul>
+<li>Input set - A collection of information that is provided to the pipeline to start
+the process of turning these generating the desired artefacts. An input set may consist
+of source code, e.g. in terms of a given commit to the source control system, files or
+documents, configuration values or any other combination of information which is required
+to create, validate and deploy the product artefacts.
+An input set should contain all the information needed to generate and deploy the product
+artefacts and each time a specific input set is provided to the pipeline exactly the
+same artefacts will be produced.</li>
+<li>Executor - In general the development pipeline will be driven by a continuous integration
+system which itself consists of a controlling unit, which receives the tasks and distributes them,
+and a set of executing units which perform the actual computational tasks. In small systems
+the controlling unit may also perform the computational tasks, however even in this case
+a distinction can be made between the controlling and executing parts.</li>
+</ul>
+<p>In order to start the selection of suitable components for a development pipeline
+it is important to know what the desirable properties of such a system are. The following
+ordered properties are thought to be the most important ones to consider.</p>
+<ul>
+<li>Correctness: The pipeline must return the right outputs for a specific input, i.e it
+should report errors to the interested parties if there are any and report success
+and produce the desired artefacts if there are no errors.</li>
+<li>Performance: The pipeline must push changes through the different stages fast
+in order to get results back to the interested parties as soon as possible.</li>
+<li>Robustness: The pipeline must be able to cope with environmental changes, both expected
+and unexpected.</li>
+<li>Flexibility: The pipeline must be easy to adapt to new products and tools so that it can
+be used without having to replace large parts each time a new product or tool needs to
+be included.</li>
+</ul>
+<p>There are of course other desirable properties for a development pipeline like ease-of-use,
+maintainability, etc.. It is however considered that the aforementioned properties are the
+most critical ones. The linked posts provide additional reasons why each of these properties
+are important and how a software development pipeline can be designed to satisfy these important
+considerations.</p>
+<p>Additional posts about this topic can be found via the
+<a href="/tags/software-development-pipeline.html">Software development pipeline</a> tag.</p>
+
+                </div>
+            </div>
+        </div>
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/nBuildkit-release-V0100">nBuildKit release - V0.10.0</a>
+</h2>
+<div id="post-meta">
+    <p>
+Sunday, July 16, 2017
+ |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
+    </p>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>Version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.0">0.10.0</a>
+and version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.1">0.10.1</a>
+of <a href="https://github.com/nbuildkit/nBuildKit.MsBuild">nBuildKit</a>
+have been released. The <code>0.10.0</code> release is the first release in the stabilization
+cycle. There are still a few major changes but the goal is to start stabilizing nBuildKit
+in preparation for the 1.0.0 release.</p>
+<p>The highlights are</p>
+<ul>
+<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/308">Renamed</a> <code>DirTest</code> to <code>DirTests</code>.
+This is a <em>breaking</em> change.</li>
+<li>Additional <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/248">meta data</a> can
+be provided with the build, test and deploy steps to indicate if a step should be inserted
+before or after another step in the sequence. Steps which have no insertion limits, i.e
+those steps that do not have the before or after meta data set, are inserted in document order.
+Steps that do define insertion limits are inserted according to the limits. Note that
+circular limits are not allowed as well as step sequences where there are no steps without
+insertion limits.</li>
+<li>Deploying artefacts to an <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/303">HTTP server</a></li>
+<li>Initial implementation of the <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/296">ability to verify GPG hash signatures</a>.
+The current implementation requires that the GPG tooling is allowed through the firewall.</li>
+</ul>
+<p>In addition to the major changes some additional build, test and deploy steps have also been defined:</p>
+<ul>
+<li>Addition of properties that indicate <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/304">which stage the script is currently executing</a>. The
+new properties are <code>IsBuild</code>, <code>IsTest</code> and <code>IsDeploy</code></li>
+<li>Allowing <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/306">template variables</a> in the
+path and <code>destination</code> of the <code>ArchiveFilesToCopy</code> item group.</li>
+<li>Migrated the <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/297">hash calculation functions</a>
+from <a href="https://github.com/ops-resource/ops-tools-build">Ops-Tools-Build</a>.</li>
+</ul>
+<p>All the work items that have been closed for this release can be found on
+github in the milestone list for releases <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/30?closed=1">0.10.0</a>
+and <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/35?closed=1">0.10.1</a>.</p>
+
+                </div>
+            </div>
+        </div>
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Ops-Tools-Build-release-V030">Ops-Tools-Build release - V0.3.0</a>
+</h2>
+<div id="post-meta">
+    <p>
+Sunday, July 16, 2017
+ |         Posted in                     <a id="post-category" role="button" href="/tags/ops-resource" class="btn btn-default btn-xs">Ops-Resource</a>
+                    <a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs">Ops-Tools-Build</a>
+    </p>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>Version <a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.3.0">0.3.0</a> of the
 <a href="https://github.com/ops-resource/ops-tools-build">Ops-Tools-Build</a> toolkit was released.</p>
-<p>This release was focussed on providing the capabilities to use the Chef toolset to create new
-resources. All the work items that have been closed for this release can be found on
-<a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1">github</a>.</p>
+<p>This release was focussed on providing the capabilities to use the Docker toolset to create new
+containers and to run validation of VM resources generated by <a href="https://packer.io">Packer</a>.
+All the work items that have been closed for this release can be found on
+<a href="https://github.com/ops-resource/ops-tools-build/milestone/3?closed=1">github</a>.</p>
 <h3>New functionality</h3>
 <ul>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/5">5</a> - A new function which provides
-the ability to execute <a href="https://github.com/sethvargo/chefspec">ChefSpec</a> tests.</li>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/6">6</a> - A new function which
-invokes the Chef linting tool <a href="http://www.foodcritic.io/">Foodcritic</a> on the selected Chef cookbooks.</li>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/7">7</a> - A new function which invokes the
-Ruby linting tool <a href="https://github.com/bbatsov/rubocop">RuboCop</a> on selected Ruby source files.</li>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/20">20</a> - A new package restore script
-was added to allow restoring Chef cookbooks via <a href="https://github.com/berkshelf/berkshelf">Berkshelf</a>.</li>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/21">21</a> - A new switch was added to the
-packer function which allows keeping the resources generated with packer in case the packer
-build fails. This improves the ability to debug issues in the packer build.</li>
+<li><a href="https://github.com/ops-resource/ops-tools-build/issues/33">33</a> - Added the ability to
+create ISO files during the test stage.</li>
+<li><a href="https://github.com/ops-resource/ops-tools-build/issues/24">24</a> - Added functions to invoke
+docker to create container resources.</li>
+<li><a href="https://github.com/ops-resource/ops-tools-build/issues/32">32</a> - Added functions to validate
+a <a href="https://packer.io">Packer</a> image by executing packer with the previously created image and
+executing tests during the packer test build.</li>
 </ul>
 
                 </div>
@@ -276,200 +436,37 @@ documents have been updated.</p>
 
 
 <h2>
-            <a href="/posts/nBuildKit-release-V091">nBuildKit release - V0.9.1</a>
+            <a href="/posts/Ops-Tools-Build-release-V020">Ops-Tools-Build release - V0.2.0</a>
 </h2>
 <div id="post-meta">
     <p>
-Sunday, April 9, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
+Sunday, May 14, 2017
+ |         Posted in                     <a id="post-category" role="button" href="/tags/ops-resource" class="btn btn-default btn-xs">Ops-Resource</a>
+                    <a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs">Ops-Tools-Build</a>
     </p>
 </div>
 
                 </div>
                 <div id="post-content">
-                    <p>Hot on the heels of the last release version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.1">0.9.1</a>
-of <a href="https://github.com/nbuildkit/nBuildKit.MsBuild">nBuildKit</a> has been released. This release fixes
-two bugs and adds a few internal improvements.</p>
-<p>All the work items that have been closed for this release can be found on
-<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/29?closed=1">github</a>.</p>
-<h3>Bugs fixed</h3>
-<ul>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/273">273</a> - The <code>CalculateSemanticVersionWithGitVersion</code>
-task used the current directory as the working directory. While that is correct in most cases
-there are some cases, especially when running the integration tests, where that is not correct.
-This has been fixed by requiring the specification of the working directory.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/277">277</a> - In the same way all NuGet tasks
-now need a working directory specified in order to make sure that the correct workspace is used
-when interacting with the NuGet command line.</li>
-</ul>
-<h3>Improvements</h3>
-<ul>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/272">272</a> - The
-<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/blob/master/src/tests/TestFunctions.PrepareWorkspace.ps1">TestFunctions.PrepareWorkspace.ps1</a>
-and the <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/blob/master/src/tests/TestFunctions.Git.ps1">TestFunctions.Git.ps1</a>
-have been updated with additional functions and checks so that when creating a test workspace the
-existing git flow process is only completed if the specified branch exists on the remote. This changes
-the completion of the git flow process from mandatory to optional.</li>
-<li>Additionally the <code>IsMasterBranch</code> and <code>IsDevelopBranch</code> properties have been defined in the settings
-file. These two properties indicate whether or not the current branch is the <code>master</code> or <code>develop</code>
-branch respectively.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/69">69</a> - The documentation for nBuildKit itself
-is being moved from the wiki to a GitHub pages website. As of this release the build for nBuildKit
-will generate the website using <a href="https://wyam.io">Wyam</a>.</li>
-</ul>
-
-                </div>
-            </div>
-        </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Ops-Tools-Build-release-V011">Ops-Tools-Build release - V0.1.0 and V0.1.1</a>
-</h2>
-<div id="post-meta">
-    <p>
-Sunday, April 9, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs">Ops-Tools-Build</a>
-    </p>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>Last week version <a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0">0.1.0</a> of the
-<a href="https://github.com/ops-resource/ops-tools-build">Ops-Tools-Build</a> toolkit was released. With the recent
-<a href="./posts/nBuildKit-release-V091">0.9.1 release of nBuildKit</a> version <a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1">0.1.1</a>
-of the Ops-Tools-Build toolkit was released.</p>
-<p>All the work items that have been closed for this release can be found on
-<a href="https://github.com/ops-resource/ops-tools-build/milestone/1?closed=1">github</a>.</p>
+                    <p>Version <a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0">0.2.0</a> of the
+<a href="https://github.com/ops-resource/ops-tools-build">Ops-Tools-Build</a> toolkit was released.</p>
+<p>This release was focussed on providing the capabilities to use the Chef toolset to create new
+resources. All the work items that have been closed for this release can be found on
+<a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1">github</a>.</p>
 <h3>New functionality</h3>
 <ul>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/3">3</a> - New scripts have been added to allow
-the creation of an ISO file using the <a href="https://sourceforge.net/projects/tumagcc">MakeIsoFS</a> command
-line application.</li>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/4">4</a> - New scripts have been added to allow
-invocation of the <a href="https://www.packer.io/">packer</a> command line tool used to generate VM and
-container images from a set of configuration files.</li>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/10">10</a> - New scripts were added to allow
-calculation of the hash of one or more files</li>
+<li><a href="https://github.com/ops-resource/ops-tools-build/issues/5">5</a> - A new function which provides
+the ability to execute <a href="https://github.com/sethvargo/chefspec">ChefSpec</a> tests.</li>
+<li><a href="https://github.com/ops-resource/ops-tools-build/issues/6">6</a> - A new function which
+invokes the Chef linting tool <a href="http://www.foodcritic.io/">Foodcritic</a> on the selected Chef cookbooks.</li>
+<li><a href="https://github.com/ops-resource/ops-tools-build/issues/7">7</a> - A new function which invokes the
+Ruby linting tool <a href="https://github.com/bbatsov/rubocop">RuboCop</a> on selected Ruby source files.</li>
+<li><a href="https://github.com/ops-resource/ops-tools-build/issues/20">20</a> - A new package restore script
+was added to allow restoring Chef cookbooks via <a href="https://github.com/berkshelf/berkshelf">Berkshelf</a>.</li>
+<li><a href="https://github.com/ops-resource/ops-tools-build/issues/21">21</a> - A new switch was added to the
+packer function which allows keeping the resources generated with packer in case the packer
+build fails. This improves the ability to debug issues in the packer build.</li>
 </ul>
-
-                </div>
-            </div>
-        </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Ubiquiti-networking-gear">Setting up a home network with Ubiquiti</a>
-</h2>
-<div id="post-meta">
-    <p>
-Friday, April 7, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/hardware" class="btn btn-default btn-xs">Hardware</a>
-                    <a id="post-category" role="button" href="/tags/home-network" class="btn btn-default btn-xs">Home network</a>
-                    <a id="post-category" role="button" href="/tags/ubiquiti" class="btn btn-default btn-xs">Ubiquiti</a>
-    </p>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>A little while back we finally got fibre in our street. After spending many years on ADSL (we don't
-talk about the time of dial-up ...) it was finally time for some decent network speeds at home. As
-the fibre was being installed in my house it was also time to evaluate the networking gear I was
-using. Until now I had always used the modem / router provided by the ISP with an additional cheap
-switch. The gear always worked fine, but didn't provide configuration options other than the ones that
-describe the connection to the ISP. As I was starting to use my <a href="./posts/Updating-Hyper-v-server-to-Windows2016">Hyper-V server</a>
-a lot more and was starting to run multiple VM's it would be nice to get some better control over
-the network. Additionally based on one of <a href="https://www.troyhunt.com/no-you-cant-join-my-wifi-network/">Troy Hunt's</a>
-blog posts I would also like to set up a separate guest network.</p>
-<h3>The selection</h3>
-<p>The prolific Troy Hunt has written about his <a href="https://www.troyhunt.com/ubiquiti-all-the-things-how-i-finally-fixed-my-dodgy-wifi/">network</a>
-setup so I used that as my starting point for finding some new network gear. Fortunately (or unfortunately)
-I don't have as much area to cover as Troy does so I didn't need nearly as much hardware. The parts
-I got are:</p>
-<ul>
-<li><a href="https://www.ubnt.com/unifi-routing/usg/">Unifi security gateway</a>: The router which provides amongst
-other things a firewall, subnet capabilities and DHCP.</li>
-<li><a href="https://www.ubnt.com/unifi-switching/unifi-switch-8/">Unifi switch 8 (US-8-60W)</a>: The managed switch
-which has 4 <a href="https://en.wikipedia.org/wiki/Power_over_Ethernet">PoE</a> ports.</li>
-<li><a href="https://www.ubnt.com/unifi/unifi-ap-ac-lite/">Unifi AP AC LITE</a>: The smallest indoor access point
-available from Ubiquiti. Given that my apartment is relatively small I don't have to worry about
-covering a lot of area, and smaller access points are cheaper.</li>
-<li><a href="https://www.ubnt.com/unifi/unifi-cloud-key/">Unifi cloud key</a>: The management device which runs
-the Unfi software for managing the network.</li>
-</ul>
-<p>Except for the cloud key this is pretty much the minimal set of hardware required. The cloud key runs
-the unifi software which is used to manage the network configuration. You can install the unifi
-software on a PC but then you need an extra PC or VM running. While I have a Hyper-V server it was easier
-just to pay for the cloud key and have a separate controller for the network. Note that the network
-functions just fine without any configuration. However if you want to make changes the easiest way
-to do so is through the unifi software, although you could do it by SSH-ing into each device.</p>
-<p>Another thing to note is that the the 60W switch has 4 PoE ports of the 802.3af kind. Unfortunately
-the access point requires 24V passive PoE. So either you have to:</p>
-<ul>
-<li>Power the access point of the converter that you get with the access point.</li>
-<li>Upgrade the access point to the <a href="https://www.ubnt.com/unifi/unifi-ap-ac-pro/">UAP-AC-PRO</a></li>
-<li>Upgrade the switch to the <a href="https://www.ubnt.com/unifi-switching/unifi-switch-8-150w/">US-8-150W</a>
-switch which has both 802.3af PoE and 24V passive PoE.</li>
-</ul>
-<p>As much as I would like to power the access point of the switch I still opted for the first option,
-the additional investment wasn't quite worth having one less cable around.</p>
-<h3>Configuration</h3>
-<p>The actual configuration was pretty easy, plug in all the parts and things start working, at least
-for the internal network. Once this is done you can configure the network through the unifi software.
-To do so the first thing to do is to to find the cloud key. There's a useful plugin for
-<a href="https://chrome.google.com/webstore/detail/ubiquiti-device-discovery/hmpigflbjeapnknladcfphgkemopofig?utm_source=chrome-app-launcher-info-dialog">chrome</a>
-that allows you to find any Ubiquiti devices on your local network, otherwise you can try to guess
-the IP address of the cloud key. If you only have 4 devices like I do that shouldn't take very long.
-The gateway by default assumes you are using the <code>192.168.1.0/24</code> subnet and the gateway is always
-the first one.</p>
-<p>Once you are logged on to the unifi software it makes sense to give the cloud key a fixed IP address
-I gave mine the 192.168.1.2 IP address as I am using the <code>192.168.1.1/24</code> subnet for all my networking
-gear. And yes I know I don't have enough networking devices for them to warrant being on their own
-subnet but it makes things a little easier and it allows me to learn about <a href="https://en.wikipedia.org/wiki/Subnetwork">subnetting</a>
-and <a href="https://en.wikipedia.org/wiki/Virtual_LAN">vlans</a>.</p>
-<h3>Subnetting adventures</h3>
-<p>As mentioned in the introduction one of the changes I wanted to make was to create a separate guest
-network. By default a vlan only guest network is created, however I wanted to move the guests onto
-their own subnet so I created a new network with the <code>192.168.5.1/24</code> subnet. I also set the vlan
-specifier to <code>1685</code>. And finally I marked this network as a guest network so that the controller
-applies the guest firewall rules.</p>
-<p>Then I created a wireless guest network with the same vlan. What confused me initially is that there
-is no relation between the wireless network and the subnet other than the vlan tag. Somehow having the
-same vlan tag is enough to direct the clients onto the the correct subnet.</p>
-<p>The last step of the configuration of the guest network is to configure the switch. Because the
-access point has three different subnets going to it, the managment subnet for the access point itself,
-the guest wifi and the internal wifi, you need to create a custom &lsquo;network&rsquo; on the switch which carries
-all three networks, making sure that the untagged network is the one on which you want the access
-point to get an IP address.</p>
-<p>Another item I found was that for some purposes the standard IP lease of 24 hours is a bit long. One
-of the things I'm currently working on is building VM images of different services for use in a test
-build environment. While doing that I'm creating <a href="https://github.com/Calvinverse">base boxes</a> for
-Windows and Linux which involves spinning up a VM, installing the OS, configuring it and capturing
-the image. While working on the code to automate this process I spin up and shut down VMs quite a lot.
-If you're using the gateway as the DHCP server and use the standard IP lease time then you run through
-IP addresses quite quickly. So I created have a separate IP subnet for those VMs where the IP lease
-time is 2 hours (which is more than long enough to create a VM and capture a base image).</p>
-<h3>In the end</h3>
-<p>In conclusion it's a good set of hardware and software and as a bonus, there are updates which apply
-without problems. There is something reassuring in the fact that the manufacturer actually cares enough
-about their product that they want to keep it running, unlike much of the consumer gear.</p>
-<p>The unifi software provides a lot of useful and interesting capabilities and it's obviously aimed
-at the business / educational environment. There are a lot of of features that I don't need, but they
-are fun to play with</p>
 
                 </div>
             </div>
@@ -505,9 +502,9 @@ are fun to play with</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 14 May 2017 05:28:31 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Mon, 21 Aug 2017 06:16:15 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/17dd8ce46eb3759f75c8879e8d177db3c90abe3a">17dd8ce46eb3759f75c8879e8d177db3c90abe3a</a> at version 2.4.1.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/ac12a2ad513b229a82ce4528cbedaff0c61c6853">ac12a2ad513b229a82ce4528cbedaff0c61c6853</a> at version 2.5.0.        </p>
     </div>
 
     <p>

@@ -5,14 +5,14 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2017</copyright>
-		<pubDate>Sun, 14 May 2017 05:28:30 GMT</pubDate>
-		<lastBuildDate>Sun, 14 May 2017 05:28:30 GMT</lastBuildDate>
+		<pubDate>Mon, 21 Aug 2017 06:16:14 GMT</pubDate>
+		<lastBuildDate>Mon, 21 Aug 2017 06:16:14 GMT</lastBuildDate>
 		<item>
-			<title>Ops-Tools-Build release - V0.2.0</title>
-			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</link>
+			<title>Software development pipeline - Design introduction</title>
+			<link>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-introduction</link>
 			<description>Welcome!</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</guid>
-			<pubDate>Sun, 14 May 2017 00:00:00 GMT</pubDate>
+			<guid>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-introduction</guid>
+			<pubDate>Mon, 21 Aug 2017 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
     &lt;div id="post-header"&gt;
         &lt;!--
@@ -22,35 +22,173 @@
 
 
 &lt;h2&gt;
-Ops-Tools-Build release - V0.2.0&lt;/h2&gt;
+Software development pipeline - Design introduction&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Sunday, May 14, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs"&gt;Ops-Tools-Build&lt;/a&gt;
+Monday, August 21, 2017
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs"&gt;Pipeline design&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
     &lt;/p&gt;
 &lt;/div&gt;
 
     &lt;/div&gt;
 
     &lt;div id="post-content"&gt;
-        &lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
+        &lt;p&gt;In order to deliver new or improved software applications within the desired
+time span while maintaining or improving quality modern development moves towards
+&lt;a href="https://techbeacon.com/doing-continuous-delivery-focus-first-reducing-release-cycle-times"&gt;shorter development and delivery&lt;/a&gt;
+cycles. This is often achieved through the use of agile processes and a development
+workflow including &lt;a href="https://en.wikipedia.org/wiki/Continuous_integration"&gt;Continuous Integration&lt;/a&gt;,
+&lt;a href="https://en.wikipedia.org/wiki/Continuous_delivery"&gt;Continuous Delivery&lt;/a&gt;
+or even &lt;a href="https://www.agilealliance.org/glossary/continuous-deployment"&gt;Continuous deployment&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;One of the consequences of this desire to reduce the development cycle time on the
+development process is that more tasks in the development workflow
+have to be automated in order to reduce the time taken for the specific task.
+One way this automation can be achieved is by creating a
+&lt;a href="http://www.informit.com/articles/article.aspx?p=1621865&amp;amp;seqNum=2"&gt;development pipeline&lt;/a&gt; which
+takes the source code and moves it through a set of largely automatic transformations, e.g. compilation,
+testing, packaging and potentially deployment, to obtain a validated, and potentially deployed, application.&lt;/p&gt;
+&lt;p&gt;In order to configure a development pipeline, whether that is on-prem or in the cloud, for
+one or more development teams one will have to understand what the requirements are which
+are placed on the pipeline, which tooling is available to create the pipeline, whether the
+pipeline will be situated on-prem, in the cloud or a combination and
+how the pipeline will be assembled and managed. In this post series some of
+these issues will be discussed starting with the requirements or considerations that need
+to be given to the characteristics or behaviours of the development pipeline.&lt;/p&gt;
+&lt;p&gt;Prior to discussing what the considerations are for selecting tooling and infrastructure
+for a development pipeline, it is important to decide what elements are part of the pipeline
+and which elements are not. For the remainder of this
+post series the development pipeline is considered to consist of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The scripts that are used during the different parts of the cycle, i.e. the build, test
+and release scripts.&lt;/li&gt;
+&lt;li&gt;The continuous integration system which is used to execute the different scripts.&lt;/li&gt;
+&lt;li&gt;The tools, like the compiler, test frameworks, etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Items like version control, package management, issue tracking, system monitoring,
+customer support and others are not included in the discussion. While these systems
+are essential in application development and deployment each of these systems spans
+a large enough area that it warrants a more thorough discussion than can be given in
+this post series.&lt;/p&gt;
+&lt;p&gt;Additionally, the following terms will be used throughout the series:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Input set - A collection of information that is provided to the pipeline to start
+the process of turning these generating the desired artefacts. An input set may consist
+of source code, e.g. in terms of a given commit to the source control system, files or
+documents, configuration values or any other combination of information which is required
+to create, validate and deploy the product artefacts.
+An input set should contain all the information needed to generate and deploy the product
+artefacts and each time a specific input set is provided to the pipeline exactly the
+same artefacts will be produced.&lt;/li&gt;
+&lt;li&gt;Executor - In general the development pipeline will be driven by a continuous integration
+system which itself consists of a controlling unit, which receives the tasks and distributes them,
+and a set of executing units which perform the actual computational tasks. In small systems
+the controlling unit may also perform the computational tasks, however even in this case
+a distinction can be made between the controlling and executing parts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In order to start the selection of suitable components for a development pipeline
+it is important to know what the desirable properties of such a system are. The following
+ordered properties are thought to be the most important ones to consider.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Correctness: The pipeline must return the right outputs for a specific input, i.e it
+should report errors to the interested parties if there are any and report success
+and produce the desired artefacts if there are no errors.&lt;/li&gt;
+&lt;li&gt;Performance: The pipeline must push changes through the different stages fast
+in order to get results back to the interested parties as soon as possible.&lt;/li&gt;
+&lt;li&gt;Robustness: The pipeline must be able to cope with environmental changes, both expected
+and unexpected.&lt;/li&gt;
+&lt;li&gt;Flexibility: The pipeline must be easy to adapt to new products and tools so that it can
+be used without having to replace large parts each time a new product or tool needs to
+be included.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;There are of course other desirable properties for a development pipeline like ease-of-use,
+maintainability, etc.. It is however considered that the aforementioned properties are the
+most critical ones. The linked posts provide additional reasons why each of these properties
+are important and how a software development pipeline can be designed to satisfy these important
+considerations.&lt;/p&gt;
+&lt;p&gt;Additional posts about this topic can be found via the
+&lt;a href="/tags/software-development-pipeline.html"&gt;Software development pipeline&lt;/a&gt; tag.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/nBuildkit-release-V0100" title="Previous Post: nBuildKit release - V0.10.0" class="navlinks-prev"&gt;« nBuildKit release - V0.10.0&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Software-development-pipeline-Design-introduction';
+    var disqus_title = 'Software development pipeline - Design introduction';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-introduction';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content:encoded>
+		</item>
+		<item>
+			<title>Ops-Tools-Build release - V0.3.0</title>
+			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V030</link>
+			<description>Welcome!</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V030</guid>
+			<pubDate>Sun, 16 Jul 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Ops-Tools-Build release - V0.3.0&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Sunday, July 16, 2017
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/ops-resource" class="btn btn-default btn-xs"&gt;Ops-Resource&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs"&gt;Ops-Tools-Build&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.3.0"&gt;0.3.0&lt;/a&gt; of the
 &lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
-&lt;p&gt;This release was focussed on providing the capabilities to use the Chef toolset to create new
-resources. All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This release was focussed on providing the capabilities to use the Docker toolset to create new
+containers and to run validation of VM resources generated by &lt;a href="https://packer.io"&gt;Packer&lt;/a&gt;.
+All the work items that have been closed for this release can be found on
+&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/3?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;New functionality&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/5"&gt;5&lt;/a&gt; - A new function which provides
-the ability to execute &lt;a href="https://github.com/sethvargo/chefspec"&gt;ChefSpec&lt;/a&gt; tests.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/6"&gt;6&lt;/a&gt; - A new function which
-invokes the Chef linting tool &lt;a href="http://www.foodcritic.io/"&gt;Foodcritic&lt;/a&gt; on the selected Chef cookbooks.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/7"&gt;7&lt;/a&gt; - A new function which invokes the
-Ruby linting tool &lt;a href="https://github.com/bbatsov/rubocop"&gt;RuboCop&lt;/a&gt; on selected Ruby source files.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/20"&gt;20&lt;/a&gt; - A new package restore script
-was added to allow restoring Chef cookbooks via &lt;a href="https://github.com/berkshelf/berkshelf"&gt;Berkshelf&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/21"&gt;21&lt;/a&gt; - A new switch was added to the
-packer function which allows keeping the resources generated with packer in case the packer
-build fails. This improves the ability to debug issues in the packer build.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/33"&gt;33&lt;/a&gt; - Added the ability to
+create ISO files during the test stage.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/24"&gt;24&lt;/a&gt; - Added functions to invoke
+docker to create container resources.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/32"&gt;32&lt;/a&gt; - Added functions to validate
+a &lt;a href="https://packer.io"&gt;Packer&lt;/a&gt; image by executing packer with the previously created image and
+executing tests during the packer test build.&lt;/li&gt;
 &lt;/ul&gt;
 
     &lt;/div&gt;
@@ -59,15 +197,113 @@ build fails. This improves the ability to debug issues in the packer build.&lt;/
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/nBuildKit-release-V092" title="Previous Post: nBuildKit release - V0.9.2" class="navlinks-prev"&gt;« nBuildKit release - V0.9.2&lt;/a&gt;
+                &lt;a href="/posts/nBuildkit-release-V0100" title="Next Post: nBuildKit release - V0.10.0" class="navlinks-next"&gt;nBuildKit release - V0.10.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
 &lt;script type="text/javascript"&gt;
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Ops-Tools-Build-release-V020';
-    var disqus_title = 'Ops-Tools-Build release - V0.2.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020';
+    var disqus_identifier = 'Ops-Tools-Build-release-V030';
+    var disqus_title = 'Ops-Tools-Build release - V0.3.0';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V030';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content:encoded>
+		</item>
+		<item>
+			<title>nBuildKit release - V0.10.0</title>
+			<link>https://www.petrikvandervelde.nl/posts/nBuildkit-release-V0100</link>
+			<description>Welcome!</description>
+			<guid>https://www.petrikvandervelde.nl/posts/nBuildkit-release-V0100</guid>
+			<pubDate>Sun, 16 Jul 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+nBuildKit release - V0.10.0&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Sunday, July 16, 2017
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.0"&gt;0.10.0&lt;/a&gt;
+and version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.1"&gt;0.10.1&lt;/a&gt;
+of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt;
+have been released. The &lt;code&gt;0.10.0&lt;/code&gt; release is the first release in the stabilization
+cycle. There are still a few major changes but the goal is to start stabilizing nBuildKit
+in preparation for the 1.0.0 release.&lt;/p&gt;
+&lt;p&gt;The highlights are&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/308"&gt;Renamed&lt;/a&gt; &lt;code&gt;DirTest&lt;/code&gt; to &lt;code&gt;DirTests&lt;/code&gt;.
+This is a &lt;em&gt;breaking&lt;/em&gt; change.&lt;/li&gt;
+&lt;li&gt;Additional &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/248"&gt;meta data&lt;/a&gt; can
+be provided with the build, test and deploy steps to indicate if a step should be inserted
+before or after another step in the sequence. Steps which have no insertion limits, i.e
+those steps that do not have the before or after meta data set, are inserted in document order.
+Steps that do define insertion limits are inserted according to the limits. Note that
+circular limits are not allowed as well as step sequences where there are no steps without
+insertion limits.&lt;/li&gt;
+&lt;li&gt;Deploying artefacts to an &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/303"&gt;HTTP server&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Initial implementation of the &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/296"&gt;ability to verify GPG hash signatures&lt;/a&gt;.
+The current implementation requires that the GPG tooling is allowed through the firewall.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In addition to the major changes some additional build, test and deploy steps have also been defined:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Addition of properties that indicate &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/304"&gt;which stage the script is currently executing&lt;/a&gt;. The
+new properties are &lt;code&gt;IsBuild&lt;/code&gt;, &lt;code&gt;IsTest&lt;/code&gt; and &lt;code&gt;IsDeploy&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Allowing &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/306"&gt;template variables&lt;/a&gt; in the
+path and &lt;code&gt;destination&lt;/code&gt; of the &lt;code&gt;ArchiveFilesToCopy&lt;/code&gt; item group.&lt;/li&gt;
+&lt;li&gt;Migrated the &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/297"&gt;hash calculation functions&lt;/a&gt;
+from &lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All the work items that have been closed for this release can be found on
+github in the milestone list for releases &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/30?closed=1"&gt;0.10.0&lt;/a&gt;
+and &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/35?closed=1"&gt;0.10.1&lt;/a&gt;.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V030" title="Previous Post: Ops-Tools-Build release - V0.3.0" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.3.0&lt;/a&gt;
+                &lt;a href="/posts/Software-development-pipeline-Design-introduction" title="Next Post: Software development pipeline - Design introduction" class="navlinks-next"&gt;Software development pipeline - Design introduction »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'nBuildkit-release-V0100';
+    var disqus_title = 'nBuildKit release - V0.10.0';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildkit-release-V0100';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
@@ -164,8 +400,8 @@ documents have been updated.&lt;/p&gt;
     &lt;div id="post-footer"&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V091" title="Previous Post: nBuildKit release - V0.9.1" class="navlinks-prev"&gt;« nBuildKit release - V0.9.1&lt;/a&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Next Post: Ops-Tools-Build release - V0.2.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.2.0 »&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Previous Post: Ops-Tools-Build release - V0.2.0" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.2.0&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V030" title="Next Post: Ops-Tools-Build release - V0.3.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.3.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -175,6 +411,172 @@ documents have been updated.&lt;/p&gt;
     var disqus_identifier = 'nBuildKit-release-V092';
     var disqus_title = 'nBuildKit release - V0.9.2';
     var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V092';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content:encoded>
+		</item>
+		<item>
+			<title>Ops-Tools-Build release - V0.2.0</title>
+			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</link>
+			<description>Welcome!</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</guid>
+			<pubDate>Sun, 14 May 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Ops-Tools-Build release - V0.2.0&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Sunday, May 14, 2017
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/ops-resource" class="btn btn-default btn-xs"&gt;Ops-Resource&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs"&gt;Ops-Tools-Build&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
+&lt;p&gt;This release was focussed on providing the capabilities to use the Chef toolset to create new
+resources. All the work items that have been closed for this release can be found on
+&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;New functionality&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/5"&gt;5&lt;/a&gt; - A new function which provides
+the ability to execute &lt;a href="https://github.com/sethvargo/chefspec"&gt;ChefSpec&lt;/a&gt; tests.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/6"&gt;6&lt;/a&gt; - A new function which
+invokes the Chef linting tool &lt;a href="http://www.foodcritic.io/"&gt;Foodcritic&lt;/a&gt; on the selected Chef cookbooks.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/7"&gt;7&lt;/a&gt; - A new function which invokes the
+Ruby linting tool &lt;a href="https://github.com/bbatsov/rubocop"&gt;RuboCop&lt;/a&gt; on selected Ruby source files.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/20"&gt;20&lt;/a&gt; - A new package restore script
+was added to allow restoring Chef cookbooks via &lt;a href="https://github.com/berkshelf/berkshelf"&gt;Berkshelf&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/21"&gt;21&lt;/a&gt; - A new switch was added to the
+packer function which allows keeping the resources generated with packer in case the packer
+build fails. This improves the ability to debug issues in the packer build.&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/nBuildKit-release-V091" title="Previous Post: nBuildKit release - V0.9.1" class="navlinks-prev"&gt;« nBuildKit release - V0.9.1&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V092" title="Next Post: nBuildKit release - V0.9.2" class="navlinks-next"&gt;nBuildKit release - V0.9.2 »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Ops-Tools-Build-release-V020';
+    var disqus_title = 'Ops-Tools-Build release - V0.2.0';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content:encoded>
+		</item>
+		<item>
+			<title>Ops-Tools-Build release - V0.1.0 and V0.1.1</title>
+			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</link>
+			<description>Welcome!</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</guid>
+			<pubDate>Sun, 09 Apr 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Ops-Tools-Build release - V0.1.0 and V0.1.1&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Sunday, April 9, 2017
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/ops-resource" class="btn btn-default btn-xs"&gt;Ops-Resource&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs"&gt;Ops-Tools-Build&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
+&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
+of the Ops-Tools-Build toolkit was released.&lt;/p&gt;
+&lt;p&gt;All the work items that have been closed for this release can be found on
+&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/1?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;New functionality&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/3"&gt;3&lt;/a&gt; - New scripts have been added to allow
+the creation of an ISO file using the &lt;a href="https://sourceforge.net/projects/tumagcc"&gt;MakeIsoFS&lt;/a&gt; command
+line application.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/4"&gt;4&lt;/a&gt; - New scripts have been added to allow
+invocation of the &lt;a href="https://www.packer.io/"&gt;packer&lt;/a&gt; command line tool used to generate VM and
+container images from a set of configuration files.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/10"&gt;10&lt;/a&gt; - New scripts were added to allow
+calculation of the hash of one or more files&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Ubiquiti-networking-gear" title="Previous Post: Setting up a home network with Ubiquiti" class="navlinks-prev"&gt;« Setting up a home network with Ubiquiti&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V091" title="Next Post: nBuildKit release - V0.9.1" class="navlinks-next"&gt;nBuildKit release - V0.9.1 »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Ops-Tools-Build-release-V011';
+    var disqus_title = 'Ops-Tools-Build release - V0.1.0 and V0.1.1';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
@@ -259,7 +661,7 @@ will generate the website using &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;.&
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/Ops-Tools-Build-release-V011" title="Previous Post: Ops-Tools-Build release - V0.1.0 and V0.1.1" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.1.0 and V0.1.1&lt;/a&gt;
-                &lt;a href="/posts/nBuildKit-release-V092" title="Next Post: nBuildKit release - V0.9.2" class="navlinks-next"&gt;nBuildKit release - V0.9.2 »&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Next Post: Ops-Tools-Build release - V0.2.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.2.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -269,87 +671,6 @@ will generate the website using &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;.&
     var disqus_identifier = 'nBuildKit-release-V091';
     var disqus_title = 'nBuildKit release - V0.9.1';
     var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
-		</item>
-		<item>
-			<title>Ops-Tools-Build release - V0.1.0 and V0.1.1</title>
-			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</link>
-			<description>Welcome!</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</guid>
-			<pubDate>Sun, 09 Apr 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Ops-Tools-Build release - V0.1.0 and V0.1.1&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Sunday, April 9, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs"&gt;Ops-Tools-Build&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
-&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
-of the Ops-Tools-Build toolkit was released.&lt;/p&gt;
-&lt;p&gt;All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/1?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;New functionality&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/3"&gt;3&lt;/a&gt; - New scripts have been added to allow
-the creation of an ISO file using the &lt;a href="https://sourceforge.net/projects/tumagcc"&gt;MakeIsoFS&lt;/a&gt; command
-line application.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/4"&gt;4&lt;/a&gt; - New scripts have been added to allow
-invocation of the &lt;a href="https://www.packer.io/"&gt;packer&lt;/a&gt; command line tool used to generate VM and
-container images from a set of configuration files.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/10"&gt;10&lt;/a&gt; - New scripts were added to allow
-calculation of the hash of one or more files&lt;/li&gt;
-&lt;/ul&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Ubiquiti-networking-gear" title="Previous Post: Setting up a home network with Ubiquiti" class="navlinks-prev"&gt;« Setting up a home network with Ubiquiti&lt;/a&gt;
-                &lt;a href="/posts/nBuildKit-release-V091" title="Next Post: nBuildKit release - V0.9.1" class="navlinks-next"&gt;nBuildKit release - V0.9.1 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Ops-Tools-Build-release-V011';
-    var disqus_title = 'Ops-Tools-Build release - V0.1.0 and V0.1.1';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
@@ -1867,315 +2188,6 @@ post. In order for this specific layout to work you will need to add the &lt;cod
     var disqus_identifier = 'Blog-archives-by-DocPad';
     var disqus_title = 'Blog archives by DocPad';
     var disqus_url = 'https://www.petrikvandervelde.nl/posts/Blog-archives-by-DocPad';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
-		</item>
-		<item>
-			<title>nBuildKit release - V0.2.4</title>
-			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V024</link>
-			<description>Welcome!</description>
-			<guid>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V024</guid>
-			<pubDate>Mon, 21 Jul 2014 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-nBuildKit release - V0.2.4&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Monday, July 21, 2014
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Version &lt;a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.2.4"&gt;V0.2.4&lt;/a&gt; of the
-&lt;a href="/projects/nbuildkit.html"&gt;nBuildKit&lt;/a&gt; build library has been released.&lt;/p&gt;
-&lt;p&gt;This release introduces NuGet packages that allow Visual Studio &lt;a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.CSharp/"&gt;C#&lt;/a&gt;
-and &lt;a href="https://www.nuget.org/packages/nBuildKit.MsBuild.Projects.WiX/"&gt;WiX&lt;/a&gt; projects to share a common
-configuration including code analysis and strong naming capabilities and to generate one or more source
-files before building the project.&lt;/p&gt;
-&lt;p&gt;Both packages provide the ability to share a configuration between multiple projects in a Visual Studio
-solution. The shared configuration can contain items like Debug and Release settings, targeted .NET
-framework, code analysis settings and many other options.&lt;/p&gt;
-&lt;p&gt;Beyond that the C# NuGet package provides capabilities to:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Generate &lt;code&gt;AssemblyInfo.XXXX.cs&lt;/code&gt; files for:
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;AssemblyInfo.VersionNumber.cs&lt;/code&gt; contains the version numbers for the project as determined by
-nBuildKit from the versioning strategies provided. Currently supported are either a version number
-provided through an MsBuild project file or through &lt;a href="https://github.com/JakeGinnivan/GitHubFlowVersion"&gt;GitHubFlowVersion&lt;/a&gt;.
-By allowing nBuildKit to generate the &lt;code&gt;AssemblyInfo.VersionNumber.cs&lt;/code&gt; file it is possible to
-automatically version the binaries the same way as all other artifacts, e.g. NuGet packages,
-installers, documentation etc. etc.. The version number is currently provided through the
-&lt;a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblyversionattribute(v=vs.110).aspx"&gt;AssemblyVersionAttribute&lt;/a&gt; as &lt;code&gt;Major.Minor.0.0&lt;/code&gt;; through the
-&lt;a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblyfileversionattribute(v=vs.110).aspx"&gt;AssemblyFileVersionAttribute&lt;/a&gt; as &lt;code&gt;Major.Minor.Patch.Build&lt;/code&gt;;
-and through the &lt;a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblyinformationalversionattribute(v=vs.110).aspx"&gt;AssemblyInformationalVersionAttribute&lt;/a&gt;
-as the full &lt;a href="http://semver.org/"&gt;semantic version&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;AssemblyInfo.BuildInformation.cs&lt;/code&gt; contains information about the current build of the binaries.
-This includes the configuration, e.g. Release; the date and time that the binary was compiled
-and information describing the build number and the commit number that were used to generate
-the binaries.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;AssemblyInfo.InternalsVisibleTo.cs&lt;/code&gt; contains the &lt;a href="http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute(v=vs.110).aspx"&gt;InternalsVisibleToAttribute&lt;/a&gt;
-values for any assemblies that should have access to the internals of the current assembly for
-purposes of unit testing.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;AssemblyInfo.Company.cs&lt;/code&gt; contains the information describing the ‘company’ that created the binaries.
-The information includes the &lt;a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblycompanyattribute(v=vs.110).aspx"&gt;AssemblyCompanyAttribute&lt;/a&gt; and the &lt;a href="http://msdn.microsoft.com/en-us/library/system.reflection.assemblycopyrightattribute(v=vs.110).aspx"&gt;AssemblyCopyrightAttribute&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Generate a &lt;code&gt;CompanyInformation.cs&lt;/code&gt; source file that contains an internal static class providing
-constants for the company name and the company URL.&lt;/li&gt;
-&lt;li&gt;Generate a &lt;code&gt;ProductInformation.cs&lt;/code&gt; source file that contains an internal static class providing
-constants for the name of the product.&lt;/li&gt;
-&lt;li&gt;Generate an &lt;code&gt;app.manifest&lt;/code&gt; file with the current project version number.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;And the WiX NuGet package provides capabilities to&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Generate a &lt;code&gt;VersionNumber.wxi&lt;/code&gt; WiX include file that contains the version numbers for the application
-and the installer.&lt;/li&gt;
-&lt;li&gt;Generate a &lt;code&gt;CompanyInformation.wxi&lt;/code&gt; WiX include file that contains the name and URL of the company
-that produces the product.&lt;/li&gt;
-&lt;li&gt;Generate a &lt;code&gt;ProductInformation.wxi&lt;/code&gt; WiX include file that contains the name and description of
-the product.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The generation of all of these files can be enabled through a setting in the &lt;code&gt;settings.props&lt;/code&gt; file
-that is also used by the &lt;a href="https://www.nuget.org/packages/nBuildKit.MsBuild/"&gt;nBuildKit.MsBuild&lt;/a&gt;
-NuGet package&lt;/p&gt;
-&lt;p&gt;The documentation for this library can be found on the nBuildKit &lt;a href="https://github.com/pvandervelde/nBuildKit/wiki/MsBuild"&gt;wiki&lt;/a&gt;&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V015" title="Previous Post: nBuildKit release - V0.1.5" class="navlinks-prev"&gt;« nBuildKit release - V0.1.5&lt;/a&gt;
-                &lt;a href="/posts/Blog-archives-by-DocPad" title="Next Post: Blog archives by DocPad" class="navlinks-next"&gt;Blog archives by DocPad »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'nBuildKit-release-V024';
-    var disqus_title = 'nBuildKit release - V0.2.4';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V024';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
-		</item>
-		<item>
-			<title>nBuildKit release - V0.1.5</title>
-			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V015</link>
-			<description>Welcome!</description>
-			<guid>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V015</guid>
-			<pubDate>Mon, 16 Jun 2014 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-nBuildKit release - V0.1.5&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Monday, June 16, 2014
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Version &lt;a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.1.5"&gt;V0.1.5&lt;/a&gt; of the &lt;a href="/projects/nbuildkit.html"&gt;nBuildKit&lt;/a&gt;
-build library has been released.&lt;/p&gt;
-&lt;p&gt;This first release introduces the &lt;a href="https://www.nuget.org/packages/nBuildKit.MsBuild/0.1.5"&gt;MsBuild&lt;/a&gt;
-NuGet package. This package contains build scripts that provide the ability to perform a complete build
-consisting of workspace preparation, compilation of binaries, execution of unit tests, analysis of
-source code and binaries and finally packing of the binaries as NuGet packages or ZIP archives.
-The &lt;code&gt;nBuildKit.MsBuild&lt;/code&gt; NuGet package also provides scripts that can be used to tag a release in the
-version control system (VCS) and deploy the artifacts to a file server, NuGet feed or a GitHub release.&lt;/p&gt;
-&lt;p&gt;The documentation for this library can be found on the nBuildKit &lt;a href="https://github.com/pvandervelde/nBuildKit/wiki/MsBuild"&gt;wiki&lt;/a&gt;&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Nuclei-release-V080" title="Previous Post: Nuclei release - V0.8.0" class="navlinks-prev"&gt;« Nuclei release - V0.8.0&lt;/a&gt;
-                &lt;a href="/posts/nBuildKit-release-V024" title="Next Post: nBuildKit release - V0.2.4" class="navlinks-next"&gt;nBuildKit release - V0.2.4 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'nBuildKit-release-V015';
-    var disqus_title = 'nBuildKit release - V0.1.5';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V015';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
-		</item>
-		<item>
-			<title>Nuclei release - V0.8.0</title>
-			<link>https://www.petrikvandervelde.nl/posts/Nuclei-release-V080</link>
-			<description>Welcome!</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Nuclei-release-V080</guid>
-			<pubDate>Wed, 28 May 2014 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Nuclei release - V0.8.0&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Wednesday, May 28, 2014
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nuclei" class="btn btn-default btn-xs"&gt;Nuclei&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Version &lt;a href="https://github.com/pvandervelde/Nuclei/releases/tag/0.8.0"&gt;V0.8.0&lt;/a&gt; of the
-&lt;a href="/projects/nuclei.html"&gt;Nuclei&lt;/a&gt; library has been released.&lt;/p&gt;
-&lt;p&gt;This release introduces a few large features to Nuclei.Communication library and adds some minor
-updates to the base Nuclei library.&lt;/p&gt;
-&lt;p&gt;The main focus of this release was adding version tolerance (&lt;a href="https://github.com/pvandervelde/Nuclei/issues/3"&gt;#3&lt;/a&gt;)
-to the different layers of the communication stack:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;The discovery layer&lt;/em&gt; - Provides ways to discover remote endpoints either automatically (via &lt;a href="http://msdn.microsoft.com/en-us/library/dd456782%28v=vs.110%29.aspx"&gt;WCF discovery&lt;/a&gt;)
-or manually.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;The protocol layer&lt;/em&gt; - Provides the means to send messages to one or more remote endpoints and
-handling the responses to those messages if they are expected.&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;The interaction layer&lt;/em&gt; -  Provides an abstraction over the &lt;em&gt;protocol layer&lt;/em&gt; in the form of an
-proxy objects that provide user-defined methods which can be invoked on a remote endpoint.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;In version 0.8.0 of the Nuclei.Communication library each of these layers now supports the ability
-to negotiate with a remote endpoint to determine which communication version will be used to exchange
-data between the endpoints. The  communication version which will be used is the highest (i.e. most
-recent) version that both endpoints support. If the endpoint do not support the same versions then
-communication will not be enabled between the endpoints.&lt;/p&gt;
-&lt;p&gt;The second focus was to improve the robustness of all the network activity. The main changes here were:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Nuclei/issues/7"&gt;#7&lt;/a&gt; - Detection of messages that have not received
-their response within a given time-out.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Nuclei/issues/11"&gt;#11&lt;/a&gt;, &lt;a href="https://github.com/pvandervelde/Nuclei/pull/17"&gt;#17&lt;/a&gt;,
-&lt;a href="https://github.com/pvandervelde/Nuclei/pull/18"&gt;#18&lt;/a&gt; - Method(s) to detect if a remote endpoint is
-still available and discard endpoint information if it is not.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/Nuclei/issues/19"&gt;#19&lt;/a&gt;,
-&lt;a href="https://github.com/pvandervelde/Nuclei/issues/23"&gt;#23&lt;/a&gt; - Automatically rebuilding the communication
-channel if it faults during message sending and then resend the message that caused the faulting.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The final focus was on decoupling the interaction interfaces from their implementations. With these
-changes an endpoint does not need to provide concrete implementations of either the command
-(&lt;a href="https://github.com/pvandervelde/Nuclei/pull/6"&gt;#6&lt;/a&gt;) and notification (&lt;a href="https://github.com/pvandervelde/Nuclei/pull/31"&gt;#31&lt;/a&gt;)
-interfaces but can map the members on those interfaces to equivalent members on any given object.&lt;/p&gt;
-&lt;p&gt;Additionally it is now possible for some parameters on a command interface method (ie. the method
-on a command interface) and a command object method (i.e .the concrete instance method that is
-mapped to the given command) to contain parameters that have a special meaning. The available
-options are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;For command interface methods (&lt;a href="https://github.com/pvandervelde/Nuclei/issues/23"&gt;#23&lt;/a&gt;)
-&lt;ul&gt;
-&lt;li&gt;Provision of a time-out indicating the maximum amount of time the endpoint should wait for a
-response to the command invocation request.&lt;/li&gt;
-&lt;li&gt;Provision of a retry count indicating the maximum number of times the endpoint should send the
-command invocation request should any errors occur during invocation.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;For command instance methods (&lt;a href="https://github.com/pvandervelde/Nuclei/pull/28"&gt;#28&lt;/a&gt;)
-&lt;ul&gt;
-&lt;li&gt;Provision of the ID of the endpoint requesting the invocation of the command method.&lt;/li&gt;
-&lt;li&gt;Provision of the ID of the message that was send to request the invocation of the command method.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Finally the Nuclei library versioning was switched to use &lt;a href="http://semver.org/"&gt;semantic versioning&lt;/a&gt;.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Improvements-to-the-site" title="Previous Post: Improvements to the site" class="navlinks-prev"&gt;« Improvements to the site&lt;/a&gt;
-                &lt;a href="/posts/nBuildKit-release-V015" title="Next Post: nBuildKit release - V0.1.5" class="navlinks-next"&gt;nBuildKit release - V0.1.5 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Nuclei-release-V080';
-    var disqus_title = 'Nuclei release - V0.8.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Nuclei-release-V080';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
