@@ -97,16 +97,16 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Software-development-pipeline-Design-accuracy">Software development pipeline - Design accuracy</a></li>
+                            <li><a href="/posts/nBuildkit-Release-V0102">nBuildKit release - V0.10.2</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-introduction">Software development pipeline - Design introduction</a></li>
                             <li><a href="/posts/nBuildkit-release-V0100">nBuildKit release - V0.10.0</a></li>
                             <li><a href="/posts/Ops-Tools-Build-release-V030">Ops-Tools-Build release - V0.3.0</a></li>
-                            <li><a href="/posts/nBuildKit-release-V092">nBuildKit release - V0.9.2</a></li>
                             <li><a href="/posts/Ops-Tools-Build-release-V020">Ops-Tools-Build release - V0.2.0</a></li>
+                            <li><a href="/posts/nBuildKit-release-V092">nBuildKit release - V0.9.2</a></li>
                             <li><a href="/posts/nBuildKit-release-V091">nBuildKit release - V0.9.1</a></li>
                             <li><a href="/posts/Ops-Tools-Build-release-V011">Ops-Tools-Build release - V0.1.0 and V0.1.1</a></li>
                             <li><a href="/posts/Ubiquiti-networking-gear">Setting up a home network with Ubiquiti</a></li>
-                            <li><a href="/posts/nBuildKit-release-V090">nBuildKit release - V0.9.0</a></li>
-                            <li><a href="/posts/Updating-Hyper-v-server-to-Windows2016">Updating my Hyper-V server to Windows 2016</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -117,7 +117,7 @@
                                     <a role="button" href="/tags/sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (11)</a>
+                                    <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
@@ -135,13 +135,13 @@
                                     <a role="button" href="/tags/nanicitus" class="btn btn-default btn-sm"> nAnicitus (5)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/ops-resource" class="btn btn-default btn-sm"> Ops-Resource (3)</a>
-                                </li>
-                                <li>
                                     <a role="button" href="/tags/docpad" class="btn btn-default btn-sm"> DocPad (3)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/ops-tools-build" class="btn btn-default btn-sm"> Ops-Tools-Build (3)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/ops-resource" class="btn btn-default btn-sm"> Ops-Resource (3)</a>
                                 </li>
                         </ul>
                     </div>
@@ -156,6 +156,167 @@
 
             <div id="content">
 
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Software-development-pipeline-Design-accuracy">Software development pipeline - Design accuracy</a>
+</h2>
+<div id="post-meta">
+    <p>
+Monday, September 4, 2017
+ |         Posted in                     <a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs">Delivering software</a>
+                    <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
+                    <a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs">Pipeline design</a>
+                    <a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs">Software development pipeline</a>
+    </p>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p><a href="https://en.wikipedia.org/wiki/Accuracy_and_precision#ISO_definition_.28ISO_5725.29">ISO</a> defines
+accuracy as the combination of <a href="http://dictionary.cambridge.org/dictionary/english/correct?q=correctness">correctness</a>,
+in agreement with the true facts, and <a href="http://dictionary.cambridge.org/dictionary/english/consistency">consistency</a>,
+always behaving or performing in a similar way.</p>
+<p>The reason to value <em>accuracy</em> as the number one characteristic of the development pipeline is
+because it is important for the development teams to be able to rely on the outputs of the
+pipeline, whether they are product artefacts, test results or output logs. Without the accuracy
+the development teams will eventually lose their trust in the development pipeline, meaning that
+they will start ignoring the results because the teams assume that a failure is one of the system
+instead of one caused by the input set. Once the development teams lose the trust in the
+pipeline it will take a lot of work to regain their trust.</p>
+<p>Once we know that having a development pipeline which delivers correct results is important the
+next step is to determine how accuracy can be built into the development pipeline.
+In theory this task is a simple one, all one has to do is to ensure that all the parts that form the
+pipeline behave correctly for all input sets. However as indicated by
+<a href="http://wiki.c2.com/?DifferenceBetweenTheoryAndPractice">many</a> -</p>
+<blockquote class="blockquote">
+<p>In theory there is no difference between theory and practice. In practice there is</p>
+</blockquote>
+<p>which means that practically achieving accuracy is a difficult task due to the
+many, often complex, interactions between the pipeline components. As a reminder
+the <a href="Software-development-pipeline-Design-introduction.html">components</a> the
+development pipeline consists of are:</p>
+<ul>
+<li>The scripts that are used during the different parts of the cycle, i.e. the build, test
+and release scripts.</li>
+<li>The continuous integration system which is used to execute the different scripts.</li>
+<li>The tools, like the compiler, test frameworks, etc.</li>
+</ul>
+<p>Based on this categorization of the pipeline parts and the previous statement one possible
+way of approaching accuracy for a development pipeline is to first ensure that all the parts
+are individually accurate. As a second stage the changes in accuracy due to interaction between
+the parts can be dealt with.</p>
+<p>For the scripts, tools and continuous integration system this means that each input returns a
+correct response and does so consistently for each input set. Fortunately most scripts
+and tools do so for the majority of the inputs. In cases where a tool returns an incorrect response
+the standard software development process should be followed by recording an issue, scheduling the
+issue and implementing, testing and deploying a new version of the tool. In this process
+it is important to test thoroughly to ensure that the changes do not negatively impact
+tool accuracy. Additionally it is important to execute both (automated) regression testing against known
+input sets as well as high level (automated) smoke tests of the entire development pipeline
+to validate that the issue has been fixed and no further issues have been introduced.
+In order to minimize disruption to the development teams tests should be conducted outside
+business hours if no test environment is available, i.e. if the production development
+pipeline has to be used for the final tests. It is of course better if a test environment
+is available so that testing can take place during business hours without affecting
+the development teams. As a side note; having a test environment with a copy of the
+development pipeline allows for the development of new features and other changes
+while the production pipeline is in use, thus making it easier and quicker to evolve
+the pipeline and its capabilities.</p>
+<p>With the approach to development and improvement of the tools taken care of the other area that
+needs to be carefully controlled is the infrastructure on top of which the development pipeline
+executes. For infrastructure the biggest issues are related to outages of different parts of
+the infrastructure, e.g. the network or the different services. In most cases
+failures on the infrastructure level do not directly influence the correctness of the development
+pipeline. It is obviously possible for a failure in the infrastructure to lead
+to an incorrect service being used, e.g. the test package manager instead of the
+production one. However unless other issues are present, i.e. the test package manager
+has packages of the same version but different content, it is unlikely that
+a failure in the infrastructure will allow artefacts to pass the development pipeline
+while they should not. A more likely result is that failures in the infrastructure
+lead to failures in the development pipeline thus affecting the ability of the
+pipeline to deliver the correct results consistently.</p>
+<p>The types of issues mentioned can mostly be prevented by using the modern approaches
+to IT operations like <a href="https://en.wikipedia.org/wiki/Software_configuration_management">configuration management</a>
+and <a href="https://martinfowler.com/bliki/ImmutableServer.html">immutable servers</a> to ensure
+that the state of the infrastructure is known, <a href="https://en.wikipedia.org/wiki/System_monitor">monitoring</a>
+to ensure that those responsible for operations are notified of issues and
+standard operating procedures and potentially auto-remediation scripts to
+quickly resolve issues that arise.</p>
+<p>It should be noted that it is not necessary, though extremely helpful, for the infrastructure
+to be robust in order to provide an accurate development pipeline. Tooling can, and
+probably should, be adapted to handle and correct for infrastructure failures as
+much as possible. However as one expects it is much easier to build a development
+pipeline on top of a robust infrastructure.</p>
+<p>The final part of the discussion on the accuracy of the development pipeline deals
+with the relation between accuracy and the interaction of the tools and infrastructure.
+The main issue with interaction issues is that they are often hard to understand
+due to the, potentially large, number of components involved. Additionally certain
+interaction issues may only occur under specific circumstances like high load or
+specific times of the day / month / year, e.g. daylight savings or on leap days.</p>
+<p>Because of the complexity it is important when building and maintaining a development pipeline
+to following the normal development process, i.e. using version control,
+(unit) testing, continuous integration, delivery or deployment, work item tracking
+and extensive testing etc. for all changes to the pipeline. This applies to the scripts
+and tools as well as the <a href="https://en.wikipedia.org/wiki/Infrastructure_as_Code">infrastructure</a>.
+Additionally it is especially important to execute thorough regression testing for any change to the
+pipeline to ensure that a change to a single part does not negatively influence the
+correctness of the pipeline.</p>
+<p>Finally in order to ensure that the correctness of the pipeline can be maintained, and improved
+if required, it is sensible to provide monitoring of the pipeline and the underlying infrastructure
+as well as ensuring that all parts of the pipeline are versioned, tools and infrastructure alike,
+and versions of all the parts are tracked for each input set.</p>
+
+                </div>
+            </div>
+        </div>
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/nBuildkit-Release-V0102">nBuildKit release - V0.10.2</a>
+</h2>
+<div id="post-meta">
+    <p>
+Monday, August 28, 2017
+ |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
+    </p>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>Version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.2">0.10.2</a>
+of <a href="https://github.com/nbuildkit/nBuildKit.MsBuild">nBuildKit</a>
+has been released.</p>
+<p>This release made the following minor changes</p>
+<ul>
+<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/316">Removed</a> the custom tasks assembly
+from the <code>nBuildKit.MsBuild.Actions</code> NuGet package because those were never used from that package
+as they are also in the <code>nBuildKit.MsBuild.Tasks</code> NuGet package</li>
+<li>Added a deployment step to get <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/318">VCS information</a>
+during the deploy process.</li>
+<li>Fixed <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/317">missing bootstrap steps</a>
+in the test and deploy stages.</li>
+</ul>
+<p>All the work items that have been closed for this release can be found on
+github in the milestone list for the <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/36?closed=1">0.10.2</a> release.</p>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -236,9 +397,9 @@ a distinction can be made between the controlling and executing parts.</li>
 it is important to know what the desirable properties of such a system are. The following
 ordered properties are thought to be the most important ones to consider.</p>
 <ul>
-<li>Correctness: The pipeline must return the right outputs for a specific input, i.e it
-should report errors to the interested parties if there are any and report success
-and produce the desired artefacts if there are no errors.</li>
+<li><a href="Software-development-pipeline-Design-accuracy.html">Accurate</a>: The pipeline must return the right
+outputs for a specific input, i.e it should report errors to the interested parties if there are any
+and report success and produce the desired artefacts if there are no errors.</li>
 <li>Performance: The pipeline must push changes through the different stages fast
 in order to get results back to the interested parties as soon as possible.</li>
 <li>Robustness: The pipeline must be able to cope with environmental changes, both expected
@@ -254,6 +415,13 @@ are important and how a software development pipeline can be designed to satisfy
 considerations.</p>
 <p>Additional posts about this topic can be found via the
 <a href="/tags/software-development-pipeline.html">Software development pipeline</a> tag.</p>
+<h4>Edits</h4>
+<ul>
+<li>August 30th: Replaced the term <code>correctness</code> with the term <code>accuracy</code> because that
+is a better description of the combined concepts of consistency and correctness.</li>
+<li>September 4th: Added the link to the post providing the high level description on
+how to achieve accuracy for a development pipeline</li>
+</ul>
 
                 </div>
             </div>
@@ -358,119 +526,6 @@ executing tests during the packer test build.</li>
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/nBuildKit-release-V092">nBuildKit release - V0.9.2</a>
-</h2>
-<div id="post-meta">
-    <p>
-Sunday, May 14, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
-    </p>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>Version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.2">0.9.2</a>
-of <a href="https://github.com/nbuildkit/nBuildKit.MsBuild">nBuildKit</a> has been released. This release fixes
-a number of bugs and adds a few new improvements</p>
-<p>All the work items that have been closed for this release can be found on
-<a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/31?closed=1">github</a>.</p>
-<h3>Bugs fixed</h3>
-<ul>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/280">280</a> - The <code>deploy.pushto.gitbranch</code>
-script called the <code>GitCurrentBranch</code> task with a <code>WorkingDirectory</code> property which did not exist,
-thus causing the pushing to a git branch deployment step to fail.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/281">281</a> - The <code>deploy.pushto.gitbranch</code>
-script did not create the directory into which the repository should be cloned. This caused the
-step to fail.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/286">286</a> - The <code>GenerateTargetsFile</code> custom
-task applied a custom assembly resolver which did not resolve references to the MsBuild assemblies.
-This is a problem for MsBuild 15.0 and higher because from that version onwards the MsBuild assemblies,
-e.g. <code>Microsoft.Build.XX</code> are no longer located in the GAC and can thus not be found by the standard
-assembly resolver.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/287">287</a> - The <code>shared.prepare.copy.files</code>
-task did not correctly copy the directory hierarchy.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/290">290</a> - The <code>build.prepare.generatefiles</code>
-script only generated the files if they did not exist. This has been changed so that generated
-files are always created and updated.</li>
-</ul>
-<h3>Improvements</h3>
-<ul>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/254">254</a> - All warnings and errors have been
-given a proper error code for easier parsing of errors from the log.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/282">282</a> - The Git, Powershell and NuGet
-base tasks have been moved to the Core targets assembly so that they can be used in third party
-custom tasks as well.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/284">284</a> - A new task has been added that
-allows extracting files from one or more ZIP archive files.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/285">285</a> - Additional conditions have been
-added to all <code>ItemGroup</code> elements to ensure that these item groups are only loaded when they are
-required. This reduces build times and improves stability.</li>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/288">288</a> - A new task has been added that
-allows downloading files from a HTTP URL. If the file in question is an archive file it can
-additionally be unzipped before the final copy takes place.</li>
-</ul>
-<p>Additionally the first steps to better documentation have been taken. The <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/blob/master/README.md">readme</a>,
-the <a href="http://nbuildkit.github.io/nBuildKit.MsBuild/">introduction</a> and the <a href="http://nbuildkit.github.io/nBuildKit.MsBuild/docs/contributing">contributing</a>
-documents have been updated.</p>
-
-                </div>
-            </div>
-        </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Ops-Tools-Build-release-V020">Ops-Tools-Build release - V0.2.0</a>
-</h2>
-<div id="post-meta">
-    <p>
-Sunday, May 14, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/ops-resource" class="btn btn-default btn-xs">Ops-Resource</a>
-                    <a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs">Ops-Tools-Build</a>
-    </p>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>Version <a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0">0.2.0</a> of the
-<a href="https://github.com/ops-resource/ops-tools-build">Ops-Tools-Build</a> toolkit was released.</p>
-<p>This release was focussed on providing the capabilities to use the Chef toolset to create new
-resources. All the work items that have been closed for this release can be found on
-<a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1">github</a>.</p>
-<h3>New functionality</h3>
-<ul>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/5">5</a> - A new function which provides
-the ability to execute <a href="https://github.com/sethvargo/chefspec">ChefSpec</a> tests.</li>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/6">6</a> - A new function which
-invokes the Chef linting tool <a href="http://www.foodcritic.io/">Foodcritic</a> on the selected Chef cookbooks.</li>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/7">7</a> - A new function which invokes the
-Ruby linting tool <a href="https://github.com/bbatsov/rubocop">RuboCop</a> on selected Ruby source files.</li>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/20">20</a> - A new package restore script
-was added to allow restoring Chef cookbooks via <a href="https://github.com/berkshelf/berkshelf">Berkshelf</a>.</li>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/21">21</a> - A new switch was added to the
-packer function which allows keeping the resources generated with packer in case the packer
-build fails. This improves the ability to debug issues in the packer build.</li>
-</ul>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -502,9 +557,9 @@ build fails. This improves the ability to debug issues in the packer build.</li>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Mon, 21 Aug 2017 06:16:15 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Wed, 06 Sep 2017 07:50:50 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/ac12a2ad513b229a82ce4528cbedaff0c61c6853">ac12a2ad513b229a82ce4528cbedaff0c61c6853</a> at version 2.5.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/499fbfdb5397770450678d70873772273192cf70">499fbfdb5397770450678d70873772273192cf70</a> at version 2.6.0.        </p>
     </div>
 
     <p>
