@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-    <title>Mind vortex - Home</title>
+    <title>Mind vortex - Exportable Linux virtual hard-drives for Hyper-V</title>
     <meta name="description" content="Welcome!" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,9 +27,9 @@
     <meta name="msapplication-tooltip" content="Mind vortex" />
     <meta name="msapplication-starturl" content="/" />
 
-    <meta property="og:title" content="Mind vortex - Home" />
+    <meta property="og:title" content="Mind vortex - Exportable Linux virtual hard-drives for Hyper-V" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.petrikvandervelde.nl/" />
+    <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v" />
     <!-- TODO: More social graph meta tags -->
 
     <script src="/assets/js/jquery.min.js"></script>
@@ -58,8 +58,8 @@
             </div>
             <div id="menu">
                 <ul>
-                                <li class="active" >
-                Home
+                                <li class="inactive" >
+                <a href="/">Home</a>
             </li>
             <li class="inactive" >
                 <a href="/projects">Projects</a>
@@ -156,18 +156,16 @@
 
             <div id="content">
 
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
+<div id="post">
+    <div id="post-header">
+        <!--
     Model is: Tuple<IDocument, IDocument>.
     The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
 -->
 
 
 <h2>
-            <a href="/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v">Exportable Linux virtual hard-drives for Hyper-V</a>
-</h2>
+Exportable Linux virtual hard-drives for Hyper-V</h2>
 <div id="post-meta">
     <p>
 Thursday, September 14, 2017
@@ -178,9 +176,10 @@ Thursday, September 14, 2017
     </p>
 </div>
 
-                </div>
-                <div id="post-content">
-                    <p>As part of learning more about infrastructure creation, testing and deployment one of the projects
+    </div>
+
+    <div id="post-content">
+        <p>As part of learning more about infrastructure creation, testing and deployment one of the projects
 I'm working on is creating a set of virtual machine images for <a href="https://github.com/Calvinverse/base.windows">Windows</a>
 and <a href="https://github.com/Calvinverse/base.linux">Linux</a> which can be used as a base for more complex
 virtual machine based resources, e.g. <a href="https://github.com/Calvinverse/resource.hashi.server">a consul host</a>
@@ -511,337 +510,48 @@ project also publishes a <a href="https://www.nuget.org/packages/Ops.Tools.BaseI
 which has all the configuration files and scripts that were used to create the Ubuntu base virtual
 hard drive.</p>
 
-                </div>
-            </div>
-        </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
+    </div>
 
+    <div id="post-footer">
+        <div>
+    <div class="navlinks">
+                <a href="/posts/Software-development-pipeline-Design-accuracy" title="Previous Post: Software development pipeline - Design accuracy" class="navlinks-prev">« Software development pipeline - Design accuracy</a>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Exportable-Linux-virtual-hard-drives-for-hyper-v';
+    var disqus_title = 'Exportable Linux virtual hard-drives for Hyper-V';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v';
 
-<h2>
-            <a href="/posts/Software-development-pipeline-Design-accuracy">Software development pipeline - Design accuracy</a>
-</h2>
-<div id="post-meta">
-    <p>
-Monday, September 4, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs">Delivering software</a>
-                    <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
-                    <a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs">Pipeline design</a>
-                    <a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs">Software development pipeline</a>
-    </p>
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
 </div>
 
-                </div>
-                <div id="post-content">
-                    <p><a href="https://en.wikipedia.org/wiki/Accuracy_and_precision#ISO_definition_.28ISO_5725.29">ISO</a> defines
-accuracy as the combination of <a href="http://dictionary.cambridge.org/dictionary/english/correct?q=correctness">correctness</a>,
-in agreement with the true facts, and <a href="http://dictionary.cambridge.org/dictionary/english/consistency">consistency</a>,
-always behaving or performing in a similar way.</p>
-<p>The reason to value <em>accuracy</em> as the number one characteristic of the development pipeline is
-because it is important for the development teams to be able to rely on the outputs of the
-pipeline, whether they are product artefacts, test results or output logs. Without the accuracy
-the development teams will eventually lose their trust in the development pipeline, meaning that
-they will start ignoring the results because the teams assume that a failure is one of the system
-instead of one caused by the input set. Once the development teams lose the trust in the
-pipeline it will take a lot of work to regain their trust.</p>
-<p>Once we know that having a development pipeline which delivers correct results is important the
-next step is to determine how accuracy can be built into the development pipeline.
-In theory this task is a simple one, all one has to do is to ensure that all the parts that form the
-pipeline behave correctly for all input sets. However as indicated by
-<a href="http://wiki.c2.com/?DifferenceBetweenTheoryAndPractice">many</a> -</p>
-<blockquote class="blockquote">
-<p>In theory there is no difference between theory and practice. In practice there is</p>
-</blockquote>
-<p>which means that practically achieving accuracy is a difficult task due to the
-many, often complex, interactions between the pipeline components. As a reminder
-the <a href="Software-development-pipeline-Design-introduction.html">components</a> the
-development pipeline consists of are:</p>
-<ul>
-<li>The scripts that are used during the different parts of the cycle, i.e. the build, test
-and release scripts.</li>
-<li>The continuous integration system which is used to execute the different scripts.</li>
-<li>The tools, like the compiler, test frameworks, etc.</li>
-</ul>
-<p>Based on this categorization of the pipeline parts and the previous statement one possible
-way of approaching accuracy for a development pipeline is to first ensure that all the parts
-are individually accurate. As a second stage the changes in accuracy due to interaction between
-the parts can be dealt with.</p>
-<p>For the scripts, tools and continuous integration system this means that each input returns a
-correct response and does so consistently for each input set. Fortunately most scripts
-and tools do so for the majority of the inputs. In cases where a tool returns an incorrect response
-the standard software development process should be followed by recording an issue, scheduling the
-issue and implementing, testing and deploying a new version of the tool. In this process
-it is important to test thoroughly to ensure that the changes do not negatively impact
-tool accuracy. Additionally it is important to execute both (automated) regression testing against known
-input sets as well as high level (automated) smoke tests of the entire development pipeline
-to validate that the issue has been fixed and no further issues have been introduced.
-In order to minimize disruption to the development teams tests should be conducted outside
-business hours if no test environment is available, i.e. if the production development
-pipeline has to be used for the final tests. It is of course better if a test environment
-is available so that testing can take place during business hours without affecting
-the development teams. As a side note; having a test environment with a copy of the
-development pipeline allows for the development of new features and other changes
-while the production pipeline is in use, thus making it easier and quicker to evolve
-the pipeline and its capabilities.</p>
-<p>With the approach to development and improvement of the tools taken care of the other area that
-needs to be carefully controlled is the infrastructure on top of which the development pipeline
-executes. For infrastructure the biggest issues are related to outages of different parts of
-the infrastructure, e.g. the network or the different services. In most cases
-failures on the infrastructure level do not directly influence the correctness of the development
-pipeline. It is obviously possible for a failure in the infrastructure to lead
-to an incorrect service being used, e.g. the test package manager instead of the
-production one. However unless other issues are present, i.e. the test package manager
-has packages of the same version but different content, it is unlikely that
-a failure in the infrastructure will allow artefacts to pass the development pipeline
-while they should not. A more likely result is that failures in the infrastructure
-lead to failures in the development pipeline thus affecting the ability of the
-pipeline to deliver the correct results consistently.</p>
-<p>The types of issues mentioned can mostly be prevented by using the modern approaches
-to IT operations like <a href="https://en.wikipedia.org/wiki/Software_configuration_management">configuration management</a>
-and <a href="https://martinfowler.com/bliki/ImmutableServer.html">immutable servers</a> to ensure
-that the state of the infrastructure is known, <a href="https://en.wikipedia.org/wiki/System_monitor">monitoring</a>
-to ensure that those responsible for operations are notified of issues and
-standard operating procedures and potentially auto-remediation scripts to
-quickly resolve issues that arise.</p>
-<p>It should be noted that it is not necessary, though extremely helpful, for the infrastructure
-to be robust in order to provide an accurate development pipeline. Tooling can, and
-probably should, be adapted to handle and correct for infrastructure failures as
-much as possible. However as one expects it is much easier to build a development
-pipeline on top of a robust infrastructure.</p>
-<p>The final part of the discussion on the accuracy of the development pipeline deals
-with the relation between accuracy and the interaction of the tools and infrastructure.
-The main issue with interaction issues is that they are often hard to understand
-due to the, potentially large, number of components involved. Additionally certain
-interaction issues may only occur under specific circumstances like high load or
-specific times of the day / month / year, e.g. daylight savings or on leap days.</p>
-<p>Because of the complexity it is important when building and maintaining a development pipeline
-to following the normal development process, i.e. using version control,
-(unit) testing, continuous integration, delivery or deployment, work item tracking
-and extensive testing etc. for all changes to the pipeline. This applies to the scripts
-and tools as well as the <a href="https://en.wikipedia.org/wiki/Infrastructure_as_Code">infrastructure</a>.
-Additionally it is especially important to execute thorough regression testing for any change to the
-pipeline to ensure that a change to a single part does not negatively influence the
-correctness of the pipeline.</p>
-<p>Finally in order to ensure that the correctness of the pipeline can be maintained, and improved
-if required, it is sensible to provide monitoring of the pipeline and the underlying infrastructure
-as well as ensuring that all parts of the pipeline are versioned, tools and infrastructure alike,
-and versions of all the parts are tracked for each input set.</p>
-
-                </div>
-            </div>
-        </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
 
 
-<h2>
-            <a href="/posts/nBuildkit-Release-V0102">nBuildKit release - V0.10.2</a>
-</h2>
-<div id="post-meta">
-    <p>
-Monday, August 28, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
-    </p>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>Version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.2">0.10.2</a>
-of <a href="https://github.com/nbuildkit/nBuildKit.MsBuild">nBuildKit</a>
-has been released.</p>
-<p>This release made the following minor changes</p>
-<ul>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/316">Removed</a> the custom tasks assembly
-from the <code>nBuildKit.MsBuild.Actions</code> NuGet package because those were never used from that package
-as they are also in the <code>nBuildKit.MsBuild.Tasks</code> NuGet package</li>
-<li>Added a deployment step to get <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/318">VCS information</a>
-during the deploy process.</li>
-<li>Fixed <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/317">missing bootstrap steps</a>
-in the test and deploy stages.</li>
-</ul>
-<p>All the work items that have been closed for this release can be found on
-github in the milestone list for the <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/36?closed=1">0.10.2</a> release.</p>
-
-                </div>
-            </div>
-        </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
 
 
-<h2>
-            <a href="/posts/Software-development-pipeline-Design-introduction">Software development pipeline - Design introduction</a>
-</h2>
-<div id="post-meta">
-    <p>
-Monday, August 21, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs">Delivering software</a>
-                    <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
-                    <a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs">Pipeline design</a>
-                    <a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs">Software development pipeline</a>
-    </p>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>In order to deliver new or improved software applications within the desired
-time span while maintaining or improving quality modern development moves towards
-<a href="https://techbeacon.com/doing-continuous-delivery-focus-first-reducing-release-cycle-times">shorter development and delivery</a>
-cycles. This is often achieved through the use of agile processes and a development
-workflow including <a href="https://en.wikipedia.org/wiki/Continuous_integration">Continuous Integration</a>,
-<a href="https://en.wikipedia.org/wiki/Continuous_delivery">Continuous Delivery</a>
-or even <a href="https://www.agilealliance.org/glossary/continuous-deployment">Continuous deployment</a>.</p>
-<p>One of the consequences of this desire to reduce the development cycle time on the
-development process is that more tasks in the development workflow
-have to be automated in order to reduce the time taken for the specific task.
-One way this automation can be achieved is by creating a
-<a href="http://www.informit.com/articles/article.aspx?p=1621865&amp;seqNum=2">development pipeline</a> which
-takes the source code and moves it through a set of largely automatic transformations, e.g. compilation,
-testing, packaging and potentially deployment, to obtain a validated, and potentially deployed, application.</p>
-<p>In order to configure a development pipeline, whether that is on-prem or in the cloud, for
-one or more development teams one will have to understand what the requirements are which
-are placed on the pipeline, which tooling is available to create the pipeline, whether the
-pipeline will be situated on-prem, in the cloud or a combination and
-how the pipeline will be assembled and managed. In this post series some of
-these issues will be discussed starting with the requirements or considerations that need
-to be given to the characteristics or behaviours of the development pipeline.</p>
-<p>Prior to discussing what the considerations are for selecting tooling and infrastructure
-for a development pipeline, it is important to decide what elements are part of the pipeline
-and which elements are not. For the remainder of this
-post series the development pipeline is considered to consist of:</p>
-<ul>
-<li>The scripts that are used during the different parts of the cycle, i.e. the build, test
-and release scripts.</li>
-<li>The continuous integration system which is used to execute the different scripts.</li>
-<li>The tools, like the compiler, test frameworks, etc.</li>
-</ul>
-<p>Items like version control, package management, issue tracking, system monitoring,
-customer support and others are not included in the discussion. While these systems
-are essential in application development and deployment each of these systems spans
-a large enough area that it warrants a more thorough discussion than can be given in
-this post series.</p>
-<p>Additionally, the following terms will be used throughout the series:</p>
-<ul>
-<li>Input set - A collection of information that is provided to the pipeline to start
-the process of turning these generating the desired artefacts. An input set may consist
-of source code, e.g. in terms of a given commit to the source control system, files or
-documents, configuration values or any other combination of information which is required
-to create, validate and deploy the product artefacts.
-An input set should contain all the information needed to generate and deploy the product
-artefacts and each time a specific input set is provided to the pipeline exactly the
-same artefacts will be produced.</li>
-<li>Executor - In general the development pipeline will be driven by a continuous integration
-system which itself consists of a controlling unit, which receives the tasks and distributes them,
-and a set of executing units which perform the actual computational tasks. In small systems
-the controlling unit may also perform the computational tasks, however even in this case
-a distinction can be made between the controlling and executing parts.</li>
-</ul>
-<p>In order to start the selection of suitable components for a development pipeline
-it is important to know what the desirable properties of such a system are. The following
-ordered properties are thought to be the most important ones to consider.</p>
-<ul>
-<li><a href="Software-development-pipeline-Design-accuracy.html">Accurate</a>: The pipeline must return the right
-outputs for a specific input, i.e it should report errors to the interested parties if there are any
-and report success and produce the desired artefacts if there are no errors.</li>
-<li>Performance: The pipeline must push changes through the different stages fast
-in order to get results back to the interested parties as soon as possible.</li>
-<li>Robustness: The pipeline must be able to cope with environmental changes, both expected
-and unexpected.</li>
-<li>Flexibility: The pipeline must be easy to adapt to new products and tools so that it can
-be used without having to replace large parts each time a new product or tool needs to
-be included.</li>
-</ul>
-<p>There are of course other desirable properties for a development pipeline like ease-of-use,
-maintainability, etc.. It is however considered that the aforementioned properties are the
-most critical ones. The linked posts provide additional reasons why each of these properties
-are important and how a software development pipeline can be designed to satisfy these important
-considerations.</p>
-<p>Additional posts about this topic can be found via the
-<a href="/tags/software-development-pipeline.html">Software development pipeline</a> tag.</p>
-<h4>Edits</h4>
-<ul>
-<li>August 30th: Replaced the term <code>correctness</code> with the term <code>accuracy</code> because that
-is a better description of the combined concepts of consistency and correctness.</li>
-<li>September 4th: Added the link to the post providing the high level description on
-how to achieve accuracy for a development pipeline</li>
-</ul>
-
-                </div>
-            </div>
-        </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
 
 
-<h2>
-            <a href="/posts/nBuildkit-release-V0100">nBuildKit release - V0.10.0</a>
-</h2>
-<div id="post-meta">
-    <p>
-Sunday, July 16, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs">nBuildKit</a>
-    </p>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>Version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.0">0.10.0</a>
-and version <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.1">0.10.1</a>
-of <a href="https://github.com/nbuildkit/nBuildKit.MsBuild">nBuildKit</a>
-have been released. The <code>0.10.0</code> release is the first release in the stabilization
-cycle. There are still a few major changes but the goal is to start stabilizing nBuildKit
-in preparation for the 1.0.0 release.</p>
-<p>The highlights are</p>
-<ul>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/308">Renamed</a> <code>DirTest</code> to <code>DirTests</code>.
-This is a <em>breaking</em> change.</li>
-<li>Additional <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/248">meta data</a> can
-be provided with the build, test and deploy steps to indicate if a step should be inserted
-before or after another step in the sequence. Steps which have no insertion limits, i.e
-those steps that do not have the before or after meta data set, are inserted in document order.
-Steps that do define insertion limits are inserted according to the limits. Note that
-circular limits are not allowed as well as step sequences where there are no steps without
-insertion limits.</li>
-<li>Deploying artefacts to an <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/303">HTTP server</a></li>
-<li>Initial implementation of the <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/296">ability to verify GPG hash signatures</a>.
-The current implementation requires that the GPG tooling is allowed through the firewall.</li>
-</ul>
-<p>In addition to the major changes some additional build, test and deploy steps have also been defined:</p>
-<ul>
-<li>Addition of properties that indicate <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/304">which stage the script is currently executing</a>. The
-new properties are <code>IsBuild</code>, <code>IsTest</code> and <code>IsDeploy</code></li>
-<li>Allowing <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/306">template variables</a> in the
-path and <code>destination</code> of the <code>ArchiveFilesToCopy</code> item group.</li>
-<li>Migrated the <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/297">hash calculation functions</a>
-from <a href="https://github.com/ops-resource/ops-tools-build">Ops-Tools-Build</a>.</li>
-</ul>
-<p>All the work items that have been closed for this release can be found on
-github in the milestone list for releases <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/30?closed=1">0.10.0</a>
-and <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/35?closed=1">0.10.1</a>.</p>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -873,7 +583,7 @@ and <a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/35?closed=
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 16 Sep 2017 10:54:02 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 16 Sep 2017 10:54:00 GMT
 
  from commit <a href="https://github.com/pvandervelde/mindvortex/tree/15f0760efe803fbb9b2aff3f49bac844a141c80e">15f0760efe803fbb9b2aff3f49bac844a141c80e</a> at version 2.7.0.        </p>
     </div>
