@@ -4,8 +4,161 @@
 	<id>https://www.petrikvandervelde.nl/</id>
 	<title>Mind vortex</title>
 	<rights>2017</rights>
-	<updated>2017-09-16T10:54:01Z</updated>
+	<updated>2017-11-05T00:11:23Z</updated>
 	<subtitle>Welcome!</subtitle>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-performance" />
+		<id>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-performance</id>
+		<title>Software development pipeline - Design performance</title>
+		<updated>2017-11-05T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Software development pipeline - Design performance&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Sunday, November 5, 2017
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs"&gt;Pipeline design&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;The &lt;a href="Software-development-pipeline-Design-introduction.html"&gt;second property&lt;/a&gt; to consider is
+&lt;em&gt;performance&lt;/em&gt;, which in this case means that the pipeline should provide feedback on the quality of
+the current input set as soon as possible in order to reduce the length of the feedback cycle. As is
+&lt;a href="https://www.richard-banks.org/2013/04/why-short-feedback-cycle-is-good-thing.html"&gt;known&lt;/a&gt;
+&lt;a href="http://www.ambysoft.com/essays/whyAgileWorksFeedback.html"&gt;having&lt;/a&gt; a short
+&lt;a href="https://continuousdelivery.com/2012/08/why-software-development-methodologies-suck/"&gt;feedback&lt;/a&gt;
+cycle makes it easier for the development teams to make improvements and fix issues.&lt;/p&gt;
+&lt;p&gt;There are two main components to development pipeline performance:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;How quickly can one specific input set be processed completely by the pipeline. In other words
+how much time does it take to push a single input set through the pipeline from the initial change
+to the delivery of the final artefacts. This depends on the number of steps in the development
+pipeline and how quickly each step can be executed.&lt;/li&gt;
+&lt;li&gt;How quickly can a large set of input sets be processed. The maximum number of executors will most
+likely be limited to some maximum value. The pipeline is limited in the number of simultaneous
+input sets it can process by the number of available executors. How quickly the pipeline can
+process large number of input sets depends both on the time necessary to process a single input set
+and the relation between the total number of input sets and the number of executors&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Optimizing the combination of these two components will lead to a development pipeline which is
+designed for maximum throughput for the development team. One important note to make is that a high
+performing pipeline will not not necessarily be the most resource efficient pipeline. For instance
+the development pipeline may only be fully loaded a few times a week. From a resource perspective
+the pipeline components are more than capable of dealing with the load, in fact the components may
+even be oversized. However because one of the main goals of the pipeline is to deliver fast feedback
+to the development teams the actual sizing of the pipeline and its components depends more on the
+way the pipeline will be loaded over time, e.g. will the jobs come as a constant stream or in
+blocks, will the jobs be small or large or will it be a mixture of both. In some cases the loading
+pattern can be accurately predicted while in other cases it is completely unpredictable.
+In general the pattern will depend on the workflow followed by the development team and the geographical
+distribution of the team. For instance when the team follows the Scrum methodology it is
+likely, though not necessary, that there will be more builds in the middle of the sprint than at the
+start or end. On the other hand when using the Kanban methodology the load on the system should be
+fairly consistent. Additionally geographical distribution of the development team influences the
+times that the pipeline will be loaded. If all of the team is in a single geographical location then
+higher loads can be expected during the day while lighter loads are be expected during the evening
+and night. However if the team is distributed across the globe it is more likely that the loading will
+be more consistent across the day due to the fact that the different locations have ‘office hours’ at
+different times in the day, as seen from the perspective of the different servers which are part of
+the development pipeline. Taking these issues into account when sizing the capacity of the development
+pipeline may lead to increasing the capacity of the pipeline because the the current peak loading
+during working hours results in wait times which are too large.&lt;/p&gt;
+&lt;p&gt;With this high level information it is possible to start improving the performance of the development
+pipeline. This obviously leads to the question: “What practical steps can we take”. As per normal when
+dealing with performance improvements it is hard to provide solutions because these depend
+on the specific situation. It is however possible to provide some more general advise.&lt;/p&gt;
+&lt;p&gt;The very first step to take when dealing with performance is always to measure everything. In the case
+of the development pipeline it will be useful to gather metrics constantly and to automatically process
+these metrics into several key performance indicators, e.g. the number of input sets per time span, which
+describes the loading pattern, the waiting times for each input set before it is processed and the
+time taken to process each input set. These key performance indicators can then be used to keep
+track of performance improvements as changes are made to the pipeline.&lt;/p&gt;
+&lt;p&gt;One important issue to keep in mind with regards to performance is that unlike with accuracy performance
+may change over time even if there are no &lt;em&gt;changes&lt;/em&gt; to the system because the performance of the
+underlying infrastructure might change, for instance when disks fill up, the network load changes or
+the hardware ages. This means it will be important to track performance trends over longer periods of
+time to average out the influences of temporary infrastructure changes, e.g. network loading.&lt;/p&gt;
+&lt;p&gt;With all that out of the way some of the standard steps that can be taken are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Each pipeline stage should only perform the necessary steps to achieve the desired goal. This for
+instance means that partial builds are better than full rebuilds, from a performance perspective.&lt;/li&gt;
+&lt;li&gt;Only gather data that will be used during the current stage. Gathering data that is not required
+wastes time, thus smaller input sets are quicker to process.&lt;/li&gt;
+&lt;li&gt;When pulling data locality matters. Pulling data off the local disk is faster than pulling it off
+the network, pulling data off the local network is faster than pulling it from the WAN or the internet.
+Additionally data that is not local should be cached so that it only needs to be retrieved once.&lt;/li&gt;
+&lt;li&gt;Ensure that pipeline stages run on suitable ‘hardware’, either physical or virtual. Ideally the
+stage is executed on hardware that is optimized for the performance demands of the step, e.g.
+execute I/O bound steps on hardware that has fast I/O etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In addition to these improvements it will be important to review and improve the ability of the
+pipeline to execute many input sets in parallel.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Ensure that the pipeline applications which deal with the distribution of input sets are efficient
+at this task. It's not very useful to start processing an input set only to find out that there
+are no executors which can process this given input set (I'm looking at you TFS2013).&lt;/li&gt;
+&lt;li&gt;Splitting a single stage into multiple parallel stages will improve throughput for a single input
+set. However it might decrease overall throughput due to the fact that a single input set requires
+the use of multiple executors. Note that splitting a single stage into many parallel stages might
+lead to reductions in performance due to the overhead of transitioning between stages.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The mentioned improvements form a start for improving the performance of the pipeline. Depending on
+the specific characteristics of a given pipeline other improvements and design choices may be valid.&lt;/p&gt;
+&lt;p&gt;Finally it must be mentioned that some performance improvements will have negative influences on the
+other &lt;a href="Software-development-pipeline-Design-introduction.html"&gt;properties&lt;/a&gt;. For instance using partial
+builds may influence accuracy. In the end a trade-off will need to be made when it comes to changes
+that influence multiple properties.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v" title="Previous Post: Exportable Linux virtual hard-drives for Hyper-V" class="navlinks-prev"&gt;« Exportable Linux virtual hard-drives for Hyper-V&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Software-development-pipeline-Design-performance';
+    var disqus_title = 'Software development pipeline - Design performance';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-performance';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>Welcome!</summary>
+	</entry>
 	<entry>
 		<link href="https://www.petrikvandervelde.nl/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v" />
 		<id>https://www.petrikvandervelde.nl/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v</id>
@@ -371,6 +524,7 @@ hard drive.&lt;/p&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/Software-development-pipeline-Design-accuracy" title="Previous Post: Software development pipeline - Design accuracy" class="navlinks-prev"&gt;« Software development pipeline - Design accuracy&lt;/a&gt;
+                &lt;a href="/posts/Software-development-pipeline-Design-performance" title="Next Post: Software development pipeline - Design performance" class="navlinks-next"&gt;Software development pipeline - Design performance »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -934,7 +1088,7 @@ executing tests during the packer test build.&lt;/li&gt;
     &lt;div id="post-footer"&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V092" title="Previous Post: nBuildKit release - V0.9.2" class="navlinks-prev"&gt;« nBuildKit release - V0.9.2&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Previous Post: Ops-Tools-Build release - V0.2.0" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.2.0&lt;/a&gt;
                 &lt;a href="/posts/nBuildkit-release-V0100" title="Next Post: nBuildKit release - V0.10.0" class="navlinks-next"&gt;nBuildKit release - V0.10.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
@@ -1018,8 +1172,8 @@ build fails. This improves the ability to debug issues in the packer build.&lt;/
     &lt;div id="post-footer"&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V091" title="Previous Post: nBuildKit release - V0.9.1" class="navlinks-prev"&gt;« nBuildKit release - V0.9.1&lt;/a&gt;
-                &lt;a href="/posts/nBuildKit-release-V092" title="Next Post: nBuildKit release - V0.9.2" class="navlinks-next"&gt;nBuildKit release - V0.9.2 »&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V092" title="Previous Post: nBuildKit release - V0.9.2" class="navlinks-prev"&gt;« nBuildKit release - V0.9.2&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V030" title="Next Post: Ops-Tools-Build release - V0.3.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.3.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -1125,8 +1279,8 @@ documents have been updated.&lt;/p&gt;
     &lt;div id="post-footer"&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Previous Post: Ops-Tools-Build release - V0.2.0" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.2.0&lt;/a&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V030" title="Next Post: Ops-Tools-Build release - V0.3.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.3.0 »&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V091" title="Previous Post: nBuildKit release - V0.9.1" class="navlinks-prev"&gt;« nBuildKit release - V0.9.1&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Next Post: Ops-Tools-Build release - V0.2.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.2.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -1220,7 +1374,7 @@ will generate the website using &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;.&
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/Ops-Tools-Build-release-V011" title="Previous Post: Ops-Tools-Build release - V0.1.0 and V0.1.1" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.1.0 and V0.1.1&lt;/a&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Next Post: Ops-Tools-Build release - V0.2.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.2.0 »&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V092" title="Next Post: nBuildKit release - V0.9.2" class="navlinks-next"&gt;nBuildKit release - V0.9.2 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -2505,101 +2659,6 @@ for the next blog post.&lt;/p&gt;
     var disqus_identifier = 'Creating-azure-vm-images-with-powershell';
     var disqus_title = 'Creating Azure VM images with Powershell';
     var disqus_url = 'https://www.petrikvandervelde.nl/posts/Creating-azure-vm-images-with-powershell';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content>
-		<summary>Welcome!</summary>
-	</entry>
-	<entry>
-		<link href="https://www.petrikvandervelde.nl/posts/Building-and-delivering-nBuildKit-with-AppVeyor" />
-		<id>https://www.petrikvandervelde.nl/posts/Building-and-delivering-nBuildKit-with-AppVeyor</id>
-		<title>Building and delivering nBuildKit with AppVeyor</title>
-		<updated>2014-09-27T00:00:00Z</updated>
-		<content>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Building and delivering nBuildKit with AppVeyor&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Saturday, September 27, 2014
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/appveyor" class="btn btn-default btn-xs"&gt;AppVeyor&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/continous-integration" class="btn btn-default btn-xs"&gt;Continous integration&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/software-delivery" class="btn btn-default btn-xs"&gt;Software delivery&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;The build server that is being used to build the packages for &lt;a href="/projects/nbuildkit.html"&gt;nBuildKit&lt;/a&gt;
-is &lt;a href="http://www.appveyor.com/"&gt;AppVeyor&lt;/a&gt;. AppVeyor is an Continuous Integration system in the cloud.
-The way AppVeyor works is that every time a commit occurs in a GitHub project AppVeyor is notified.
-AppVeyor then spins up a new clean virtual machine (VM) on which your build scripts are executed.
-Once the build is done the VM is terminated and thrown away. This way there is no way that the
-changes made to the build environment by a build will influence future builds.&lt;/p&gt;
-&lt;p&gt;For nBuildKit two builds were configured. The first configuration is the standard
-&lt;a href="https://ci.appveyor.com/project/pvandervelde/nbuildkit"&gt;continuous integration&lt;/a&gt; build which generates
-the version numbers and templates and then creates the NuGet packages. As the final step the build
-artefacts are archived for later use by the second build configuration.
-For this configuration no special settings are required other then to tell AppVeyor to store the artifacts.&lt;/p&gt;
-&lt;p&gt;The second build configuration handles the &lt;a href="https://ci.appveyor.com/project/pvandervelde/nbuildkit-244"&gt;delivery&lt;/a&gt;
-of the artefacts. This configuration gathers the build artefacts from the latest build of the first
-build configuration, tags the revision that was build and then pushes the NuGet packages to
-&lt;a href="http://www.nuget.org/packages/nbuildkit.msbuild"&gt;NuGet.org&lt;/a&gt; and marks the given commit as a release
-in &lt;a href="https://github.com/pvandervelde/nBuildKit/releases"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;For this second configuration a few tweaks need to be made to the environment before the build can be
-executed. The first thing to do is to install the &lt;a href="https://github.com/aktau/github-release"&gt;GitHub-release&lt;/a&gt;
-application which provides an easy way to push release information to github. A simple Powershell
-script is used to set-up this part of the environment:&lt;/p&gt;
-&lt;script src="https://gist.github.com/pvandervelde/77bd834239d9f67c40d7.js"&gt;&lt;/script&gt;
-&lt;p&gt;Once all the required tools are installed the artefacts of the selected continuous integration build
-need to be downloaded and placed in the correct directories. For that yet another Powershell script
-is used:&lt;/p&gt;
-&lt;script src="https://gist.github.com/pvandervelde/9cf270ef5266b18a1ac9.js"&gt;&lt;/script&gt;
-&lt;p&gt;Once all the artefacts are restored the delivery process can be executed. For nBuildKit the delivery
-process is executed by nBuildKit itself in the standard dogfooding approach that is so well known in
-the software business.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V032" title="Previous Post: nBuildKit release - V0.3.2" class="navlinks-prev"&gt;« nBuildKit release - V0.3.2&lt;/a&gt;
-                &lt;a href="/posts/Creating-azure-vm-images-with-powershell" title="Next Post: Creating Azure VM images with Powershell" class="navlinks-next"&gt;Creating Azure VM images with Powershell »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Building-and-delivering-nBuildKit-with-AppVeyor';
-    var disqus_title = 'Building and delivering nBuildKit with AppVeyor';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Building-and-delivering-nBuildKit-with-AppVeyor';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
