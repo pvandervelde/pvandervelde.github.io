@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - PG2 - Christmas holiday antics</title>
+        <title>Mind vortex - Software development pipeline - Design resilience</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,9 +27,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - PG2 - Christmas holiday antics" />
+        <meta property="og:title" content="Mind vortex - Software development pipeline - Design resilience" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/PG2-Christmas-holiday-antics" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-resilience" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -178,60 +178,141 @@
 
 
 <h2>
-PG2 - Christmas holiday antics</h2>
+Software development pipeline - Design resilience</h2>
 <div id="post-meta">
     <p>
-Tuesday, January 21, 2014
- |         Posted in                     <a id="post-category" role="button" href="/tags/paragliding" class="btn btn-default btn-xs">Paragliding</a>
-                    <a id="post-category" role="button" href="/tags/pg2" class="btn btn-default btn-xs">PG2</a>
+Tuesday, December 19, 2017
+ |         Posted in                     <a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs">Delivering software</a>
+                    <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
+                    <a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs">Pipeline design</a>
+                    <a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs">Software development pipeline</a>
     </p>
 </div>
 
     </div>
 
     <div id="post-content">
-        <p>During the Christmas holidays a few weeks ago I was planning to get lots of flying done, after all
-I had two weeks off and the weather had been amazing while I was in the office so what else could be
-the case? Unfortunately it turned out that the weather gods had other plans and provided generous
-helpings of wind and rain. That meant I only managed to fly on two different days.</p>
-<p>However that doesn't mean that the Christmas holidays were lacking paragliding activities. You see my
-new <a href="http://www.korteldesign.com/spip/?Karma-II-231">harness</a> arrived just before Christmas. It was
-ordered three or so months ago but it was completely worth the wait. The build quality is very high
-and the harness felt comfortable straight away. Mind you there is still some set up to be done.
-There are a lot of different straps on this harness which subtly change the position and shape of
-the harness. I suspect it will be a while before I find all the right settings.
-The biggest difference so far compared to the school harnesses is that it feels like the harness
-reacts more to changes in the glider, which at the moment is unsettling but I guess I'll get used
-to it. And the second difference is that the harness is harder to get into.</p>
-<p>Given that I was already spending money I figured I should spend some more ... Actually it was more
-like there were a few other things that were either <a href="http://en.wikipedia.org/wiki/Altimeter">legally required</a>
-or <a href="http://en.wikipedia.org/wiki/Parachute">very sensible</a> to have. And so I also bought a
-<a href="http://www.brauniger.com/en/products/flight-instruments/iq-basic-gps/overview.html">vario</a> and a
-<a href="http://gingliders.com/rescue-systems/yeti-light-rescue/">reserve</a>. The combination was not cheap
-but I do feel a lot safer now that I have a way to tell how high I am and a way to come down in case
-everything goes to custard.</p>
-<p>Finally I also did my PG2 theory exam and scored 97% which I was pretty stoked with. The minimum
-score to pass is 90% so I managed to get that in the bag pretty easily. There is one more theoretical
-exam to do which is the <a href="http://en.wikipedia.org/wiki/Visual_flight_rules">VFR</a> exam. For that I am
-trying to learn all the abbreviations at the moment which might take a bit of time.</p>
-<p>All in all the Christmas holidays turned out to have a decent amount of paragliding related activities.</p>
+        <p>The <a href="Software-development-pipeline-Design-introduction.html">third property</a> to consider is
+<em>resilience</em>, which in this case means that the pipeline should be able to cope with
+expected and unexpected changes to the environment it executes in and uses.</p>
+<p>David Woods defines <a href="https://www.researchgate.net/publication/276139783_Four_concepts_for_resilience_and_the_implications_for_the_future_of_resilience_engineering">four different types of &lsquo;resilience&rsquo;</a> in a paper in the journal of reliability engineering and system safety. One of the different types
+is the generally well known form of robustness, i.e. the ability to absorb pertubations or disturbances.
+In order to be robust for given disturbances one has to know in advance where the disturbances will
+come from, e.g. in the case of a development pipeline it might be expected that pipeline stages will
+fail and will polute or damage parts or all of the executor it was running on. Robustness in this
+case would be defined as the ability of the pipeline to handle this damage, for instance by repairing
+or replacing the executor. The other definitions for resilience are:</p>
+<ul>
+<li>Rebound, the ability to recover from trauma: In order to achieve this capacity ahead of time is
+required, i.e. in order to recover from a disturbance one needs to be able to deploy capabilities
+and capacity that was available in excess before the issues occurred.</li>
+<li>Graceful extensibility, the ability to extend adaptive capacity in the face of surprise. This is
+the ability to stretch resources and capabilities in the face of surprises.</li>
+<li>Sustained adaptibility, which is the ability to adapt and grow new capabilities in the face of
+unexpected issues. In general this definition applies more to systems / layered networks where
+the loss of sub-systems can be compensated.</li>
+</ul>
+<p>Which ever definition of resilience is used in general the goal is to be able to recover from
+unexpected changes and return back to the normal state, ideally with minimal intervention. An interesting
+side note is that returning back to normal after major trauma can be deceiving because the &lsquo;normal&rsquo; as
+experienced before the trauma will be different from the 'normal' experienced after the trauma due
+to the lessons learned from the trauma and permanent changed caused by the trauma.</p>
+<p>Additionally it is not just the unexpected or traumatic changes that are interesting in the case of a
+development pipeline but also the expected ones, e.g. upgrades, maintenance etc., because in general
+it is important for the pipeline to continue functioning while those changes are happening.</p>
+<p>For a development pipeline resilience can be approached on different levels. For instance the
+pipeline should be resilient against:</p>
+<ul>
+<li>Changes in the environment which range from small changes, e.g. additional tools being deployed,
+to big changes, e.g. migration of many of the services, and from expected, i.e. maintenance or
+planned upgrades, to unexpected</li>
+<li>Changes in the inputs and the results of processing those inputs which may range from build and test
+errors to issues with executors</li>
+<li>Invalid or incorrect configurations.</li>
+</ul>
+<p>Once it is known what resilience actually means and what type of situations the pipeline is expected
+to be able to handle the next question is how the pipeline can handle these situations, both in
+terms of what the expected responses are and in terms of how the pipeline should be designed.</p>
+<p>There are a mirriad of simple steps that can be taken to provide a base level of resilience. None
+of these simple steps will guard against major trauma but they will be able to either prevent or
+smooth out many of the smaller issues that would otherwise cause the development team to lose faith
+in the pipeline outputs. Some examples of simple steps that can be taken to improve resilience in
+a development pipeline are:</p>
+<ul>
+<li>For each pipeline step ensure that it is executed in a clean &lsquo;workspace&rsquo;, i.e. a directory or drive,
+that will only ever be used by that specific single step. This workspace should be 'private' to the
+specific pipeline step and no other processes should be allowed to execute in this workspace. This
+prevents issues with unexpected changes to the file system. There are still cases where &lsquo;unexpected&rsquo;
+changes to the file system can occur, for instance when running parallel executions within the same
+pipeline step in the same workspace. This type of behaviour should therefore be avoided as much as
+possible</li>
+<li>Do not depend on global, i.e. machine, container or network, state. Global state has a tendency
+to change in random ways at random times.</li>
+<li>Avoid using source which are external to the pipeline infrastructure becaues these are prone to
+unspected random changes. If a build step requires data from an external source then the external
+source should be mirrored and mirrors should be carefully controled for their content. This should
+prevent issues with external packages and inputs changing or disappearing, e.g.<a href="https://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/">leftpad</a>.</li>
+<li>If external sources are suitably mirrored inside the pipeline infrastructure then it is possible
+to remove the caches for these external sources on the executors. By pulling data in fresh from the
+local data store cache polution issues can be prevented</li>
+<li>Ensure that each resource is appropriately secured against undesirable acces. This is especially
+true for the executor resources. It is important to note that pipeline steps are essentially random
+scripts from an unknown source, even if the scripts are pulled from internal sources, because the
+scripts will not be security verified before being used. This means that the pipeline scripts should
+not be allowed to to make any changes or to obtain secrets that they shouldn't have access to.</li>
+</ul>
+<p>As mentioned the afforementioned steps form a decent base for improving resilience and they are
+fairly easy to implement, hence they make a good first stage in the improvement of the resilience
+of the development pipeline. Once these steps have been implemented more complex steps can be taken
+to futher improve the state of the development pipeline. These additional steps can be divided into
+items that help prevent issues, items that test and verify the current state, items that aid in
+recovery and finally items, like logging and metrics, that help during post-mortems of failure cases.</p>
+<p>One way prevention of trauma / outages can partially be improved is by ensuring that all parts of the
+development pipeline are able to handle different error states which can be achieved by building in
+extensive error handling capabilities, both for known cases, e.g. service offline, and general error
+handling for unexpected cases. For the tooling / script side of the pipeline this means for instance
+adding error handling structures nearly everywhere and providing the ability to retry actions.
+For the infrastructure side of the pipeline this could mean providng highly available services and
+ensuring that service delivery gracefully degrades if it can no longer be provided at the required
+standard.</p>
+<p>Even if every possible precaution is taken it is not possible to prevent all modes of failure. Unexpected
+failures will always occur no matter what the capabilities of the development pipeline are. This means
+that some of the way to improve resilience is to provide capabilities to recover from failures and to
+recognise that unexpected conditions exist and to notify the users and administrators of this situation.
+It should be noted that providing these capabilities may be much harder to implement due to the
+flexible nature of the issues that are being solved for these cases.</p>
+<p>By exposing the system continuously to semi-controlled unexpected conditions it is possible to
+provide early and controlled feedback to the operators and administrators regarding the resilience
+of the development pipeline. One example of this is the
+<a href="https://github.com/Netflix/SimianArmy/wiki/Chaos-Monkey">chaos monkey approach</a> which tests the
+resilience of a system by randomly taking down parts of the system. In a well designed system this
+should result in a response of the system in order to restore the now missing capabilities.</p>
+<p>The actual handling of unexpected conditions requires that the system has some capability to instigate
+recovery which can for instance consist of having fall-back options for the different sub-systems,
+providing automatic remediation services which monitor the system state and apply different standard
+recovery techniques like restarting failing services or machines or creating new resources to replace
+missing ones.</p>
+<p>From the high level descriptions given above it is hopefully clear that it will not be easy to create
+a resilient development pipeline and depending on the demands placed on the pipeline many hours of
+work will be consumed by improving the current state and learning from failures. In order to ensure
+that this effort is not a wasted effort it is definitely worth applying iterative improvement approaches
+and only continuing the improvement process if there is actual demand for improvements.</p>
 
     </div>
 
     <div id="post-footer">
         <div>
     <div class="navlinks">
-                <a href="/posts/Integrating-Sherlock-with-a-build-server" title="Previous Post: Sherlock configuration - Build server integration" class="navlinks-prev">« Sherlock configuration - Build server integration</a>
-                <a href="/posts/PG2-Site-number-five" title="Next Post: PG2 - Site number five" class="navlinks-next">PG2 - Site number five »</a>
+                <a href="/posts/Software-development-pipeline-Design-performance" title="Previous Post: Software development pipeline - Design performance" class="navlinks-prev">« Software development pipeline - Design performance</a>
     </div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'PG2-Christmas-holiday-antics';
-    var disqus_title = 'PG2 - Christmas holiday antics';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/PG2-Christmas-holiday-antics';
+    var disqus_identifier = 'Software-development-pipeline-Design-resilience';
+    var disqus_title = 'Software development pipeline - Design resilience';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-resilience';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
@@ -290,7 +371,7 @@ trying to learn all the abbreviations at the moment which might take a bit of ti
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Tue, 19 Dec 2017 08:43:56 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Tue, 19 Dec 2017 08:43:55 GMT
 
  from commit <a href="https://github.com/pvandervelde/mindvortex/tree/9c7682ae996c68b41d580cf25a9c884c5b1b24fb">9c7682ae996c68b41d580cf25a9c884c5b1b24fb</a> at version 2.9.0.        </p>
     </div>
