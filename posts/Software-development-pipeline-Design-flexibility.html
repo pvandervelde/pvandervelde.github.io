@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - nAdoni</title>
+        <title>Mind vortex - Software development pipeline - Design flexibilty</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,9 +27,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - nAdoni" />
+        <meta property="og:title" content="Mind vortex - Software development pipeline - Design flexibilty" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/projects/nadoni" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-flexibility" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -168,26 +168,154 @@
             </div>
 
             <div id="content">
-                        <div class="project">
-                            <h2>nAdoni</h2>
-                            <div>
-                                <p><a href="https://github.com/pvandervelde/nAdoni">nAdoni</a> is a library that provides a way to check for updates to one or more binaries via an update manifest, and then to download an archive containing the updated binaries.</p>
-<p>The manifest file is an XML file which is signed with an RSA key to provide some form of security in the update process.</p>
 
-                            </div>
-                            <div id="project-linkedposts">
+<div id="post">
+    <div id="post-header">
+        <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
 
-        <h3>Recent posts referencing nAdoni</h3>
-        <ul>
-                <li><a href="/posts/NAdoni-Release-V0200">nAdoni release - V0.2.0.0</a></li>
-                <li><a href="/posts/NAdoni-Release-V0210">nAdoni release - V0.2.1.0</a></li>
-        </ul>
-        <div id="project-linkedposts-more">
-            More posts referencing <a href="/tags/nadoni">nAdoni</a>
-        </div>
+
+<h2>
+Software development pipeline - Design flexibilty</h2>
+<div id="post-meta">
+    <p>
+Wednesday, October 31, 2018
+ |         Posted in                     <a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs">Delivering software</a>
+                    <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
+                    <a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs">Pipeline design</a>
+                    <a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs">Software development pipeline</a>
+    </p>
 </div>
 
-                        </div>
+    </div>
+
+    <div id="post-content">
+        <p>The <a href="Software-development-pipeline-Design-introduction.html">fourth property</a> to consider is
+<em>flexibility</em>, i.e. the ability of the pipeline to be able to be modified or adapted without
+requiring large changes to be made to the underlying pipeline code and services.</p>
+<p>A pipeline should be flexible because the products being build, tested and deployed with that
+pipeline may require different workflows or processes in order for them to complete all the
+stages in the pipeline. For example building and packaging a library will require a different
+approach then building, testing and deploying a cloud service.
+Additionally the different stages in the pipeline will require different approaches, e.g. build steps
+will in general be executed by a build system returning the results in a synchronous way, however
+test steps might run on a different machine from the process that controls the test steps so those
+results might come back via an asynchronous route.
+Finally flexibility in the pipeline also improves resilience since in case of a disruption
+an adaptable or flexible pipeline will allow restoring services through alternate means.</p>
+<p>Making a flexible pipeline is achieved in the same way flexibility is achieved in other software
+products, by using modular parts, standard inputs and outputs and carefully considered design. Some
+of the appropriate options are for instance:</p>
+<ul>
+<li>Split the pipeline into stages that take standard inputs and deliver standard outputs. There might
+be many different types of inputs and outputs but they should be known and easily shared between
+processes and applications. There can be one or more stages, e.g. build, test and deploy, which
+are dependent on each other only through their inputs and outputs. This allows adding more stages
+if required.</li>
+<li>Allow steps or stages in the pipeline to be started through a response to a standard notification.
+That allows each step to determine what information it needs to start execution. Additional
+information can be downloaded from the appropriate sources upon receiving a notification. This
+approach allows notifications to be generic while steps can still acquire the information they
+need to execute. Additionally having pipeline steps respond to notifications means that it is
+very easy to add new steps in the process because a new executor only has to be instantiated
+and connected to the message source, e.g. a distributed queue.</li>
+<li>If a stage consists of multiple, dependent steps, then it should be easy to add and remove
+steps based on the requirements. In these cases it would generally be preferred that a stage like
+this executes one or more scripts as they are easier to extend than services. As with the stages steps
+should ideally use well-known inputs and produce well-known outputs.</li>
+<li>Inputs for stages and steps are for instance
+<ul>
+<li>Source information, e.g. a commit ID</li>
+<li>Artefacts, e.g. packages installers, zip files etc.</li>
+<li>Meta data, additional information attached to a given output or input, e.g. build or test results</li>
+</ul>
+</li>
+<li>Outputs generated by stages and steps are for instance</li>
+</ul>
+<p>Flexibility of the workflow is can further be improved by making sure that the artefacts
+generated in the pipeline are not created, tested and deployed in a single monolithic process even
+if the end result should be a single artefact. In many cases artefacts can be assembled from smaller
+components. Using this approach improves the workflow for the development teams because smaller
+components can be created much quicker and in general assembly of a larger piece from components
+is quicker and more flexible than regeneration of the entire piece from scratch. In many cases only
+a few components will be recreated which both saves time and allows much of the process to be executed
+in parallel.</p>
+<p>The exact implementation of the pipeline determines how flexible and easy to extend it will be.
+Given that the use and implementation of the pipeline vary quite a lot it is hard to provide
+detailed implementation details, however some standard suggestions are:</p>
+<ul>
+<li>Keep the build part of the pipeline described in the scripts given that scripts are, in general,
+easier to adapt. By pulling the scripts from a package, e.g. a NuGet or NPM package, it is
+quick and easy to update to a later version of these scripts. An additional benefit of
+keeping the process in the scripts is that developers can execute the individual steps of the pipeline
+from their local machines. That allows them to ensure builds / tests work before pushing to the
+pipeline and provides a means of building things if the pipeline is not available.</li>
+<li>Any part of the process that cannot be done by a script, e.g. test systems, items that need services, e.g.
+certificate signing, which require that the certificates are present on the current machine, something
+which might not be possible to do on every machine etc., should have a service that is available to both
+the pipeline and the developers executing the scripts locally. For any services that should only
+be provided to the build server, e.g. signing, the scripts should allow skipping the steps that
+need the service.</li>
+<li>For stages that execute scripts, e.g. the build stage, jobs can be automatically generated
+from information stored in source control. This makes it easy to update the actions executed by these
+stages without requiring developers to perform the configuration manually.</li>
+</ul>
+<p>As a final note one should consider how the pipeline will be described. It is easier to reason about
+a pipeline if the entire description of that pipeline is stored in a single file, ideally in source
+control. However as the pipeline evolves and more steps and stages are executed in parallel it will
+become increasingly difficult to capture the entire pipeline in a single file. While harder to
+reason about it is in the end simpler and more flexible to let the pipeline layout, as in the stages,
+steps and orders of these items, be determined by the executors that are available and listening for
+notifications. That way it's easy to change the layout of the pipeline.</p>
+<p>And with that we have come to the end of this journey into the guiding principles of designing
+a build and release pipeline. There are of course many additions that can be made with regards to
+the general design process and even more additions for specific use cases. Those however will have
+to wait until another post.</p>
+
+    </div>
+
+    <div id="post-footer">
+        <div>
+    <div class="navlinks">
+                <a href="/posts/Software-development-pipeline-Design-resilience" title="Previous Post: Software development pipeline - Design resilience" class="navlinks-prev">« Software development pipeline - Design resilience</a>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Software-development-pipeline-Design-flexibility';
+    var disqus_title = 'Software development pipeline - Design flexibilty';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-flexibility';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+</div>
+
+
+
+
+
+
+
             </div>
         </div>
 
@@ -219,7 +347,7 @@
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Wed, 31 Oct 2018 07:33:57 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Wed, 31 Oct 2018 07:33:54 GMT
 
  from commit <a href="https://github.com/pvandervelde/mindvortex/tree/c2de6098ce0cbce487b9c55681d87de5d2a8c667">c2de6098ce0cbce487b9c55681d87de5d2a8c667</a> at version 2.10.0.        </p>
     </div>
