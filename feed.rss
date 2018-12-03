@@ -5,10 +5,203 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2018</copyright>
-		<pubDate>Wed, 31 Oct 2018 07:33:56 GMT</pubDate>
-		<lastBuildDate>Wed, 31 Oct 2018 07:33:56 GMT</lastBuildDate>
+		<pubDate>Mon, 03 Dec 2018 03:27:22 GMT</pubDate>
+		<lastBuildDate>Mon, 03 Dec 2018 03:27:22 GMT</lastBuildDate>
 		<item>
-			<title>Software development pipeline - Design flexibilty</title>
+			<title>Software development pipeline - In the build system or not</title>
+			<link>https://www.petrikvandervelde.nl/posts/Sofware-development-pipeline-In-the-build-system-or-not</link>
+			<description>Welcome!</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Sofware-development-pipeline-In-the-build-system-or-not</guid>
+			<pubDate>Mon, 03 Dec 2018 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Software development pipeline - In the build system or not&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Monday, December 3, 2018
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs"&gt;Pipeline design&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Over the last few years the use of build pipelines has been gaining traction backed by the ever growing
+use of Continuous Integration (CI) and Continuous Delivery and Deployment (CD) processes. By using a
+build pipeline the development team get benefits like being able to execute parts of the build, test,
+release and deployment processes in parallel, being able to restart the process part way through
+in case of environmental issues, and vastly improved feedback cycles which improve the velocity
+at which features can be delivered to the customer.&lt;/p&gt;
+&lt;p&gt;Most modern build systems have the ability to create a build pipelines in one form or another, e.g.
+&lt;a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/get-started/what-is-azure-pipelines?toc=/azure/devops/pipelines/toc.json&amp;amp;bc=/azure/devops/boards/pipelines/breadcrumb/toc.json&amp;amp;view=vsts"&gt;VSTS / Azure Devops builds&lt;/a&gt;,
+&lt;a href="https://jenkins.io/solutions/pipeline/"&gt;Jenkins pipeline&lt;/a&gt;,
+&lt;a href="https://docs.gitlab.com/ee/ci/pipelines.html"&gt;GitLab&lt;/a&gt;, &lt;a href="https://bitbucket.org/product/features/pipelines"&gt;BitBucket&lt;/a&gt;
+and &lt;a href="https://confluence.jetbrains.com/display/TCD18/Build+Chain"&gt;TeamCity&lt;/a&gt;. With these capabilities
+built into the build system it is easy for developers to quickly create a new pipeline from scratch.
+While this is quick and easy often the pipeline for a product is created by the development team
+without considering if this is the best way to achieve their goal, which is to deliver their product
+faster with higher quality. Before using the built-in pipeline capability in the build system the second
+question a development team should ask is when should one use this ability and when should one not
+use this ability? Obviously the first question is, do we need a pipeline at all, which is a question
+for another post.&lt;/p&gt;
+&lt;p&gt;The advantages of creating a pipeline in your build system are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It is easy to quickly create pipelines. Either the is a click and point UI of some form or the
+pipeline is defined by a, relatively, simple configuration file. This means that a development
+team can configure a new build pipeline quickly when one is desired.&lt;/li&gt;
+&lt;li&gt;Pipelines created in a build system can often use multiple build executors or have a job move
+from one executor to another if different capabilities are required for a new step, for instance
+if different steps in the pipeline need different operating systems to be executed.&lt;/li&gt;
+&lt;li&gt;In many cases, but not all, the build system provides a way for humans to interact with a running
+pipeline, for instance to approve the continuation of the pipeline in case of deployments or
+to mark a manual test phase as passed or failed.&lt;/li&gt;
+&lt;li&gt;If the configuration of the pipeline is stored in a file it can generally be stored in a source
+control system, thus providing all the benefits of using a source control system. In these cases
+the build system can generally update the build configurations in response to a commit / push
+notification from the version control system. Thus ensuring that the active build configuration
+is always up to date.&lt;/li&gt;
+&lt;li&gt;The development team has nearly complete control over the build configuration which ensures that
+it is easy for the development teams to have a pipeline that suits their needs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Based on the advantages of having a pipeline in the build system it seems pretty straight forward to
+say that having the pipeline in the build system is a good thing. However as with all things there
+are also drawbacks to having the pipeline in the build system.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Having the pipeline in the build system makes some assumptions that may not be correct in certain
+cases.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The first assumption is that the build system is the center of all the work being done
+because the pipeline is controlled by the build system, thus requiring that all actions feed back
+into said build system. This however shouldn't be a given, after all why would the build system
+be the core system and not the source control system or the issue tracker. In reality all systems
+are required to deliver high quality software. This means in most cases that none of these systems
+have enough knowledge by themselves to make decisions about the complete state of the pipeline.
+By making the assumption that the build system is at the core of the pipeline the result will
+be that the knowledge of the pipeline work flow will end up being encoded in the build configurations
+and the build scripts. For simple pipelines this is a sensible thing to do but as the pipeline
+gets more complex this approach will be sub-optimal at best and more likely detrimental due to
+the complexity of providing all users with the overview of how the pipeline functions.&lt;/li&gt;
+&lt;li&gt;The second, but potentially more important, assumption is that the item the development teams
+care most about is ‘build’ or 'build job'. This however is not the case most of the time because
+a ‘build’ is just a way to create or alter an artefact, i.e. the package, container, installer
+etc.. It is artefacts that people care about most because artefacts are the carrying vehicle
+for the features and bug fixes that the customer cares about. From this perspective it makes
+sense to track the artefacts instead of builds because the artefact flows through the entire pipeline
+while builds are only part of the pipeline.&lt;/li&gt;
+&lt;li&gt;A third assumption is that every task can somehow be run through the build system, but this is
+not always the case and even when it is possible it is not necessarily sensible. For instance
+builds and deploys are fundamentally different things, one should be repeatable (builds) and
+can just be stopped on failure and restarted if necesary and the other is often not exactly
+repeatable (because artefacts can only be moved from a location once etc.) and should often
+not just be stopped (but rolled-back or not ‘committed’). Another example is long running tests
+for which the results may be fed back into the build system if required but that doesn't
+necessarily make sense.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;If the build system is the the center of the pipeline then that means that the build system has to
+start storing persistent data about the state of the pipeline with all the issues that come with this
+kind of data, for instance:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The data stored in the pipeline is valuable to the development team both at the current time and
+in the future when the development team needs to determine where an artefact comes from. This means
+that the data potentially needs to be kept safe for much longer than build information is
+normally kept. In order to achieve this the standard data protection rules apply for instance
+access controls and backups.&lt;/li&gt;
+&lt;li&gt;The information about the pipeline needs to be easily accessible and changable both by the build
+system and by systems external to the build system. It should be possible to add additional
+information, e.g. the versions / names of artefacts created by a build. The status of the artefact
+as it progresses through the pipeline etc.. All this information is important either during the
+pipeline process or after the artefacts have been delivered to the customer. Often build
+systems don't have this capability, they store just enough information that they can do what
+they need to do, and in general they are not database systems (and if they are it is recommended
+that you don't tinker with them and in general it is made difficult to append or add information).&lt;/li&gt;
+&lt;li&gt;Build systems work much better if they are immutable, i.e. created from standard components (e.g.
+controller and agents) with automatically generated build jobs (more about the reasons both of
+these will follow in future posts). This allows a build system to be expanded or replaced really
+easily (&lt;a href="https://medium.com/@Joachim8675309/devops-concepts-pets-vs-cattle-2380b5aab313"&gt;cattle not pets&lt;/a&gt;
+even for build systems). That is much harder if the build system is the core of your pipeline
+and stores all the data for it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Having the pipeline in the build system in general provides more control for the development teams,
+which is a great benefit, but less control for the administrators. Because the pipeline provides the
+development teams with all the abilities there is, in general, less ability for the admins to guide
+things in the right direction or to block developers from doing things that they shouldn't be doing
+or have access to. While this may seem to be a benefit for the developers, no more annoying admins
+getting in the way, it is in fact a drawback because this behaviour means that the developers take
+on the responsibility to administer some or all of the underlying build system. Examples of the
+change of control are for instance in the Jenkins pipeline it is possible for developers to use
+all the credentials that jenkins has access to. However this might not be desirable for high power
+credentials or credentials for highly restricted resources. An other example is that the selection
+of the build executor is done in the pipeline configuration, however in some cases it may make sense
+to limit access to executors, after all having a build that can migrate from node to node makes
+sense in some cases but it's not free. Further the ease with which parallel steps can be created will
+lead to many parallel jobs. This might be great for one pipeline but isn't necessarily the best for
+the overall system. In some cases serializing the steps for a single pipeline can lead to greater
+overall throughput if there are many different jobs for many different teams.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Based on all the advantages and disadvantages that are listed here it may be difficult to decide whether
+or not a development team should use the pipeline in their build system or not. In general it will be
+sensible to use the pipeline capabilities that are build into your build system in cases where you either
+have a fairly simple pipeline that is easy to reason about or where no external systems need to interact
+with the data in the pipeline.&lt;/p&gt;
+&lt;p&gt;Once the pipeline gets more complicated, external systems need access to the metadata describing the
+pipeline or the pipeline gets stages that are incompatible with being executed by a build system it
+will be time to migrate to a different approach to the build and deployment pipeline. In this case
+it is worth it to develop some custom software that tracks artefacts through the pipeline. This makes
+it possible to treat the pipeline system as the critical infrastructure that it is, with the appropriate
+separation of data and business rule processing, data security and controlled access to the data for
+external systems.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Software-development-pipeline-Design-flexibility" title="Previous Post: Software development pipeline - Design flexibility" class="navlinks-prev"&gt;« Software development pipeline - Design flexibility&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Sofware-development-pipeline-In-the-build-system-or-not';
+    var disqus_title = 'Software development pipeline - In the build system or not';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Sofware-development-pipeline-In-the-build-system-or-not';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content:encoded>
+		</item>
+		<item>
+			<title>Software development pipeline - Design flexibility</title>
 			<link>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-flexibility</link>
 			<description>Welcome!</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-flexibility</guid>
@@ -22,7 +215,7 @@
 
 
 &lt;h2&gt;
-Software development pipeline - Design flexibilty&lt;/h2&gt;
+Software development pipeline - Design flexibility&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
 Wednesday, October 31, 2018
@@ -117,6 +310,10 @@ notifications. That way it's easy to change the layout of the pipeline.&lt;/p&gt
 a build and release pipeline. There are of course many additions that can be made with regards to
 the general design process and even more additions for specific use cases. Those however will have
 to wait until another post.&lt;/p&gt;
+&lt;h4&gt;Edits&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;December 3rd 2018: Fixed a typo in the post title&lt;/li&gt;
+&lt;/ul&gt;
 
     &lt;/div&gt;
 
@@ -124,6 +321,7 @@ to wait until another post.&lt;/p&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/Software-development-pipeline-Design-resilience" title="Previous Post: Software development pipeline - Design resilience" class="navlinks-prev"&gt;« Software development pipeline - Design resilience&lt;/a&gt;
+                &lt;a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not" title="Next Post: Software development pipeline - In the build system or not" class="navlinks-next"&gt;Software development pipeline - In the build system or not »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -131,7 +329,7 @@ to wait until another post.&lt;/p&gt;
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
     var disqus_identifier = 'Software-development-pipeline-Design-flexibility';
-    var disqus_title = 'Software development pipeline - Design flexibilty';
+    var disqus_title = 'Software development pipeline - Design flexibility';
     var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-flexibility';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
@@ -295,7 +493,7 @@ and only continuing the improvement process if there is actual demand for improv
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/Software-development-pipeline-Design-performance" title="Previous Post: Software development pipeline - Design performance" class="navlinks-prev"&gt;« Software development pipeline - Design performance&lt;/a&gt;
-                &lt;a href="/posts/Software-development-pipeline-Design-flexibility" title="Next Post: Software development pipeline - Design flexibilty" class="navlinks-next"&gt;Software development pipeline - Design flexibilty »&lt;/a&gt;
+                &lt;a href="/posts/Software-development-pipeline-Design-flexibility" title="Next Post: Software development pipeline - Design flexibility" class="navlinks-next"&gt;Software development pipeline - Design flexibility »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -1414,7 +1612,7 @@ executing tests during the packer test build.&lt;/li&gt;
     &lt;div id="post-footer"&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V092" title="Previous Post: nBuildKit release - V0.9.2" class="navlinks-prev"&gt;« nBuildKit release - V0.9.2&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Previous Post: Ops-Tools-Build release - V0.2.0" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.2.0&lt;/a&gt;
                 &lt;a href="/posts/nBuildkit-release-V0100" title="Next Post: nBuildKit release - V0.10.0" class="navlinks-next"&gt;nBuildKit release - V0.10.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
@@ -1425,90 +1623,6 @@ executing tests during the packer test build.&lt;/li&gt;
     var disqus_identifier = 'Ops-Tools-Build-release-V030';
     var disqus_title = 'Ops-Tools-Build release - V0.3.0';
     var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V030';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
-		</item>
-		<item>
-			<title>Ops-Tools-Build release - V0.2.0</title>
-			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</link>
-			<description>Welcome!</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</guid>
-			<pubDate>Sun, 14 May 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Ops-Tools-Build release - V0.2.0&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Sunday, May 14, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/ops-resource" class="btn btn-default btn-xs"&gt;Ops-Resource&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs"&gt;Ops-Tools-Build&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
-&lt;p&gt;This release was focussed on providing the capabilities to use the Chef toolset to create new
-resources. All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;New functionality&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/5"&gt;5&lt;/a&gt; - A new function which provides
-the ability to execute &lt;a href="https://github.com/sethvargo/chefspec"&gt;ChefSpec&lt;/a&gt; tests.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/6"&gt;6&lt;/a&gt; - A new function which
-invokes the Chef linting tool &lt;a href="http://www.foodcritic.io/"&gt;Foodcritic&lt;/a&gt; on the selected Chef cookbooks.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/7"&gt;7&lt;/a&gt; - A new function which invokes the
-Ruby linting tool &lt;a href="https://github.com/bbatsov/rubocop"&gt;RuboCop&lt;/a&gt; on selected Ruby source files.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/20"&gt;20&lt;/a&gt; - A new package restore script
-was added to allow restoring Chef cookbooks via &lt;a href="https://github.com/berkshelf/berkshelf"&gt;Berkshelf&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/21"&gt;21&lt;/a&gt; - A new switch was added to the
-packer function which allows keeping the resources generated with packer in case the packer
-build fails. This improves the ability to debug issues in the packer build.&lt;/li&gt;
-&lt;/ul&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V011" title="Previous Post: Ops-Tools-Build release - V0.1.0 and V0.1.1" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.1.0 and V0.1.1&lt;/a&gt;
-                &lt;a href="/posts/nBuildKit-release-V092" title="Next Post: nBuildKit release - V0.9.2" class="navlinks-next"&gt;nBuildKit release - V0.9.2 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Ops-Tools-Build-release-V020';
-    var disqus_title = 'Ops-Tools-Build release - V0.2.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
@@ -1605,8 +1719,8 @@ documents have been updated.&lt;/p&gt;
     &lt;div id="post-footer"&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Previous Post: Ops-Tools-Build release - V0.2.0" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.2.0&lt;/a&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V030" title="Next Post: Ops-Tools-Build release - V0.3.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.3.0 »&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V091" title="Previous Post: nBuildKit release - V0.9.1" class="navlinks-prev"&gt;« nBuildKit release - V0.9.1&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Next Post: Ops-Tools-Build release - V0.2.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.2.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -1638,11 +1752,11 @@ documents have been updated.&lt;/p&gt;
 &lt;/div&gt;</content:encoded>
 		</item>
 		<item>
-			<title>Ops-Tools-Build release - V0.1.0 and V0.1.1</title>
-			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</link>
+			<title>Ops-Tools-Build release - V0.2.0</title>
+			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</link>
 			<description>Welcome!</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</guid>
-			<pubDate>Sun, 09 Apr 2017 00:00:00 GMT</pubDate>
+			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</guid>
+			<pubDate>Sun, 14 May 2017 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;div id="post"&gt;
     &lt;div id="post-header"&gt;
         &lt;!--
@@ -1652,10 +1766,10 @@ documents have been updated.&lt;/p&gt;
 
 
 &lt;h2&gt;
-Ops-Tools-Build release - V0.1.0 and V0.1.1&lt;/h2&gt;
+Ops-Tools-Build release - V0.2.0&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
-Sunday, April 9, 2017
+Sunday, May 14, 2017
  |         Posted in                     &lt;a id="post-category" role="button" href="/tags/ops-resource" class="btn btn-default btn-xs"&gt;Ops-Resource&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs"&gt;Ops-Tools-Build&lt;/a&gt;
     &lt;/p&gt;
@@ -1664,22 +1778,24 @@ Sunday, April 9, 2017
     &lt;/div&gt;
 
     &lt;div id="post-content"&gt;
-        &lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
-&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
-of the Ops-Tools-Build toolkit was released.&lt;/p&gt;
-&lt;p&gt;All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/1?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
+        &lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
+&lt;p&gt;This release was focussed on providing the capabilities to use the Chef toolset to create new
+resources. All the work items that have been closed for this release can be found on
+&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;New functionality&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/3"&gt;3&lt;/a&gt; - New scripts have been added to allow
-the creation of an ISO file using the &lt;a href="https://sourceforge.net/projects/tumagcc"&gt;MakeIsoFS&lt;/a&gt; command
-line application.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/4"&gt;4&lt;/a&gt; - New scripts have been added to allow
-invocation of the &lt;a href="https://www.packer.io/"&gt;packer&lt;/a&gt; command line tool used to generate VM and
-container images from a set of configuration files.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/10"&gt;10&lt;/a&gt; - New scripts were added to allow
-calculation of the hash of one or more files&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/5"&gt;5&lt;/a&gt; - A new function which provides
+the ability to execute &lt;a href="https://github.com/sethvargo/chefspec"&gt;ChefSpec&lt;/a&gt; tests.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/6"&gt;6&lt;/a&gt; - A new function which
+invokes the Chef linting tool &lt;a href="http://www.foodcritic.io/"&gt;Foodcritic&lt;/a&gt; on the selected Chef cookbooks.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/7"&gt;7&lt;/a&gt; - A new function which invokes the
+Ruby linting tool &lt;a href="https://github.com/bbatsov/rubocop"&gt;RuboCop&lt;/a&gt; on selected Ruby source files.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/20"&gt;20&lt;/a&gt; - A new package restore script
+was added to allow restoring Chef cookbooks via &lt;a href="https://github.com/berkshelf/berkshelf"&gt;Berkshelf&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/21"&gt;21&lt;/a&gt; - A new switch was added to the
+packer function which allows keeping the resources generated with packer in case the packer
+build fails. This improves the ability to debug issues in the packer build.&lt;/li&gt;
 &lt;/ul&gt;
 
     &lt;/div&gt;
@@ -1687,17 +1803,17 @@ calculation of the hash of one or more files&lt;/li&gt;
     &lt;div id="post-footer"&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V091" title="Previous Post: nBuildKit release - V0.9.1" class="navlinks-prev"&gt;« nBuildKit release - V0.9.1&lt;/a&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Next Post: Ops-Tools-Build release - V0.2.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.2.0 »&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V092" title="Previous Post: nBuildKit release - V0.9.2" class="navlinks-prev"&gt;« nBuildKit release - V0.9.2&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V030" title="Next Post: Ops-Tools-Build release - V0.3.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.3.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
 &lt;script type="text/javascript"&gt;
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Ops-Tools-Build-release-V011';
-    var disqus_title = 'Ops-Tools-Build release - V0.1.0 and V0.1.1';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011';
+    var disqus_identifier = 'Ops-Tools-Build-release-V020';
+    var disqus_title = 'Ops-Tools-Build release - V0.2.0';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
@@ -1781,8 +1897,8 @@ will generate the website using &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;.&
     &lt;div id="post-footer"&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Ubiquiti-networking-gear" title="Previous Post: Setting up a home network with Ubiquiti" class="navlinks-prev"&gt;« Setting up a home network with Ubiquiti&lt;/a&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V011" title="Next Post: Ops-Tools-Build release - V0.1.0 and V0.1.1" class="navlinks-next"&gt;Ops-Tools-Build release - V0.1.0 and V0.1.1 »&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V011" title="Previous Post: Ops-Tools-Build release - V0.1.0 and V0.1.1" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.1.0 and V0.1.1&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V092" title="Next Post: nBuildKit release - V0.9.2" class="navlinks-next"&gt;nBuildKit release - V0.9.2 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -1792,6 +1908,88 @@ will generate the website using &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;.&
     var disqus_identifier = 'nBuildKit-release-V091';
     var disqus_title = 'nBuildKit release - V0.9.1';
     var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content:encoded>
+		</item>
+		<item>
+			<title>Ops-Tools-Build release - V0.1.0 and V0.1.1</title>
+			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</link>
+			<description>Welcome!</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</guid>
+			<pubDate>Sun, 09 Apr 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Ops-Tools-Build release - V0.1.0 and V0.1.1&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Sunday, April 9, 2017
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/ops-resource" class="btn btn-default btn-xs"&gt;Ops-Resource&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs"&gt;Ops-Tools-Build&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
+&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
+of the Ops-Tools-Build toolkit was released.&lt;/p&gt;
+&lt;p&gt;All the work items that have been closed for this release can be found on
+&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/1?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;New functionality&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/3"&gt;3&lt;/a&gt; - New scripts have been added to allow
+the creation of an ISO file using the &lt;a href="https://sourceforge.net/projects/tumagcc"&gt;MakeIsoFS&lt;/a&gt; command
+line application.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/4"&gt;4&lt;/a&gt; - New scripts have been added to allow
+invocation of the &lt;a href="https://www.packer.io/"&gt;packer&lt;/a&gt; command line tool used to generate VM and
+container images from a set of configuration files.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/10"&gt;10&lt;/a&gt; - New scripts were added to allow
+calculation of the hash of one or more files&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Ubiquiti-networking-gear" title="Previous Post: Setting up a home network with Ubiquiti" class="navlinks-prev"&gt;« Setting up a home network with Ubiquiti&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V091" title="Next Post: nBuildKit release - V0.9.1" class="navlinks-next"&gt;nBuildKit release - V0.9.1 »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Ops-Tools-Build-release-V011';
+    var disqus_title = 'Ops-Tools-Build release - V0.1.0 and V0.1.1';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
@@ -1932,7 +2130,7 @@ are fun to play with&lt;/p&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/nBuildKit-release-V090" title="Previous Post: nBuildKit release - V0.9.0" class="navlinks-prev"&gt;« nBuildKit release - V0.9.0&lt;/a&gt;
-                &lt;a href="/posts/nBuildKit-release-V091" title="Next Post: nBuildKit release - V0.9.1" class="navlinks-next"&gt;nBuildKit release - V0.9.1 »&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V011" title="Next Post: Ops-Tools-Build release - V0.1.0 and V0.1.1" class="navlinks-next"&gt;Ops-Tools-Build release - V0.1.0 and V0.1.1 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -2676,121 +2874,6 @@ how Wyam works and how my own blog is generated.&lt;/p&gt;
     var disqus_identifier = 'Updating-blog-to-wyam';
     var disqus_title = 'Exit Docpad, enter Wyam';
     var disqus_url = 'https://www.petrikvandervelde.nl/posts/Updating-blog-to-wyam';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
-		</item>
-		<item>
-			<title>nBuildKit release - V0.5.1</title>
-			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V051</link>
-			<description>Welcome!</description>
-			<guid>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V051</guid>
-			<pubDate>Sat, 23 May 2015 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-nBuildKit release - V0.5.1&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Saturday, May 23, 2015
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Version &lt;a href="https://github.com/pvandervelde/nBuildKit/releases/tag/0.5.1"&gt;V0.5.1&lt;/a&gt; of the &lt;a href="/projects/nbuildkit.html"&gt;nBuildKit&lt;/a&gt;
-build library has been released.&lt;/p&gt;
-&lt;p&gt;This release adds the following features&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/91"&gt;91&lt;/a&gt;: MsBuild.Projects: Common.props should
-do a more extensive search for settings.props&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/90"&gt;90&lt;/a&gt;: MsBuild: Allow pushing symbols via
-NuGet enhancement&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/89"&gt;89&lt;/a&gt;: MsBuild: Allow assembly versioning to
-be more custom defined.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/87"&gt;87&lt;/a&gt;: MsBuild: Rename template files to have
-normal extension&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/86"&gt;86&lt;/a&gt;: MsBuild: Rename the DirMsBuildShared,
-DirMsBuildExtensions and DirMsBuildTemplates properties enhancement&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/85"&gt;85&lt;/a&gt;: Unable to build projects which have a
-mixture of target frameworks&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/83"&gt;83&lt;/a&gt;: MsBuild: Allow PreCleanScripts and
-PreCompilationScripts to define their own properties&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/82"&gt;82&lt;/a&gt;: MsBuild: Update the Sample custom
-version files to match the current version gathering capabilities&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/80"&gt;80&lt;/a&gt;: MsBuild: Combine top-level build.msbuild,
-deploy.msbuild and shared.locatenbuildkit.msbuild&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/78"&gt;78&lt;/a&gt;: MsBuild: Automatically include NuGet
-dependencies if nuspec is in same directory as project&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/72"&gt;72&lt;/a&gt;: MsBuild: Define default directory
-paths only in settings.props file&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/68"&gt;68&lt;/a&gt;: Improve inline documentation of
-settings.props file&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/66"&gt;66&lt;/a&gt;: MsBuild: Provide initialization/installation
-scripts for an empty workspace&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/55"&gt;55&lt;/a&gt;: MsBuild: Allow assembly copyright to be
-more custom defined&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/22"&gt;22&lt;/a&gt;: MsBuild: Allow each file to have their
-own base directory when creating ZIP archives&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/19"&gt;19&lt;/a&gt;: MsBuild.Projects: Provide scripts for
-Visual Basic projects&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;And fixes the following issues:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/92"&gt;92&lt;/a&gt;: MsBuild.Projects: GetVersion, VcsInfo and
-Generate files also run when they're disabled in the settings.props file&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/88"&gt;88&lt;/a&gt;: MsBuild.Projects: Excessive NuGet
-restore of global packages&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/84"&gt;84&lt;/a&gt;: Not compatible with ncrunch&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/54"&gt;54&lt;/a&gt;: MsBuild: First space trimmed from
-release note content&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Finally the following tasks were completed:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/pvandervelde/nBuildKit/issues/7"&gt;7&lt;/a&gt;: MsBuild: Set up tests&lt;/li&gt;
-&lt;/ul&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V041" title="Previous Post: nBuildKit release - V0.4.1" class="navlinks-prev"&gt;« nBuildKit release - V0.4.1&lt;/a&gt;
-                &lt;a href="/posts/Updating-blog-to-wyam" title="Next Post: Exit Docpad, enter Wyam" class="navlinks-next"&gt;Exit Docpad, enter Wyam »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'nBuildKit-release-V051';
-    var disqus_title = 'nBuildKit release - V0.5.1';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V051';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
