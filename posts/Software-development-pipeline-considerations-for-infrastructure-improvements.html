@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - PG2 - Spending a weekend in the air</title>
+        <title>Mind vortex - Software delivery pipeline - Considerations for infrastructure improvements</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,9 +27,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - PG2 - Spending a weekend in the air" />
+        <meta property="og:title" content="Mind vortex - Software delivery pipeline - Considerations for infrastructure improvements" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/PG2-Spending-a-weekend-in-the-air" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Software-development-pipeline-considerations-for-infrastructure-improvements" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -178,73 +178,155 @@
 
 
 <h2>
-PG2 - Spending a weekend in the air</h2>
+Software delivery pipeline - Considerations for infrastructure improvements</h2>
 <div id="post-meta">
     <p>
-Sunday, October 13, 2013
- |         Posted in                     <a id="post-category" role="button" href="/tags/paragliding" class="btn btn-default btn-xs">Paragliding</a>
-                    <a id="post-category" role="button" href="/tags/pg2" class="btn btn-default btn-xs">PG2</a>
+Sunday, January 27, 2019
+ |         Posted in                     <a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs">Delivering software</a>
+                    <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
+                    <a id="post-category" role="button" href="/tags/immutable-infrastructure" class="btn btn-default btn-xs">Immutable infrastructure</a>
+                    <a id="post-category" role="button" href="/tags/infrastructure-as-code" class="btn btn-default btn-xs">Infrastructure as code</a>
+                    <a id="post-category" role="button" href="/tags/software-delivery-pipeline" class="btn btn-default btn-xs">Software delivery pipeline</a>
     </p>
 </div>
 
     </div>
 
     <div id="post-content">
-        <p>Last weekend another episode in my <a href="/tags/PG2.html">PG2 course</a> took place with flights happening on
-both Saturday <em>and</em> Sunday. Both days started with an off shore breeze but as the day progressed the
-sea breeze brought six to seven knots of wind from the South-West and we were good to go.</p>
-<p>This time we flew from the high launch at at <a href="http://en.wikipedia.org/wiki/Kariotahi_Beach">Kariotahi</a>
-which has the lowest point of the launch at about 90m above the beach. The walk up follows a narrow,
-relatively steep, sandy and muddy path which increased everybody's desire to top land. Fortunately
-for us our excellent instructor always managed to get us into a position where top landings were
-possible, in spite of the sometimes lacking wind strength.</p>
-<p><img align="left" alt="Cruising around on my Gin Atlas" src="/assets/images/paragliding/paraglide_0006.JPG" /></p>
-<p>The main learning point for this weekend was the <a href="http://en.wikipedia.org/wiki/Paragliding#Reverse_launch">reverse launch</a>.
-The technique I am being taught has, in some places, been called the
-<a href="http://sydneyparagliding.com/flying-techniques/the-effortless-reverse-launch-technique/">Mitsos reverse launch</a>.
-The reverse launch method provides a lot more control over the glider while it is on the ground than
-the forward launch method, not in the least because one can actually see what the glider is doing.</p>
-<p>For me the hardest part of the reverse launch method so far is controlling the glider as it rises
-above my head. The launch will go well as long as the glider rises evenly, but as soon as it slides
-to the right or left side it is hard to get it back to the middle. The second area to focus on is
-coordinating the turn and the drive when actually launching. Normally I can execute the turn without
-too much trouble but I don't always drive correctly so a lot more practise is in order. Fortunately
-the instructors have given me an old harness and an old glider that I can use to practise my ground
-handling on days that we're not flying. In fact I would be doing that right now if there wasn't a
-near gale force wind outside ...</p>
-<p>Over the course of the two days I managed to do:</p>
+        <p>In one of the post from a <a href="Software-development-pipeline-Design-introduction.html">while ago</a> we
+discussed what a software development pipeline is and what the <a href="Software-development-pipeline-Design-accuracy.html">most</a>
+<a href="Software-development-pipeline-Design-performance.html">important</a>
+<a href="Software-development-pipeline-Design-resilience.html">characteristics</a>
+<a href="Software-development-pipeline-Design-flexibility.html">are</a>. Given that the pipeline is used
+during the large majority of the development, test and release process it is fair to say that for
+a software company the build and deployment pipeline infrastructure should be considered critical
+infrastructure because without it the development team will be more limited in their ability to
+perform their tasks. Note that at no stage should any specific tool, including the pipeline, be the
+single point of failure. More on how to reduce the dependency on CI systems and the pipeline will
+follow in another post.</p>
+<p>Just like any other piece of infrastructure the development pipeline will need to be updated
+and improved on a regular basis, either to fix bugs, patch security issues or to add new features
+that will make the development team more productive. Because the pipeline falls in the cricital
+infrastructure category it is important to keep disturbances to a minimum while performing these
+changes. There are two main parts to providing (nearly) continuous service while still providing
+improvements and updates. The first is to ensure that the changes are tracked and tested properly,
+the second is to deploy the exact changes that were tested to the production system in a way that no
+or minimal interruptions occur. A sensible approach to the first part is to follow a solid software
+development process so that the changes are controlled, verified and monitored which can be achieved
+by creating infrastructure resources completely from information stored in source control, i.e. using
+<a href="https://en.wikipedia.org/wiki/Infrastructure_as_code">infrastructure-as-code</a>, making the resources
+as <a href="https://thenewstack.io/a-brief-look-at-immutable-infrastructure-and-why-it-is-such-a-quest/">immutable</a>
+as <a href="https://twitter.com/jezhumble/status/970334897544900609">possible</a> and performing automated tests
+on these resources after deploying them in a test environment using the same deployment process that
+will be used to deploy the resources to the production environment.</p>
+<p>Using this approach should allow the creation of resources that are thoroughly tested and can be
+deployed in a sensible fashion. It should be noted that no amount of automated testing will
+guarantee that the new resources are free of any issues so it will always be important use deployment
+techniques that allow for example <a href="https://martinfowler.com/bliki/BlueGreenDeployment.html">quick roll-back</a>
+or <a href="https://martinfowler.com/bliki/CanaryRelease.html">staged roll-outs</a>. Additionally deployed
+resources should be carefully monitored so that issues will be discovered quickly.</p>
+<p>To achieve the goal of being able to deploy updates and improvements to the development
+infrastructure the following steps can be taken</p>
 <ul>
-<li>Six flights of differing lengths with one flight of 30 minutes and others between five and ten
-minutes long.</li>
-<li>Four top landings and two landings near the car park. In all cases the instructor guided me on my
-landing spot selection and approach paths.</li>
-<li>One forwards launch and five reverse launches which all went well except for one reverse launch
-where I bounced up and down due to a lacking acceleration run.</li>
+<li>Using infrastructure-as-code to create new resource images each time a resource needs to be updated.
+Trying to create resources by hand will drastically reduce the ease at which they can be build and
+be made consistently. Resources that are deployed into an environment should never be changed. If
+bugs need to be fixed or new features need to be added then a new version of the resource image
+should be created, tested and deployed. That way changes can be tested before deployment and
+the configuration of the deployed resources will be known.</li>
+<li>Resources should be placed on virtual machines or in (Docker) containers. Both technologies provide
+an easy way to create one or more instances of the resource which is required in order to test or
+scale a service. The general idea is to have one resource per VM / container instance. One resource
+may contain multiple services or daemons but it always serves a single goal. Note that in some cases
+people will state that you should only use containers and not VMs but there are still cases where
+a VM works better, e.g. in some cases executing software builds works better in a VM or running
+a service that stores large quantities of data. Additionally if all or a large part of the
+infrastructure is running on VMs then using VMs might make more sense. In all cases the correct
+approach, container or VMs, is the one that makes sense for the environment the resources will
+be deployed into.</li>
+<li>Some way of getting configurations into the resource. Some configurations can be hard-coded into
+the resource, if they are never expected to be changed. The draw-back of encoding a configuration
+into a resource is that this configuration cannot be changed if the resource is used in different
+environments, e.g. a test environment and a production environment. Configurations which are
+different between environments should not be encoded in the resource since that may prevent the
+resource from being deployed in a test environment for testing. Provisioning a resource requires
+that you can apply all the environment specific information to a resource which is a difficult
+problem to solve especially for the initial set of configurations, e.g. the configurations which
+determine where to get the remaining configurations. Several options are:
+<ul>
+<li>For VMs you can use DVD / ISO files that are linked on first start-up of the resource.</li>
+<li>Systems like <a href="https://github.com/hashicorp/consul-template">consul-template</a> can generate
+configurations from a distributed key-value store.</li>
+<li>Resources can be pull their own configurations from a shared store.</li>
+<li>For containers often environment variables are used. These might be sufficient but note that they
+are not secure, both inside the container and outside the container.</li>
 </ul>
-<p>And finally I have to say that the Gin Atlas is an amazing glider. I am by no means a good pilot,
-after all I'm just learning to fly but the Atlas consistently lets me fly higher than nearly all
-other gliders, save for some of the super high performance gliders. During the weekend all the other
-gliders had to, at one point or another, work quite hard to stay at the height of the launch site,
-or even to scratch their way back up to the launch height. The Atlas just only dropped down to the
-height of the launch a few times, and each time it did a minor puff of wind allowed it to gain more
-than sufficient height again.</p>
+</li>
+<li>Configurations that should be provided when a resource is provisioned should be stored
+in source control, just like the resource code is, in order to be able to automate the verification
+and delivery of the configuration values.
+<ul>
+<li>The infrastructure should have it's own shared storage for configurations so that the &lsquo;build&rsquo;
+process can push to the shared storage and configurations are distributed from there. That ensures
+that the build process doesn't need to know where to deliver exactly (which can change as the
+infrastructure changes). One option is to use SQL / no-SQL type storage (e.g. Elasticsearch),
+another option is to use a system like <a href="https://consul.io">consul</a> which has a distributed key-value
+store</li>
+</ul>
+</li>
+<li>Automatic testing of a resource once it is deployed into an environment. For the very least the
+smoke tests should be run automatically when the resource is deployed to a test environment.</li>
+<li>Automatic deployments when a new resource becomes available or approved for an environment, for
+the very least to the test environment but ideally to all environments. Using the same deployment
+system for all environments is highly recommended because this allows testing the deployment
+process as well as the resource.</li>
+</ul>
+<p>A general workflow for the creation of a new resource or to update a resource could be</p>
+<ul>
+<li>Update the code for the resource. This code can consist of Docker files, <a href="https://www.chef.io/">Chef</a>
+or <a href="https://puppet.com/">Puppet</a>, scripts etc.. The most important thing is that the files are
+stored in source control and a sensible source control strategy is used.</li>
+<li>Once the changes are made a new resource can be created from the code.
+<ul>
+<li>It is sensible to validate the sources using one or more suitable linters. Especially for infrastructure
+resources it is sensible to validate the sources before trying to create the resource because it
+potentially takes a long time to build a resource. Any errors that can be found sooner in the
+process will reduce the cycle time.</li>
+<li>Execute unit tests, e.g. <a href="https://docs.chef.io/chefspec.html">ChefSpec</a>, against the sources.
+Again, building a resource can take a long time so validation before trying to create the resource
+will reduce the cycle time.</li>
+<li>Actually create the new resource. For Docker containers this can be done from a
+<a href="https://docs.docker.com/engine/reference/builder/">docker file</a>. For a VM this can be done with
+<a href="https://packer.io">Packer</a>. Building a VM will take longer than building a docker container in
+most cases. Note that building resources will in general take longer than building applications
+it is sensible to use the build / deployment pipeline to build the resources that make up the
+build / deployment pipeline. By using the pipeline it is possible to create the artefacts for
+the services and then use these artefacts to create the resource.</li>
+</ul>
+</li>
+<li>Deploy the resource to a (small) test environment and execute the tests against the newly created
+resource.</li>
+<li>Once the tests have passed the newly made image can be &lsquo;promoted&rsquo;, i.e. approved for use in the
+production environment.</li>
+</ul>
+<p>Using the approaches mentioned above it is possible to improve the development pipeline without
+causing unnecessary disturbances for the development team.</p>
 
     </div>
 
     <div id="post-footer">
         <div>
     <div class="navlinks">
-                <a href="/posts/Nuclei-Release-V0660" title="Previous Post: Nuclei release - V0.6.6.0" class="navlinks-prev">« Nuclei release - V0.6.6.0</a>
-                <a href="/posts/Sherlock-Release-V0450" title="Next Post: Sherlock release - V0.4.5.0" class="navlinks-next">Sherlock release - V0.4.5.0 »</a>
+                <a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not" title="Previous Post: Software development pipeline - In the build system or not" class="navlinks-prev">« Software development pipeline - In the build system or not</a>
     </div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'PG2-Spending-a-weekend-in-the-air';
-    var disqus_title = 'PG2 - Spending a weekend in the air';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/PG2-Spending-a-weekend-in-the-air';
+    var disqus_identifier = 'Software-development-pipeline-considerations-for-infrastructure-improvements';
+    var disqus_title = 'Software delivery pipeline - Considerations for infrastructure improvements';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-considerations-for-infrastructure-improvements';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

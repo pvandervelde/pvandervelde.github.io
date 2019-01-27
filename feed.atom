@@ -3,9 +3,194 @@
 	<link rel="self" href="https://www.petrikvandervelde.nl/" />
 	<id>https://www.petrikvandervelde.nl/</id>
 	<title>Mind vortex</title>
-	<rights>2018</rights>
-	<updated>2018-12-03T03:27:22Z</updated>
+	<rights>2019</rights>
+	<updated>2019-01-27T03:31:29Z</updated>
 	<subtitle>Welcome!</subtitle>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Software-development-pipeline-considerations-for-infrastructure-improvements" />
+		<id>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-considerations-for-infrastructure-improvements</id>
+		<title>Software delivery pipeline - Considerations for infrastructure improvements</title>
+		<updated>2019-01-27T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Software delivery pipeline - Considerations for infrastructure improvements&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Sunday, January 27, 2019
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/immutable-infrastructure" class="btn btn-default btn-xs"&gt;Immutable infrastructure&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/infrastructure-as-code" class="btn btn-default btn-xs"&gt;Infrastructure as code&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/software-delivery-pipeline" class="btn btn-default btn-xs"&gt;Software delivery pipeline&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;In one of the post from a &lt;a href="Software-development-pipeline-Design-introduction.html"&gt;while ago&lt;/a&gt; we
+discussed what a software development pipeline is and what the &lt;a href="Software-development-pipeline-Design-accuracy.html"&gt;most&lt;/a&gt;
+&lt;a href="Software-development-pipeline-Design-performance.html"&gt;important&lt;/a&gt;
+&lt;a href="Software-development-pipeline-Design-resilience.html"&gt;characteristics&lt;/a&gt;
+&lt;a href="Software-development-pipeline-Design-flexibility.html"&gt;are&lt;/a&gt;. Given that the pipeline is used
+during the large majority of the development, test and release process it is fair to say that for
+a software company the build and deployment pipeline infrastructure should be considered critical
+infrastructure because without it the development team will be more limited in their ability to
+perform their tasks. Note that at no stage should any specific tool, including the pipeline, be the
+single point of failure. More on how to reduce the dependency on CI systems and the pipeline will
+follow in another post.&lt;/p&gt;
+&lt;p&gt;Just like any other piece of infrastructure the development pipeline will need to be updated
+and improved on a regular basis, either to fix bugs, patch security issues or to add new features
+that will make the development team more productive. Because the pipeline falls in the cricital
+infrastructure category it is important to keep disturbances to a minimum while performing these
+changes. There are two main parts to providing (nearly) continuous service while still providing
+improvements and updates. The first is to ensure that the changes are tracked and tested properly,
+the second is to deploy the exact changes that were tested to the production system in a way that no
+or minimal interruptions occur. A sensible approach to the first part is to follow a solid software
+development process so that the changes are controlled, verified and monitored which can be achieved
+by creating infrastructure resources completely from information stored in source control, i.e. using
+&lt;a href="https://en.wikipedia.org/wiki/Infrastructure_as_code"&gt;infrastructure-as-code&lt;/a&gt;, making the resources
+as &lt;a href="https://thenewstack.io/a-brief-look-at-immutable-infrastructure-and-why-it-is-such-a-quest/"&gt;immutable&lt;/a&gt;
+as &lt;a href="https://twitter.com/jezhumble/status/970334897544900609"&gt;possible&lt;/a&gt; and performing automated tests
+on these resources after deploying them in a test environment using the same deployment process that
+will be used to deploy the resources to the production environment.&lt;/p&gt;
+&lt;p&gt;Using this approach should allow the creation of resources that are thoroughly tested and can be
+deployed in a sensible fashion. It should be noted that no amount of automated testing will
+guarantee that the new resources are free of any issues so it will always be important use deployment
+techniques that allow for example &lt;a href="https://martinfowler.com/bliki/BlueGreenDeployment.html"&gt;quick roll-back&lt;/a&gt;
+or &lt;a href="https://martinfowler.com/bliki/CanaryRelease.html"&gt;staged roll-outs&lt;/a&gt;. Additionally deployed
+resources should be carefully monitored so that issues will be discovered quickly.&lt;/p&gt;
+&lt;p&gt;To achieve the goal of being able to deploy updates and improvements to the development
+infrastructure the following steps can be taken&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Using infrastructure-as-code to create new resource images each time a resource needs to be updated.
+Trying to create resources by hand will drastically reduce the ease at which they can be build and
+be made consistently. Resources that are deployed into an environment should never be changed. If
+bugs need to be fixed or new features need to be added then a new version of the resource image
+should be created, tested and deployed. That way changes can be tested before deployment and
+the configuration of the deployed resources will be known.&lt;/li&gt;
+&lt;li&gt;Resources should be placed on virtual machines or in (Docker) containers. Both technologies provide
+an easy way to create one or more instances of the resource which is required in order to test or
+scale a service. The general idea is to have one resource per VM / container instance. One resource
+may contain multiple services or daemons but it always serves a single goal. Note that in some cases
+people will state that you should only use containers and not VMs but there are still cases where
+a VM works better, e.g. in some cases executing software builds works better in a VM or running
+a service that stores large quantities of data. Additionally if all or a large part of the
+infrastructure is running on VMs then using VMs might make more sense. In all cases the correct
+approach, container or VMs, is the one that makes sense for the environment the resources will
+be deployed into.&lt;/li&gt;
+&lt;li&gt;Some way of getting configurations into the resource. Some configurations can be hard-coded into
+the resource, if they are never expected to be changed. The draw-back of encoding a configuration
+into a resource is that this configuration cannot be changed if the resource is used in different
+environments, e.g. a test environment and a production environment. Configurations which are
+different between environments should not be encoded in the resource since that may prevent the
+resource from being deployed in a test environment for testing. Provisioning a resource requires
+that you can apply all the environment specific information to a resource which is a difficult
+problem to solve especially for the initial set of configurations, e.g. the configurations which
+determine where to get the remaining configurations. Several options are:
+&lt;ul&gt;
+&lt;li&gt;For VMs you can use DVD / ISO files that are linked on first start-up of the resource.&lt;/li&gt;
+&lt;li&gt;Systems like &lt;a href="https://github.com/hashicorp/consul-template"&gt;consul-template&lt;/a&gt; can generate
+configurations from a distributed key-value store.&lt;/li&gt;
+&lt;li&gt;Resources can be pull their own configurations from a shared store.&lt;/li&gt;
+&lt;li&gt;For containers often environment variables are used. These might be sufficient but note that they
+are not secure, both inside the container and outside the container.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Configurations that should be provided when a resource is provisioned should be stored
+in source control, just like the resource code is, in order to be able to automate the verification
+and delivery of the configuration values.
+&lt;ul&gt;
+&lt;li&gt;The infrastructure should have it's own shared storage for configurations so that the ‘build’
+process can push to the shared storage and configurations are distributed from there. That ensures
+that the build process doesn't need to know where to deliver exactly (which can change as the
+infrastructure changes). One option is to use SQL / no-SQL type storage (e.g. Elasticsearch),
+another option is to use a system like &lt;a href="https://consul.io"&gt;consul&lt;/a&gt; which has a distributed key-value
+store&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Automatic testing of a resource once it is deployed into an environment. For the very least the
+smoke tests should be run automatically when the resource is deployed to a test environment.&lt;/li&gt;
+&lt;li&gt;Automatic deployments when a new resource becomes available or approved for an environment, for
+the very least to the test environment but ideally to all environments. Using the same deployment
+system for all environments is highly recommended because this allows testing the deployment
+process as well as the resource.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A general workflow for the creation of a new resource or to update a resource could be&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Update the code for the resource. This code can consist of Docker files, &lt;a href="https://www.chef.io/"&gt;Chef&lt;/a&gt;
+or &lt;a href="https://puppet.com/"&gt;Puppet&lt;/a&gt;, scripts etc.. The most important thing is that the files are
+stored in source control and a sensible source control strategy is used.&lt;/li&gt;
+&lt;li&gt;Once the changes are made a new resource can be created from the code.
+&lt;ul&gt;
+&lt;li&gt;It is sensible to validate the sources using one or more suitable linters. Especially for infrastructure
+resources it is sensible to validate the sources before trying to create the resource because it
+potentially takes a long time to build a resource. Any errors that can be found sooner in the
+process will reduce the cycle time.&lt;/li&gt;
+&lt;li&gt;Execute unit tests, e.g. &lt;a href="https://docs.chef.io/chefspec.html"&gt;ChefSpec&lt;/a&gt;, against the sources.
+Again, building a resource can take a long time so validation before trying to create the resource
+will reduce the cycle time.&lt;/li&gt;
+&lt;li&gt;Actually create the new resource. For Docker containers this can be done from a
+&lt;a href="https://docs.docker.com/engine/reference/builder/"&gt;docker file&lt;/a&gt;. For a VM this can be done with
+&lt;a href="https://packer.io"&gt;Packer&lt;/a&gt;. Building a VM will take longer than building a docker container in
+most cases. Note that building resources will in general take longer than building applications
+it is sensible to use the build / deployment pipeline to build the resources that make up the
+build / deployment pipeline. By using the pipeline it is possible to create the artefacts for
+the services and then use these artefacts to create the resource.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Deploy the resource to a (small) test environment and execute the tests against the newly created
+resource.&lt;/li&gt;
+&lt;li&gt;Once the tests have passed the newly made image can be ‘promoted’, i.e. approved for use in the
+production environment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Using the approaches mentioned above it is possible to improve the development pipeline without
+causing unnecessary disturbances for the development team.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not" title="Previous Post: Software development pipeline - In the build system or not" class="navlinks-prev"&gt;« Software development pipeline - In the build system or not&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Software-development-pipeline-considerations-for-infrastructure-improvements';
+    var disqus_title = 'Software delivery pipeline - Considerations for infrastructure improvements';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-considerations-for-infrastructure-improvements';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>Welcome!</summary>
+	</entry>
 	<entry>
 		<link href="https://www.petrikvandervelde.nl/posts/Sofware-development-pipeline-In-the-build-system-or-not" />
 		<id>https://www.petrikvandervelde.nl/posts/Sofware-development-pipeline-In-the-build-system-or-not</id>
@@ -168,6 +353,7 @@ external systems.&lt;/p&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/Software-development-pipeline-Design-flexibility" title="Previous Post: Software development pipeline - Design flexibility" class="navlinks-prev"&gt;« Software development pipeline - Design flexibility&lt;/a&gt;
+                &lt;a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements" title="Next Post: Software delivery pipeline - Considerations for infrastructure improvements" class="navlinks-next"&gt;Software delivery pipeline - Considerations for infrastructure improvements »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -1610,7 +1796,7 @@ executing tests during the packer test build.&lt;/li&gt;
     &lt;div id="post-footer"&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Previous Post: Ops-Tools-Build release - V0.2.0" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.2.0&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V092" title="Previous Post: nBuildKit release - V0.9.2" class="navlinks-prev"&gt;« nBuildKit release - V0.9.2&lt;/a&gt;
                 &lt;a href="/posts/nBuildkit-release-V0100" title="Next Post: nBuildKit release - V0.10.0" class="navlinks-next"&gt;nBuildKit release - V0.10.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
@@ -1717,8 +1903,8 @@ documents have been updated.&lt;/p&gt;
     &lt;div id="post-footer"&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V091" title="Previous Post: nBuildKit release - V0.9.1" class="navlinks-prev"&gt;« nBuildKit release - V0.9.1&lt;/a&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Next Post: Ops-Tools-Build release - V0.2.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.2.0 »&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Previous Post: Ops-Tools-Build release - V0.2.0" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.2.0&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V030" title="Next Post: Ops-Tools-Build release - V0.3.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.3.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -1801,8 +1987,8 @@ build fails. This improves the ability to debug issues in the packer build.&lt;/
     &lt;div id="post-footer"&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V092" title="Previous Post: nBuildKit release - V0.9.2" class="navlinks-prev"&gt;« nBuildKit release - V0.9.2&lt;/a&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V030" title="Next Post: Ops-Tools-Build release - V0.3.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.3.0 »&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V091" title="Previous Post: nBuildKit release - V0.9.1" class="navlinks-prev"&gt;« nBuildKit release - V0.9.1&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V092" title="Next Post: nBuildKit release - V0.9.2" class="navlinks-next"&gt;nBuildKit release - V0.9.2 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -1896,7 +2082,7 @@ will generate the website using &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;.&
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/Ops-Tools-Build-release-V011" title="Previous Post: Ops-Tools-Build release - V0.1.0 and V0.1.1" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.1.0 and V0.1.1&lt;/a&gt;
-                &lt;a href="/posts/nBuildKit-release-V092" title="Next Post: nBuildKit release - V0.9.2" class="navlinks-next"&gt;nBuildKit release - V0.9.2 »&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Next Post: Ops-Tools-Build release - V0.2.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.2.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -2699,179 +2885,6 @@ more than 5km.&lt;/p&gt;
     var disqus_identifier = 'Goals-for-2017';
     var disqus_title = 'Goals for 2017';
     var disqus_url = 'https://www.petrikvandervelde.nl/posts/Goals-for-2017';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content>
-		<summary>Welcome!</summary>
-	</entry>
-	<entry>
-		<link href="https://www.petrikvandervelde.nl/posts/Updating-blog-to-wyam" />
-		<id>https://www.petrikvandervelde.nl/posts/Updating-blog-to-wyam</id>
-		<title>Exit Docpad, enter Wyam</title>
-		<updated>2017-01-11T00:00:00Z</updated>
-		<content>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Exit Docpad, enter Wyam&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Wednesday, January 11, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/blog" class="btn btn-default btn-xs"&gt;Blog&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;After not having done anything with my blog for over a year I have returned and will once again try
-to make this blogging thing happen. Part of my goals for 2017 is to start advancing my career
-independent from my job. And one part of that goal is to blog about all the things I'm learning.&lt;/p&gt;
-&lt;p&gt;For about a year and a half &lt;a href="http://docpad.org/"&gt;Docpad&lt;/a&gt; has been very helpful in adding content to
-my blog, however as I was trying to automate my blog more and more I came to the conclusion that
-being on a Windows operating system doesn't make dealing with node and NPM any easier. So I figured
-it might make sense to switch to a &lt;a href=""&gt;static generator&lt;/a&gt; which uses technologies that play better on
-Windows. Enter &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;, a static generator written in .NET, a technology stack
-I'm very familiar with.&lt;/p&gt;
-&lt;h3&gt;Getting started&lt;/h3&gt;
-&lt;p&gt;To get started with Wyam I downloaded the latest version and generated a skeleton directory structure
-by running the &lt;code&gt;wyam.exe new --recipe Blog&lt;/code&gt; command. Once the skeleton has been created you can
-create the pages by running &lt;code&gt;wyam.exe -r Blog -t CleanBlog&lt;/code&gt;, and to create and be able to view
-the pages you can execute &lt;code&gt;wyam -r Blog -t CleanBlog -p&lt;/code&gt;. These commands assume that you store
-your blog source in the &lt;code&gt;input&lt;/code&gt; directory and that the website pages should be placed in the
-&lt;code&gt;output&lt;/code&gt; directory. This however is where the build engineer in me started making
-disapproving sounds so I changed the input and output folders by specifying the appropriate command line
-parameters to make it happy again&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;wyam.exe --input src --output build\site -r Blog -t CleanBlog -p
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Good that is much more inline with the standard paths used by &lt;a href="/projects/nbuildkit"&gt;nBuildKit&lt;/a&gt;.
-Another change that needs to be made is where Wyam stores the NuGet packages. Normally Wyam stores
-those in a global location, however I strongly feel that builds should always only write to their
-local workspaces, so lets redirect the packages to a folder that is local to the workspaces&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;wyam.exe --input src --output build\site --use-local-packages --packages-path packages -r Blog -t CleanBlog -p
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;That command line is getting longer but we can make it shorter again by moving some of the
-standard items into the &lt;a href="https://wyam.io/docs/usage/configuration"&gt;Wyam configuration file&lt;/a&gt;, so
-I created a &lt;code&gt;config.wyam&lt;/code&gt; file in the root of the workspace and added the following lines&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;// Preprocessor directives
-#recipe Blog
-#theme CleanBlog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And with this the command line to generate the website and start a local webserver is&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;wyam.exe --input src --output build\site --use-local-packages --packages-path packages
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;Moving the existing content&lt;/h3&gt;
-&lt;p&gt;Moving the existing content from the Docpad generated site to the Wyam generated site required a bit
-of work although the initial results were quite easy to achieve. I started off moving the
-post files to the &lt;code&gt;posts&lt;/code&gt; directory and updating all the files to be named so that Wyam is able
-to extract the date and time from the file name. In order for that to work Wyam wants the file
-name to follow the naming convention &lt;code&gt;&amp;lt;YEAR&amp;gt;-&amp;lt;MONTH&amp;gt;-&amp;lt;DAY&amp;gt;-&amp;lt;TITLE&amp;gt;.md&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;The next step was to update the front matter in the post files. Wyam would like to see the
-following format:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Title: &amp;lt;POST_TITLE_GOES_HERE&amp;gt;
-Tags:
-  - &amp;lt;TAG_1&amp;gt;
-  - &amp;lt;TAG_2&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;With this done Wyam can generate a website with blog posts with the correct titles and dates. This
-is a good start. Next are the non-post pages, like the &lt;a href="/"&gt;home page&lt;/a&gt; and the &lt;a href="/projects"&gt;project pages&lt;/a&gt;.
-These can simply be dropped in the desired directory. Wyam will automatically generate HTML pages
-from any Markdown file and simply copy the other files (like the favicon etc.). Any non-blog post
-pages will show up in the menu bar so for all pages that should not show up in the menu bar you can
-add the &lt;code&gt;ShowInNavBar: false&lt;/code&gt; entry in the page front matter like so:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Title: My page that shouldn't show up in the NavBar
-ShowInNavBar: false
----
-# Content
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Once that was done I created &lt;a href="https://wyam.io/recipes/blog/themes"&gt;overrides&lt;/a&gt; for&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The page and post footers by creating the &lt;code&gt;_Footer.cshml&lt;/code&gt; and &lt;code&gt;_PostFooter.cshtml&lt;/code&gt; files. The page
-footer was straight forward but the post footer required some additional work to get the links
-to the previous and next post to function correctly. Fortunately &lt;a href="https://daveaglick.com/"&gt;Dave Glick&lt;/a&gt;
-was very helpful on the &lt;a href="https://gitter.im/Wyamio/Wyam"&gt;gitter&lt;/a&gt; page for Wyam and pointed out
-that there are collections that you can iterate over to find out what the previous and
-next posts are.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;script src="https://gist.github.com/pvandervelde/d2825f2c5d67ab30d15ce179ced4b30f.js"&gt;&lt;/script&gt;
-&lt;ul&gt;
-&lt;li&gt;The sidebar which contains my little ‘about me’ blurp.&lt;/li&gt;
-&lt;li&gt;The navbar which by default orders pages alphabetically and does not contain a link to the home page.
-In my Docpad blog both those things are not true, so I did a bit of Razor coding and generated the
-navbar items myself&lt;/li&gt;
-&lt;/ul&gt;
-&lt;script src="https://gist.github.com/pvandervelde/7645c478ae08c94d3716ca8e8ad41c4c.js"&gt;&lt;/script&gt;
-&lt;p&gt;These changes got most of the pages looking pretty close to what they should be, but yet not quite
-the same as it was.&lt;/p&gt;
-&lt;h3&gt;Tweaking&lt;/h3&gt;
-&lt;p&gt;If you don't have an existing layout for your blog or you don't mind changing the layout then
-after the previous steps you should have a very nice looking blog that works just fine. However it
-turns out I'm stuborn and specific in the way I want things to look. In this case I wanted my blog
-to not look any different than the existing one does, at least for the time being. So that meant
-I had to do a fair amount of tweaking.&lt;/p&gt;
-&lt;p&gt;The first major tweak was to get the sidebar looking like it should. This turned out to be a little
-harder than I expected because it required overriding the &lt;code&gt;_Layout.cshtml&lt;/code&gt; page. While this is a
-bigger step than the other overrides it also meant I was able to make the pages look exactly like
-I wanted and I was able to re-use my CSS files.&lt;/p&gt;
-&lt;script src="https://gist.github.com/pvandervelde/5e3520e0f150176f529b1972fc2042a7.js"&gt;&lt;/script&gt;
-&lt;p&gt;One of the more tricky parts was to generate a list of the last 10 posts. Originally I was using
-the list of posts, however because this is the layout page that is used for all pages it might
-well be that some pages are generated before the full post list is available (say hello to the
-&lt;a href="/tags"&gt;tags&lt;/a&gt; pages). Once again Dave Glick came through and pointed me to the &lt;a href="https://wyam.io/recipes/blog/pipelines"&gt;RawPosts&lt;/a&gt;
-collection which is generated right at the beginning of the cycle.&lt;/p&gt;
-&lt;p&gt;Once the issues with the sidebar were resolved the next step was to show the last five blog posts
-on the home page. By default Wyam will place excepts on the home page with a link to the actual post
-in the post title. However what I wanted was the full post, excluding the comment section. Once again
-the &lt;code&gt;RawPosts&lt;/code&gt; collection came to the rescue which allowed me to iterate over the last five posts
-and get their pre-rendered content.&lt;/p&gt;
-&lt;script src="https://gist.github.com/pvandervelde/d0d83eb2c636a5d3b63b5bf0cce6029c.js"&gt;&lt;/script&gt;
-&lt;p&gt;Some additional hacking also allowed me to reuse the &lt;code&gt;_PostHeader.cshtml&lt;/code&gt; file for both the posts
-on the home page, for which the title links to the actual post page, and for the post page in which
-the title is just a header.&lt;/p&gt;
-&lt;script src="https://gist.github.com/pvandervelde/465c0a2399f135a25e656b0d15c1866a.js"&gt;&lt;/script&gt;
-&lt;p&gt;With these changes the blog looks (almost) exactly like it used to look except that it is now
-being generated by &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;. All in all I have to say I'm pretty happy with the result
-and with how easy it was to move from Docpad to Wyam. And as a bonus I understand much more of
-how Wyam works and how my own blog is generated.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V051" title="Previous Post: nBuildKit release - V0.5.1" class="navlinks-prev"&gt;« nBuildKit release - V0.5.1&lt;/a&gt;
-                &lt;a href="/posts/Goals-for-2017" title="Next Post: Goals for 2017" class="navlinks-next"&gt;Goals for 2017 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Updating-blog-to-wyam';
-    var disqus_title = 'Exit Docpad, enter Wyam';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Updating-blog-to-wyam';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

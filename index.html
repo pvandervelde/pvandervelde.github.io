@@ -110,6 +110,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software delivery pipeline - Considerations for infrastructure improvements</a></li>
                             <li><a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not">Software development pipeline - In the build system or not</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-flexibility">Software development pipeline - Design flexibility</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-resilience">Software development pipeline - Design resilience</a></li>
@@ -119,7 +120,6 @@
                             <li><a href="/posts/nBuildkit-Release-V0102">nBuildKit release - V0.10.2</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-introduction">Software development pipeline - Design introduction</a></li>
                             <li><a href="/posts/nBuildkit-release-V0100">nBuildKit release - V0.10.0</a></li>
-                            <li><a href="/posts/Ops-Tools-Build-release-V030">Ops-Tools-Build release - V0.3.0</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -133,28 +133,28 @@
                                     <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
                                     <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (7)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (7)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (6)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (7)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (6)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (6)</a>
+                                    <a role="button" href="/tags/pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
                                 </li>
                         </ul>
                     </div>
@@ -169,6 +169,153 @@
 
             <div id="content">
 
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software delivery pipeline - Considerations for infrastructure improvements</a>
+</h2>
+<div id="post-meta">
+    <p>
+Sunday, January 27, 2019
+ |         Posted in                     <a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs">Delivering software</a>
+                    <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
+                    <a id="post-category" role="button" href="/tags/immutable-infrastructure" class="btn btn-default btn-xs">Immutable infrastructure</a>
+                    <a id="post-category" role="button" href="/tags/infrastructure-as-code" class="btn btn-default btn-xs">Infrastructure as code</a>
+                    <a id="post-category" role="button" href="/tags/software-delivery-pipeline" class="btn btn-default btn-xs">Software delivery pipeline</a>
+    </p>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>In one of the post from a <a href="Software-development-pipeline-Design-introduction.html">while ago</a> we
+discussed what a software development pipeline is and what the <a href="Software-development-pipeline-Design-accuracy.html">most</a>
+<a href="Software-development-pipeline-Design-performance.html">important</a>
+<a href="Software-development-pipeline-Design-resilience.html">characteristics</a>
+<a href="Software-development-pipeline-Design-flexibility.html">are</a>. Given that the pipeline is used
+during the large majority of the development, test and release process it is fair to say that for
+a software company the build and deployment pipeline infrastructure should be considered critical
+infrastructure because without it the development team will be more limited in their ability to
+perform their tasks. Note that at no stage should any specific tool, including the pipeline, be the
+single point of failure. More on how to reduce the dependency on CI systems and the pipeline will
+follow in another post.</p>
+<p>Just like any other piece of infrastructure the development pipeline will need to be updated
+and improved on a regular basis, either to fix bugs, patch security issues or to add new features
+that will make the development team more productive. Because the pipeline falls in the cricital
+infrastructure category it is important to keep disturbances to a minimum while performing these
+changes. There are two main parts to providing (nearly) continuous service while still providing
+improvements and updates. The first is to ensure that the changes are tracked and tested properly,
+the second is to deploy the exact changes that were tested to the production system in a way that no
+or minimal interruptions occur. A sensible approach to the first part is to follow a solid software
+development process so that the changes are controlled, verified and monitored which can be achieved
+by creating infrastructure resources completely from information stored in source control, i.e. using
+<a href="https://en.wikipedia.org/wiki/Infrastructure_as_code">infrastructure-as-code</a>, making the resources
+as <a href="https://thenewstack.io/a-brief-look-at-immutable-infrastructure-and-why-it-is-such-a-quest/">immutable</a>
+as <a href="https://twitter.com/jezhumble/status/970334897544900609">possible</a> and performing automated tests
+on these resources after deploying them in a test environment using the same deployment process that
+will be used to deploy the resources to the production environment.</p>
+<p>Using this approach should allow the creation of resources that are thoroughly tested and can be
+deployed in a sensible fashion. It should be noted that no amount of automated testing will
+guarantee that the new resources are free of any issues so it will always be important use deployment
+techniques that allow for example <a href="https://martinfowler.com/bliki/BlueGreenDeployment.html">quick roll-back</a>
+or <a href="https://martinfowler.com/bliki/CanaryRelease.html">staged roll-outs</a>. Additionally deployed
+resources should be carefully monitored so that issues will be discovered quickly.</p>
+<p>To achieve the goal of being able to deploy updates and improvements to the development
+infrastructure the following steps can be taken</p>
+<ul>
+<li>Using infrastructure-as-code to create new resource images each time a resource needs to be updated.
+Trying to create resources by hand will drastically reduce the ease at which they can be build and
+be made consistently. Resources that are deployed into an environment should never be changed. If
+bugs need to be fixed or new features need to be added then a new version of the resource image
+should be created, tested and deployed. That way changes can be tested before deployment and
+the configuration of the deployed resources will be known.</li>
+<li>Resources should be placed on virtual machines or in (Docker) containers. Both technologies provide
+an easy way to create one or more instances of the resource which is required in order to test or
+scale a service. The general idea is to have one resource per VM / container instance. One resource
+may contain multiple services or daemons but it always serves a single goal. Note that in some cases
+people will state that you should only use containers and not VMs but there are still cases where
+a VM works better, e.g. in some cases executing software builds works better in a VM or running
+a service that stores large quantities of data. Additionally if all or a large part of the
+infrastructure is running on VMs then using VMs might make more sense. In all cases the correct
+approach, container or VMs, is the one that makes sense for the environment the resources will
+be deployed into.</li>
+<li>Some way of getting configurations into the resource. Some configurations can be hard-coded into
+the resource, if they are never expected to be changed. The draw-back of encoding a configuration
+into a resource is that this configuration cannot be changed if the resource is used in different
+environments, e.g. a test environment and a production environment. Configurations which are
+different between environments should not be encoded in the resource since that may prevent the
+resource from being deployed in a test environment for testing. Provisioning a resource requires
+that you can apply all the environment specific information to a resource which is a difficult
+problem to solve especially for the initial set of configurations, e.g. the configurations which
+determine where to get the remaining configurations. Several options are:
+<ul>
+<li>For VMs you can use DVD / ISO files that are linked on first start-up of the resource.</li>
+<li>Systems like <a href="https://github.com/hashicorp/consul-template">consul-template</a> can generate
+configurations from a distributed key-value store.</li>
+<li>Resources can be pull their own configurations from a shared store.</li>
+<li>For containers often environment variables are used. These might be sufficient but note that they
+are not secure, both inside the container and outside the container.</li>
+</ul>
+</li>
+<li>Configurations that should be provided when a resource is provisioned should be stored
+in source control, just like the resource code is, in order to be able to automate the verification
+and delivery of the configuration values.
+<ul>
+<li>The infrastructure should have it's own shared storage for configurations so that the &lsquo;build&rsquo;
+process can push to the shared storage and configurations are distributed from there. That ensures
+that the build process doesn't need to know where to deliver exactly (which can change as the
+infrastructure changes). One option is to use SQL / no-SQL type storage (e.g. Elasticsearch),
+another option is to use a system like <a href="https://consul.io">consul</a> which has a distributed key-value
+store</li>
+</ul>
+</li>
+<li>Automatic testing of a resource once it is deployed into an environment. For the very least the
+smoke tests should be run automatically when the resource is deployed to a test environment.</li>
+<li>Automatic deployments when a new resource becomes available or approved for an environment, for
+the very least to the test environment but ideally to all environments. Using the same deployment
+system for all environments is highly recommended because this allows testing the deployment
+process as well as the resource.</li>
+</ul>
+<p>A general workflow for the creation of a new resource or to update a resource could be</p>
+<ul>
+<li>Update the code for the resource. This code can consist of Docker files, <a href="https://www.chef.io/">Chef</a>
+or <a href="https://puppet.com/">Puppet</a>, scripts etc.. The most important thing is that the files are
+stored in source control and a sensible source control strategy is used.</li>
+<li>Once the changes are made a new resource can be created from the code.
+<ul>
+<li>It is sensible to validate the sources using one or more suitable linters. Especially for infrastructure
+resources it is sensible to validate the sources before trying to create the resource because it
+potentially takes a long time to build a resource. Any errors that can be found sooner in the
+process will reduce the cycle time.</li>
+<li>Execute unit tests, e.g. <a href="https://docs.chef.io/chefspec.html">ChefSpec</a>, against the sources.
+Again, building a resource can take a long time so validation before trying to create the resource
+will reduce the cycle time.</li>
+<li>Actually create the new resource. For Docker containers this can be done from a
+<a href="https://docs.docker.com/engine/reference/builder/">docker file</a>. For a VM this can be done with
+<a href="https://packer.io">Packer</a>. Building a VM will take longer than building a docker container in
+most cases. Note that building resources will in general take longer than building applications
+it is sensible to use the build / deployment pipeline to build the resources that make up the
+build / deployment pipeline. By using the pipeline it is possible to create the artefacts for
+the services and then use these artefacts to create the resource.</li>
+</ul>
+</li>
+<li>Deploy the resource to a (small) test environment and execute the tests against the newly created
+resource.</li>
+<li>Once the tests have passed the newly made image can be &lsquo;promoted&rsquo;, i.e. approved for use in the
+production environment.</li>
+</ul>
+<p>Using the approaches mentioned above it is possible to improve the development pipeline without
+causing unnecessary disturbances for the development team.</p>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -685,364 +832,6 @@ that influence multiple properties.</p>
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v">Exportable Linux virtual hard-drives for Hyper-V</a>
-</h2>
-<div id="post-meta">
-    <p>
-Thursday, September 14, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/hyper-v" class="btn btn-default btn-xs">Hyper-V</a>
-                    <a id="post-category" role="button" href="/tags/preseed" class="btn btn-default btn-xs">Preseed</a>
-                    <a id="post-category" role="button" href="/tags/ubuntu" class="btn btn-default btn-xs">Ubuntu</a>
-                    <a id="post-category" role="button" href="/tags/unattend" class="btn btn-default btn-xs">Unattend</a>
-    </p>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>As part of learning more about infrastructure creation, testing and deployment one of the projects
-I'm working on is creating a set of virtual machine images for <a href="https://github.com/Calvinverse/base.windows">Windows</a>
-and <a href="https://github.com/Calvinverse/base.linux">Linux</a> which can be used as a base for more complex
-virtual machine based resources, e.g. <a href="https://github.com/Calvinverse/resource.hashi.server">a consul host</a>
-or <a href="https://github.com/Calvinverse/resource.container.host.linux">a docker host</a>.</p>
-<p>The main virtualization technology I use is Hyper-V on both Windows 10 and Windows 2016 which allows
-creating <a href="https://technet.microsoft.com/en-us/library/dn282285(v=ws.11).aspx">Generation 2</a> virtual machines.
-Some of the
-<a href="https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/plan/should-i-create-a-generation-1-or-2-virtual-machine-in-hyper-v">benefits of a generation 2</a>
-virtual machine are:</p>
-<ul>
-<li>Boot volume up to 64 Tb</li>
-<li>Use of <a href="https://en.wikipedia.org/wiki/Unified_Extensible_Firmware_Interface">UEFI</a> for the boot process</li>
-<li>Faster boot</li>
-</ul>
-<p>The initial version of the base resources allowed creating a virtual machine with
-<a href="https://packer.io">Packer</a> and exporting that virtual machine to be used as a base. However ideally
-all one would need is the virtual hard-drive. The virtual machine configuration can easily be
-created for each individual resource and the configuration is usually specific to the original
-host by virtue of it containing the absolute path of the virtual hard drive, the name of the network
-interfaces etc..</p>
-<p>When building Ubuntu virtual disk images one of the issues with using a Generation 2 virtual machine is that
-it uses UEFI for the boot process. It turns out that the Ubuntu install process stores the UEFI files
-in the <a href="https://blogs.msdn.microsoft.com/virtual_pc_guy/2015/02/11/copying-the-vhd-of-a-generation-2-linux-vmand-not-booting-afterwards/">virtual machine configuration file</a>.
-This means that when one creates a new virtual machine from the base virtual disk image it runs into
-a problem when booting because the boot files are not present in the new machine. The result is this</p>
-<p><img align="center" alt="Hyper-V error message due to missing UEFI sector" src="/assets/images/infrastructure/hyperv-gen2-ubuntu-missing-uefi-sector-result.png" /></p>
-<p>The solution to this issue obviously is to force the Ubuntu installer to write the UEFI files to the
-virtual hard disk which can be achieved by adding the correct configuration values to the
-<a href="https://help.ubuntu.com/lts/installation-guide/armhf/apb.html">preseed file</a>. Unfortunately the
-documentation for the different options in the preseed files is hard to find. In the end a combination
-of the <a href="https://help.ubuntu.com/lts/installation-guide/example-preseed.txt">ubuntu sample preseed</a> file,
-bug reports, old forum messages and a few blog
-<a href="https://blog.jhnr.ch/2017/02/23/resolving-no-x64-based-uefi-boot-loader-was-found-when-starting-ubuntu-virtual-machine/">posts</a>
-allowed me to determine that to make the Ubuntu installer place the UEFI files in the correct location
-two parts of the preseed file needed to be changed from the default Ubuntu one. The first
-part is the partitioning section which requires that at least an <code>EFI</code> partition and (most likely)
-a <code>boot</code> partition are defined. This almost requires that a custom recipe is defined. The one
-I currently use looks as follows:</p>
-<pre><code># Or provide a recipe of your own...
-# If not, you can put an entire recipe into the preconfiguration file in one
-# (logical) line. This example creates a small /boot partition, suitable
-# swap, and uses the rest of the space for the root partition:
-d-i partman-auto/expert_recipe string       \
-    grub-efi-boot-root ::                   \
-        1 1 1 free                          \
-            $bios_boot{ }                   \
-            method{ biosgrub }              \
-        .                                   \
-        256 256 256 fat32                   \
-            $primary{ }                     \
-            method{ efi }                   \
-            format{ }                       \
-        .                                   \
-        512 512 512 ext4                    \
-            $primary{ }                     \
-            $bootable{ }                    \
-            method{ format }                \
-            format{ }                       \
-            use_filesystem{ }               \
-            filesystem{ ext4 }              \
-            mountpoint{ /boot }             \
-        .                                   \
-        4096 4096 4096 linux-swap           \
-            $lvmok{ }                       \
-            method{ swap }                  \
-            format{ }                       \
-        .                                   \
-        10000 20000 -1 ext4                 \
-            $lvmok{ }                       \
-            method{ format }                \
-            format{ }                       \
-            use_filesystem{ }               \
-            filesystem{ ext4 }              \
-            mountpoint{ / }                 \
-        .
-</code></pre>
-<p>Note that syntax for the partioner section is very particular. Note especially the  dots (<code>.</code>) at
-the end of each section. If the syntax isn't completely correct nothing will work but no sensible
-error messages will be provided.
-Additionally the Ubuntu install complained when there was no <code>swap</code> section so I added one. This
-shouldn't be necessary to get the UEFI files in the correct location but it is apparently necessary
-to get Ubuntu to install in the first place.</p>
-<p>The second part of the preseed file that should be changed is the <code>grub-installer</code> section. There
-the following line should be added</p>
-<pre><code>d-i grub-installer/force-efi-extra-removable boolean true
-</code></pre>
-<p>This line indicates that grub should force install the UEFI files, thus overriding the normal state
-of not installing the UEFI boot files.</p>
-<p>This means that the complete preseed file looks as follows</p>
-<pre><code># preseed configuration file for Ubuntu.
-# Based on: https://help.ubuntu.com/lts/installation-guide/armhf/apbs04.html
-
-#
-# *** Localization ***
-#
-# Originally from: https://help.ubuntu.com/lts/installation-guide/armhf/apbs04.html#preseed-l10n
-#
-
-# Preseeding only locale sets language, country and locale.
-d-i debian-installer/locale string en_US.utf8
-
-# Keyboard selection.
-# Disable automatic (interactive) keymap detection.
-d-i console-setup/ask_detect boolean false
-d-i console-setup/layout string us
-
-d-i kbd-chooser/method select American English
-
-#
-# *** Network configuration ***
-#
-# Originally from: https://help.ubuntu.com/lts/installation-guide/armhf/apbs04.html#preseed-network
-#
-
-# netcfg will choose an interface that has link if possible. This makes it
-# skip displaying a list if there is more than one interface.
-d-i netcfg/choose_interface select auto
-
-# If you want the preconfiguration file to work on systems both with and
-# without a dhcp server, uncomment these lines and the static network
-# configuration below.
-d-i netcfg/dhcp_failed note ignore
-d-i netcfg/dhcp_options select Configure network manually
-
-# Any hostname and domain names assigned from dhcp take precedence over
-# values set here. However, setting the values still prevents the questions
-# from being shown, even if values come from dhcp.
-d-i netcfg/get_hostname string unassigned-hostname
-d-i netcfg/get_domain string unassigned-domain
-
-# Disable that annoying WEP key dialog.
-d-i netcfg/wireless_wep string
-
-
-#
-# *** Account setup ***
-#
-# Originally from: https://help.ubuntu.com/lts/installation-guide/armhf/apbs04.html#preseed-account
-#
-
-# To create a normal user account.
-d-i passwd/user-fullname string localadmin
-d-i passwd/username string localadmin
-
-# Normal user's password, either in clear text
-d-i passwd/user-password password reallygoodpassword
-d-i passwd/user-password-again password reallygoodpassword
-
-# The installer will warn about weak passwords. If you are sure you know
-# what you're doing and want to override it, uncomment this.
-d-i user-setup/encrypt-home boolean false
-d-i user-setup/allow-password-weak boolean true
-
-# Set to true if you want to encrypt the first user's home directory.
-d-i user-setup/encrypt-home boolean false
-
-
-#
-# *** Clock and time zone setup ***
-#
-# Originally from: https://help.ubuntu.com/lts/installation-guide/armhf/apbs04.html#preseed-time
-#
-
-# Controls whether or not the hardware clock is set to UTC.
-d-i clock-setup/utc boolean true
-d-i clock-setup/utc-auto boolean true
-
-# You may set this to any valid setting for $TZ; see the contents of
-# /usr/share/zoneinfo/ for valid values.
-d-i time/zone string UTC
-
-
-#
-# *** Partitioning ***
-#
-# Originally from: https://help.ubuntu.com/lts/installation-guide/armhf/apbs04.html#preseed-partman
-#
-
-# This makes partman automatically partition without confirmation, provided
-# that you told it what to do using one of the methods below.
-d-i partman/choose_partition select finish
-d-i partman/confirm boolean true
-d-i partman/confirm_nooverwrite boolean true
-
-# In addition, you'll need to specify the method to use.
-# The presently available methods are:
-# - regular: use the usual partition types for your architecture
-# - lvm:     use LVM to partition the disk
-# - crypto:  use LVM within an encrypted partition
-d-i partman-auto/method string lvm
-d-i partman-auto/purge_lvm_from_device boolean true
-
-# If one of the disks that are going to be automatically partitioned
-# contains an old LVM configuration, the user will normally receive a
-# warning. This can be preseeded away...
-d-i partman-lvm/device_remove_lvm boolean true
-d-i partman-lvm/device_remove_lvm_span boolean true
-
-# And the same goes for the confirmation to write the lvm partitions.
-d-i partman-lvm/confirm boolean true
-d-i partman-lvm/confirm_nooverwrite boolean true
-
-# For LVM partitioning, you can select how much of the volume group to use
-# for logical volumes.
-d-i partman-auto-lvm/guided_size string max
-d-i partman-auto-lvm/new_vg_name string system
-
-# You can choose one of the three predefined partitioning recipes:
-# - atomic: all files in one partition
-# - home:   separate /home partition
-# - multi:  separate /home, /usr, /var, and /tmp partitions
-d-i partman-auto/choose_recipe select grub-efi-boot-root
-
-d-i partman-partitioning/confirm_write_new_label boolean true
-
-# If you just want to change the default filesystem from ext3 to something
-# else, you can do that without providing a full recipe.
-d-i partman/default_filesystem string ext4
-
-# Or provide a recipe of your own...
-# If not, you can put an entire recipe into the preconfiguration file in one
-# (logical) line. This example creates a small /boot partition, suitable
-# swap, and uses the rest of the space for the root partition:
-d-i partman-auto/expert_recipe string       \
-    grub-efi-boot-root ::                   \
-        1 1 1 free                          \
-            $bios_boot{ }                   \
-            method{ biosgrub }              \
-        .                                   \
-        256 256 256 fat32                   \
-            $primary{ }                     \
-            method{ efi }                   \
-            format{ }                       \
-        .                                   \
-        512 512 512 ext4                    \
-            $primary{ }                     \
-            $bootable{ }                    \
-            method{ format }                \
-            format{ }                       \
-            use_filesystem{ }               \
-            filesystem{ ext4 }              \
-            mountpoint{ /boot }             \
-        .                                   \
-        4096 4096 4096 linux-swap           \
-            $lvmok{ }                       \
-            method{ swap }                  \
-            format{ }                       \
-        .                                   \
-        10000 20000 -1 ext4                 \
-            $lvmok{ }                       \
-            method{ format }                \
-            format{ }                       \
-            use_filesystem{ }               \
-            filesystem{ ext4 }              \
-            mountpoint{ / }                 \
-        .
-
-d-i partman-partitioning/no_bootable_gpt_biosgrub boolean false
-d-i partman-partitioning/no_bootable_gpt_efi boolean false
-
-# enforce usage of GPT - a must have to use EFI!
-d-i partman-basicfilesystems/choose_label string gpt
-d-i partman-basicfilesystems/default_label string gpt
-d-i partman-partitioning/choose_label string gpt
-d-i partman-partitioning/default_label string gpt
-d-i partman/choose_label string gpt
-d-i partman/default_label string gpt
-
-# Keep that one set to true so we end up with a UEFI enabled
-# system. If set to false, /var/lib/partman/uefi_ignore will be touched
-d-i partman-efi/non_efi_system boolean true
-
-
-#
-# *** Package selection ***
-#
-# originally from: https://help.ubuntu.com/lts/installation-guide/armhf/apbs04.html#preseed-pkgsel
-#
-
-tasksel tasksel/first multiselect standard, ubuntu-server
-
-# Minimum packages (see postinstall.sh). This includes the hyper-v tools
-d-i pkgsel/include string openssh-server ntp linux-tools-$(uname -r) linux-cloud-tools-$(uname -r) linux-cloud-tools-common
-
-# Upgrade packages after debootstrap? (none, safe-upgrade, full-upgrade)
-# (note: set to none for speed)
-d-i pkgsel/upgrade select none
-
-# Policy for applying updates. May be &quot;none&quot; (no automatic updates),
-# &quot;unattended-upgrades&quot; (install security updates automatically), or
-# &quot;landscape&quot; (manage system with Landscape).
-d-i pkgsel/update-policy select none
-
-# Language pack selection
-d-i pkgsel/install-language-support boolean false
-
-#
-# Boot loader installation
-#
-
-# This is fairly safe to set, it makes grub install automatically to the MBR
-# if no other operating system is detected on the machine.
-d-i grub-installer/only_debian boolean true
-
-# This one makes grub-installer install to the MBR if it also finds some other
-# OS, which is less safe as it might not be able to boot that other OS.
-d-i grub-installer/with_other_os boolean true
-
-# Alternatively, if you want to install to a location other than the mbr,
-# uncomment and edit these lines:
-d-i grub-installer/bootdev string /dev/sda
-d-i grub-installer/force-efi-extra-removable boolean true
-
-
-#
-# *** Preseed other packages ***
-#
-
-d-i debconf debconf/frontend select Noninteractive
-d-i finish-install/reboot_in_progress note
-
-choose-mirror-bin mirror/http/proxy string
-</code></pre>
-<p>The complete preseed file can also be found in the
-<a href="https://github.com/ops-resource/ops-tools-baseimage/tree/master/src/linux/ubuntu/http">http preseed directory</a>
-of the <a href="https://github.com/ops-resource/ops-tools-baseimage">Ops-Tools-BaseImage</a> project. This
-project also publishes a <a href="https://www.nuget.org/packages/Ops.Tools.BaseImage.Linux/">NuGet</a> package
-which has all the configuration files and scripts that were used to create the Ubuntu base virtual
-hard drive.</p>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -1061,7 +850,7 @@ hard drive.</p>
     </div>
     <div id="fbox2">
         <h2 id="copyright">Copyright</h2>
-        <p>Copyright (c) 2018 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
+        <p>Copyright (c) 2019 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
 
         <h2 id="disclaimer">Disclaimer</h2>
         <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
@@ -1074,9 +863,9 @@ hard drive.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Mon, 03 Dec 2018 03:27:23 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 27 Jan 2019 03:31:30 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/0dec335531e9d28ae0b07b82171ef36a3805f702">0dec335531e9d28ae0b07b82171ef36a3805f702</a> at version 2.11.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/71d9b009bcb314ec039056391d38669658da2a23">71d9b009bcb314ec039056391d38669658da2a23</a> at version 2.12.0.        </p>
     </div>
 
     <p>
