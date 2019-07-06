@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - Nuclei release - V0.7.1.0</title>
+        <title>Mind vortex - Calvinverse - An example build infrastructure</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,9 +27,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - Nuclei release - V0.7.1.0" />
+        <meta property="og:title" content="Mind vortex - Calvinverse - An example build infrastructure" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Nuclei-Release-V0710" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Calvinverse-an-example-build-infrastructure" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -178,37 +178,132 @@
 
 
 <h2>
-Nuclei release - V0.7.1.0</h2>
+Calvinverse - An example build infrastructure</h2>
 <div id="post-meta">
     <p>
-Saturday, December 21, 2013
- |         Posted in                     <a id="post-category" role="button" href="/tags/nuclei" class="btn btn-default btn-xs">Nuclei</a>
+Friday, June 28, 2019
+ |         Posted in                     <a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs">Delivering software</a>
+                    <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
+                    <a id="post-category" role="button" href="/tags/immutable-infrastructure" class="btn btn-default btn-xs">Immutable infrastructure</a>
+                    <a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs">Software development pipeline</a>
     </p>
 </div>
 
     </div>
 
     <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.1.0">V0.7.1.0</a> of the
-<a href="/projects/nuclei.html">Nuclei</a> library has been released. This release fixes issue
-<a href="https://github.com/pvandervelde/Nuclei/issues/9">#9</a>.</p>
+        <p>This post introduces the <a href="https://www.calvinverse.net/">Calvinverse</a>
+<a href="https://github.com/Calvinverse">project</a> which provides the source code for the different resources
+required to create the infrastructure for a build pipeline. The Calvinverse resources have been
+developed for two main reasons:</p>
+<ul>
+<li>To provide me with a way to experiment with and learn more about
+<a href="https://thenewstack.io/a-brief-look-at-immutable-infrastructure-and-why-it-is-such-a-quest/">immutable</a> <a href="https://twitter.com/jezhumble/status/970334897544900609">infrastructure</a> and
+<a href="https://en.wikipedia.org/wiki/Infrastructure_as_code">infrastructure-as-code</a> as applied to build infrastructure.</li>
+<li>To provide resources that can be used to set up the infrastructure for a complete
+<a href="/posts/On-prem-vs-cloud-build-systems">on-prem</a> build system. The system should provide a build
+controller with build agents, artefact storage and all the necessary tools to monitor the different
+services and diagnose issues.</li>
+</ul>
+<p>The Calvinverse resources can be configured and deployed for different sizes of infrastructure, from
+small setups only used by a few developers to a large setup used by many developers for the development
+of many products. How to configure the resources for small, medium or large environments and their
+hardware requirements will be discussed in future posts.</p>
+<p>The resources in the Calvinverse project are designed to be run as a self-contained system. While
+daily maintenance is minimal it is not a hosted system so some maintenance is required. For instance
+OS updates will be required on a regular basis. These can either be applied to existing resources,
+through the automatic updates, or by applying the new updates to the templates and then replacing
+the existing resources with a new instance. The latter approach case can be automated, however there
+is no code in any of the Calvinverse repositories to do this automatically.</p>
+<p>The different resources in the Calvinverse project contain a set of tools and applications which
+provide all the necessary capabilities to create the infrastructure for a build pipeline. Amongst these
+capabilities are service discovery, build execution, artefact storage, metrics, alerting and
+log processing.</p>
+<p>The following applications and approaches are used for service discovery and configuration storage:</p>
+<ul>
+<li>Using <a href="https://www.consul.io">Consul</a> to provide service discovery and machine discovery via
+<a href="https://www.consul.io/docs/agent/dns.html">DNS</a> inside an environment. An environment is defined
+as all machines that are part of a <a href="https://www.consul.io/docs/internals/architecture.html">consul datacenter</a>.
+It is possible to have multiple environments where the machines may all be on the same network but
+in general will not be communicating across environments. This is useful for cases where having
+multiple environments makes sense, for instance when having a production environment and a test
+environment. The benefit of using Consul as a DNS is that it allows a resource to have a consistent
+name across different environments without the DNS names clashing. For instance if there is a
+production environment and a test environment then it is possible to use the same DNS name
+for a resource, even though the actual machine names will be different. This allows using the
+Consul DNS name in tools and scripts without having to keep in mind the environment the tool
+is deployed in.
+Finally Consul is also used for the distributed key-value store that all applications can obtain
+configuration information from thereby centralizing the configuration information.</li>
+<li>Using one or more <a href="https://vaultproject.io">Vault</a> instance to handle all the secrets required
+for the environment. Vault provides authenticated access for resources to securely access secrets,
+login credentials and other information that should be kept secure. This allows centralizing the
+storage and distribution of secrets</li>
+</ul>
+<p>For the build work Calvinverse uses the following applications:</p>
+<ul>
+<li><a href="https://jenkins.io">Jenkins</a> is used as the
+<a href="https://github.com/Calvinverse/resource.build.master">build controller</a>.</li>
+<li>Build executors connect to jenkins using the <a href="https://plugins.jenkins.io/swarm">swarm plugin</a> so
+that agents can connect when it starts. In the Calvinverse project there are currently only
+<a href="https://github.com/Calvinverse/resource.build.agent.windows">Windows</a> based executors.</li>
+</ul>
+<p>For <a href="https://github.com/Calvinverse/resource.artefacts">artefact storage</a> Calvin verse uses the
+<a href="https://www.sonatype.com/nexus-repository-oss">Nexus</a> application. The image is configured such that
+a new instance of the image will create artefact repositories for <a href="https://www.nuget.org">NuGet</a>,
+<a href="https://www.npmjs.com/">Npm</a>, <a href="https://www.docker.com/">Docker</a> and general ZIP artefacts.</p>
+<p>For <a href="https://github.com/Calvinverse/resource.queue">message distribution</a> Calvinverse uses the <a href="https://www.rabbitmq.com/">RabbitMQ</a> application. The image is configured such that a new instance of the image will
+try to connect to the existing cluster in the environment. If no cluster exists then the first
+instance of the image will form the start of the cluster in the environment.</p>
+<p>Metrics, monitoring and alerting capabilities are provided by the
+<a href="https://www.influxdata.com/">Influx</a> stack, consisting of:</p>
+<ul>
+<li><a href="https://www.influxdata.com/time-series-platform/">InfluxDB</a> for
+<a href="https://github.com/Calvinverse/resource.metrics.storage">metrics collection</a>.</li>
+<li><a href="https://grafana.com/">Grafana</a> for <a href="https://github.com/Calvinverse/resource.metrics.dashboard">dashboards</a>.</li>
+<li><a href="https://www.rabbitmq.com/">Telegraf</a> is installed on each resource to collect metrics and send
+them to InfluxDb.</li>
+<li><a href="https://www.influxdata.com/time-series-platform/chronograf/">Chronograf</a> for
+<a href="https://github.com/Calvinverse/resource.metrics.monitoring">alert configurations</a>.</li>
+<li><a href="https://www.influxdata.com/time-series-platform/kapacitor/">Kapacitor</a> for
+<a href="https://github.com/Calvinverse/resource.metrics.monitoring">alerting</a>.</li>
+</ul>
+<p>Build and system logs are processed by the <a href="https://www.elastic.co/">Elastic</a> stack consisting off:</p>
+<ul>
+<li><a href="https://www.elastic.co/products/elasticsearch">Elasticsearch</a> for
+<a href="https://github.com/Calvinverse/resource.documents.storage">log storage</a>, both system logs
+and build logs</li>
+<li><a href="https://www.elastic.co/products/kibana">Kibana</a> for
+<a href="https://github.com/Calvinverse/resource.documents.dashboard">log dashboards</a>.</li>
+<li>Logs collected via <a href="https://www.syslog-ng.com/products/open-source-log-management/">syslog-ng</a> on
+linux and a modified version of <a href="https://github.com/pvandervelde/filebeat.mqtt">filebeat</a> on windows.
+Logs are sent to rabbitmq to ensure that the unprocessed logs aren't lost when something any part
+of the log stack goes offline.</li>
+<li><a href="https://www.elastic.co/products/logstash">Logstash</a> for
+<a href="https://github.com/Calvinverse/resource.logs.processor">processing logs</a> from RabbitMQ to
+Elasticsearch using <a href="https://github.com/Calvinverse/calvinverse.logs.filters">filters</a></li>
+</ul>
+<p>It should be noted that while the Calvinverse resources combine to create a complete build environment
+the resources might need some alterations to fit in with the work flow and processes that are being
+followed. After all each company is different and applies different workflows. Additionally users
+might want to replace some of the resources with versions of their own, e.g. to replace Influx with
+<a href="https://prometheus.io/">Prometheus</a>.</p>
 
     </div>
 
     <div id="post-footer">
         <div>
     <div class="navlinks">
-                <a href="/posts/Setting-up-Sherlock-virtualmachines" title="Previous Post: Sherlock configuration - Virtual machines" class="navlinks-prev">« Sherlock configuration - Virtual machines</a>
-                <a href="/posts/nAnicitus-Release-V0140" title="Next Post: nAnicitus release - V0.1.4.0" class="navlinks-next">nAnicitus release - V0.1.4.0 »</a>
+                <a href="/posts/On-prem-vs-cloud-build-systems" title="Previous Post: Software development pipeline - On-prem or in the cloud?" class="navlinks-prev">« Software development pipeline - On-prem or in the cloud?</a>
     </div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Nuclei-Release-V0710';
-    var disqus_title = 'Nuclei release - V0.7.1.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Nuclei-Release-V0710';
+    var disqus_identifier = 'Calvinverse-an-example-build-infrastructure';
+    var disqus_title = 'Calvinverse - An example build infrastructure';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Calvinverse-an-example-build-infrastructure';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

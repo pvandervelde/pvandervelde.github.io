@@ -94,12 +94,12 @@
                     <h2>Patrick van der Velde</h2>
 
 <p>
-    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+    <img src="https://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
 </p>
 <p>
     Dutch software developer, living, working and playing in New Zealand.
     Rock climber, and paragliding pilot. Developer of
-    <a href="http://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
+    <a href="https://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
     <a href="https://github.com/Calvinverse">the Calvinverse resources</a> and other projects
 </p>
 <p>
@@ -110,7 +110,9 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
-                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software delivery pipeline - Considerations for infrastructure improvements</a></li>
+                            <li><a href="/posts/Calvinverse-an-example-build-infrastructure">Calvinverse - An example build infrastructure</a></li>
+                            <li><a href="/posts/On-prem-vs-cloud-build-systems">Software development pipeline - On-prem or in the cloud?</a></li>
+                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software development pipeline - Considerations for infrastructure improvements</a></li>
                             <li><a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not">Software development pipeline - In the build system or not</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-flexibility">Software development pipeline - Design flexibility</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-resilience">Software development pipeline - Design resilience</a></li>
@@ -118,8 +120,6 @@
                             <li><a href="/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v">Exportable Linux virtual hard-drives for Hyper-V</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-accuracy">Software development pipeline - Design accuracy</a></li>
                             <li><a href="/posts/nBuildkit-Release-V0102">nBuildKit release - V0.10.2</a></li>
-                            <li><a href="/posts/Software-development-pipeline-Design-introduction">Software development pipeline - Design introduction</a></li>
-                            <li><a href="/posts/nBuildkit-release-V0100">nBuildKit release - V0.10.0</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -133,22 +133,22 @@
                                     <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                    <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (7)</a>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (7)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (7)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (6)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
@@ -214,11 +214,11 @@ communication with the master controller, and thus allowing error reports to be 
 <li>Store information about the virtual machine in the host database</li>
 </ul>
 <h3>Preparing the virtual machine</h3>
-<p>The first step is to create a <a href="http://technet.microsoft.com/en-us/library/cc772480.aspx">new virtual machine</a>
+<p>The first step is to create a <a href="https://technet.microsoft.com/en-us/library/cc772480.aspx">new virtual machine</a>
 and install the operating system. This should be straight forward but there a few things to look out
 for:</p>
 <ul>
-<li>The operating system must (currently) support <a href="http://en.wikipedia.org/wiki/.NET_Framework_version_history#.NET_Framework_4.5">.NET 4.5</a>
+<li>The operating system must (currently) support <a href="https://en.wikipedia.org/wiki/.NET_Framework_version_history#.NET_Framework_4.5">.NET 4.5</a>
 because that is what Sherlock is needs to run on.</li>
 <li>The network for the virtual machine must be set up so that it can at the very least see the host
 machine and the other virtual machines stored on the same host machine.
@@ -239,7 +239,7 @@ others are necessary only from a test perspective.</p>
 <li>If .NET 4.5 is not already installed, then install it. Without it Sherlock won't run at all.</li>
 <li>Create a new user that will be used to execute the tests. This user needs to be an administrator so
 that the execution of an MSI install can succeed without the need for elevation (which is
-<a href="http://stackoverflow.com/questions/5098121/how-can-i-get-elevated-permissions-uac-via-impersonation-under-a-non-interacti">a bit tricky</a>
+<a href="https://stackoverflow.com/questions/5098121/how-can-i-get-elevated-permissions-uac-via-impersonation-under-a-non-interacti">a bit tricky</a>
 from an application). The user can be either a machine local administrator or a domain user  which
 is granted administration rights on the machine.
 <ul>
@@ -264,18 +264,18 @@ about the settings you want to change and the <a href="http://www.brianbondy.com
 need to change those settings.</p>
 <ul>
 <li><strong>Interactive user:</strong> If you need to run interactive tests, e.g. UI tests, then you need to make
-sure a user is logged in. Use <a href="http://technet.microsoft.com/en-us/sysinternals/bb963905.aspx">Autologon</a>
+sure a user is logged in. Use <a href="https://technet.microsoft.com/en-us/sysinternals/bb963905.aspx">Autologon</a>
 to automatically log your user in when the computer starts while still maintaining password security.</li>
 <li><strong>Windows 8 switch to desktop:</strong> If you are on Windows 8 you need to make sure that the desktop is
 <a href="http://www.7tutorials.com/how-boot-desktop-windows-8-skip-start-screen">available</a> for interactive
 applications to execute on.</li>
 <li><strong>Screen saver:</strong> In order to prevent any interactive tests from failing due to a
-<a href="http://windows.microsoft.com/en-nz/windows-vista/turn-your-screen-saver-on-or-off">screensaver</a> or
-the <a href="http://answers.microsoft.com/en-us/windows/forum/windows_7-security/disable-automatic-lock-with-windows-7/daef8f0a-810f-46e8-9420-3c32c4bd6479">automatic locking of the desktop</a>
+<a href="https://windows.microsoft.com/en-nz/windows-vista/turn-your-screen-saver-on-or-off">screensaver</a> or
+the <a href="https://answers.microsoft.com/en-us/windows/forum/windows_7-security/disable-automatic-lock-with-windows-7/daef8f0a-810f-46e8-9420-3c32c4bd6479">automatic locking of the desktop</a>
 both those features need to be turned off.</li>
 <li><strong>Windows error reporting:</strong> Any tests that run on the desktop may hang eternally if the application
 under tests fails and displays the Windows Error Reporting (WER) dialog. In order to prevent this
-from happening <a href="http://4sysops.com/archives/how-to-disable-windows-error-reporting/">WER should be disabled</a>.
+from happening <a href="https://4sysops.com/archives/how-to-disable-windows-error-reporting/">WER should be disabled</a>.
 The most efficient way of doing this is to use the group policy controls to disable the following elements:
 <ul>
 <li>In <code>Computer Configuration\Administrative Templates\System\Internet Communication Management\Internet Communication settings</code>
@@ -328,7 +328,7 @@ for the update service and the executor controller respectively.</li>
 <li>After both applications have started stop them both by stopping the update service (<code>Sherlock.Service</code>).</li>
 <li>Once the applications have been stopped remove the data from the directory <code>c:\ProgramData\Sherlock</code>.</li>
 <li>Shut down the machine.</li>
-<li>Take a <a href="http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/16/managing-snapshots-with-hyper-v.aspx">snapshot</a>
+<li>Take a <a href="https://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/16/managing-snapshots-with-hyper-v.aspx">snapshot</a>
 of the current state of the virtual machine and give it a sensible name.</li>
 </ul>
 <h3>Host configuration</h3>
@@ -366,8 +366,8 @@ with Sherlock through the management website.</p>
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
     </div>
 </div>
@@ -388,9 +388,9 @@ with Sherlock through the management website.</p>
         <ul>
             <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
             <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
-            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
-            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
-            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="https://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="https://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
             <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
         </ul>
     </div>
@@ -409,19 +409,19 @@ with Sherlock through the management website.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 27 Jan 2019 03:31:28 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 06 Jul 2019 09:20:50 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/71d9b009bcb314ec039056391d38669658da2a23">71d9b009bcb314ec039056391d38669658da2a23</a> at version 2.12.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/c61988176269766fde330c7aff68291127112d1a">c61988176269766fde330c7aff68291127112d1a</a> at version 3.0.0.        </p>
     </div>
 
     <p>
-        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
-        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+        Site design based on the <a href="https://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="https://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
     </p>
     <p>
-        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
-        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
-        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+        Feed icon by <a href="https://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="https://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="https://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
     </p>
 </div>
 

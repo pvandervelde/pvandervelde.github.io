@@ -94,12 +94,12 @@
                     <h2>Patrick van der Velde</h2>
 
 <p>
-    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+    <img src="https://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
 </p>
 <p>
     Dutch software developer, living, working and playing in New Zealand.
     Rock climber, and paragliding pilot. Developer of
-    <a href="http://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
+    <a href="https://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
     <a href="https://github.com/Calvinverse">the Calvinverse resources</a> and other projects
 </p>
 <p>
@@ -110,7 +110,9 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
-                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software delivery pipeline - Considerations for infrastructure improvements</a></li>
+                            <li><a href="/posts/Calvinverse-an-example-build-infrastructure">Calvinverse - An example build infrastructure</a></li>
+                            <li><a href="/posts/On-prem-vs-cloud-build-systems">Software development pipeline - On-prem or in the cloud?</a></li>
+                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software development pipeline - Considerations for infrastructure improvements</a></li>
                             <li><a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not">Software development pipeline - In the build system or not</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-flexibility">Software development pipeline - Design flexibility</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-resilience">Software development pipeline - Design resilience</a></li>
@@ -118,8 +120,6 @@
                             <li><a href="/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v">Exportable Linux virtual hard-drives for Hyper-V</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-accuracy">Software development pipeline - Design accuracy</a></li>
                             <li><a href="/posts/nBuildkit-Release-V0102">nBuildKit release - V0.10.2</a></li>
-                            <li><a href="/posts/Software-development-pipeline-Design-introduction">Software development pipeline - Design introduction</a></li>
-                            <li><a href="/posts/nBuildkit-release-V0100">nBuildKit release - V0.10.0</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -133,22 +133,22 @@
                                     <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                    <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (7)</a>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (7)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (7)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (6)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
@@ -191,7 +191,7 @@ Monday, September 16, 2013
 
     <div id="post-content">
         <p>On Sunday the weather was good enough for some flying on the west coast. So at 11.30am about 8 of us
-gathered at <a href="http://en.wikipedia.org/wiki/Kariotahi_Beach">Kario</a> and the second day of my
+gathered at <a href="https://en.wikipedia.org/wiki/Kariotahi_Beach">Kario</a> and the second day of my
 <a href="/tags/PG2.html">PG2</a> had started.</p>
 <p><img align="left" alt="Paraglider soaring high over beautiful west coast" src="/assets/images/paragliding/paraglide_0004.JPG" /></p>
 <p>The first thing to notice about the west coast is that it looks amazing, rugged and empty. It seems
@@ -199,7 +199,7 @@ that with paragliding besides the flying I also get to look out over the amazing
 has. Double win!</p>
 <p>But before I get to fly as a qualified pilot a lot more training has to be had and that we did. The
 day started off with some ground handling exercises on the really old gliders. My first taste of
-<a href="http://en.wikipedia.org/wiki/Paragliding#Reverse_launch">reverse launching</a> except with out the
+<a href="https://en.wikipedia.org/wiki/Paragliding#Reverse_launch">reverse launching</a> except with out the
 actual turning around and flying bit. It turns out reverse launching isn't actually as simple as I
 thought it would be. Having flown kites for many years I thought I would get the reverse launch down
 pretty easily but when the gliders get larger and the controls are reversed things get difficult.
@@ -220,7 +220,7 @@ instead of its side. I got only one landing totally right.</li>
 <p>And then it was time for the unexpected highlight of the day. When I paid for the PG2 course I paid
 for a combination package, which includes the PG2 course, a glider and a harness. Now I still
 haven't selected a harness but I have selected the glider, a bright red
-<a href="http://gingliders.com/paragliders/atlas/">Gin Atlas</a>. I didn't expect to be able to fly it so soon
+<a href="https://gingliders.com/paragliders/atlas/">Gin Atlas</a>. I didn't expect to be able to fly it so soon
 in my course but after my initial three flights both instructors gave me the go ahead to fly it.</p>
 <p>I managed a further two flights with it. The first one was a nice long soaring flight where I got to
 get a feel for the glider. At the end of the flight I managed to get quite a bit of height. And to
@@ -262,8 +262,8 @@ or so. I guess selecting and landing in the right spot is yet another skill I ha
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
     </div>
 </div>
@@ -284,9 +284,9 @@ or so. I guess selecting and landing in the right spot is yet another skill I ha
         <ul>
             <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
             <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
-            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
-            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
-            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="https://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="https://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
             <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
         </ul>
     </div>
@@ -305,19 +305,19 @@ or so. I guess selecting and landing in the right spot is yet another skill I ha
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 27 Jan 2019 03:31:28 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 06 Jul 2019 09:20:51 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/71d9b009bcb314ec039056391d38669658da2a23">71d9b009bcb314ec039056391d38669658da2a23</a> at version 2.12.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/c61988176269766fde330c7aff68291127112d1a">c61988176269766fde330c7aff68291127112d1a</a> at version 3.0.0.        </p>
     </div>
 
     <p>
-        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
-        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+        Site design based on the <a href="https://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="https://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
     </p>
     <p>
-        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
-        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
-        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+        Feed icon by <a href="https://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="https://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="https://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
     </p>
 </div>
 

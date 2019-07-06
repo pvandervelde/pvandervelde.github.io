@@ -94,12 +94,12 @@
                     <h2>Patrick van der Velde</h2>
 
 <p>
-    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+    <img src="https://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
 </p>
 <p>
     Dutch software developer, living, working and playing in New Zealand.
     Rock climber, and paragliding pilot. Developer of
-    <a href="http://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
+    <a href="https://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
     <a href="https://github.com/Calvinverse">the Calvinverse resources</a> and other projects
 </p>
 <p>
@@ -110,7 +110,9 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
-                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software delivery pipeline - Considerations for infrastructure improvements</a></li>
+                            <li><a href="/posts/Calvinverse-an-example-build-infrastructure">Calvinverse - An example build infrastructure</a></li>
+                            <li><a href="/posts/On-prem-vs-cloud-build-systems">Software development pipeline - On-prem or in the cloud?</a></li>
+                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software development pipeline - Considerations for infrastructure improvements</a></li>
                             <li><a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not">Software development pipeline - In the build system or not</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-flexibility">Software development pipeline - Design flexibility</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-resilience">Software development pipeline - Design resilience</a></li>
@@ -118,8 +120,6 @@
                             <li><a href="/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v">Exportable Linux virtual hard-drives for Hyper-V</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-accuracy">Software development pipeline - Design accuracy</a></li>
                             <li><a href="/posts/nBuildkit-Release-V0102">nBuildKit release - V0.10.2</a></li>
-                            <li><a href="/posts/Software-development-pipeline-Design-introduction">Software development pipeline - Design introduction</a></li>
-                            <li><a href="/posts/nBuildkit-release-V0100">nBuildKit release - V0.10.0</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -133,22 +133,22 @@
                                     <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                    <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (7)</a>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (7)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (7)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (6)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
@@ -179,7 +179,230 @@
 
 
 <h2>
-            <a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software delivery pipeline - Considerations for infrastructure improvements</a>
+            <a href="/posts/Calvinverse-an-example-build-infrastructure">Calvinverse - An example build infrastructure</a>
+</h2>
+<div id="post-meta">
+    <p>
+Friday, June 28, 2019
+ |         Posted in                     <a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs">Delivering software</a>
+                    <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
+                    <a id="post-category" role="button" href="/tags/immutable-infrastructure" class="btn btn-default btn-xs">Immutable infrastructure</a>
+                    <a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs">Software development pipeline</a>
+    </p>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>This post introduces the <a href="https://www.calvinverse.net/">Calvinverse</a>
+<a href="https://github.com/Calvinverse">project</a> which provides the source code for the different resources
+required to create the infrastructure for a build pipeline. The Calvinverse resources have been
+developed for two main reasons:</p>
+<ul>
+<li>To provide me with a way to experiment with and learn more about
+<a href="https://thenewstack.io/a-brief-look-at-immutable-infrastructure-and-why-it-is-such-a-quest/">immutable</a> <a href="https://twitter.com/jezhumble/status/970334897544900609">infrastructure</a> and
+<a href="https://en.wikipedia.org/wiki/Infrastructure_as_code">infrastructure-as-code</a> as applied to build infrastructure.</li>
+<li>To provide resources that can be used to set up the infrastructure for a complete
+<a href="/posts/On-prem-vs-cloud-build-systems">on-prem</a> build system. The system should provide a build
+controller with build agents, artefact storage and all the necessary tools to monitor the different
+services and diagnose issues.</li>
+</ul>
+<p>The Calvinverse resources can be configured and deployed for different sizes of infrastructure, from
+small setups only used by a few developers to a large setup used by many developers for the development
+of many products. How to configure the resources for small, medium or large environments and their
+hardware requirements will be discussed in future posts.</p>
+<p>The resources in the Calvinverse project are designed to be run as a self-contained system. While
+daily maintenance is minimal it is not a hosted system so some maintenance is required. For instance
+OS updates will be required on a regular basis. These can either be applied to existing resources,
+through the automatic updates, or by applying the new updates to the templates and then replacing
+the existing resources with a new instance. The latter approach case can be automated, however there
+is no code in any of the Calvinverse repositories to do this automatically.</p>
+<p>The different resources in the Calvinverse project contain a set of tools and applications which
+provide all the necessary capabilities to create the infrastructure for a build pipeline. Amongst these
+capabilities are service discovery, build execution, artefact storage, metrics, alerting and
+log processing.</p>
+<p>The following applications and approaches are used for service discovery and configuration storage:</p>
+<ul>
+<li>Using <a href="https://www.consul.io">Consul</a> to provide service discovery and machine discovery via
+<a href="https://www.consul.io/docs/agent/dns.html">DNS</a> inside an environment. An environment is defined
+as all machines that are part of a <a href="https://www.consul.io/docs/internals/architecture.html">consul datacenter</a>.
+It is possible to have multiple environments where the machines may all be on the same network but
+in general will not be communicating across environments. This is useful for cases where having
+multiple environments makes sense, for instance when having a production environment and a test
+environment. The benefit of using Consul as a DNS is that it allows a resource to have a consistent
+name across different environments without the DNS names clashing. For instance if there is a
+production environment and a test environment then it is possible to use the same DNS name
+for a resource, even though the actual machine names will be different. This allows using the
+Consul DNS name in tools and scripts without having to keep in mind the environment the tool
+is deployed in.
+Finally Consul is also used for the distributed key-value store that all applications can obtain
+configuration information from thereby centralizing the configuration information.</li>
+<li>Using one or more <a href="https://vaultproject.io">Vault</a> instance to handle all the secrets required
+for the environment. Vault provides authenticated access for resources to securely access secrets,
+login credentials and other information that should be kept secure. This allows centralizing the
+storage and distribution of secrets</li>
+</ul>
+<p>For the build work Calvinverse uses the following applications:</p>
+<ul>
+<li><a href="https://jenkins.io">Jenkins</a> is used as the
+<a href="https://github.com/Calvinverse/resource.build.master">build controller</a>.</li>
+<li>Build executors connect to jenkins using the <a href="https://plugins.jenkins.io/swarm">swarm plugin</a> so
+that agents can connect when it starts. In the Calvinverse project there are currently only
+<a href="https://github.com/Calvinverse/resource.build.agent.windows">Windows</a> based executors.</li>
+</ul>
+<p>For <a href="https://github.com/Calvinverse/resource.artefacts">artefact storage</a> Calvin verse uses the
+<a href="https://www.sonatype.com/nexus-repository-oss">Nexus</a> application. The image is configured such that
+a new instance of the image will create artefact repositories for <a href="https://www.nuget.org">NuGet</a>,
+<a href="https://www.npmjs.com/">Npm</a>, <a href="https://www.docker.com/">Docker</a> and general ZIP artefacts.</p>
+<p>For <a href="https://github.com/Calvinverse/resource.queue">message distribution</a> Calvinverse uses the <a href="https://www.rabbitmq.com/">RabbitMQ</a> application. The image is configured such that a new instance of the image will
+try to connect to the existing cluster in the environment. If no cluster exists then the first
+instance of the image will form the start of the cluster in the environment.</p>
+<p>Metrics, monitoring and alerting capabilities are provided by the
+<a href="https://www.influxdata.com/">Influx</a> stack, consisting of:</p>
+<ul>
+<li><a href="https://www.influxdata.com/time-series-platform/">InfluxDB</a> for
+<a href="https://github.com/Calvinverse/resource.metrics.storage">metrics collection</a>.</li>
+<li><a href="https://grafana.com/">Grafana</a> for <a href="https://github.com/Calvinverse/resource.metrics.dashboard">dashboards</a>.</li>
+<li><a href="https://www.rabbitmq.com/">Telegraf</a> is installed on each resource to collect metrics and send
+them to InfluxDb.</li>
+<li><a href="https://www.influxdata.com/time-series-platform/chronograf/">Chronograf</a> for
+<a href="https://github.com/Calvinverse/resource.metrics.monitoring">alert configurations</a>.</li>
+<li><a href="https://www.influxdata.com/time-series-platform/kapacitor/">Kapacitor</a> for
+<a href="https://github.com/Calvinverse/resource.metrics.monitoring">alerting</a>.</li>
+</ul>
+<p>Build and system logs are processed by the <a href="https://www.elastic.co/">Elastic</a> stack consisting off:</p>
+<ul>
+<li><a href="https://www.elastic.co/products/elasticsearch">Elasticsearch</a> for
+<a href="https://github.com/Calvinverse/resource.documents.storage">log storage</a>, both system logs
+and build logs</li>
+<li><a href="https://www.elastic.co/products/kibana">Kibana</a> for
+<a href="https://github.com/Calvinverse/resource.documents.dashboard">log dashboards</a>.</li>
+<li>Logs collected via <a href="https://www.syslog-ng.com/products/open-source-log-management/">syslog-ng</a> on
+linux and a modified version of <a href="https://github.com/pvandervelde/filebeat.mqtt">filebeat</a> on windows.
+Logs are sent to rabbitmq to ensure that the unprocessed logs aren't lost when something any part
+of the log stack goes offline.</li>
+<li><a href="https://www.elastic.co/products/logstash">Logstash</a> for
+<a href="https://github.com/Calvinverse/resource.logs.processor">processing logs</a> from RabbitMQ to
+Elasticsearch using <a href="https://github.com/Calvinverse/calvinverse.logs.filters">filters</a></li>
+</ul>
+<p>It should be noted that while the Calvinverse resources combine to create a complete build environment
+the resources might need some alterations to fit in with the work flow and processes that are being
+followed. After all each company is different and applies different workflows. Additionally users
+might want to replace some of the resources with versions of their own, e.g. to replace Influx with
+<a href="https://prometheus.io/">Prometheus</a>.</p>
+
+                </div>
+            </div>
+        </div>
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/On-prem-vs-cloud-build-systems">Software development pipeline - On-prem or in the cloud?</a>
+</h2>
+<div id="post-meta">
+    <p>
+Thursday, June 27, 2019
+ |         Posted in                     <a id="post-category" role="button" href="/tags/cloud" class="btn btn-default btn-xs">Cloud</a>
+                    <a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs">Delivering software</a>
+                    <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
+                    <a id="post-category" role="button" href="/tags/on-prem" class="btn btn-default btn-xs">On-prem</a>
+                    <a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs">Software development pipeline</a>
+    </p>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p><a href="https://en.wikipedia.org/wiki/Continuous_integration">Continuous integration (CI) systems</a> originally and
+build pipelines recently have traditionally been available on-prem only with systems like <a href="https://jenkins.io">Jenkins</a>,
+<a href="https://www.jetbrains.com/teamcity/">TeamCity</a>, <a href="https://www.atlassian.com/software/bamboo">Bamboo</a> and
+<a href="https://en.wikipedia.org/wiki/Team_Foundation_Server">TFS</a>. This is possibly due to the fact that these
+systems needs relatively powerful hardware, mostly consisting of powerful CPU and fast IO, something
+which was not easily available in the cloud until the last few years.</p>
+<p>However in the last few years a number of cloud based CI systems have appeared e.g.
+<a href="https://azure.microsoft.com/en-in/services/devops/">Azure DevOps</a>, <a href="https://www.appveyor.com/">AppVeyor</a>,
+<a href="https://circleci.com/">CircleCi</a>), <a href="https://codeship.com/">CloudShip</a>,
+<a href="https://cloud.google.com/cloud-build/">Google cloud build</a> and <a href="https://travis-ci.org/">Travis CI</a>. This
+has lead to the question of where to locate a CI system? Should it be on-prem or in the cloud or potentially
+even a combination of the two. This post should provide some suggestions on how to make the selection
+between the different options.</p>
+<h3>Cloud-based CI systems</h3>
+<p>As with other cloud systems when using a cloud based CI system the user gets the benefits of not
+having to worry about the underlying infrastructure and resources and having the ability to scale
+the CI system to the size required, provided one pays for the additional resources.</p>
+<p>The other side of the coin is that because the user has no influence on the infrastructure of the
+CI system there is also no direct control over the hardware or the controller software. Thus the user
+cannot increase the hardware specs for the controller or the agents and the user cannot determine
+which plugins or capabilities are available in the CI system.
+As a side effect this also means that the user does not have access to the logs, metrics and
+file system for the underlying system, which provide information that may be useful when issues
+arise. In general the controller specific logs and metrics are only useful if you have access to
+the controller, however the build specific information is useful either for diagnostics
+or future planning.</p>
+<p>Besides the CI part of the system in some cases the entire pipeline will require other resources, e.g
+artefact storage or test systems. Some cloud systems provide these additional systems as well, for a price
+of course. Other systems require that these additional resources are provided in some other way.</p>
+<h3>On-prem CI systems</h3>
+<p>When running the CI system on-prem one has to both provide and maintain the infrastructure, hardware and networking etc.,
+and the controller and executor software. This increases the overhead for running a CI system. Additionally
+scaling the system either requires manual intervention or building the scaling capabilities.</p>
+<p>On the other hand having control over the infrastructure means that the CI system can be configured
+so that it fits the use case for the development teams, the desired plugins installed, executors with
+all the right tools, full control over executor workspaces and with that the ability to lock down
+sensitive information. Additionally logs and metrics can be collected from everywhere which
+helps diagnostics, alerting and predictive capabilities on both the infrastructure side and the build
+capacity side.</p>
+<p>Finally having full control over the CI system means that it is possible to extend the system if
+that is required with custom capabilities, either directly added to the CI system or as additional
+services. It should of course be noted that this requires resources and is thus not free.</p>
+<h3>Selecting a location for your CI system</h3>
+<p>So how does one select a location for a CI system. Both cloud and on-prem have pros and cons and in the
+end the location of the system depends very much on the situation fo the development team. If the team works
+for a company where there is no on-prem server infrastructure then a cloud based system will be the
+only sensible approach. However there will also be cases where an on-prem system is the only sensible
+option.</p>
+<p>In order to decide for one system or the other the first thing that should be done is a cost
+comparison, comparing the total cost of ownership, i.e. initial purchasing costs, running costs,
+staff costs, training costs etc.. As part of the cost comparison the costs for additional parts
+of the system should also be included, e.g. artefact storage or test systems. One should also note
+that while cloud systems reduce maintenance, they are not maintenance free. The maintenance of the
+infrastructure disappears but the maintenance of the builds and the workflow does not, after all no
+matter where the build pipeline is located it is still important that it delivers the
+<a href="/posts/Software-development-pipeline-Design-accuracy">accuracy</a>,
+<a href="/posts/Software-development-pipeline-Design-performance.html">performance</a>,
+<a href="/posts/Software-development-pipeline-Design-resilience.html">resilience</a> and
+<a href="/posts/Software-development-pipeline-Design-flexibility.html">flexibility</a>.</p>
+<p>Once the cost comparison is done there are other things to bring into the decision process. Because
+while costs are important they are not the only reason to select one system or another. For instance
+other comparison elements could be related to regulations that specify how source needs to be treated
+or specific processes that should be followed, or the capabilities of the different CI systems for
+example is the ability to execute builds on a specific OS. Not all cloud CI systems provide
+executors for all the different OSes.</p>
+<p>In the end the decision to select a cloud build system or a on-prem build system depends
+very strongly on the situation the company is in. It is even possible that as time progresses
+the best type of system may change from on-prem to cloud or visa versa. Both systems have their
+own advantages and disadvantages. In the end all that matters is that a system that fits the
+development process is selected, independent of what the different vendors say is the best thing.</p>
+
+                </div>
+            </div>
+        </div>
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software development pipeline - Considerations for infrastructure improvements</a>
 </h2>
 <div id="post-meta">
     <p>
@@ -188,17 +411,17 @@ Sunday, January 27, 2019
                     <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
                     <a id="post-category" role="button" href="/tags/immutable-infrastructure" class="btn btn-default btn-xs">Immutable infrastructure</a>
                     <a id="post-category" role="button" href="/tags/infrastructure-as-code" class="btn btn-default btn-xs">Infrastructure as code</a>
-                    <a id="post-category" role="button" href="/tags/software-delivery-pipeline" class="btn btn-default btn-xs">Software delivery pipeline</a>
+                    <a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs">Software development pipeline</a>
     </p>
 </div>
 
                 </div>
                 <div id="post-content">
-                    <p>In one of the post from a <a href="Software-development-pipeline-Design-introduction.html">while ago</a> we
-discussed what a software development pipeline is and what the <a href="Software-development-pipeline-Design-accuracy.html">most</a>
-<a href="Software-development-pipeline-Design-performance.html">important</a>
-<a href="Software-development-pipeline-Design-resilience.html">characteristics</a>
-<a href="Software-development-pipeline-Design-flexibility.html">are</a>. Given that the pipeline is used
+                    <p>In one of the post from a <a href="/posts/Software-development-pipeline-Design-introduction.html">while ago</a> we
+discussed what a software development pipeline is and what the <a href="/posts/Software-development-pipeline-Design-accuracy.html">most</a>
+<a href="/posts/Software-development-pipeline-Design-performance.html">important</a>
+<a href="/posts/Software-development-pipeline-Design-resilience.html">characteristics</a>
+<a href="/posts/Software-development-pipeline-Design-flexibility.html">are</a>. Given that the pipeline is used
 during the large majority of the development, test and release process it is fair to say that for
 a software company the build and deployment pipeline infrastructure should be considered critical
 infrastructure because without it the development team will be more limited in their ability to
@@ -312,6 +535,8 @@ production environment.</li>
 </ul>
 <p>Using the approaches mentioned above it is possible to improve the development pipeline without
 causing unnecessary disturbances for the development team.</p>
+<p>Edit: Changed the title from <code>software delivery pipeline</code> to <code>software development pipeline</code> to match
+the other posts.</p>
 
                 </div>
             </div>
@@ -495,7 +720,7 @@ Wednesday, October 31, 2018
 
                 </div>
                 <div id="post-content">
-                    <p>The <a href="Software-development-pipeline-Design-introduction.html">fourth property</a> to consider is
+                    <p>The <a href="/posts/Software-development-pipeline-Design-introduction.html">fourth property</a> to consider is
 <em>flexibility</em>, i.e. the ability of the pipeline to be able to be modified or adapted without
 requiring large changes to be made to the underlying pipeline code and services.</p>
 <p>A pipeline should be flexible because the products being build, tested and deployed with that
@@ -584,254 +809,6 @@ to wait until another post.</p>
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Software-development-pipeline-Design-resilience">Software development pipeline - Design resilience</a>
-</h2>
-<div id="post-meta">
-    <p>
-Tuesday, December 19, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs">Delivering software</a>
-                    <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
-                    <a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs">Pipeline design</a>
-                    <a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs">Software development pipeline</a>
-    </p>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>The <a href="Software-development-pipeline-Design-introduction.html">third property</a> to consider is
-<em>resilience</em>, which in this case means that the pipeline should be able to cope with
-expected and unexpected changes to the environment it executes in and uses.</p>
-<p>David Woods defines <a href="https://www.researchgate.net/publication/276139783_Four_concepts_for_resilience_and_the_implications_for_the_future_of_resilience_engineering">four different types of &lsquo;resilience&rsquo;</a> in a paper in the journal of reliability engineering and system safety. One of the different types
-is the generally well known form of robustness, i.e. the ability to absorb pertubations or disturbances.
-In order to be robust for given disturbances one has to know in advance where the disturbances will
-come from, e.g. in the case of a development pipeline it might be expected that pipeline stages will
-fail and will polute or damage parts or all of the executor it was running on. Robustness in this
-case would be defined as the ability of the pipeline to handle this damage, for instance by repairing
-or replacing the executor. The other definitions for resilience are:</p>
-<ul>
-<li>Rebound, the ability to recover from trauma: In order to achieve this capacity ahead of time is
-required, i.e. in order to recover from a disturbance one needs to be able to deploy capabilities
-and capacity that was available in excess before the issues occurred.</li>
-<li>Graceful extensibility, the ability to extend adaptive capacity in the face of surprise. This is
-the ability to stretch resources and capabilities in the face of surprises.</li>
-<li>Sustained adaptibility, which is the ability to adapt and grow new capabilities in the face of
-unexpected issues. In general this definition applies more to systems / layered networks where
-the loss of sub-systems can be compensated.</li>
-</ul>
-<p>Which ever definition of resilience is used in general the goal is to be able to recover from
-unexpected changes and return back to the normal state, ideally with minimal intervention. An interesting
-side note is that returning back to normal after major trauma can be deceiving because the &lsquo;normal&rsquo; as
-experienced before the trauma will be different from the 'normal' experienced after the trauma due
-to the lessons learned from the trauma and permanent changed caused by the trauma.</p>
-<p>Additionally it is not just the unexpected or traumatic changes that are interesting in the case of a
-development pipeline but also the expected ones, e.g. upgrades, maintenance etc., because in general
-it is important for the pipeline to continue functioning while those changes are happening.</p>
-<p>For a development pipeline resilience can be approached on different levels. For instance the
-pipeline should be resilient against:</p>
-<ul>
-<li>Changes in the environment which range from small changes, e.g. additional tools being deployed,
-to big changes, e.g. migration of many of the services, and from expected, i.e. maintenance or
-planned upgrades, to unexpected</li>
-<li>Changes in the inputs and the results of processing those inputs which may range from build and test
-errors to issues with executors</li>
-<li>Invalid or incorrect configurations.</li>
-</ul>
-<p>Once it is known what resilience actually means and what type of situations the pipeline is expected
-to be able to handle the next question is how the pipeline can handle these situations, both in
-terms of what the expected responses are and in terms of how the pipeline should be designed.</p>
-<p>There are a mirriad of simple steps that can be taken to provide a base level of resilience. None
-of these simple steps will guard against major trauma but they will be able to either prevent or
-smooth out many of the smaller issues that would otherwise cause the development team to lose faith
-in the pipeline outputs. Some examples of simple steps that can be taken to improve resilience in
-a development pipeline are:</p>
-<ul>
-<li>For each pipeline step ensure that it is executed in a clean &lsquo;workspace&rsquo;, i.e. a directory or drive,
-that will only ever be used by that specific single step. This workspace should be 'private' to the
-specific pipeline step and no other processes should be allowed to execute in this workspace. This
-prevents issues with unexpected changes to the file system. There are still cases where &lsquo;unexpected&rsquo;
-changes to the file system can occur, for instance when running parallel executions within the same
-pipeline step in the same workspace. This type of behaviour should therefore be avoided as much as
-possible</li>
-<li>Do not depend on global, i.e. machine, container or network, state. Global state has a tendency
-to change in random ways at random times.</li>
-<li>Avoid using source which are external to the pipeline infrastructure becaues these are prone to
-unspected random changes. If a build step requires data from an external source then the external
-source should be mirrored and mirrors should be carefully controled for their content. This should
-prevent issues with external packages and inputs changing or disappearing, e.g.<a href="https://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/">leftpad</a>.</li>
-<li>If external sources are suitably mirrored inside the pipeline infrastructure then it is possible
-to remove the caches for these external sources on the executors. By pulling data in fresh from the
-local data store cache polution issues can be prevented</li>
-<li>Ensure that each resource is appropriately secured against undesirable acces. This is especially
-true for the executor resources. It is important to note that pipeline steps are essentially random
-scripts from an unknown source, even if the scripts are pulled from internal sources, because the
-scripts will not be security verified before being used. This means that the pipeline scripts should
-not be allowed to to make any changes or to obtain secrets that they shouldn't have access to.</li>
-</ul>
-<p>As mentioned the afforementioned steps form a decent base for improving resilience and they are
-fairly easy to implement, hence they make a good first stage in the improvement of the resilience
-of the development pipeline. Once these steps have been implemented more complex steps can be taken
-to futher improve the state of the development pipeline. These additional steps can be divided into
-items that help prevent issues, items that test and verify the current state, items that aid in
-recovery and finally items, like logging and metrics, that help during post-mortems of failure cases.</p>
-<p>One way prevention of trauma / outages can partially be improved is by ensuring that all parts of the
-development pipeline are able to handle different error states which can be achieved by building in
-extensive error handling capabilities, both for known cases, e.g. service offline, and general error
-handling for unexpected cases. For the tooling / script side of the pipeline this means for instance
-adding error handling structures nearly everywhere and providing the ability to retry actions.
-For the infrastructure side of the pipeline this could mean providng highly available services and
-ensuring that service delivery gracefully degrades if it can no longer be provided at the required
-standard.</p>
-<p>Even if every possible precaution is taken it is not possible to prevent all modes of failure. Unexpected
-failures will always occur no matter what the capabilities of the development pipeline are. This means
-that some of the way to improve resilience is to provide capabilities to recover from failures and to
-recognise that unexpected conditions exist and to notify the users and administrators of this situation.
-It should be noted that providing these capabilities may be much harder to implement due to the
-flexible nature of the issues that are being solved for these cases.</p>
-<p>By exposing the system continuously to semi-controlled unexpected conditions it is possible to
-provide early and controlled feedback to the operators and administrators regarding the resilience
-of the development pipeline. One example of this is the
-<a href="https://github.com/Netflix/SimianArmy/wiki/Chaos-Monkey">chaos monkey approach</a> which tests the
-resilience of a system by randomly taking down parts of the system. In a well designed system this
-should result in a response of the system in order to restore the now missing capabilities.</p>
-<p>The actual handling of unexpected conditions requires that the system has some capability to instigate
-recovery which can for instance consist of having fall-back options for the different sub-systems,
-providing automatic remediation services which monitor the system state and apply different standard
-recovery techniques like restarting failing services or machines or creating new resources to replace
-missing ones.</p>
-<p>From the high level descriptions given above it is hopefully clear that it will not be easy to create
-a resilient development pipeline and depending on the demands placed on the pipeline many hours of
-work will be consumed by improving the current state and learning from failures. In order to ensure
-that this effort is not a wasted effort it is definitely worth applying iterative improvement approaches
-and only continuing the improvement process if there is actual demand for improvements.</p>
-
-                </div>
-            </div>
-        </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Software-development-pipeline-Design-performance">Software development pipeline - Design performance</a>
-</h2>
-<div id="post-meta">
-    <p>
-Sunday, November 5, 2017
- |         Posted in                     <a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs">Delivering software</a>
-                    <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
-                    <a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs">Pipeline design</a>
-                    <a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs">Software development pipeline</a>
-    </p>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>The <a href="Software-development-pipeline-Design-introduction.html">second property</a> to consider is
-<em>performance</em>, which in this case means that the pipeline should provide feedback on the quality of
-the current input set as soon as possible in order to reduce the length of the feedback cycle. As is
-<a href="https://www.richard-banks.org/2013/04/why-short-feedback-cycle-is-good-thing.html">known</a>
-<a href="http://www.ambysoft.com/essays/whyAgileWorksFeedback.html">having</a> a short
-<a href="https://continuousdelivery.com/2012/08/why-software-development-methodologies-suck/">feedback</a>
-cycle makes it easier for the development teams to make improvements and fix issues.</p>
-<p>There are two main components to development pipeline performance:</p>
-<ul>
-<li>How quickly can one specific input set be processed completely by the pipeline. In other words
-how much time does it take to push a single input set through the pipeline from the initial change
-to the delivery of the final artefacts. This depends on the number of steps in the development
-pipeline and how quickly each step can be executed.</li>
-<li>How quickly can a large set of input sets be processed. The maximum number of executors will most
-likely be limited to some maximum value. The pipeline is limited in the number of simultaneous
-input sets it can process by the number of available executors. How quickly the pipeline can
-process large number of input sets depends both on the time necessary to process a single input set
-and the relation between the total number of input sets and the number of executors</li>
-</ul>
-<p>Optimizing the combination of these two components will lead to a development pipeline which is
-designed for maximum throughput for the development team. One important note to make is that a high
-performing pipeline will not not necessarily be the most resource efficient pipeline. For instance
-the development pipeline may only be fully loaded a few times a week. From a resource perspective
-the pipeline components are more than capable of dealing with the load, in fact the components may
-even be oversized. However because one of the main goals of the pipeline is to deliver fast feedback
-to the development teams the actual sizing of the pipeline and its components depends more on the
-way the pipeline will be loaded over time, e.g. will the jobs come as a constant stream or in
-blocks, will the jobs be small or large or will it be a mixture of both. In some cases the loading
-pattern can be accurately predicted while in other cases it is completely unpredictable.
-In general the pattern will depend on the workflow followed by the development team and the geographical
-distribution of the team. For instance when the team follows the Scrum methodology it is
-likely, though not necessary, that there will be more builds in the middle of the sprint than at the
-start or end. On the other hand when using the Kanban methodology the load on the system should be
-fairly consistent. Additionally geographical distribution of the development team influences the
-times that the pipeline will be loaded. If all of the team is in a single geographical location then
-higher loads can be expected during the day while lighter loads are be expected during the evening
-and night. However if the team is distributed across the globe it is more likely that the loading will
-be more consistent across the day due to the fact that the different locations have &lsquo;office hours&rsquo; at
-different times in the day, as seen from the perspective of the different servers which are part of
-the development pipeline. Taking these issues into account when sizing the capacity of the development
-pipeline may lead to increasing the capacity of the pipeline because the the current peak loading
-during working hours results in wait times which are too large.</p>
-<p>With this high level information it is possible to start improving the performance of the development
-pipeline. This obviously leads to the question: &ldquo;What practical steps can we take&rdquo;. As per normal when
-dealing with performance improvements it is hard to provide solutions because these depend
-on the specific situation. It is however possible to provide some more general advise.</p>
-<p>The very first step to take when dealing with performance is always to measure everything. In the case
-of the development pipeline it will be useful to gather metrics constantly and to automatically process
-these metrics into several key performance indicators, e.g. the number of input sets per time span, which
-describes the loading pattern, the waiting times for each input set before it is processed and the
-time taken to process each input set. These key performance indicators can then be used to keep
-track of performance improvements as changes are made to the pipeline.</p>
-<p>One important issue to keep in mind with regards to performance is that unlike with accuracy performance
-may change over time even if there are no <em>changes</em> to the system because the performance of the
-underlying infrastructure might change, for instance when disks fill up, the network load changes or
-the hardware ages. This means it will be important to track performance trends over longer periods of
-time to average out the influences of temporary infrastructure changes, e.g. network loading.</p>
-<p>With all that out of the way some of the standard steps that can be taken are:</p>
-<ul>
-<li>Each pipeline stage should only perform the necessary steps to achieve the desired goal. This for
-instance means that partial builds are better than full rebuilds, from a performance perspective.</li>
-<li>Only gather data that will be used during the current stage. Gathering data that is not required
-wastes time, thus smaller input sets are quicker to process.</li>
-<li>When pulling data locality matters. Pulling data off the local disk is faster than pulling it off
-the network, pulling data off the local network is faster than pulling it from the WAN or the internet.
-Additionally data that is not local should be cached so that it only needs to be retrieved once.</li>
-<li>Ensure that pipeline stages run on suitable &lsquo;hardware&rsquo;, either physical or virtual. Ideally the
-stage is executed on hardware that is optimized for the performance demands of the step, e.g.
-execute I/O bound steps on hardware that has fast I/O etc.</li>
-</ul>
-<p>In addition to these improvements it will be important to review and improve the ability of the
-pipeline to execute many input sets in parallel.</p>
-<ul>
-<li>Ensure that the pipeline applications which deal with the distribution of input sets are efficient
-at this task. It's not very useful to start processing an input set only to find out that there
-are no executors which can process this given input set (I'm looking at you TFS2013).</li>
-<li>Splitting a single stage into multiple parallel stages will improve throughput for a single input
-set. However it might decrease overall throughput due to the fact that a single input set requires
-the use of multiple executors. Note that splitting a single stage into many parallel stages might
-lead to reductions in performance due to the overhead of transitioning between stages.</li>
-</ul>
-<p>The mentioned improvements form a start for improving the performance of the pipeline. Depending on
-the specific characteristics of a given pipeline other improvements and design choices may be valid.</p>
-<p>Finally it must be mentioned that some performance improvements will have negative influences on the
-other <a href="Software-development-pipeline-Design-introduction.html">properties</a>. For instance using partial
-builds may influence accuracy. In the end a trade-off will need to be made when it comes to changes
-that influence multiple properties.</p>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -842,9 +819,9 @@ that influence multiple properties.</p>
         <ul>
             <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
             <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
-            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
-            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
-            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="https://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="https://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
             <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
         </ul>
     </div>
@@ -863,19 +840,19 @@ that influence multiple properties.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 27 Jan 2019 03:31:30 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 06 Jul 2019 09:20:52 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/71d9b009bcb314ec039056391d38669658da2a23">71d9b009bcb314ec039056391d38669658da2a23</a> at version 2.12.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/c61988176269766fde330c7aff68291127112d1a">c61988176269766fde330c7aff68291127112d1a</a> at version 3.0.0.        </p>
     </div>
 
     <p>
-        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
-        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+        Site design based on the <a href="https://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="https://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
     </p>
     <p>
-        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
-        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
-        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+        Feed icon by <a href="https://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="https://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="https://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
     </p>
 </div>
 

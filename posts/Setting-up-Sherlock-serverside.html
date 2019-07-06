@@ -94,12 +94,12 @@
                     <h2>Patrick van der Velde</h2>
 
 <p>
-    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+    <img src="https://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
 </p>
 <p>
     Dutch software developer, living, working and playing in New Zealand.
     Rock climber, and paragliding pilot. Developer of
-    <a href="http://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
+    <a href="https://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
     <a href="https://github.com/Calvinverse">the Calvinverse resources</a> and other projects
 </p>
 <p>
@@ -110,7 +110,9 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
-                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software delivery pipeline - Considerations for infrastructure improvements</a></li>
+                            <li><a href="/posts/Calvinverse-an-example-build-infrastructure">Calvinverse - An example build infrastructure</a></li>
+                            <li><a href="/posts/On-prem-vs-cloud-build-systems">Software development pipeline - On-prem or in the cloud?</a></li>
+                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software development pipeline - Considerations for infrastructure improvements</a></li>
                             <li><a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not">Software development pipeline - In the build system or not</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-flexibility">Software development pipeline - Design flexibility</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-resilience">Software development pipeline - Design resilience</a></li>
@@ -118,8 +120,6 @@
                             <li><a href="/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v">Exportable Linux virtual hard-drives for Hyper-V</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-accuracy">Software development pipeline - Design accuracy</a></li>
                             <li><a href="/posts/nBuildkit-Release-V0102">nBuildKit release - V0.10.2</a></li>
-                            <li><a href="/posts/Software-development-pipeline-Design-introduction">Software development pipeline - Design introduction</a></li>
-                            <li><a href="/posts/nBuildkit-release-V0100">nBuildKit release - V0.10.0</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -133,22 +133,22 @@
                                     <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                    <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (7)</a>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (7)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (7)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (6)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
@@ -208,7 +208,7 @@ machine but for the purposes of this post I will assume that this is the case. T
 the host machine consists of:</p>
 <ol>
 <li>Install the host operating system on the machine. Both the machine and the operating system need to
-<a href="http://en.wikipedia.org/wiki/Hyper-V#System_requirements_and_specifications">support Hyper-V</a>. On
+<a href="https://en.wikipedia.org/wiki/Hyper-V#System_requirements_and_specifications">support Hyper-V</a>. On
 top of that for the very least the master controller service has to be installed on the host machine,
 which means it is not possible to install the core Hyper-V version of Windows.</li>
 <li>Create or associate a user which you will use to run the Sherlock services. It is strongly
@@ -217,8 +217,8 @@ more suitable to provide a separate user to run the services. Note that this use
 permissions to run services, but doesn't need installation permissions etc. For the remainder of
 this post lets call this user the <em>SherlockUser</em>. <em>Note:</em> If you have a specific user that is used
 for your build server then it makes sense to use that user, although that is not required.</li>
-<li>Install the <a href="http://technet.microsoft.com/en-us/library/hh846766.aspx">Hyper-V role</a> on the host machine.</li>
-<li>Grant the <em>SherlockUser</em> <a href="http://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/17/allowing-non-administrators-to-control-hyper-v.aspx">permissions</a>
+<li>Install the <a href="https://technet.microsoft.com/en-us/library/hh846766.aspx">Hyper-V role</a> on the host machine.</li>
+<li>Grant the <em>SherlockUser</em> <a href="https://blogs.msdn.com/b/virtual_pc_guy/archive/2008/01/17/allowing-non-administrators-to-control-hyper-v.aspx">permissions</a>
 to start, stop and reset Hyper-V virtual machines.</li>
 <li>Install the <a href="http://www.iis.net/learn/get-started/whats-new-in-iis-8/installing-iis-8-on-windows-server-2012">IIS role</a>
 on the host machine. <em>Note:</em> that in theory (i.e. this has not been tested) IIS can be installed
@@ -232,7 +232,7 @@ IIS install will need to have the following parts installed as a minimum:
 <li>Http logging and tracing</li>
 </ul>
 </li>
-<li>Install <a href="http://www.microsoft.com/web/platform/database.aspx">MSSQL Express 2012</a> on the host
+<li>Install <a href="https://www.microsoft.com/web/platform/database.aspx">MSSQL Express 2012</a> on the host
 machine. <em>Note:</em> As with IIS it is again possible to install the database on any machine as long
 as both IIS and the Hyper-V host can connect to it.</li>
 <li>Create a directory that will hold all the files related to Sherlock, e.g. <code>c:\testing</code>. In that
@@ -477,8 +477,8 @@ and private networks should be sufficient.</p>
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
     </div>
 </div>
@@ -499,9 +499,9 @@ and private networks should be sufficient.</p>
         <ul>
             <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
             <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
-            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
-            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
-            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="https://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="https://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
             <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
         </ul>
     </div>
@@ -520,19 +520,19 @@ and private networks should be sufficient.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 27 Jan 2019 03:31:28 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 06 Jul 2019 09:20:51 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/71d9b009bcb314ec039056391d38669658da2a23">71d9b009bcb314ec039056391d38669658da2a23</a> at version 2.12.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/c61988176269766fde330c7aff68291127112d1a">c61988176269766fde330c7aff68291127112d1a</a> at version 3.0.0.        </p>
     </div>
 
     <p>
-        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
-        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+        Site design based on the <a href="https://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="https://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
     </p>
     <p>
-        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
-        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
-        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+        Feed icon by <a href="https://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="https://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="https://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
     </p>
 </div>
 

@@ -94,12 +94,12 @@
                     <h2>Patrick van der Velde</h2>
 
 <p>
-    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+    <img src="https://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
 </p>
 <p>
     Dutch software developer, living, working and playing in New Zealand.
     Rock climber, and paragliding pilot. Developer of
-    <a href="http://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
+    <a href="https://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
     <a href="https://github.com/Calvinverse">the Calvinverse resources</a> and other projects
 </p>
 <p>
@@ -110,7 +110,9 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
-                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software delivery pipeline - Considerations for infrastructure improvements</a></li>
+                            <li><a href="/posts/Calvinverse-an-example-build-infrastructure">Calvinverse - An example build infrastructure</a></li>
+                            <li><a href="/posts/On-prem-vs-cloud-build-systems">Software development pipeline - On-prem or in the cloud?</a></li>
+                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software development pipeline - Considerations for infrastructure improvements</a></li>
                             <li><a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not">Software development pipeline - In the build system or not</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-flexibility">Software development pipeline - Design flexibility</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-resilience">Software development pipeline - Design resilience</a></li>
@@ -118,8 +120,6 @@
                             <li><a href="/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v">Exportable Linux virtual hard-drives for Hyper-V</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-accuracy">Software development pipeline - Design accuracy</a></li>
                             <li><a href="/posts/nBuildkit-Release-V0102">nBuildKit release - V0.10.2</a></li>
-                            <li><a href="/posts/Software-development-pipeline-Design-introduction">Software development pipeline - Design introduction</a></li>
-                            <li><a href="/posts/nBuildkit-release-V0100">nBuildKit release - V0.10.0</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -133,22 +133,22 @@
                                     <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                    <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (7)</a>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (7)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (7)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (6)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
@@ -203,7 +203,7 @@ or even <a href="https://www.agilealliance.org/glossary/continuous-deployment">C
 development process is that more tasks in the development workflow
 have to be automated in order to reduce the time taken for the specific task.
 One way this automation can be achieved is by creating a
-<a href="http://www.informit.com/articles/article.aspx?p=1621865&amp;seqNum=2">development pipeline</a> which
+<a href="https://www.informit.com/articles/article.aspx?p=1621865&amp;seqNum=2">development pipeline</a> which
 takes the source code and moves it through a set of largely automatic transformations, e.g. compilation,
 testing, packaging and potentially deployment, to obtain a validated, and potentially deployed, application.</p>
 <p>In order to configure a development pipeline, whether that is on-prem or in the cloud, for
@@ -248,15 +248,15 @@ a distinction can be made between the controlling and executing parts.</li>
 it is important to know what the desirable properties of such a system are. The following
 ordered properties are thought to be the most important ones to consider.</p>
 <ul>
-<li><a href="Software-development-pipeline-Design-accuracy.html">Accurate</a>: The pipeline must return the right
+<li><a href="/posts/Software-development-pipeline-Design-accuracy.html">Accurate</a>: The pipeline must return the right
 outputs for a specific input, i.e it should report errors to the interested parties if there are any
 and report success and produce the desired artefacts if there are no errors.</li>
-<li><a href="Software-development-pipeline-Design-performance.html">Performance</a>: The pipeline must push changes
+<li><a href="/posts/Software-development-pipeline-Design-performance.html">Performance</a>: The pipeline must push changes
 through the different stages fast in order to get results back to the interested parties as soon
 as possible.</li>
-<li><a href="Software-development-pipeline-Design-resilience.html">Resilience</a>: The pipeline must be able to
+<li><a href="/posts/Software-development-pipeline-Design-resilience.html">Resilience</a>: The pipeline must be able to
 cope with environmental changes, both expected and unexpected.</li>
-<li><a href="Software-development-pipeline-Design-flexibility.html">Flexibility</a>: The pipeline must be easy to
+<li><a href="/posts/Software-development-pipeline-Design-flexibility.html">Flexibility</a>: The pipeline must be easy to
 adapt to new products and tools so that it can be used without having to replace large parts each
 time a new product or tool needs to be included.</li>
 </ul>
@@ -309,8 +309,8 @@ changes.</li>
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
     </div>
 </div>
@@ -331,9 +331,9 @@ changes.</li>
         <ul>
             <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
             <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
-            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
-            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
-            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="https://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="https://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
             <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
         </ul>
     </div>
@@ -352,19 +352,19 @@ changes.</li>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 27 Jan 2019 03:31:28 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 06 Jul 2019 09:20:51 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/71d9b009bcb314ec039056391d38669658da2a23">71d9b009bcb314ec039056391d38669658da2a23</a> at version 2.12.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/c61988176269766fde330c7aff68291127112d1a">c61988176269766fde330c7aff68291127112d1a</a> at version 3.0.0.        </p>
     </div>
 
     <p>
-        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
-        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+        Site design based on the <a href="https://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="https://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
     </p>
     <p>
-        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
-        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
-        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+        Feed icon by <a href="https://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="https://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="https://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
     </p>
 </div>
 

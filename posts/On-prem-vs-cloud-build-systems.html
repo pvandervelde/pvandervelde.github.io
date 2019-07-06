@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - Nuclei release - V0.7.1.0</title>
+        <title>Mind vortex - Software development pipeline - On-prem or in the cloud?</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,9 +27,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - Nuclei release - V0.7.1.0" />
+        <meta property="og:title" content="Mind vortex - Software development pipeline - On-prem or in the cloud?" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Nuclei-Release-V0710" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/On-prem-vs-cloud-build-systems" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -178,37 +178,108 @@
 
 
 <h2>
-Nuclei release - V0.7.1.0</h2>
+Software development pipeline - On-prem or in the cloud?</h2>
 <div id="post-meta">
     <p>
-Saturday, December 21, 2013
- |         Posted in                     <a id="post-category" role="button" href="/tags/nuclei" class="btn btn-default btn-xs">Nuclei</a>
+Thursday, June 27, 2019
+ |         Posted in                     <a id="post-category" role="button" href="/tags/cloud" class="btn btn-default btn-xs">Cloud</a>
+                    <a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs">Delivering software</a>
+                    <a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs">DevOps</a>
+                    <a id="post-category" role="button" href="/tags/on-prem" class="btn btn-default btn-xs">On-prem</a>
+                    <a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs">Software development pipeline</a>
     </p>
 </div>
 
     </div>
 
     <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.1.0">V0.7.1.0</a> of the
-<a href="/projects/nuclei.html">Nuclei</a> library has been released. This release fixes issue
-<a href="https://github.com/pvandervelde/Nuclei/issues/9">#9</a>.</p>
+        <p><a href="https://en.wikipedia.org/wiki/Continuous_integration">Continuous integration (CI) systems</a> originally and
+build pipelines recently have traditionally been available on-prem only with systems like <a href="https://jenkins.io">Jenkins</a>,
+<a href="https://www.jetbrains.com/teamcity/">TeamCity</a>, <a href="https://www.atlassian.com/software/bamboo">Bamboo</a> and
+<a href="https://en.wikipedia.org/wiki/Team_Foundation_Server">TFS</a>. This is possibly due to the fact that these
+systems needs relatively powerful hardware, mostly consisting of powerful CPU and fast IO, something
+which was not easily available in the cloud until the last few years.</p>
+<p>However in the last few years a number of cloud based CI systems have appeared e.g.
+<a href="https://azure.microsoft.com/en-in/services/devops/">Azure DevOps</a>, <a href="https://www.appveyor.com/">AppVeyor</a>,
+<a href="https://circleci.com/">CircleCi</a>), <a href="https://codeship.com/">CloudShip</a>,
+<a href="https://cloud.google.com/cloud-build/">Google cloud build</a> and <a href="https://travis-ci.org/">Travis CI</a>. This
+has lead to the question of where to locate a CI system? Should it be on-prem or in the cloud or potentially
+even a combination of the two. This post should provide some suggestions on how to make the selection
+between the different options.</p>
+<h3>Cloud-based CI systems</h3>
+<p>As with other cloud systems when using a cloud based CI system the user gets the benefits of not
+having to worry about the underlying infrastructure and resources and having the ability to scale
+the CI system to the size required, provided one pays for the additional resources.</p>
+<p>The other side of the coin is that because the user has no influence on the infrastructure of the
+CI system there is also no direct control over the hardware or the controller software. Thus the user
+cannot increase the hardware specs for the controller or the agents and the user cannot determine
+which plugins or capabilities are available in the CI system.
+As a side effect this also means that the user does not have access to the logs, metrics and
+file system for the underlying system, which provide information that may be useful when issues
+arise. In general the controller specific logs and metrics are only useful if you have access to
+the controller, however the build specific information is useful either for diagnostics
+or future planning.</p>
+<p>Besides the CI part of the system in some cases the entire pipeline will require other resources, e.g
+artefact storage or test systems. Some cloud systems provide these additional systems as well, for a price
+of course. Other systems require that these additional resources are provided in some other way.</p>
+<h3>On-prem CI systems</h3>
+<p>When running the CI system on-prem one has to both provide and maintain the infrastructure, hardware and networking etc.,
+and the controller and executor software. This increases the overhead for running a CI system. Additionally
+scaling the system either requires manual intervention or building the scaling capabilities.</p>
+<p>On the other hand having control over the infrastructure means that the CI system can be configured
+so that it fits the use case for the development teams, the desired plugins installed, executors with
+all the right tools, full control over executor workspaces and with that the ability to lock down
+sensitive information. Additionally logs and metrics can be collected from everywhere which
+helps diagnostics, alerting and predictive capabilities on both the infrastructure side and the build
+capacity side.</p>
+<p>Finally having full control over the CI system means that it is possible to extend the system if
+that is required with custom capabilities, either directly added to the CI system or as additional
+services. It should of course be noted that this requires resources and is thus not free.</p>
+<h3>Selecting a location for your CI system</h3>
+<p>So how does one select a location for a CI system. Both cloud and on-prem have pros and cons and in the
+end the location of the system depends very much on the situation fo the development team. If the team works
+for a company where there is no on-prem server infrastructure then a cloud based system will be the
+only sensible approach. However there will also be cases where an on-prem system is the only sensible
+option.</p>
+<p>In order to decide for one system or the other the first thing that should be done is a cost
+comparison, comparing the total cost of ownership, i.e. initial purchasing costs, running costs,
+staff costs, training costs etc.. As part of the cost comparison the costs for additional parts
+of the system should also be included, e.g. artefact storage or test systems. One should also note
+that while cloud systems reduce maintenance, they are not maintenance free. The maintenance of the
+infrastructure disappears but the maintenance of the builds and the workflow does not, after all no
+matter where the build pipeline is located it is still important that it delivers the
+<a href="/posts/Software-development-pipeline-Design-accuracy">accuracy</a>,
+<a href="/posts/Software-development-pipeline-Design-performance.html">performance</a>,
+<a href="/posts/Software-development-pipeline-Design-resilience.html">resilience</a> and
+<a href="/posts/Software-development-pipeline-Design-flexibility.html">flexibility</a>.</p>
+<p>Once the cost comparison is done there are other things to bring into the decision process. Because
+while costs are important they are not the only reason to select one system or another. For instance
+other comparison elements could be related to regulations that specify how source needs to be treated
+or specific processes that should be followed, or the capabilities of the different CI systems for
+example is the ability to execute builds on a specific OS. Not all cloud CI systems provide
+executors for all the different OSes.</p>
+<p>In the end the decision to select a cloud build system or a on-prem build system depends
+very strongly on the situation the company is in. It is even possible that as time progresses
+the best type of system may change from on-prem to cloud or visa versa. Both systems have their
+own advantages and disadvantages. In the end all that matters is that a system that fits the
+development process is selected, independent of what the different vendors say is the best thing.</p>
 
     </div>
 
     <div id="post-footer">
         <div>
     <div class="navlinks">
-                <a href="/posts/Setting-up-Sherlock-virtualmachines" title="Previous Post: Sherlock configuration - Virtual machines" class="navlinks-prev">« Sherlock configuration - Virtual machines</a>
-                <a href="/posts/nAnicitus-Release-V0140" title="Next Post: nAnicitus release - V0.1.4.0" class="navlinks-next">nAnicitus release - V0.1.4.0 »</a>
+                <a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements" title="Previous Post: Software development pipeline - Considerations for infrastructure improvements" class="navlinks-prev">« Software development pipeline - Considerations for infrastructure improvements</a>
+                <a href="/posts/Calvinverse-an-example-build-infrastructure" title="Next Post: Calvinverse - An example build infrastructure" class="navlinks-next">Calvinverse - An example build infrastructure »</a>
     </div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Nuclei-Release-V0710';
-    var disqus_title = 'Nuclei release - V0.7.1.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Nuclei-Release-V0710';
+    var disqus_identifier = 'On-prem-vs-cloud-build-systems';
+    var disqus_title = 'Software development pipeline - On-prem or in the cloud?';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/On-prem-vs-cloud-build-systems';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

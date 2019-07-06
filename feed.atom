@@ -4,12 +4,312 @@
 	<id>https://www.petrikvandervelde.nl/</id>
 	<title>Mind vortex</title>
 	<rights>2019</rights>
-	<updated>2019-01-27T03:31:29Z</updated>
+	<updated>2019-07-06T09:20:52Z</updated>
 	<subtitle>Welcome!</subtitle>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Calvinverse-an-example-build-infrastructure" />
+		<id>https://www.petrikvandervelde.nl/posts/Calvinverse-an-example-build-infrastructure</id>
+		<title>Calvinverse - An example build infrastructure</title>
+		<updated>2019-06-28T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Calvinverse - An example build infrastructure&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Friday, June 28, 2019
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/immutable-infrastructure" class="btn btn-default btn-xs"&gt;Immutable infrastructure&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;This post introduces the &lt;a href="https://www.calvinverse.net/"&gt;Calvinverse&lt;/a&gt;
+&lt;a href="https://github.com/Calvinverse"&gt;project&lt;/a&gt; which provides the source code for the different resources
+required to create the infrastructure for a build pipeline. The Calvinverse resources have been
+developed for two main reasons:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;To provide me with a way to experiment with and learn more about
+&lt;a href="https://thenewstack.io/a-brief-look-at-immutable-infrastructure-and-why-it-is-such-a-quest/"&gt;immutable&lt;/a&gt; &lt;a href="https://twitter.com/jezhumble/status/970334897544900609"&gt;infrastructure&lt;/a&gt; and
+&lt;a href="https://en.wikipedia.org/wiki/Infrastructure_as_code"&gt;infrastructure-as-code&lt;/a&gt; as applied to build infrastructure.&lt;/li&gt;
+&lt;li&gt;To provide resources that can be used to set up the infrastructure for a complete
+&lt;a href="/posts/On-prem-vs-cloud-build-systems"&gt;on-prem&lt;/a&gt; build system. The system should provide a build
+controller with build agents, artefact storage and all the necessary tools to monitor the different
+services and diagnose issues.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The Calvinverse resources can be configured and deployed for different sizes of infrastructure, from
+small setups only used by a few developers to a large setup used by many developers for the development
+of many products. How to configure the resources for small, medium or large environments and their
+hardware requirements will be discussed in future posts.&lt;/p&gt;
+&lt;p&gt;The resources in the Calvinverse project are designed to be run as a self-contained system. While
+daily maintenance is minimal it is not a hosted system so some maintenance is required. For instance
+OS updates will be required on a regular basis. These can either be applied to existing resources,
+through the automatic updates, or by applying the new updates to the templates and then replacing
+the existing resources with a new instance. The latter approach case can be automated, however there
+is no code in any of the Calvinverse repositories to do this automatically.&lt;/p&gt;
+&lt;p&gt;The different resources in the Calvinverse project contain a set of tools and applications which
+provide all the necessary capabilities to create the infrastructure for a build pipeline. Amongst these
+capabilities are service discovery, build execution, artefact storage, metrics, alerting and
+log processing.&lt;/p&gt;
+&lt;p&gt;The following applications and approaches are used for service discovery and configuration storage:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Using &lt;a href="https://www.consul.io"&gt;Consul&lt;/a&gt; to provide service discovery and machine discovery via
+&lt;a href="https://www.consul.io/docs/agent/dns.html"&gt;DNS&lt;/a&gt; inside an environment. An environment is defined
+as all machines that are part of a &lt;a href="https://www.consul.io/docs/internals/architecture.html"&gt;consul datacenter&lt;/a&gt;.
+It is possible to have multiple environments where the machines may all be on the same network but
+in general will not be communicating across environments. This is useful for cases where having
+multiple environments makes sense, for instance when having a production environment and a test
+environment. The benefit of using Consul as a DNS is that it allows a resource to have a consistent
+name across different environments without the DNS names clashing. For instance if there is a
+production environment and a test environment then it is possible to use the same DNS name
+for a resource, even though the actual machine names will be different. This allows using the
+Consul DNS name in tools and scripts without having to keep in mind the environment the tool
+is deployed in.
+Finally Consul is also used for the distributed key-value store that all applications can obtain
+configuration information from thereby centralizing the configuration information.&lt;/li&gt;
+&lt;li&gt;Using one or more &lt;a href="https://vaultproject.io"&gt;Vault&lt;/a&gt; instance to handle all the secrets required
+for the environment. Vault provides authenticated access for resources to securely access secrets,
+login credentials and other information that should be kept secure. This allows centralizing the
+storage and distribution of secrets&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For the build work Calvinverse uses the following applications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://jenkins.io"&gt;Jenkins&lt;/a&gt; is used as the
+&lt;a href="https://github.com/Calvinverse/resource.build.master"&gt;build controller&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Build executors connect to jenkins using the &lt;a href="https://plugins.jenkins.io/swarm"&gt;swarm plugin&lt;/a&gt; so
+that agents can connect when it starts. In the Calvinverse project there are currently only
+&lt;a href="https://github.com/Calvinverse/resource.build.agent.windows"&gt;Windows&lt;/a&gt; based executors.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For &lt;a href="https://github.com/Calvinverse/resource.artefacts"&gt;artefact storage&lt;/a&gt; Calvin verse uses the
+&lt;a href="https://www.sonatype.com/nexus-repository-oss"&gt;Nexus&lt;/a&gt; application. The image is configured such that
+a new instance of the image will create artefact repositories for &lt;a href="https://www.nuget.org"&gt;NuGet&lt;/a&gt;,
+&lt;a href="https://www.npmjs.com/"&gt;Npm&lt;/a&gt;, &lt;a href="https://www.docker.com/"&gt;Docker&lt;/a&gt; and general ZIP artefacts.&lt;/p&gt;
+&lt;p&gt;For &lt;a href="https://github.com/Calvinverse/resource.queue"&gt;message distribution&lt;/a&gt; Calvinverse uses the &lt;a href="https://www.rabbitmq.com/"&gt;RabbitMQ&lt;/a&gt; application. The image is configured such that a new instance of the image will
+try to connect to the existing cluster in the environment. If no cluster exists then the first
+instance of the image will form the start of the cluster in the environment.&lt;/p&gt;
+&lt;p&gt;Metrics, monitoring and alerting capabilities are provided by the
+&lt;a href="https://www.influxdata.com/"&gt;Influx&lt;/a&gt; stack, consisting of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.influxdata.com/time-series-platform/"&gt;InfluxDB&lt;/a&gt; for
+&lt;a href="https://github.com/Calvinverse/resource.metrics.storage"&gt;metrics collection&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://grafana.com/"&gt;Grafana&lt;/a&gt; for &lt;a href="https://github.com/Calvinverse/resource.metrics.dashboard"&gt;dashboards&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.rabbitmq.com/"&gt;Telegraf&lt;/a&gt; is installed on each resource to collect metrics and send
+them to InfluxDb.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.influxdata.com/time-series-platform/chronograf/"&gt;Chronograf&lt;/a&gt; for
+&lt;a href="https://github.com/Calvinverse/resource.metrics.monitoring"&gt;alert configurations&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.influxdata.com/time-series-platform/kapacitor/"&gt;Kapacitor&lt;/a&gt; for
+&lt;a href="https://github.com/Calvinverse/resource.metrics.monitoring"&gt;alerting&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Build and system logs are processed by the &lt;a href="https://www.elastic.co/"&gt;Elastic&lt;/a&gt; stack consisting off:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.elastic.co/products/elasticsearch"&gt;Elasticsearch&lt;/a&gt; for
+&lt;a href="https://github.com/Calvinverse/resource.documents.storage"&gt;log storage&lt;/a&gt;, both system logs
+and build logs&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.elastic.co/products/kibana"&gt;Kibana&lt;/a&gt; for
+&lt;a href="https://github.com/Calvinverse/resource.documents.dashboard"&gt;log dashboards&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Logs collected via &lt;a href="https://www.syslog-ng.com/products/open-source-log-management/"&gt;syslog-ng&lt;/a&gt; on
+linux and a modified version of &lt;a href="https://github.com/pvandervelde/filebeat.mqtt"&gt;filebeat&lt;/a&gt; on windows.
+Logs are sent to rabbitmq to ensure that the unprocessed logs aren't lost when something any part
+of the log stack goes offline.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.elastic.co/products/logstash"&gt;Logstash&lt;/a&gt; for
+&lt;a href="https://github.com/Calvinverse/resource.logs.processor"&gt;processing logs&lt;/a&gt; from RabbitMQ to
+Elasticsearch using &lt;a href="https://github.com/Calvinverse/calvinverse.logs.filters"&gt;filters&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It should be noted that while the Calvinverse resources combine to create a complete build environment
+the resources might need some alterations to fit in with the work flow and processes that are being
+followed. After all each company is different and applies different workflows. Additionally users
+might want to replace some of the resources with versions of their own, e.g. to replace Influx with
+&lt;a href="https://prometheus.io/"&gt;Prometheus&lt;/a&gt;.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/On-prem-vs-cloud-build-systems" title="Previous Post: Software development pipeline - On-prem or in the cloud?" class="navlinks-prev"&gt;« Software development pipeline - On-prem or in the cloud?&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Calvinverse-an-example-build-infrastructure';
+    var disqus_title = 'Calvinverse - An example build infrastructure';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Calvinverse-an-example-build-infrastructure';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>Welcome!</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/On-prem-vs-cloud-build-systems" />
+		<id>https://www.petrikvandervelde.nl/posts/On-prem-vs-cloud-build-systems</id>
+		<title>Software development pipeline - On-prem or in the cloud?</title>
+		<updated>2019-06-27T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Software development pipeline - On-prem or in the cloud?&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Thursday, June 27, 2019
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/cloud" class="btn btn-default btn-xs"&gt;Cloud&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/on-prem" class="btn btn-default btn-xs"&gt;On-prem&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Continuous_integration"&gt;Continuous integration (CI) systems&lt;/a&gt; originally and
+build pipelines recently have traditionally been available on-prem only with systems like &lt;a href="https://jenkins.io"&gt;Jenkins&lt;/a&gt;,
+&lt;a href="https://www.jetbrains.com/teamcity/"&gt;TeamCity&lt;/a&gt;, &lt;a href="https://www.atlassian.com/software/bamboo"&gt;Bamboo&lt;/a&gt; and
+&lt;a href="https://en.wikipedia.org/wiki/Team_Foundation_Server"&gt;TFS&lt;/a&gt;. This is possibly due to the fact that these
+systems needs relatively powerful hardware, mostly consisting of powerful CPU and fast IO, something
+which was not easily available in the cloud until the last few years.&lt;/p&gt;
+&lt;p&gt;However in the last few years a number of cloud based CI systems have appeared e.g.
+&lt;a href="https://azure.microsoft.com/en-in/services/devops/"&gt;Azure DevOps&lt;/a&gt;, &lt;a href="https://www.appveyor.com/"&gt;AppVeyor&lt;/a&gt;,
+&lt;a href="https://circleci.com/"&gt;CircleCi&lt;/a&gt;), &lt;a href="https://codeship.com/"&gt;CloudShip&lt;/a&gt;,
+&lt;a href="https://cloud.google.com/cloud-build/"&gt;Google cloud build&lt;/a&gt; and &lt;a href="https://travis-ci.org/"&gt;Travis CI&lt;/a&gt;. This
+has lead to the question of where to locate a CI system? Should it be on-prem or in the cloud or potentially
+even a combination of the two. This post should provide some suggestions on how to make the selection
+between the different options.&lt;/p&gt;
+&lt;h3&gt;Cloud-based CI systems&lt;/h3&gt;
+&lt;p&gt;As with other cloud systems when using a cloud based CI system the user gets the benefits of not
+having to worry about the underlying infrastructure and resources and having the ability to scale
+the CI system to the size required, provided one pays for the additional resources.&lt;/p&gt;
+&lt;p&gt;The other side of the coin is that because the user has no influence on the infrastructure of the
+CI system there is also no direct control over the hardware or the controller software. Thus the user
+cannot increase the hardware specs for the controller or the agents and the user cannot determine
+which plugins or capabilities are available in the CI system.
+As a side effect this also means that the user does not have access to the logs, metrics and
+file system for the underlying system, which provide information that may be useful when issues
+arise. In general the controller specific logs and metrics are only useful if you have access to
+the controller, however the build specific information is useful either for diagnostics
+or future planning.&lt;/p&gt;
+&lt;p&gt;Besides the CI part of the system in some cases the entire pipeline will require other resources, e.g
+artefact storage or test systems. Some cloud systems provide these additional systems as well, for a price
+of course. Other systems require that these additional resources are provided in some other way.&lt;/p&gt;
+&lt;h3&gt;On-prem CI systems&lt;/h3&gt;
+&lt;p&gt;When running the CI system on-prem one has to both provide and maintain the infrastructure, hardware and networking etc.,
+and the controller and executor software. This increases the overhead for running a CI system. Additionally
+scaling the system either requires manual intervention or building the scaling capabilities.&lt;/p&gt;
+&lt;p&gt;On the other hand having control over the infrastructure means that the CI system can be configured
+so that it fits the use case for the development teams, the desired plugins installed, executors with
+all the right tools, full control over executor workspaces and with that the ability to lock down
+sensitive information. Additionally logs and metrics can be collected from everywhere which
+helps diagnostics, alerting and predictive capabilities on both the infrastructure side and the build
+capacity side.&lt;/p&gt;
+&lt;p&gt;Finally having full control over the CI system means that it is possible to extend the system if
+that is required with custom capabilities, either directly added to the CI system or as additional
+services. It should of course be noted that this requires resources and is thus not free.&lt;/p&gt;
+&lt;h3&gt;Selecting a location for your CI system&lt;/h3&gt;
+&lt;p&gt;So how does one select a location for a CI system. Both cloud and on-prem have pros and cons and in the
+end the location of the system depends very much on the situation fo the development team. If the team works
+for a company where there is no on-prem server infrastructure then a cloud based system will be the
+only sensible approach. However there will also be cases where an on-prem system is the only sensible
+option.&lt;/p&gt;
+&lt;p&gt;In order to decide for one system or the other the first thing that should be done is a cost
+comparison, comparing the total cost of ownership, i.e. initial purchasing costs, running costs,
+staff costs, training costs etc.. As part of the cost comparison the costs for additional parts
+of the system should also be included, e.g. artefact storage or test systems. One should also note
+that while cloud systems reduce maintenance, they are not maintenance free. The maintenance of the
+infrastructure disappears but the maintenance of the builds and the workflow does not, after all no
+matter where the build pipeline is located it is still important that it delivers the
+&lt;a href="/posts/Software-development-pipeline-Design-accuracy"&gt;accuracy&lt;/a&gt;,
+&lt;a href="/posts/Software-development-pipeline-Design-performance.html"&gt;performance&lt;/a&gt;,
+&lt;a href="/posts/Software-development-pipeline-Design-resilience.html"&gt;resilience&lt;/a&gt; and
+&lt;a href="/posts/Software-development-pipeline-Design-flexibility.html"&gt;flexibility&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Once the cost comparison is done there are other things to bring into the decision process. Because
+while costs are important they are not the only reason to select one system or another. For instance
+other comparison elements could be related to regulations that specify how source needs to be treated
+or specific processes that should be followed, or the capabilities of the different CI systems for
+example is the ability to execute builds on a specific OS. Not all cloud CI systems provide
+executors for all the different OSes.&lt;/p&gt;
+&lt;p&gt;In the end the decision to select a cloud build system or a on-prem build system depends
+very strongly on the situation the company is in. It is even possible that as time progresses
+the best type of system may change from on-prem to cloud or visa versa. Both systems have their
+own advantages and disadvantages. In the end all that matters is that a system that fits the
+development process is selected, independent of what the different vendors say is the best thing.&lt;/p&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements" title="Previous Post: Software development pipeline - Considerations for infrastructure improvements" class="navlinks-prev"&gt;« Software development pipeline - Considerations for infrastructure improvements&lt;/a&gt;
+                &lt;a href="/posts/Calvinverse-an-example-build-infrastructure" title="Next Post: Calvinverse - An example build infrastructure" class="navlinks-next"&gt;Calvinverse - An example build infrastructure »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'On-prem-vs-cloud-build-systems';
+    var disqus_title = 'Software development pipeline - On-prem or in the cloud?';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/On-prem-vs-cloud-build-systems';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>Welcome!</summary>
+	</entry>
 	<entry>
 		<link href="https://www.petrikvandervelde.nl/posts/Software-development-pipeline-considerations-for-infrastructure-improvements" />
 		<id>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-considerations-for-infrastructure-improvements</id>
-		<title>Software delivery pipeline - Considerations for infrastructure improvements</title>
+		<title>Software development pipeline - Considerations for infrastructure improvements</title>
 		<updated>2019-01-27T00:00:00Z</updated>
 		<content>&lt;div id="post"&gt;
     &lt;div id="post-header"&gt;
@@ -20,7 +320,7 @@
 
 
 &lt;h2&gt;
-Software delivery pipeline - Considerations for infrastructure improvements&lt;/h2&gt;
+Software development pipeline - Considerations for infrastructure improvements&lt;/h2&gt;
 &lt;div id="post-meta"&gt;
     &lt;p&gt;
 Sunday, January 27, 2019
@@ -28,18 +328,18 @@ Sunday, January 27, 2019
                     &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/immutable-infrastructure" class="btn btn-default btn-xs"&gt;Immutable infrastructure&lt;/a&gt;
                     &lt;a id="post-category" role="button" href="/tags/infrastructure-as-code" class="btn btn-default btn-xs"&gt;Infrastructure as code&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/software-delivery-pipeline" class="btn btn-default btn-xs"&gt;Software delivery pipeline&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
     &lt;/p&gt;
 &lt;/div&gt;
 
     &lt;/div&gt;
 
     &lt;div id="post-content"&gt;
-        &lt;p&gt;In one of the post from a &lt;a href="Software-development-pipeline-Design-introduction.html"&gt;while ago&lt;/a&gt; we
-discussed what a software development pipeline is and what the &lt;a href="Software-development-pipeline-Design-accuracy.html"&gt;most&lt;/a&gt;
-&lt;a href="Software-development-pipeline-Design-performance.html"&gt;important&lt;/a&gt;
-&lt;a href="Software-development-pipeline-Design-resilience.html"&gt;characteristics&lt;/a&gt;
-&lt;a href="Software-development-pipeline-Design-flexibility.html"&gt;are&lt;/a&gt;. Given that the pipeline is used
+        &lt;p&gt;In one of the post from a &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;while ago&lt;/a&gt; we
+discussed what a software development pipeline is and what the &lt;a href="/posts/Software-development-pipeline-Design-accuracy.html"&gt;most&lt;/a&gt;
+&lt;a href="/posts/Software-development-pipeline-Design-performance.html"&gt;important&lt;/a&gt;
+&lt;a href="/posts/Software-development-pipeline-Design-resilience.html"&gt;characteristics&lt;/a&gt;
+&lt;a href="/posts/Software-development-pipeline-Design-flexibility.html"&gt;are&lt;/a&gt;. Given that the pipeline is used
 during the large majority of the development, test and release process it is fair to say that for
 a software company the build and deployment pipeline infrastructure should be considered critical
 infrastructure because without it the development team will be more limited in their ability to
@@ -153,6 +453,8 @@ production environment.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Using the approaches mentioned above it is possible to improve the development pipeline without
 causing unnecessary disturbances for the development team.&lt;/p&gt;
+&lt;p&gt;Edit: Changed the title from &lt;code&gt;software delivery pipeline&lt;/code&gt; to &lt;code&gt;software development pipeline&lt;/code&gt; to match
+the other posts.&lt;/p&gt;
 
     &lt;/div&gt;
 
@@ -160,6 +462,7 @@ causing unnecessary disturbances for the development team.&lt;/p&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not" title="Previous Post: Software development pipeline - In the build system or not" class="navlinks-prev"&gt;« Software development pipeline - In the build system or not&lt;/a&gt;
+                &lt;a href="/posts/On-prem-vs-cloud-build-systems" title="Next Post: Software development pipeline - On-prem or in the cloud?" class="navlinks-next"&gt;Software development pipeline - On-prem or in the cloud? »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -167,7 +470,7 @@ causing unnecessary disturbances for the development team.&lt;/p&gt;
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
     var disqus_identifier = 'Software-development-pipeline-considerations-for-infrastructure-improvements';
-    var disqus_title = 'Software delivery pipeline - Considerations for infrastructure improvements';
+    var disqus_title = 'Software development pipeline - Considerations for infrastructure improvements';
     var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-considerations-for-infrastructure-improvements';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
@@ -184,8 +487,8 @@ causing unnecessary disturbances for the development team.&lt;/p&gt;
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -353,7 +656,7 @@ external systems.&lt;/p&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/Software-development-pipeline-Design-flexibility" title="Previous Post: Software development pipeline - Design flexibility" class="navlinks-prev"&gt;« Software development pipeline - Design flexibility&lt;/a&gt;
-                &lt;a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements" title="Next Post: Software delivery pipeline - Considerations for infrastructure improvements" class="navlinks-next"&gt;Software delivery pipeline - Considerations for infrastructure improvements »&lt;/a&gt;
+                &lt;a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements" title="Next Post: Software development pipeline - Considerations for infrastructure improvements" class="navlinks-next"&gt;Software development pipeline - Considerations for infrastructure improvements »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -378,8 +681,8 @@ external systems.&lt;/p&gt;
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -413,7 +716,7 @@ Wednesday, October 31, 2018
     &lt;/div&gt;
 
     &lt;div id="post-content"&gt;
-        &lt;p&gt;The &lt;a href="Software-development-pipeline-Design-introduction.html"&gt;fourth property&lt;/a&gt; to consider is
+        &lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;fourth property&lt;/a&gt; to consider is
 &lt;em&gt;flexibility&lt;/em&gt;, i.e. the ability of the pipeline to be able to be modified or adapted without
 requiring large changes to be made to the underlying pipeline code and services.&lt;/p&gt;
 &lt;p&gt;A pipeline should be flexible because the products being build, tested and deployed with that
@@ -530,8 +833,8 @@ to wait until another post.&lt;/p&gt;
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -565,7 +868,7 @@ Tuesday, December 19, 2017
     &lt;/div&gt;
 
     &lt;div id="post-content"&gt;
-        &lt;p&gt;The &lt;a href="Software-development-pipeline-Design-introduction.html"&gt;third property&lt;/a&gt; to consider is
+        &lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;third property&lt;/a&gt; to consider is
 &lt;em&gt;resilience&lt;/em&gt;, which in this case means that the pipeline should be able to cope with
 expected and unexpected changes to the environment it executes in and uses.&lt;/p&gt;
 &lt;p&gt;David Woods defines &lt;a href="https://www.researchgate.net/publication/276139783_Four_concepts_for_resilience_and_the_implications_for_the_future_of_resilience_engineering"&gt;four different types of ‘resilience’&lt;/a&gt; in a paper in the journal of reliability engineering and system safety. One of the different types
@@ -702,8 +1005,8 @@ and only continuing the improvement process if there is actual demand for improv
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -737,11 +1040,11 @@ Sunday, November 5, 2017
     &lt;/div&gt;
 
     &lt;div id="post-content"&gt;
-        &lt;p&gt;The &lt;a href="Software-development-pipeline-Design-introduction.html"&gt;second property&lt;/a&gt; to consider is
+        &lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;second property&lt;/a&gt; to consider is
 &lt;em&gt;performance&lt;/em&gt;, which in this case means that the pipeline should provide feedback on the quality of
 the current input set as soon as possible in order to reduce the length of the feedback cycle. As is
 &lt;a href="https://www.richard-banks.org/2013/04/why-short-feedback-cycle-is-good-thing.html"&gt;known&lt;/a&gt;
-&lt;a href="http://www.ambysoft.com/essays/whyAgileWorksFeedback.html"&gt;having&lt;/a&gt; a short
+&lt;a href="https://www.ambysoft.com/essays/whyAgileWorksFeedback.html"&gt;having&lt;/a&gt; a short
 &lt;a href="https://continuousdelivery.com/2012/08/why-software-development-methodologies-suck/"&gt;feedback&lt;/a&gt;
 cycle makes it easier for the development teams to make improvements and fix issues.&lt;/p&gt;
 &lt;p&gt;There are two main components to development pipeline performance:&lt;/p&gt;
@@ -821,7 +1124,7 @@ lead to reductions in performance due to the overhead of transitioning between s
 &lt;p&gt;The mentioned improvements form a start for improving the performance of the pipeline. Depending on
 the specific characteristics of a given pipeline other improvements and design choices may be valid.&lt;/p&gt;
 &lt;p&gt;Finally it must be mentioned that some performance improvements will have negative influences on the
-other &lt;a href="Software-development-pipeline-Design-introduction.html"&gt;properties&lt;/a&gt;. For instance using partial
+other &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;properties&lt;/a&gt;. For instance using partial
 builds may influence accuracy. In the end a trade-off will need to be made when it comes to changes
 that influence multiple properties.&lt;/p&gt;
 
@@ -856,8 +1159,8 @@ that influence multiple properties.&lt;/p&gt;
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -1253,8 +1556,8 @@ hard drive.&lt;/p&gt;
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -1289,8 +1592,8 @@ Monday, September 4, 2017
 
     &lt;div id="post-content"&gt;
         &lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Accuracy_and_precision#ISO_definition_.28ISO_5725.29"&gt;ISO&lt;/a&gt; defines
-accuracy as the combination of &lt;a href="http://dictionary.cambridge.org/dictionary/english/correct?q=correctness"&gt;correctness&lt;/a&gt;,
-in agreement with the true facts, and &lt;a href="http://dictionary.cambridge.org/dictionary/english/consistency"&gt;consistency&lt;/a&gt;,
+accuracy as the combination of &lt;a href="https://dictionary.cambridge.org/dictionary/english/correct?q=correctness"&gt;correctness&lt;/a&gt;,
+in agreement with the true facts, and &lt;a href="https://dictionary.cambridge.org/dictionary/english/consistency"&gt;consistency&lt;/a&gt;,
 always behaving or performing in a similar way.&lt;/p&gt;
 &lt;p&gt;The reason to value &lt;em&gt;accuracy&lt;/em&gt; as the number one characteristic of the development pipeline is
 because it is important for the development teams to be able to rely on the outputs of the
@@ -1303,13 +1606,13 @@ pipeline it will take a lot of work to regain their trust.&lt;/p&gt;
 next step is to determine how accuracy can be built into the development pipeline.
 In theory this task is a simple one, all one has to do is to ensure that all the parts that form the
 pipeline behave correctly for all input sets. However as indicated by
-&lt;a href="http://wiki.c2.com/?DifferenceBetweenTheoryAndPractice"&gt;many&lt;/a&gt; -&lt;/p&gt;
+&lt;a href="https://wiki.c2.com/?DifferenceBetweenTheoryAndPractice"&gt;many&lt;/a&gt; -&lt;/p&gt;
 &lt;blockquote class="blockquote"&gt;
 &lt;p&gt;In theory there is no difference between theory and practice. In practice there is&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;which means that practically achieving accuracy is a difficult task due to the
 many, often complex, interactions between the pipeline components. As a reminder
-the &lt;a href="Software-development-pipeline-Design-introduction.html"&gt;components&lt;/a&gt; the
+the &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;components&lt;/a&gt; the
 development pipeline consists of are:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The scripts that are used during the different parts of the cycle, i.e. the build, test
@@ -1413,8 +1716,8 @@ and versions of all the parts are tracked for each input set.&lt;/p&gt;
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -1492,8 +1795,8 @@ github in the milestone list for the &lt;a href="https://github.com/nbuildkit/nB
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -1538,7 +1841,7 @@ or even &lt;a href="https://www.agilealliance.org/glossary/continuous-deployment
 development process is that more tasks in the development workflow
 have to be automated in order to reduce the time taken for the specific task.
 One way this automation can be achieved is by creating a
-&lt;a href="http://www.informit.com/articles/article.aspx?p=1621865&amp;amp;seqNum=2"&gt;development pipeline&lt;/a&gt; which
+&lt;a href="https://www.informit.com/articles/article.aspx?p=1621865&amp;amp;seqNum=2"&gt;development pipeline&lt;/a&gt; which
 takes the source code and moves it through a set of largely automatic transformations, e.g. compilation,
 testing, packaging and potentially deployment, to obtain a validated, and potentially deployed, application.&lt;/p&gt;
 &lt;p&gt;In order to configure a development pipeline, whether that is on-prem or in the cloud, for
@@ -1583,15 +1886,15 @@ a distinction can be made between the controlling and executing parts.&lt;/li&gt
 it is important to know what the desirable properties of such a system are. The following
 ordered properties are thought to be the most important ones to consider.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="Software-development-pipeline-Design-accuracy.html"&gt;Accurate&lt;/a&gt;: The pipeline must return the right
+&lt;li&gt;&lt;a href="/posts/Software-development-pipeline-Design-accuracy.html"&gt;Accurate&lt;/a&gt;: The pipeline must return the right
 outputs for a specific input, i.e it should report errors to the interested parties if there are any
 and report success and produce the desired artefacts if there are no errors.&lt;/li&gt;
-&lt;li&gt;&lt;a href="Software-development-pipeline-Design-performance.html"&gt;Performance&lt;/a&gt;: The pipeline must push changes
+&lt;li&gt;&lt;a href="/posts/Software-development-pipeline-Design-performance.html"&gt;Performance&lt;/a&gt;: The pipeline must push changes
 through the different stages fast in order to get results back to the interested parties as soon
 as possible.&lt;/li&gt;
-&lt;li&gt;&lt;a href="Software-development-pipeline-Design-resilience.html"&gt;Resilience&lt;/a&gt;: The pipeline must be able to
+&lt;li&gt;&lt;a href="/posts/Software-development-pipeline-Design-resilience.html"&gt;Resilience&lt;/a&gt;: The pipeline must be able to
 cope with environmental changes, both expected and unexpected.&lt;/li&gt;
-&lt;li&gt;&lt;a href="Software-development-pipeline-Design-flexibility.html"&gt;Flexibility&lt;/a&gt;: The pipeline must be easy to
+&lt;li&gt;&lt;a href="/posts/Software-development-pipeline-Design-flexibility.html"&gt;Flexibility&lt;/a&gt;: The pipeline must be easy to
 adapt to new products and tools so that it can be used without having to replace large parts each
 time a new product or tool needs to be included.&lt;/li&gt;
 &lt;/ul&gt;
@@ -1644,8 +1947,8 @@ changes.&lt;/li&gt;
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -1741,8 +2044,8 @@ and &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/35?clos
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -1796,7 +2099,7 @@ executing tests during the packer test build.&lt;/li&gt;
     &lt;div id="post-footer"&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V092" title="Previous Post: nBuildKit release - V0.9.2" class="navlinks-prev"&gt;« nBuildKit release - V0.9.2&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Previous Post: Ops-Tools-Build release - V0.2.0" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.2.0&lt;/a&gt;
                 &lt;a href="/posts/nBuildkit-release-V0100" title="Next Post: nBuildKit release - V0.10.0" class="navlinks-next"&gt;nBuildKit release - V0.10.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
@@ -1822,8 +2125,92 @@ executing tests during the packer test build.&lt;/li&gt;
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;</content>
+		<summary>Welcome!</summary>
+	</entry>
+	<entry>
+		<link href="https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020" />
+		<id>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</id>
+		<title>Ops-Tools-Build release - V0.2.0</title>
+		<updated>2017-05-14T00:00:00Z</updated>
+		<content>&lt;div id="post"&gt;
+    &lt;div id="post-header"&gt;
+        &lt;!--
+    Model is: Tuple&lt;IDocument, IDocument&gt;.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+--&gt;
+
+
+&lt;h2&gt;
+Ops-Tools-Build release - V0.2.0&lt;/h2&gt;
+&lt;div id="post-meta"&gt;
+    &lt;p&gt;
+Sunday, May 14, 2017
+ |         Posted in                     &lt;a id="post-category" role="button" href="/tags/ops-resource" class="btn btn-default btn-xs"&gt;Ops-Resource&lt;/a&gt;
+                    &lt;a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs"&gt;Ops-Tools-Build&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-content"&gt;
+        &lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
+&lt;p&gt;This release was focussed on providing the capabilities to use the Chef toolset to create new
+resources. All the work items that have been closed for this release can be found on
+&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;New functionality&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/5"&gt;5&lt;/a&gt; - A new function which provides
+the ability to execute &lt;a href="https://github.com/sethvargo/chefspec"&gt;ChefSpec&lt;/a&gt; tests.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/6"&gt;6&lt;/a&gt; - A new function which
+invokes the Chef linting tool &lt;a href="https://www.foodcritic.io/"&gt;Foodcritic&lt;/a&gt; on the selected Chef cookbooks.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/7"&gt;7&lt;/a&gt; - A new function which invokes the
+Ruby linting tool &lt;a href="https://github.com/bbatsov/rubocop"&gt;RuboCop&lt;/a&gt; on selected Ruby source files.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/20"&gt;20&lt;/a&gt; - A new package restore script
+was added to allow restoring Chef cookbooks via &lt;a href="https://github.com/berkshelf/berkshelf"&gt;Berkshelf&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/21"&gt;21&lt;/a&gt; - A new switch was added to the
+packer function which allows keeping the resources generated with packer in case the packer
+build fails. This improves the ability to debug issues in the packer build.&lt;/li&gt;
+&lt;/ul&gt;
+
+    &lt;/div&gt;
+
+    &lt;div id="post-footer"&gt;
+        &lt;div&gt;
+    &lt;div class="navlinks"&gt;
+                &lt;a href="/posts/nBuildKit-release-V092" title="Previous Post: nBuildKit release - V0.9.2" class="navlinks-prev"&gt;« nBuildKit release - V0.9.2&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V030" title="Next Post: Ops-Tools-Build release - V0.3.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.3.0 »&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Ops-Tools-Build-release-V020';
+    var disqus_title = 'Ops-Tools-Build release - V0.2.0';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+&lt;/script&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -1895,7 +2282,7 @@ allows downloading files from a HTTP URL. If the file in question is an archive 
 additionally be unzipped before the final copy takes place.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Additionally the first steps to better documentation have been taken. The &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/blob/master/README.md"&gt;readme&lt;/a&gt;,
-the &lt;a href="http://nbuildkit.github.io/nBuildKit.MsBuild/"&gt;introduction&lt;/a&gt; and the &lt;a href="http://nbuildkit.github.io/nBuildKit.MsBuild/docs/contributing"&gt;contributing&lt;/a&gt;
+the &lt;a href="https://nbuildkit.github.io/nBuildKit.MsBuild/"&gt;introduction&lt;/a&gt; and the &lt;a href="https://nbuildkit.github.io/nBuildKit.MsBuild/docs/contributing"&gt;contributing&lt;/a&gt;
 documents have been updated.&lt;/p&gt;
 
     &lt;/div&gt;
@@ -1903,8 +2290,8 @@ documents have been updated.&lt;/p&gt;
     &lt;div id="post-footer"&gt;
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Previous Post: Ops-Tools-Build release - V0.2.0" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.2.0&lt;/a&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V030" title="Next Post: Ops-Tools-Build release - V0.3.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.3.0 »&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V091" title="Previous Post: nBuildKit release - V0.9.1" class="navlinks-prev"&gt;« nBuildKit release - V0.9.1&lt;/a&gt;
+                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Next Post: Ops-Tools-Build release - V0.2.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.2.0 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -1929,92 +2316,8 @@ documents have been updated.&lt;/p&gt;
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content>
-		<summary>Welcome!</summary>
-	</entry>
-	<entry>
-		<link href="https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020" />
-		<id>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</id>
-		<title>Ops-Tools-Build release - V0.2.0</title>
-		<updated>2017-05-14T00:00:00Z</updated>
-		<content>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Ops-Tools-Build release - V0.2.0&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Sunday, May 14, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/ops-resource" class="btn btn-default btn-xs"&gt;Ops-Resource&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs"&gt;Ops-Tools-Build&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
-&lt;p&gt;This release was focussed on providing the capabilities to use the Chef toolset to create new
-resources. All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;New functionality&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/5"&gt;5&lt;/a&gt; - A new function which provides
-the ability to execute &lt;a href="https://github.com/sethvargo/chefspec"&gt;ChefSpec&lt;/a&gt; tests.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/6"&gt;6&lt;/a&gt; - A new function which
-invokes the Chef linting tool &lt;a href="http://www.foodcritic.io/"&gt;Foodcritic&lt;/a&gt; on the selected Chef cookbooks.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/7"&gt;7&lt;/a&gt; - A new function which invokes the
-Ruby linting tool &lt;a href="https://github.com/bbatsov/rubocop"&gt;RuboCop&lt;/a&gt; on selected Ruby source files.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/20"&gt;20&lt;/a&gt; - A new package restore script
-was added to allow restoring Chef cookbooks via &lt;a href="https://github.com/berkshelf/berkshelf"&gt;Berkshelf&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/21"&gt;21&lt;/a&gt; - A new switch was added to the
-packer function which allows keeping the resources generated with packer in case the packer
-build fails. This improves the ability to debug issues in the packer build.&lt;/li&gt;
-&lt;/ul&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V091" title="Previous Post: nBuildKit release - V0.9.1" class="navlinks-prev"&gt;« nBuildKit release - V0.9.1&lt;/a&gt;
-                &lt;a href="/posts/nBuildKit-release-V092" title="Next Post: nBuildKit release - V0.9.2" class="navlinks-next"&gt;nBuildKit release - V0.9.2 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Ops-Tools-Build-release-V020';
-    var disqus_title = 'Ops-Tools-Build release - V0.2.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -2082,7 +2385,7 @@ will generate the website using &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;.&
         &lt;div&gt;
     &lt;div class="navlinks"&gt;
                 &lt;a href="/posts/Ops-Tools-Build-release-V011" title="Previous Post: Ops-Tools-Build release - V0.1.0 and V0.1.1" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.1.0 and V0.1.1&lt;/a&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Next Post: Ops-Tools-Build release - V0.2.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.2.0 »&lt;/a&gt;
+                &lt;a href="/posts/nBuildKit-release-V092" title="Next Post: nBuildKit release - V0.9.2" class="navlinks-next"&gt;nBuildKit release - V0.9.2 »&lt;/a&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="disqus_thread"&gt;&lt;/div&gt;
@@ -2107,8 +2410,8 @@ will generate the website using &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;.&
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -2189,8 +2492,8 @@ calculation of the hash of one or more files&lt;/li&gt;
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -2339,8 +2642,8 @@ are fun to play with&lt;/p&gt;
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -2466,8 +2769,8 @@ overall speed up for the nBuildKit build itself is about a factor two.&lt;/p&gt;
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>
@@ -2592,316 +2895,8 @@ ideally I'd also have lots of money to pay for all these physical machines 😉&
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 &lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content>
-		<summary>Welcome!</summary>
-	</entry>
-	<entry>
-		<link href="https://www.petrikvandervelde.nl/posts/Blog-publishing-with-AppVeyor" />
-		<id>https://www.petrikvandervelde.nl/posts/Blog-publishing-with-AppVeyor</id>
-		<title>Blog publishing with AppVeyor</title>
-		<updated>2017-01-16T00:00:00Z</updated>
-		<content>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Blog publishing with AppVeyor&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Monday, January 16, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/appveyor" class="btn btn-default btn-xs"&gt;AppVeyor&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/blog" class="btn btn-default btn-xs"&gt;Blog&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/build" class="btn btn-default btn-xs"&gt;Build&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/deploy" class="btn btn-default btn-xs"&gt;Deploy&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;One part of &lt;a href="/posts/Goals-for-2017"&gt;improving my career and increasing my professional reach&lt;/a&gt; is to
-post more to this blog about the work that I am doing and the code and skills that come from this
-work. Unfortunately at the moment writing is still more of a chore than it is a pleasure so that
-means that if I want to publish more I need to make it very easy for me to do so, otherwise the publishing
-process will just add yet another obstacle that I need to get past while producing content.&lt;/p&gt;
-&lt;p&gt;With me being a build engineer by profession the obvious solution was not to follow the
-&lt;a href="https://www.troyhunt.com/its-a-new-blog/"&gt;sensible path&lt;/a&gt; of a managed system but to create some
-kind of build system to automatically build and publish my blog posts. Troy Hunt is right in
-that a managed system is far quicker and easier to use, thereby saving time that you can use for
-improvements elsewhere. In my case however I feel that there is something additional to be gotten from
-setting my blog up to be automatically build and deployed. To be specific additional learning experiences,
-more knowledge and a new blog post about how I achieved the goal. I hope that those things will
-make up for the extra work I have to do in maintaining my own blog.&lt;/p&gt;
-&lt;p&gt;So the goals for this project were&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Build every time I push to the &lt;a href="https://github.com/pvandervelde/mindvortex"&gt;source repository&lt;/a&gt; on
-an independent environment so that I can be sure that I can always build my blog and nothing is
-dependent on my machine being available.&lt;/li&gt;
-&lt;li&gt;Publishing should involve a minimal amount of work done from my side. Ideally all I would have to
-do is commit my changes, merge them to the &lt;a href="https://github.com/pvandervelde/mindvortex"&gt;master branch&lt;/a&gt;
-of the source repository and then sit back and see the new post appear online.&lt;/li&gt;
-&lt;li&gt;No maintenance is necessary for what ever system I use to achive this goal. When I build new versions
-of one of my libraries, applications or infrastructure resources I want full control over the
-build, test and deployment environments. For building my blog that is far less important because
-it is a simple process which does not require many different steps.&lt;/li&gt;
-&lt;li&gt;Finally it would be nice to make it interesting enough to get a blog post out of it.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;After a few hours of tinkering that is where we are now, this blog post was build and published
-using a combination of &lt;a href="https://www.appveyor.com/"&gt;AppVeyor&lt;/a&gt; as the build server and
-&lt;a href="/projects/nBuildKit"&gt;nBuildKit&lt;/a&gt; for the build and deploy scripts.&lt;/p&gt;
-&lt;p&gt;In order to achieve this the first step that I took was to set up the build scripts so that I could
-build on my local machine. Having a build that executes in the same way on a developer machine
-and the build server has many benefits.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Familiarity: developers understand what the build server does because it works exactly as on their
-machine.&lt;/li&gt;
-&lt;li&gt;Ease of debugging: it is easier to discover the source of any errors if you can execute the scripts
-on a developers machine because then you have have full access to the workspace which may not be
-the case on a build machine.&lt;/li&gt;
-&lt;li&gt;Ease of testing: even build scripts need to be tested. If this is done on a developer machine then
-the testing will most likely be able to be executed much quicker because there is less need to
-commit every change, push it to the server and wait for the build server to execute the build.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Configuring &lt;code&gt;nBuildKit&lt;/code&gt; means copying the &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/tree/master/src/samples"&gt;sample files&lt;/a&gt;
-to the root of the workspace and updating them with values relevant to the project.&lt;/p&gt;
-&lt;p&gt;In this case I updated the &lt;code&gt;settings.props&lt;/code&gt; file, which contains the general information about the
-build, test and deploy processes, with &lt;a href="https://gist.github.com/pvandervelde/88aa8f644148b4cdb9fa909fe3ff8f69"&gt;product information&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;I also &lt;a href="https://gist.github.com/pvandervelde/9853b15889ccf67bafa5fa2e93594ca2"&gt;enabled the automatic merging&lt;/a&gt;
-for the &lt;a href="http://nvie.com/posts/a-successful-git-branching-model/"&gt;GitFlow&lt;/a&gt; process. This allows
-nBuildKit to automatically complete feature, hotfix and release branches when running on a build
-server so that each build also verifies that the final merge will be successful and the changes will
-not break anything after the merge.&lt;/p&gt;
-&lt;p&gt;The next file to update was the &lt;code&gt;build.settings.props&lt;/code&gt; file, which describes what needs to be done
-during the build process, was updated. The first part of that was to define which &lt;a href="https://gist.github.com/pvandervelde/015611f5355b07e1b3246ae81bf2ea0a"&gt;steps should be
-taken during the build process&lt;/a&gt;.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Clear the workspace. While this is not necessary on a build server, after all a fresh workspace
-is used for each build, it is necessary on a developer machine because old artefacts may still
-be present.&lt;/li&gt;
-&lt;li&gt;Ensure that the build server has configured the workspace with the correct source control information.
-Many build systems do not perform a full clone at the start of a build but rather get only the
-minimal source control information in addition to the source files. This reduces time and IO
-demands, especially for repositories with extensive history. Different build systems have a
-different approach to what steps exactly are taken. The lack of source control information, e.g.
-the state of different branches, or the branch that the current commit is part of, is not a
-problem if the only step is to compiling code however issues can occur if the state of the local
-workspace is used to determine version numbers or VCS information. In those cases it is better to
-ensure that the workspace is in the same state as it was on the developers machine.&lt;/li&gt;
-&lt;li&gt;Gather VCS information like the current commit ID and the branch name. For my blog this information
-is embedded in the footer of every page to indicate which commit was build and what version
-of the blog you are looking at.&lt;/li&gt;
-&lt;li&gt;Complete the active &lt;code&gt;GitFlow&lt;/code&gt; branch, if there is one, by merging the active branch to the
-appropriate target branches and adding tags if necessary.&lt;/li&gt;
-&lt;li&gt;Get version information with &lt;a href="https://github.com/GitTools/GitVersion"&gt;GitVersion&lt;/a&gt;. This
-is done after the merge process so that the version number is the release version.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://gist.github.com/pvandervelde/813a19ff4861470ba03591a5ecc4b910"&gt;Build the pages&lt;/a&gt; with Wyam.&lt;/li&gt;
-&lt;li&gt;Zip up the generated pages&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The final change to the &lt;code&gt;build.settings.props&lt;/code&gt; file was to enable the generation of the archive
-files by &lt;a href="https://gist.github.com/pvandervelde/d1ec2c78fc560bd20ef1ef7a375eee30"&gt;uncommenting the &lt;code&gt;ArchivePackageSpecs&lt;/code&gt; section&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;The last file to be changed was the &lt;code&gt;deploy.settings.props&lt;/code&gt; file which describes what needs to be
-done during the deploy process. As with the &lt;code&gt;build.settings.props&lt;/code&gt; file the first step here was
-to select the &lt;a href="https://gist.github.com/pvandervelde/8ee5a1dc96d0835bb8b3aa6354896ba7"&gt;steps that should be taken during the deploy process&lt;/a&gt;.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Once again ensure that the build server workspace is configured with the correct source control
-information.&lt;/li&gt;
-&lt;li&gt;Gather version information in the same way as was done during the build process.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://gist.github.com/pvandervelde/c6490e33fd73d0f7afc15677a4bf2e8b"&gt;Push the archive files&lt;/a&gt;
-to AppVeyor.&lt;/li&gt;
-&lt;li&gt;Push the files contained in the archive file to the &lt;a href="https://github.com/pvandervelde/pvandervelde.github.io"&gt;repository&lt;/a&gt;
-that contains the generated pages. This was simply done by enabling the &lt;code&gt;DeployStepsPushToGitBranch&lt;/code&gt;
-deploy step and &lt;a href="https://gist.github.com/pvandervelde/9a2dd811faf4d0e56ef3b5069d2e7d3c"&gt;providing information about the repository and branch&lt;/a&gt;
-that the files should be pushed to. The commit message for this process currently comes from a text
-file in the root of the repository. Ideally there would be some way to discover a decent commit
-message, e.g. the name of the most recent post, however many different changes are pushed to the
-source repository so selecting the correct commit message is somewhat difficult.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;By updating these three files we have provided &lt;code&gt;nBuildKit&lt;/code&gt; with enough information to execute both
-the build and deploy processes.&lt;/p&gt;
-&lt;p&gt;Once the build scripts were complete and tested the only thing that remained was to configure
-AppVeyor. This can either be done through the &lt;a href="https://www.appveyor.com/docs/build-configuration/"&gt;UI or a YAML file&lt;/a&gt;.
-In this case I elected to use the &lt;a href="https://gist.github.com/pvandervelde/4171a3b81776132e2800a3f9b802fa43"&gt;YAML file&lt;/a&gt;
-so that all information describing my build and deployment process would exist in the repository.&lt;/p&gt;
-&lt;p&gt;In order to create the configuration file I copied the &lt;a href="https://www.appveyor.com/docs/appveyor-yml/"&gt;reference file&lt;/a&gt;
-and then removed all the bits I didn't need. The only tricky bit was setting up the AppVeyor
-environment so that the deploy process could push the final results back to GitHub. For that I
-added a &lt;a href="https://github.com/blog/2024-read-only-deploy-keys"&gt;deploy key&lt;/a&gt; to the target repository.
-The private part of this key was then encrypted and placed in the YAML file. Some &lt;code&gt;before_deploy&lt;/code&gt;
-&lt;a href="https://www.appveyor.com/docs/how-to/private-git-sub-modules/"&gt;script magic&lt;/a&gt; allows the decryption
-of the key so that git can push the changes to the repository via SSH.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Goals-for-2017" title="Previous Post: Goals for 2017" class="navlinks-prev"&gt;« Goals for 2017&lt;/a&gt;
-                &lt;a href="/posts/Updating-Hyper-v-server-to-Windows2016" title="Next Post: Updating my Hyper-V server to Windows 2016" class="navlinks-next"&gt;Updating my Hyper-V server to Windows 2016 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Blog-publishing-with-AppVeyor';
-    var disqus_title = 'Blog publishing with AppVeyor';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Blog-publishing-with-AppVeyor';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content>
-		<summary>Welcome!</summary>
-	</entry>
-	<entry>
-		<link href="https://www.petrikvandervelde.nl/posts/Goals-for-2017" />
-		<id>https://www.petrikvandervelde.nl/posts/Goals-for-2017</id>
-		<title>Goals for 2017</title>
-		<updated>2017-01-13T00:00:00Z</updated>
-		<content>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Goals for 2017&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Friday, January 13, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/goals" class="btn btn-default btn-xs"&gt;Goals&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/life" class="btn btn-default btn-xs"&gt;Life&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;In 2016 set myself a bunch of goals for the year for different areas of my life. Of all the goals
-I only managed to achieve one successfully but am still pretty happy with how the year turned
-out. Overall improvements were made and new things were learned so what that concerns it was
-a successful year.&lt;/p&gt;
-&lt;p&gt;Given that setting goals did sort of work for me in 2016 going into 2017 I decided to do this again
-and set some goals in order to actively progress in different areas. This time I also decided to
-write the goals down somewhere public.&lt;/p&gt;
-&lt;p&gt;For 2017 my goals are&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Improve my overall fitness while maintaining my weight at or below 80kg.&lt;/p&gt;
-&lt;p&gt;In 2016 my goal was to improve my fitness and lose some weight. Due to a shoulder and elbow injury
-I actually gained weight in the first half of the year but over the course of the last 6 months
-I managed to lose about 5kgs thanks to a lot of exercise and an improvement in my eating habits.
-As a bonus I gained a lot of strength and general endurance. Overall these improvements have made
-me feel a lot better, have a more defined set of muscles and helped me in my outdoor spot pursuits
-as well.&lt;/p&gt;
-&lt;p&gt;For 2017 the goal is to keep the weight the same, just below 80kgs, while improving my general
-strength and fitness.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Make my career independent from my job&lt;/p&gt;
-&lt;p&gt;The last two years I have been working for &lt;a href="https://vista.co"&gt;Vista&lt;/a&gt; as a software / build engineer
-responsible for the development tooling and infrastructure. While this has been a bit of a change
-from my previous jobs as software developer it has been a great experience. I have learned about
-many new technologies, created some awesome tooling and have many more things still to learn and
-create. However with this change from general developer to more of an internal tooling / infrastructure
-person it has also become clear to me that my technical capabilities will improve more if I make
-my toughts, opinions and code available for public scrutiny by the larger development community.
-I already have a &lt;a href="/projects"&gt;number of open source projects&lt;/a&gt; but for 2017 I also plan to write
-and potentially speak more about the things I'm working on. One part of that is re-re-activating
-my blog and writing new posts about some of the cool technologies I'm currently working with and on.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Simplify life and my surroundings.&lt;/p&gt;
-&lt;p&gt;The first few years after I moved to New Zealand I didn't have very much in the way of material
-possessions, after all I had just moved to the other side of the world with only the things I could
-take on the airplane. Additionally I moved almost every year to a new house so getting rid of
-useless possessions meant I had to move less stuff from the old house to the new one. Over time
-though I have acquired more things both materially and in habits. Some of those things are
-&lt;a href="/tags/paragliding"&gt;highly&lt;/a&gt; &lt;a href="/tags/climbing"&gt;prized&lt;/a&gt; however some things are a waste of time and
-space. The goal for 2017 is to minimize the amount of useless stuff I have, like pieces of furniture
-which are never used, and useless things I do so that there is  more time and space to spend on
-things that are useful and improve my life.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Improve my confidence, in general in life but especially for climbing and paragliding&lt;/p&gt;
-&lt;p&gt;In general in life having confidence in yourself and your skills is important. For my outdoor
-activities, climbing and paragliding, it is even more important. Without confidence in yourself and
-your skils it is not possible to perform well in either activity. Due to injuries and some
-intense experiences my confidence in either my climbing or flying skills isn't very high at the
-moment so 2017 is the year that I will do my utmost best to improve my confidence in my professional
-skills, my climbing and paragliding capabilities and life in general.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Sports / achievment goals&lt;/p&gt;
-&lt;p&gt;The final goals for 2017, at least as far as this list goes, is to actively improve my skils
-in climbing and flying.&lt;/p&gt;
-&lt;p&gt;For a while I have been trying to improve my climbing skills, strength and endurance enough to
-be able to climb a &lt;a href="https://en.wikipedia.org/wiki/Grade_(climbing)"&gt;grade 24&lt;/a&gt;
-&lt;a href="https://en.wikipedia.org/wiki/Sport_climbing"&gt;sports climb&lt;/a&gt;. So for 2017 that will be my goal, to
-improve enoguh to finally be able to climb a 24. Additionally over the last few years I have been
-doing more &lt;a href="https://en.wikipedia.org/wiki/Traditional_climbing"&gt;trad climbing&lt;/a&gt; I am also going to
-try to improve my skills in that area by setting myself a goal of climbing a grade 20 on trad.&lt;/p&gt;
-&lt;p&gt;In my other outdoor activity, paragliding, the general goals are related to the distance your
-can fly &lt;a href="https://en.wikipedia.org/wiki/Paragliding#Cross-country_flying"&gt;cross country (XC)&lt;/a&gt;. As I
-have so far not managed to get away from launch at all my goal for 2017 is to do an XC flight of
-more than 5km.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Updating-blog-to-wyam" title="Previous Post: Exit Docpad, enter Wyam" class="navlinks-prev"&gt;« Exit Docpad, enter Wyam&lt;/a&gt;
-                &lt;a href="/posts/Blog-publishing-with-AppVeyor" title="Next Post: Blog publishing with AppVeyor" class="navlinks-next"&gt;Blog publishing with AppVeyor »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Goals-for-2017';
-    var disqus_title = 'Goals for 2017';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Goals-for-2017';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="http://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
+&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
 
     &lt;/div&gt;
 &lt;/div&gt;</content>

@@ -94,12 +94,12 @@
                     <h2>Patrick van der Velde</h2>
 
 <p>
-    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+    <img src="https://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
 </p>
 <p>
     Dutch software developer, living, working and playing in New Zealand.
     Rock climber, and paragliding pilot. Developer of
-    <a href="http://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
+    <a href="https://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
     <a href="https://github.com/Calvinverse">the Calvinverse resources</a> and other projects
 </p>
 <p>
@@ -110,7 +110,9 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
-                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software delivery pipeline - Considerations for infrastructure improvements</a></li>
+                            <li><a href="/posts/Calvinverse-an-example-build-infrastructure">Calvinverse - An example build infrastructure</a></li>
+                            <li><a href="/posts/On-prem-vs-cloud-build-systems">Software development pipeline - On-prem or in the cloud?</a></li>
+                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software development pipeline - Considerations for infrastructure improvements</a></li>
                             <li><a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not">Software development pipeline - In the build system or not</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-flexibility">Software development pipeline - Design flexibility</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-resilience">Software development pipeline - Design resilience</a></li>
@@ -118,8 +120,6 @@
                             <li><a href="/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v">Exportable Linux virtual hard-drives for Hyper-V</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-accuracy">Software development pipeline - Design accuracy</a></li>
                             <li><a href="/posts/nBuildkit-Release-V0102">nBuildKit release - V0.10.2</a></li>
-                            <li><a href="/posts/Software-development-pipeline-Design-introduction">Software development pipeline - Design introduction</a></li>
-                            <li><a href="/posts/nBuildkit-release-V0100">nBuildKit release - V0.10.0</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -133,22 +133,22 @@
                                     <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                    <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (7)</a>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (7)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (7)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (6)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
@@ -194,24 +194,24 @@ Monday, May 19, 2014
     </div>
 
     <div id="post-content">
-        <p>The <a href="/projects/nanicitus.html">nAnicitus</a> application processes <a href="http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-symbol-package">NuGet symbol</a>
+        <p>The <a href="/projects/nanicitus.html">nAnicitus</a> application processes <a href="https://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-symbol-package">NuGet symbol</a>
 packages to push the symbols and sources up to their respective location for the symbol and source
 servers to work. In order to have a symbol server nothing special needs to be done, just push the
-symbols through the <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx">SymStore</a> application and a nice directory with indexed symbols
+symbols through the <a href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff558848(v=vs.85).aspx">SymStore</a> application and a nice directory with indexed symbols
 is created. However in order to allow debuggers to obtain the source files related to a given PDB
 some manipulation of the PDB files is necessary. Specifically the SRCSRV stream in the PDB file needs
-to be <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff552219%28v=vs.85%29.aspx">modified</a>.</p>
+to be <a href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff552219%28v=vs.85%29.aspx">modified</a>.</p>
 <p>The documentation gives a decent overview of how the source indexing works but it does not actually
 provide the information necessary to determine what should be written to the SRCSRV stream for a
 given PDB file. In fact if you want to know what information should be written to the SRCSRV stream
 if you want to store the indexed source files in a directory instead of getting them from your source
 control system then even the almighty <a href="https://www.google.co.nz/webhp?tab=ww&amp;ei=FwljU6S7J8byoATTxoLIAQ&amp;ved=0CBMQ1S4#q=PDB+SRCSRV+UNC+VERSION%3D2">google</a>
 is rather quiet.</p>
-<p>In order to write to the SRCSRV stream one can use the <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff558874%28v=vs.85%29.aspx">PDBStr utility</a>. However that
-still leaves the question of what to write to the stream. The <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms680641%28v=vs.85%29.aspx">source server documentation</a>
-provides examples for <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff551958%28v=vs.85%29.aspx">VERSION 1</a> streams, i.e. the kind that point the debugger to a
+<p>In order to write to the SRCSRV stream one can use the <a href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff558874%28v=vs.85%29.aspx">PDBStr utility</a>. However that
+still leaves the question of what to write to the stream. The <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms680641%28v=vs.85%29.aspx">source server documentation</a>
+provides examples for <a href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff551958%28v=vs.85%29.aspx">VERSION 1</a> streams, i.e. the kind that point the debugger to a
 source control (VCS) command. If however you want to store symbols and sources in a UNC path then you
-need <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff551966%28v=vs.85%29.aspx">VERSION 2</a> streams. With some help from this
+need <a href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff551966%28v=vs.85%29.aspx">VERSION 2</a> streams. With some help from this
 <a href="http://www.jayway.com/2011/06/19/hosting-your-own-source-symbol-server/">blog post</a>, some digging
 at MSDN and lots of trial-and-error it seems that the SRCSRV stream should look like:</p>
 <pre><code>SRCSRV: ini ------------------------------------------------
@@ -226,7 +226,7 @@ SRCSRVTRG=%http_extract_target%
 SRCSRVCMD=
 SRCSRV: source files ---------------------------------------
 </code></pre>
-<p>In this stream the <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/ff551958%28v=vs.85%29.aspx">variables mean</a>:</p>
+<p>In this stream the <a href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff551958%28v=vs.85%29.aspx">variables mean</a>:</p>
 <ul>
 <li><strong><code>Version = 2</code></strong> - Indicates the version of the SRCSRV stream</li>
 <li><strong><code>VerCtrl = http</code></strong> - &lsquo;Version control&rsquo; is done through HTTP. This variable is potentially optional.</li>
@@ -313,8 +313,8 @@ a designated directory. This makes it possible to re-process the packages should
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
     </div>
 </div>
@@ -335,9 +335,9 @@ a designated directory. This makes it possible to re-process the packages should
         <ul>
             <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
             <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
-            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
-            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
-            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="https://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="https://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
             <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
         </ul>
     </div>
@@ -356,19 +356,19 @@ a designated directory. This makes it possible to re-process the packages should
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 27 Jan 2019 03:31:28 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 06 Jul 2019 09:20:51 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/71d9b009bcb314ec039056391d38669658da2a23">71d9b009bcb314ec039056391d38669658da2a23</a> at version 2.12.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/c61988176269766fde330c7aff68291127112d1a">c61988176269766fde330c7aff68291127112d1a</a> at version 3.0.0.        </p>
     </div>
 
     <p>
-        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
-        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+        Site design based on the <a href="https://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="https://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
     </p>
     <p>
-        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
-        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
-        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+        Feed icon by <a href="https://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="https://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="https://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
     </p>
 </div>
 

@@ -94,12 +94,12 @@
                     <h2>Patrick van der Velde</h2>
 
 <p>
-    <img src="http://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+    <img src="https://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
 </p>
 <p>
     Dutch software developer, living, working and playing in New Zealand.
     Rock climber, and paragliding pilot. Developer of
-    <a href="http://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
+    <a href="https://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
     <a href="https://github.com/Calvinverse">the Calvinverse resources</a> and other projects
 </p>
 <p>
@@ -110,7 +110,9 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
-                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software delivery pipeline - Considerations for infrastructure improvements</a></li>
+                            <li><a href="/posts/Calvinverse-an-example-build-infrastructure">Calvinverse - An example build infrastructure</a></li>
+                            <li><a href="/posts/On-prem-vs-cloud-build-systems">Software development pipeline - On-prem or in the cloud?</a></li>
+                            <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software development pipeline - Considerations for infrastructure improvements</a></li>
                             <li><a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not">Software development pipeline - In the build system or not</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-flexibility">Software development pipeline - Design flexibility</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-resilience">Software development pipeline - Design resilience</a></li>
@@ -118,8 +120,6 @@
                             <li><a href="/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v">Exportable Linux virtual hard-drives for Hyper-V</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-accuracy">Software development pipeline - Design accuracy</a></li>
                             <li><a href="/posts/nBuildkit-Release-V0102">nBuildKit release - V0.10.2</a></li>
-                            <li><a href="/posts/Software-development-pipeline-Design-introduction">Software development pipeline - Design introduction</a></li>
-                            <li><a href="/posts/nBuildkit-release-V0100">nBuildKit release - V0.10.0</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -133,22 +133,22 @@
                                     <a role="button" href="/tags/nbuildkit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                    <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/devops" class="btn btn-default btn-sm"> DevOps (7)</a>
+                                    <a role="button" href="/tags/pg2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/blog" class="btn btn-default btn-sm"> Blog (7)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/delivering-software" class="btn btn-default btn-sm"> Delivering software (7)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (6)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
@@ -191,9 +191,9 @@ Monday, November 10, 2014
 
     <div id="post-content">
         <p>As part of a new <a href="https://github.com/pvandervelde/azure-jenkins">project</a> to create a
-<a href="http://jenkins-ci.org/">Jenkins CI server</a> on Azure I am writing a set of powershell scripts to
+<a href="https://jenkins.io">Jenkins CI server</a> on Azure I am writing a set of powershell scripts to
 control virtual machines on Azure. For this project the plan is to use virtual machine (VM) images
-as a template for an <a href="http://martinfowler.com/bliki/ImmutableServer.html">&lsquo;immutable server&rsquo;</a> that
+as a template for an <a href="https://martinfowler.com/bliki/ImmutableServer.html">&lsquo;immutable server&rsquo;</a> that
 will contain the Jenkins instance.</p>
 <p>Now the actual server isn't really &lsquo;immutable&rsquo; given that the jenkins instance will update, add and
 delete files on the hard drive which will obviously change the state of the server. As such the immutable
@@ -209,7 +209,7 @@ the Azure VM and the local machine that is executing the creation scripts. You c
 one or you can use a self-signed certificate (which is obviously less secure). Two things of
 interest are:</p>
 <ul>
-<li>The certificate needs to have an <a href="http://consultingblogs.emc.com/gracemollison/archive/2010/02/19/creating-and-using-self-signed-certificates-for-use-with-azure-service-management-api.aspx">exportable</a>
+<li>The certificate needs to have an <a href="https://consultingblogs.emc.com/gracemollison/archive/2010/02/19/creating-and-using-self-signed-certificates-for-use-with-azure-service-management-api.aspx">exportable</a>
 private key because otherwise it cannot be used for the WinRM connection.</li>
 <li>The certificate needs to be named after the connection that you expect to make. For a connection to
 an Azure VM this will most likely be something like <code>&lt;RESOURCE_GROUP_NAME&gt;.cloudapp.net</code>.</li>
@@ -217,7 +217,7 @@ an Azure VM this will most likely be something like <code>&lt;RESOURCE_GROUP_NAM
 <p>Once the certificate is installed in the user certificate store we can create a new virtual machine
 from a given base image, e.g. a Windows 2012 R2 server image. The following powershell function creates
 a new windows VM with a WinRM endpoint with the certificate that was created earlier. Note that the
-<a href="http://msdn.microsoft.com/en-us/library/dn495254.aspx"><code>New-AzureVM</code></a> function can create resource
+<a href="https://msdn.microsoft.com/en-us/library/dn495254.aspx"><code>New-AzureVM</code></a> function can create resource
 and storage groups for the new VM if you don't specify a storage account and a matching resource group.</p>
 <script src="https://gist.github.com/pvandervelde/1153f249115780ed2b99.js"></script>
 <p>Once the VM is running a new Powershell remote session can be opened to the machine in order to start
@@ -226,17 +226,17 @@ because the <code>Get-AzureWinRMUri</code> function only returns the <code>https
 that can be used to secure the connection.</p>
 <script src="https://gist.github.com/pvandervelde/eb6e28934d5fd16fe186.js"></script>
 <p>The next step is to copy all the installer files and configuration scripts to the VM. This can be
-done over the <a href="http://measureofchaos.wordpress.com/2012/09/26/copying-files-via-powershell-remoting-channel/">remoting channnel</a>.</p>
+done over the <a href="https://measureofchaos.wordpress.com/2012/09/26/copying-files-via-powershell-remoting-channel/">remoting channnel</a>.</p>
 <script src="https://gist.github.com/pvandervelde/b2f5b4156e5efe67f495.js"></script>
 <p>Once all the required files have been copied to the VM the configuration of the machine can be started.
 This can be done in many different ways, e.g through the use of a <a href="https://www.getchef.com/">configuration</a>
-<a href="http://puppetlabs.com/">management</a> <a href="http://technet.microsoft.com/en-us/library/dn249912.aspx">tool</a>
+<a href="https://puppetlabs.com/">management</a> <a href="https://technet.microsoft.com/en-us/library/dn249912.aspx">tool</a>
 or just via the use of plain old scripts. When the configuration is complete and all the necessary
 clean-up has been done the time has come to turn the VM into an image. Before doing that a Windows
-machine will have to be <a href="http://en.wikipedia.org/wiki/Sysprep">sysprepp'ed</a> so that there are no
+machine will have to be <a href="https://en.wikipedia.org/wiki/Sysprep">sysprepp'ed</a> so that there are no
 unique identifiers in the image (and thus in the copies).</p>
 <p>In order to sysprep an Azure VM it is necessary to execute the sysprep command through a script on the
-VM because sysprep <a href="http://blogs.msdn.com/b/brocode/archive/2014/06/20/how-to-automate-sysprep-of-an-iaas-vm-on-microsoft-azure.aspx">fails</a>
+VM because sysprep <a href="https://blogs.msdn.com/b/brocode/archive/2014/06/20/how-to-automate-sysprep-of-an-iaas-vm-on-microsoft-azure.aspx">fails</a>
 if the command is given directly through the remoting channel. The following function creates a new
 Powershell script which invokes sysprep, copies that to the VM and then executes that script. Once
 sysprep has completed running the machine will be turned off and an image can be created.</p>
@@ -276,8 +276,8 @@ for the next blog post.</p>
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
 </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
     </div>
 </div>
@@ -298,9 +298,9 @@ for the next blog post.</p>
         <ul>
             <li id="first"><a href="https://plus.google.com/+PatrickvanderVelde/about"><i class="fa fa-google-plus"></i> Google+</a></li>
             <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
-            <li><a href="http://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
-            <li><a href="http://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
-            <li><a href="http://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="https://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="https://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
             <li><a href="https://twitter.com/petrikvdvelde"><i class="fa fa-twitter"></i> Twitter</a></li>
         </ul>
     </div>
@@ -319,19 +319,19 @@ for the next blog post.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 27 Jan 2019 03:31:28 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 06 Jul 2019 09:20:51 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/71d9b009bcb314ec039056391d38669658da2a23">71d9b009bcb314ec039056391d38669658da2a23</a> at version 2.12.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/c61988176269766fde330c7aff68291127112d1a">c61988176269766fde330c7aff68291127112d1a</a> at version 3.0.0.        </p>
     </div>
 
     <p>
-        Site design based on the <a href="http://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
-        by <a href="http://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+        Site design based on the <a href="https://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="https://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
     </p>
     <p>
-        Feed icon by <a href="http://www.icojam.com/">Icojam</a> and Favicon by
-        <a href="http://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
-        from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+        Feed icon by <a href="https://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="https://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="https://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
     </p>
 </div>
 
