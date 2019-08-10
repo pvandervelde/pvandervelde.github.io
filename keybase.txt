@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/pvandervelde
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://www.petrikvandervelde.nl
+  * I am pvandervelde (https://keybase.io/pvandervelde) on keybase.
+  * I have a public key ASCZkniIQws2uJme4BYFQrf8Cy-Muo1yy86GVLaDKLivSwo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0120bbcf9b5909637139f973babe189ccb920cdaa0308208482edc8424dd9ef8d8480a",
+      "host": "keybase.io",
+      "kid": "012099927888430b36b8999ee0160542b7fc0b2f8cba8d72cbce8654b68328b8af4b0a",
+      "uid": "5bf10910925cd54aed20ed2db6518719",
+      "username": "pvandervelde"
+    },
+    "merkle_root": {
+      "ctime": 1565409977,
+      "hash": "37b81ca9b595bb091e73513dd6a3e2bfa72466742172452e9262d2a2a09da6a12ad727a5dbc335e4877624ca22b0647d637e3dda44a6472242bc15d31bbc814b",
+      "hash_meta": "a940e4e104e6d15c447b12aa536faa27059ee472ed43dec85e2d48a7f1f24c4d",
+      "seqno": 5983230
+    },
+    "service": {
+      "entropy": "hM3RqoZyKn6Xbd2qY667EK51",
+      "hostname": "www.petrikvandervelde.nl",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "4.2.0"
+  },
+  "ctime": 1565410187,
+  "expire_in": 504576000,
+  "prev": "f33aa9e2c9862916f54dc15360b8008c7d58b8a16a5502dee3119405f556d27a",
+  "seqno": 10,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgmZJ4iEMLNriZnuAWBUK3/AsvjLqNcsvOhlS2gyi4r0sKp3BheWxvYWTESpcCCsQg8zqp4smGKRb1TcFTYLgAjH1YuKFqVQLe4xGUBfVW0nrEIOoaQ4/3Sj9LAsUgjuzrIqBiKH0GH10infzDQBhwKjZZAgHCo3NpZ8RAIjIozXV0s858H2qVNQdY3ydlB2ZyBRofOoH0+YXBZP/JcIkttiXTnCYkR0CXVHGfmH4hYp3M8RGj97kwhjDcAqhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIF967EieSL1Eqs6xjRuFSZNaQhIVFH9sj+YTlxqjC+m9o3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/pvandervelde
+
+==================================================================
