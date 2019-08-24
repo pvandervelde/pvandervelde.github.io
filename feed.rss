@@ -5,38 +5,18 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2019</copyright>
-		<pubDate>Sat, 10 Aug 2019 04:31:39 GMT</pubDate>
-		<lastBuildDate>Sat, 10 Aug 2019 04:31:39 GMT</lastBuildDate>
+		<pubDate>Sat, 24 Aug 2019 11:58:41 GMT</pubDate>
+		<lastBuildDate>Sat, 24 Aug 2019 11:58:41 GMT</lastBuildDate>
 		<item>
 			<title>Calvinverse - An example build infrastructure</title>
 			<link>https://www.petrikvandervelde.nl/posts/Calvinverse-an-example-build-infrastructure</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;This post introduces the &lt;a href="https://www.calvinverse.net/"&gt;Calvinverse&lt;/a&gt;
+&lt;a href="https://github.com/Calvinverse"&gt;project&lt;/a&gt; which provides the source code for the different resources
+required to create the infrastructure for a build pipeline. The Calvinverse resources have been
+developed for two main reasons:&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Calvinverse-an-example-build-infrastructure</guid>
 			<pubDate>Fri, 28 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Calvinverse - An example build infrastructure&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Friday, June 28, 2019
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/immutable-infrastructure" class="btn btn-default btn-xs"&gt;Immutable infrastructure&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;This post introduces the &lt;a href="https://www.calvinverse.net/"&gt;Calvinverse&lt;/a&gt;
+			<content:encoded>&lt;p&gt;This post introduces the &lt;a href="https://www.calvinverse.net/"&gt;Calvinverse&lt;/a&gt;
 &lt;a href="https://github.com/Calvinverse"&gt;project&lt;/a&gt; which provides the source code for the different resources
 required to create the infrastructure for a build pipeline. The Calvinverse resources have been
 developed for two main reasons:&lt;/p&gt;
@@ -132,74 +112,20 @@ the resources might need some alterations to fit in with the work flow and proce
 followed. After all each company is different and applies different workflows. Additionally users
 might want to replace some of the resources with versions of their own, e.g. to replace Influx with
 &lt;a href="https://prometheus.io/"&gt;Prometheus&lt;/a&gt;.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/On-prem-vs-cloud-build-systems" title="Previous Post: Software development pipeline - On-prem or in the cloud?" class="navlinks-prev"&gt;« Software development pipeline - On-prem or in the cloud?&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Calvinverse-an-example-build-infrastructure';
-    var disqus_title = 'Calvinverse - An example build infrastructure';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Calvinverse-an-example-build-infrastructure';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>Software development pipeline - On-prem or in the cloud?</title>
 			<link>https://www.petrikvandervelde.nl/posts/On-prem-vs-cloud-build-systems</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Continuous_integration"&gt;Continuous integration (CI) systems&lt;/a&gt; originally and
+build pipelines recently have traditionally been available on-prem only with systems like &lt;a href="https://jenkins.io"&gt;Jenkins&lt;/a&gt;,
+&lt;a href="https://www.jetbrains.com/teamcity/"&gt;TeamCity&lt;/a&gt;, &lt;a href="https://www.atlassian.com/software/bamboo"&gt;Bamboo&lt;/a&gt; and
+&lt;a href="https://en.wikipedia.org/wiki/Team_Foundation_Server"&gt;TFS&lt;/a&gt;. This is possibly due to the fact that these
+systems needs relatively powerful hardware, mostly consisting of powerful CPU and fast IO, something
+which was not easily available in the cloud until the last few years.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/On-prem-vs-cloud-build-systems</guid>
 			<pubDate>Thu, 27 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Software development pipeline - On-prem or in the cloud?&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Thursday, June 27, 2019
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/cloud" class="btn btn-default btn-xs"&gt;Cloud&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/on-prem" class="btn btn-default btn-xs"&gt;On-prem&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Continuous_integration"&gt;Continuous integration (CI) systems&lt;/a&gt; originally and
+			<content:encoded>&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Continuous_integration"&gt;Continuous integration (CI) systems&lt;/a&gt; originally and
 build pipelines recently have traditionally been available on-prem only with systems like &lt;a href="https://jenkins.io"&gt;Jenkins&lt;/a&gt;,
 &lt;a href="https://www.jetbrains.com/teamcity/"&gt;TeamCity&lt;/a&gt;, &lt;a href="https://www.atlassian.com/software/bamboo"&gt;Bamboo&lt;/a&gt; and
 &lt;a href="https://en.wikipedia.org/wiki/Team_Foundation_Server"&gt;TFS&lt;/a&gt;. This is possibly due to the fact that these
@@ -269,75 +195,25 @@ very strongly on the situation the company is in. It is even possible that as ti
 the best type of system may change from on-prem to cloud or visa versa. Both systems have their
 own advantages and disadvantages. In the end all that matters is that a system that fits the
 development process is selected, independent of what the different vendors say is the best thing.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements" title="Previous Post: Software development pipeline - Considerations for infrastructure improvements" class="navlinks-prev"&gt;« Software development pipeline - Considerations for infrastructure improvements&lt;/a&gt;
-                &lt;a href="/posts/Calvinverse-an-example-build-infrastructure" title="Next Post: Calvinverse - An example build infrastructure" class="navlinks-next"&gt;Calvinverse - An example build infrastructure »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'On-prem-vs-cloud-build-systems';
-    var disqus_title = 'Software development pipeline - On-prem or in the cloud?';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/On-prem-vs-cloud-build-systems';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>Software development pipeline - Considerations for infrastructure improvements</title>
 			<link>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-considerations-for-infrastructure-improvements</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;In one of the post from a &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;while ago&lt;/a&gt; we
+discussed what a software development pipeline is and what the &lt;a href="/posts/Software-development-pipeline-Design-accuracy.html"&gt;most&lt;/a&gt;
+&lt;a href="/posts/Software-development-pipeline-Design-performance.html"&gt;important&lt;/a&gt;
+&lt;a href="/posts/Software-development-pipeline-Design-resilience.html"&gt;characteristics&lt;/a&gt;
+&lt;a href="/posts/Software-development-pipeline-Design-flexibility.html"&gt;are&lt;/a&gt;. Given that the pipeline is used
+during the large majority of the development, test and release process it is fair to say that for
+a software company the build and deployment pipeline infrastructure should be considered critical
+infrastructure because without it the development team will be more limited in their ability to
+perform their tasks. Note that at no stage should any specific tool, including the pipeline, be the
+single point of failure. More on how to reduce the dependency on CI systems and the pipeline will
+follow in another post.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-considerations-for-infrastructure-improvements</guid>
 			<pubDate>Sun, 27 Jan 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Software development pipeline - Considerations for infrastructure improvements&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Sunday, January 27, 2019
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/immutable-infrastructure" class="btn btn-default btn-xs"&gt;Immutable infrastructure&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/infrastructure-as-code" class="btn btn-default btn-xs"&gt;Infrastructure as code&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;In one of the post from a &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;while ago&lt;/a&gt; we
+			<content:encoded>&lt;p&gt;In one of the post from a &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;while ago&lt;/a&gt; we
 discussed what a software development pipeline is and what the &lt;a href="/posts/Software-development-pipeline-Design-accuracy.html"&gt;most&lt;/a&gt;
 &lt;a href="/posts/Software-development-pipeline-Design-performance.html"&gt;important&lt;/a&gt;
 &lt;a href="/posts/Software-development-pipeline-Design-resilience.html"&gt;characteristics&lt;/a&gt;
@@ -410,7 +286,7 @@ are not secure, both inside the container and outside the container.&lt;/li&gt;
 in source control, just like the resource code is, in order to be able to automate the verification
 and delivery of the configuration values.
 &lt;ul&gt;
-&lt;li&gt;The infrastructure should have it's own shared storage for configurations so that the ‘build’
+&lt;li&gt;The infrastructure should have it's own shared storage for configurations so that the &amp;lsquo;build&amp;rsquo;
 process can push to the shared storage and configurations are distributed from there. That ensures
 that the build process doesn't need to know where to deliver exactly (which can change as the
 infrastructure changes). One option is to use SQL / no-SQL type storage (e.g. Elasticsearch),
@@ -450,81 +326,27 @@ the services and then use these artefacts to create the resource.&lt;/li&gt;
 &lt;/li&gt;
 &lt;li&gt;Deploy the resource to a (small) test environment and execute the tests against the newly created
 resource.&lt;/li&gt;
-&lt;li&gt;Once the tests have passed the newly made image can be ‘promoted’, i.e. approved for use in the
+&lt;li&gt;Once the tests have passed the newly made image can be &amp;lsquo;promoted&amp;rsquo;, i.e. approved for use in the
 production environment.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Using the approaches mentioned above it is possible to improve the development pipeline without
 causing unnecessary disturbances for the development team.&lt;/p&gt;
 &lt;p&gt;Edit: Changed the title from &lt;code&gt;software delivery pipeline&lt;/code&gt; to &lt;code&gt;software development pipeline&lt;/code&gt; to match
 the other posts.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not" title="Previous Post: Software development pipeline - In the build system or not" class="navlinks-prev"&gt;« Software development pipeline - In the build system or not&lt;/a&gt;
-                &lt;a href="/posts/On-prem-vs-cloud-build-systems" title="Next Post: Software development pipeline - On-prem or in the cloud?" class="navlinks-next"&gt;Software development pipeline - On-prem or in the cloud? »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Software-development-pipeline-considerations-for-infrastructure-improvements';
-    var disqus_title = 'Software development pipeline - Considerations for infrastructure improvements';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-considerations-for-infrastructure-improvements';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>Software development pipeline - In the build system or not</title>
 			<link>https://www.petrikvandervelde.nl/posts/Sofware-development-pipeline-In-the-build-system-or-not</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;Over the last few years the use of build pipelines has been gaining traction backed by the ever growing
+use of Continuous Integration (CI) and Continuous Delivery and Deployment (CD) processes. By using a
+build pipeline the development team get benefits like being able to execute parts of the build, test,
+release and deployment processes in parallel, being able to restart the process part way through
+in case of environmental issues, and vastly improved feedback cycles which improve the velocity
+at which features can be delivered to the customer.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Sofware-development-pipeline-In-the-build-system-or-not</guid>
 			<pubDate>Mon, 03 Dec 2018 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Software development pipeline - In the build system or not&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Monday, December 3, 2018
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs"&gt;Pipeline design&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Over the last few years the use of build pipelines has been gaining traction backed by the ever growing
+			<content:encoded>&lt;p&gt;Over the last few years the use of build pipelines has been gaining traction backed by the ever growing
 use of Continuous Integration (CI) and Continuous Delivery and Deployment (CD) processes. By using a
 build pipeline the development team get benefits like being able to execute parts of the build, test,
 release and deployment processes in parallel, being able to restart the process part way through
@@ -580,8 +402,8 @@ and the build scripts. For simple pipelines this is a sensible thing to do but a
 gets more complex this approach will be sub-optimal at best and more likely detrimental due to
 the complexity of providing all users with the overview of how the pipeline functions.&lt;/li&gt;
 &lt;li&gt;The second, but potentially more important, assumption is that the item the development teams
-care most about is ‘build’ or 'build job'. This however is not the case most of the time because
-a ‘build’ is just a way to create or alter an artefact, i.e. the package, container, installer
+care most about is &amp;lsquo;build&amp;rsquo; or 'build job'. This however is not the case most of the time because
+a &amp;lsquo;build&amp;rsquo; is just a way to create or alter an artefact, i.e. the package, container, installer
 etc.. It is artefacts that people care about most because artefacts are the carrying vehicle
 for the features and bug fixes that the customer cares about. From this perspective it makes
 sense to track the artefacts instead of builds because the artefact flows through the entire pipeline
@@ -591,7 +413,7 @@ not always the case and even when it is possible it is not necessarily sensible.
 builds and deploys are fundamentally different things, one should be repeatable (builds) and
 can just be stopped on failure and restarted if necesary and the other is often not exactly
 repeatable (because artefacts can only be moved from a location once etc.) and should often
-not just be stopped (but rolled-back or not ‘committed’). Another example is long running tests
+not just be stopped (but rolled-back or not &amp;lsquo;committed&amp;rsquo;). Another example is long running tests
 for which the results may be fed back into the build system if required but that doesn't
 necessarily make sense.&lt;/li&gt;
 &lt;/ul&gt;
@@ -616,7 +438,7 @@ that you don't tinker with them and in general it is made difficult to append or
 &lt;li&gt;Build systems work much better if they are immutable, i.e. created from standard components (e.g.
 controller and agents) with automatically generated build jobs (more about the reasons both of
 these will follow in future posts). This allows a build system to be expanded or replaced really
-easily (&lt;a href="https://medium.com/@Joachim8675309/devops-concepts-pets-vs-cattle-2380b5aab313"&gt;cattle not pets&lt;/a&gt;
+easily (&lt;a href="https://medium.com/&amp;#64;Joachim8675309/devops-concepts-pets-vs-cattle-2380b5aab313"&gt;cattle not pets&lt;/a&gt;
 even for build systems). That is much harder if the build system is the core of your pipeline
 and stores all the data for it.&lt;/li&gt;
 &lt;/ul&gt;
@@ -651,74 +473,17 @@ it is worth it to develop some custom software that tracks artefacts through the
 it possible to treat the pipeline system as the critical infrastructure that it is, with the appropriate
 separation of data and business rule processing, data security and controlled access to the data for
 external systems.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Software-development-pipeline-Design-flexibility" title="Previous Post: Software development pipeline - Design flexibility" class="navlinks-prev"&gt;« Software development pipeline - Design flexibility&lt;/a&gt;
-                &lt;a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements" title="Next Post: Software development pipeline - Considerations for infrastructure improvements" class="navlinks-next"&gt;Software development pipeline - Considerations for infrastructure improvements »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Sofware-development-pipeline-In-the-build-system-or-not';
-    var disqus_title = 'Software development pipeline - In the build system or not';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Sofware-development-pipeline-In-the-build-system-or-not';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>Software development pipeline - Design flexibility</title>
 			<link>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-flexibility</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;fourth property&lt;/a&gt; to consider is
+&lt;em&gt;flexibility&lt;/em&gt;, i.e. the ability of the pipeline to be able to be modified or adapted without
+requiring large changes to be made to the underlying pipeline code and services.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-flexibility</guid>
 			<pubDate>Wed, 31 Oct 2018 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Software development pipeline - Design flexibility&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Wednesday, October 31, 2018
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs"&gt;Pipeline design&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;fourth property&lt;/a&gt; to consider is
+			<content:encoded>&lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;fourth property&lt;/a&gt; to consider is
 &lt;em&gt;flexibility&lt;/em&gt;, i.e. the ability of the pipeline to be able to be modified or adapted without
 requiring large changes to be made to the underlying pipeline code and services.&lt;/p&gt;
 &lt;p&gt;A pipeline should be flexible because the products being build, tested and deployed with that
@@ -803,77 +568,20 @@ to wait until another post.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;December 3rd 2018: Fixed a typo in the post title&lt;/li&gt;
 &lt;/ul&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Software-development-pipeline-Design-resilience" title="Previous Post: Software development pipeline - Design resilience" class="navlinks-prev"&gt;« Software development pipeline - Design resilience&lt;/a&gt;
-                &lt;a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not" title="Next Post: Software development pipeline - In the build system or not" class="navlinks-next"&gt;Software development pipeline - In the build system or not »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Software-development-pipeline-Design-flexibility';
-    var disqus_title = 'Software development pipeline - Design flexibility';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-flexibility';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>Software development pipeline - Design resilience</title>
 			<link>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-resilience</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;third property&lt;/a&gt; to consider is
+&lt;em&gt;resilience&lt;/em&gt;, which in this case means that the pipeline should be able to cope with
+expected and unexpected changes to the environment it executes in and uses.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-resilience</guid>
 			<pubDate>Tue, 19 Dec 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Software development pipeline - Design resilience&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Tuesday, December 19, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs"&gt;Pipeline design&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;third property&lt;/a&gt; to consider is
+			<content:encoded>&lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;third property&lt;/a&gt; to consider is
 &lt;em&gt;resilience&lt;/em&gt;, which in this case means that the pipeline should be able to cope with
 expected and unexpected changes to the environment it executes in and uses.&lt;/p&gt;
-&lt;p&gt;David Woods defines &lt;a href="https://www.researchgate.net/publication/276139783_Four_concepts_for_resilience_and_the_implications_for_the_future_of_resilience_engineering"&gt;four different types of ‘resilience’&lt;/a&gt; in a paper in the journal of reliability engineering and system safety. One of the different types
+&lt;p&gt;David Woods defines &lt;a href="https://www.researchgate.net/publication/276139783_Four_concepts_for_resilience_and_the_implications_for_the_future_of_resilience_engineering"&gt;four different types of &amp;lsquo;resilience&amp;rsquo;&lt;/a&gt; in a paper in the journal of reliability engineering and system safety. One of the different types
 is the generally well known form of robustness, i.e. the ability to absorb pertubations or disturbances.
 In order to be robust for given disturbances one has to know in advance where the disturbances will
 come from, e.g. in the case of a development pipeline it might be expected that pipeline stages will
@@ -892,7 +600,7 @@ the loss of sub-systems can be compensated.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Which ever definition of resilience is used in general the goal is to be able to recover from
 unexpected changes and return back to the normal state, ideally with minimal intervention. An interesting
-side note is that returning back to normal after major trauma can be deceiving because the ‘normal’ as
+side note is that returning back to normal after major trauma can be deceiving because the &amp;lsquo;normal&amp;rsquo; as
 experienced before the trauma will be different from the 'normal' experienced after the trauma due
 to the lessons learned from the trauma and permanent changed caused by the trauma.&lt;/p&gt;
 &lt;p&gt;Additionally it is not just the unexpected or traumatic changes that are interesting in the case of a
@@ -917,10 +625,10 @@ smooth out many of the smaller issues that would otherwise cause the development
 in the pipeline outputs. Some examples of simple steps that can be taken to improve resilience in
 a development pipeline are:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;For each pipeline step ensure that it is executed in a clean ‘workspace’, i.e. a directory or drive,
+&lt;li&gt;For each pipeline step ensure that it is executed in a clean &amp;lsquo;workspace&amp;rsquo;, i.e. a directory or drive,
 that will only ever be used by that specific single step. This workspace should be 'private' to the
 specific pipeline step and no other processes should be allowed to execute in this workspace. This
-prevents issues with unexpected changes to the file system. There are still cases where ‘unexpected’
+prevents issues with unexpected changes to the file system. There are still cases where &amp;lsquo;unexpected&amp;rsquo;
 changes to the file system can occur, for instance when running parallel executions within the same
 pipeline step in the same workspace. This type of behaviour should therefore be avoided as much as
 possible&lt;/li&gt;
@@ -975,74 +683,21 @@ a resilient development pipeline and depending on the demands placed on the pipe
 work will be consumed by improving the current state and learning from failures. In order to ensure
 that this effort is not a wasted effort it is definitely worth applying iterative improvement approaches
 and only continuing the improvement process if there is actual demand for improvements.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Software-development-pipeline-Design-performance" title="Previous Post: Software development pipeline - Design performance" class="navlinks-prev"&gt;« Software development pipeline - Design performance&lt;/a&gt;
-                &lt;a href="/posts/Software-development-pipeline-Design-flexibility" title="Next Post: Software development pipeline - Design flexibility" class="navlinks-next"&gt;Software development pipeline - Design flexibility »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Software-development-pipeline-Design-resilience';
-    var disqus_title = 'Software development pipeline - Design resilience';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-resilience';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>Software development pipeline - Design performance</title>
 			<link>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-performance</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;second property&lt;/a&gt; to consider is
+&lt;em&gt;performance&lt;/em&gt;, which in this case means that the pipeline should provide feedback on the quality of
+the current input set as soon as possible in order to reduce the length of the feedback cycle. As is
+&lt;a href="https://www.richard-banks.org/2013/04/why-short-feedback-cycle-is-good-thing.html"&gt;known&lt;/a&gt;
+&lt;a href="https://www.ambysoft.com/essays/whyAgileWorksFeedback.html"&gt;having&lt;/a&gt; a short
+&lt;a href="https://continuousdelivery.com/2012/08/why-software-development-methodologies-suck/"&gt;feedback&lt;/a&gt;
+cycle makes it easier for the development teams to make improvements and fix issues.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-performance</guid>
 			<pubDate>Sun, 05 Nov 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Software development pipeline - Design performance&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Sunday, November 5, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs"&gt;Pipeline design&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;second property&lt;/a&gt; to consider is
+			<content:encoded>&lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;second property&lt;/a&gt; to consider is
 &lt;em&gt;performance&lt;/em&gt;, which in this case means that the pipeline should provide feedback on the quality of
 the current input set as soon as possible in order to reduce the length of the feedback cycle. As is
 &lt;a href="https://www.richard-banks.org/2013/04/why-short-feedback-cycle-is-good-thing.html"&gt;known&lt;/a&gt;
@@ -1079,13 +734,13 @@ fairly consistent. Additionally geographical distribution of the development tea
 times that the pipeline will be loaded. If all of the team is in a single geographical location then
 higher loads can be expected during the day while lighter loads are be expected during the evening
 and night. However if the team is distributed across the globe it is more likely that the loading will
-be more consistent across the day due to the fact that the different locations have ‘office hours’ at
+be more consistent across the day due to the fact that the different locations have &amp;lsquo;office hours&amp;rsquo; at
 different times in the day, as seen from the perspective of the different servers which are part of
 the development pipeline. Taking these issues into account when sizing the capacity of the development
 pipeline may lead to increasing the capacity of the pipeline because the the current peak loading
 during working hours results in wait times which are too large.&lt;/p&gt;
 &lt;p&gt;With this high level information it is possible to start improving the performance of the development
-pipeline. This obviously leads to the question: “What practical steps can we take”. As per normal when
+pipeline. This obviously leads to the question: &amp;ldquo;What practical steps can we take&amp;rdquo;. As per normal when
 dealing with performance improvements it is hard to provide solutions because these depend
 on the specific situation. It is however possible to provide some more general advise.&lt;/p&gt;
 &lt;p&gt;The very first step to take when dealing with performance is always to measure everything. In the case
@@ -1108,7 +763,7 @@ wastes time, thus smaller input sets are quicker to process.&lt;/li&gt;
 &lt;li&gt;When pulling data locality matters. Pulling data off the local disk is faster than pulling it off
 the network, pulling data off the local network is faster than pulling it from the WAN or the internet.
 Additionally data that is not local should be cached so that it only needs to be retrieved once.&lt;/li&gt;
-&lt;li&gt;Ensure that pipeline stages run on suitable ‘hardware’, either physical or virtual. Ideally the
+&lt;li&gt;Ensure that pipeline stages run on suitable &amp;lsquo;hardware&amp;rsquo;, either physical or virtual. Ideally the
 stage is executed on hardware that is optimized for the performance demands of the step, e.g.
 execute I/O bound steps on hardware that has fast I/O etc.&lt;/li&gt;
 &lt;/ul&gt;
@@ -1129,74 +784,19 @@ the specific characteristics of a given pipeline other improvements and design c
 other &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;properties&lt;/a&gt;. For instance using partial
 builds may influence accuracy. In the end a trade-off will need to be made when it comes to changes
 that influence multiple properties.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v" title="Previous Post: Exportable Linux virtual hard-drives for Hyper-V" class="navlinks-prev"&gt;« Exportable Linux virtual hard-drives for Hyper-V&lt;/a&gt;
-                &lt;a href="/posts/Software-development-pipeline-Design-resilience" title="Next Post: Software development pipeline - Design resilience" class="navlinks-next"&gt;Software development pipeline - Design resilience »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Software-development-pipeline-Design-performance';
-    var disqus_title = 'Software development pipeline - Design performance';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-performance';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>Exportable Linux virtual hard-drives for Hyper-V</title>
 			<link>https://www.petrikvandervelde.nl/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;As part of learning more about infrastructure creation, testing and deployment one of the projects
+I'm working on is creating a set of virtual machine images for &lt;a href="https://github.com/Calvinverse/base.windows"&gt;Windows&lt;/a&gt;
+and &lt;a href="https://github.com/Calvinverse/base.linux"&gt;Linux&lt;/a&gt; which can be used as a base for more complex
+virtual machine based resources, e.g. &lt;a href="https://github.com/Calvinverse/resource.hashi.server"&gt;a consul host&lt;/a&gt;
+or &lt;a href="https://github.com/Calvinverse/resource.container.host.linux"&gt;a docker host&lt;/a&gt;.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v</guid>
 			<pubDate>Thu, 14 Sep 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Exportable Linux virtual hard-drives for Hyper-V&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Thursday, September 14, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/hyper-v" class="btn btn-default btn-xs"&gt;Hyper-V&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/preseed" class="btn btn-default btn-xs"&gt;Preseed&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/ubuntu" class="btn btn-default btn-xs"&gt;Ubuntu&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/unattend" class="btn btn-default btn-xs"&gt;Unattend&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;As part of learning more about infrastructure creation, testing and deployment one of the projects
+			<content:encoded>&lt;p&gt;As part of learning more about infrastructure creation, testing and deployment one of the projects
 I'm working on is creating a set of virtual machine images for &lt;a href="https://github.com/Calvinverse/base.windows"&gt;Windows&lt;/a&gt;
 and &lt;a href="https://github.com/Calvinverse/base.linux"&gt;Linux&lt;/a&gt; which can be used as a base for more complex
 virtual machine based resources, e.g. &lt;a href="https://github.com/Calvinverse/resource.hashi.server"&gt;a consul host&lt;/a&gt;
@@ -1222,7 +822,7 @@ it uses UEFI for the boot process. It turns out that the Ubuntu install process 
 in the &lt;a href="https://blogs.msdn.microsoft.com/virtual_pc_guy/2015/02/11/copying-the-vhd-of-a-generation-2-linux-vmand-not-booting-afterwards/"&gt;virtual machine configuration file&lt;/a&gt;.
 This means that when one creates a new virtual machine from the base virtual disk image it runs into
 a problem when booting because the boot files are not present in the new machine. The result is this&lt;/p&gt;
-&lt;p&gt;&lt;img align="center" alt="Hyper-V error message due to missing UEFI sector" src="/assets/images/infrastructure/hyperv-gen2-ubuntu-missing-uefi-sector-result.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img align="center" alt="Hyper-V error message due to missing UEFI sector" src="/assets/images/infrastructure/hyperv-gen2-ubuntu-missing-uefi-sector-result.png" /&gt;&lt;/p&gt;
 &lt;p&gt;The solution to this issue obviously is to force the Ubuntu installer to write the UEFI files to the
 virtual hard disk which can be achieved by adding the correct configuration values to the
 &lt;a href="https://help.ubuntu.com/lts/installation-guide/armhf/apb.html"&gt;preseed file&lt;/a&gt;. Unfortunately the
@@ -1485,9 +1085,9 @@ d-i pkgsel/include string openssh-server ntp linux-tools-$(uname -r) linux-cloud
 # (note: set to none for speed)
 d-i pkgsel/upgrade select none
 
-# Policy for applying updates. May be "none" (no automatic updates),
-# "unattended-upgrades" (install security updates automatically), or
-# "landscape" (manage system with Landscape).
+# Policy for applying updates. May be &amp;quot;none&amp;quot; (no automatic updates),
+# &amp;quot;unattended-upgrades&amp;quot; (install security updates automatically), or
+# &amp;quot;landscape&amp;quot; (manage system with Landscape).
 d-i pkgsel/update-policy select none
 
 # Language pack selection
@@ -1526,74 +1126,18 @@ of the &lt;a href="https://github.com/ops-resource/ops-tools-baseimage"&gt;Ops-T
 project also publishes a &lt;a href="https://www.nuget.org/packages/Ops.Tools.BaseImage.Linux/"&gt;NuGet&lt;/a&gt; package
 which has all the configuration files and scripts that were used to create the Ubuntu base virtual
 hard drive.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Software-development-pipeline-Design-accuracy" title="Previous Post: Software development pipeline - Design accuracy" class="navlinks-prev"&gt;« Software development pipeline - Design accuracy&lt;/a&gt;
-                &lt;a href="/posts/Software-development-pipeline-Design-performance" title="Next Post: Software development pipeline - Design performance" class="navlinks-next"&gt;Software development pipeline - Design performance »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Exportable-Linux-virtual-hard-drives-for-hyper-v';
-    var disqus_title = 'Exportable Linux virtual hard-drives for Hyper-V';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>Software development pipeline - Design accuracy</title>
 			<link>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-accuracy</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Accuracy_and_precision#ISO_definition_.28ISO_5725.29"&gt;ISO&lt;/a&gt; defines
+accuracy as the combination of &lt;a href="https://dictionary.cambridge.org/dictionary/english/correct?q=correctness"&gt;correctness&lt;/a&gt;,
+in agreement with the true facts, and &lt;a href="https://dictionary.cambridge.org/dictionary/english/consistency"&gt;consistency&lt;/a&gt;,
+always behaving or performing in a similar way.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-accuracy</guid>
 			<pubDate>Mon, 04 Sep 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Software development pipeline - Design accuracy&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Monday, September 4, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs"&gt;Pipeline design&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Accuracy_and_precision#ISO_definition_.28ISO_5725.29"&gt;ISO&lt;/a&gt; defines
+			<content:encoded>&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Accuracy_and_precision#ISO_definition_.28ISO_5725.29"&gt;ISO&lt;/a&gt; defines
 accuracy as the combination of &lt;a href="https://dictionary.cambridge.org/dictionary/english/correct?q=correctness"&gt;correctness&lt;/a&gt;,
 in agreement with the true facts, and &lt;a href="https://dictionary.cambridge.org/dictionary/english/consistency"&gt;consistency&lt;/a&gt;,
 always behaving or performing in a similar way.&lt;/p&gt;
@@ -1686,71 +1230,17 @@ correctness of the pipeline.&lt;/p&gt;
 if required, it is sensible to provide monitoring of the pipeline and the underlying infrastructure
 as well as ensuring that all parts of the pipeline are versioned, tools and infrastructure alike,
 and versions of all the parts are tracked for each input set.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildkit-Release-V0102" title="Previous Post: nBuildKit release - V0.10.2" class="navlinks-prev"&gt;« nBuildKit release - V0.10.2&lt;/a&gt;
-                &lt;a href="/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v" title="Next Post: Exportable Linux virtual hard-drives for Hyper-V" class="navlinks-next"&gt;Exportable Linux virtual hard-drives for Hyper-V »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Software-development-pipeline-Design-accuracy';
-    var disqus_title = 'Software development pipeline - Design accuracy';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-accuracy';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>nBuildKit release - V0.10.2</title>
 			<link>https://www.petrikvandervelde.nl/posts/nBuildkit-Release-V0102</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.2"&gt;0.10.2&lt;/a&gt;
+of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt;
+has been released.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/nBuildkit-Release-V0102</guid>
 			<pubDate>Mon, 28 Aug 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-nBuildKit release - V0.10.2&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Monday, August 28, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.2"&gt;0.10.2&lt;/a&gt;
+			<content:encoded>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.2"&gt;0.10.2&lt;/a&gt;
 of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt;
 has been released.&lt;/p&gt;
 &lt;p&gt;This release made the following minor changes&lt;/p&gt;
@@ -1765,74 +1255,21 @@ in the test and deploy stages.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;All the work items that have been closed for this release can be found on
 github in the milestone list for the &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/36?closed=1"&gt;0.10.2&lt;/a&gt; release.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Software-development-pipeline-Design-introduction" title="Previous Post: Software development pipeline - Design introduction" class="navlinks-prev"&gt;« Software development pipeline - Design introduction&lt;/a&gt;
-                &lt;a href="/posts/Software-development-pipeline-Design-accuracy" title="Next Post: Software development pipeline - Design accuracy" class="navlinks-next"&gt;Software development pipeline - Design accuracy »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'nBuildkit-Release-V0102';
-    var disqus_title = 'nBuildKit release - V0.10.2';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildkit-Release-V0102';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>Software development pipeline - Design introduction</title>
 			<link>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-introduction</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;In order to deliver new or improved software applications within the desired
+time span while maintaining or improving quality modern development moves towards
+&lt;a href="https://techbeacon.com/doing-continuous-delivery-focus-first-reducing-release-cycle-times"&gt;shorter development and delivery&lt;/a&gt;
+cycles. This is often achieved through the use of agile processes and a development
+workflow including &lt;a href="https://en.wikipedia.org/wiki/Continuous_integration"&gt;Continuous Integration&lt;/a&gt;,
+&lt;a href="https://en.wikipedia.org/wiki/Continuous_delivery"&gt;Continuous Delivery&lt;/a&gt;
+or even &lt;a href="https://www.agilealliance.org/glossary/continuous-deployment"&gt;Continuous deployment&lt;/a&gt;.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-introduction</guid>
 			<pubDate>Mon, 21 Aug 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Software development pipeline - Design introduction&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Monday, August 21, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/delivering-software" class="btn btn-default btn-xs"&gt;Delivering software&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/devops" class="btn btn-default btn-xs"&gt;DevOps&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/pipeline-design" class="btn btn-default btn-xs"&gt;Pipeline design&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/software-development-pipeline" class="btn btn-default btn-xs"&gt;Software development pipeline&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;In order to deliver new or improved software applications within the desired
+			<content:encoded>&lt;p&gt;In order to deliver new or improved software applications within the desired
 time span while maintaining or improving quality modern development moves towards
 &lt;a href="https://techbeacon.com/doing-continuous-delivery-focus-first-reducing-release-cycle-times"&gt;shorter development and delivery&lt;/a&gt;
 cycles. This is often achieved through the use of agile processes and a development
@@ -1917,152 +1354,20 @@ how to achieve accuracy for a development pipeline.&lt;/li&gt;
 captures a broader perspective on the ability of the system to handle expected and unexpected
 changes.&lt;/li&gt;
 &lt;/ul&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildkit-release-V0100" title="Previous Post: nBuildKit release - V0.10.0" class="navlinks-prev"&gt;« nBuildKit release - V0.10.0&lt;/a&gt;
-                &lt;a href="/posts/nBuildkit-Release-V0102" title="Next Post: nBuildKit release - V0.10.2" class="navlinks-next"&gt;nBuildKit release - V0.10.2 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Software-development-pipeline-Design-introduction';
-    var disqus_title = 'Software development pipeline - Design introduction';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-introduction';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
-		</item>
-		<item>
-			<title>Ops-Tools-Build release - V0.3.0</title>
-			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V030</link>
-			<description>Welcome!</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V030</guid>
-			<pubDate>Sun, 16 Jul 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Ops-Tools-Build release - V0.3.0&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Sunday, July 16, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/ops-resource" class="btn btn-default btn-xs"&gt;Ops-Resource&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs"&gt;Ops-Tools-Build&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.3.0"&gt;0.3.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
-&lt;p&gt;This release was focussed on providing the capabilities to use the Docker toolset to create new
-containers and to run validation of VM resources generated by &lt;a href="https://packer.io"&gt;Packer&lt;/a&gt;.
-All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/3?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;New functionality&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/33"&gt;33&lt;/a&gt; - Added the ability to
-create ISO files during the test stage.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/24"&gt;24&lt;/a&gt; - Added functions to invoke
-docker to create container resources.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/32"&gt;32&lt;/a&gt; - Added functions to validate
-a &lt;a href="https://packer.io"&gt;Packer&lt;/a&gt; image by executing packer with the previously created image and
-executing tests during the packer test build.&lt;/li&gt;
-&lt;/ul&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Previous Post: Ops-Tools-Build release - V0.2.0" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.2.0&lt;/a&gt;
-                &lt;a href="/posts/nBuildkit-release-V0100" title="Next Post: nBuildKit release - V0.10.0" class="navlinks-next"&gt;nBuildKit release - V0.10.0 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Ops-Tools-Build-release-V030';
-    var disqus_title = 'Ops-Tools-Build release - V0.3.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V030';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>nBuildKit release - V0.10.0</title>
 			<link>https://www.petrikvandervelde.nl/posts/nBuildkit-release-V0100</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.0"&gt;0.10.0&lt;/a&gt;
+and version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.1"&gt;0.10.1&lt;/a&gt;
+of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt;
+have been released. The &lt;code&gt;0.10.0&lt;/code&gt; release is the first release in the stabilization
+cycle. There are still a few major changes but the goal is to start stabilizing nBuildKit
+in preparation for the 1.0.0 release.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/nBuildkit-release-V0100</guid>
 			<pubDate>Sun, 16 Jul 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-nBuildKit release - V0.10.0&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Sunday, July 16, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.0"&gt;0.10.0&lt;/a&gt;
+			<content:encoded>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.0"&gt;0.10.0&lt;/a&gt;
 and version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.1"&gt;0.10.1&lt;/a&gt;
 of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt;
 have been released. The &lt;code&gt;0.10.0&lt;/code&gt; release is the first release in the stabilization
@@ -2095,72 +1400,41 @@ from &lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-B
 &lt;p&gt;All the work items that have been closed for this release can be found on
 github in the milestone list for releases &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/30?closed=1"&gt;0.10.0&lt;/a&gt;
 and &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/35?closed=1"&gt;0.10.1&lt;/a&gt;.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V030" title="Previous Post: Ops-Tools-Build release - V0.3.0" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.3.0&lt;/a&gt;
-                &lt;a href="/posts/Software-development-pipeline-Design-introduction" title="Next Post: Software development pipeline - Design introduction" class="navlinks-next"&gt;Software development pipeline - Design introduction »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'nBuildkit-release-V0100';
-    var disqus_title = 'nBuildKit release - V0.10.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildkit-release-V0100';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
+		</item>
+		<item>
+			<title>Ops-Tools-Build release - V0.3.0</title>
+			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V030</link>
+			<description>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.3.0"&gt;0.3.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V030</guid>
+			<pubDate>Sun, 16 Jul 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.3.0"&gt;0.3.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
+&lt;p&gt;This release was focussed on providing the capabilities to use the Docker toolset to create new
+containers and to run validation of VM resources generated by &lt;a href="https://packer.io"&gt;Packer&lt;/a&gt;.
+All the work items that have been closed for this release can be found on
+&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/3?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;New functionality&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/33"&gt;33&lt;/a&gt; - Added the ability to
+create ISO files during the test stage.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/24"&gt;24&lt;/a&gt; - Added functions to invoke
+docker to create container resources.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/32"&gt;32&lt;/a&gt; - Added functions to validate
+a &lt;a href="https://packer.io"&gt;Packer&lt;/a&gt; image by executing packer with the previously created image and
+executing tests during the packer test build.&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded>
 		</item>
 		<item>
 			<title>Ops-Tools-Build release - V0.2.0</title>
 			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</guid>
 			<pubDate>Sun, 14 May 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Ops-Tools-Build release - V0.2.0&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Sunday, May 14, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/ops-resource" class="btn btn-default btn-xs"&gt;Ops-Resource&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs"&gt;Ops-Tools-Build&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
+			<content:encoded>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
 &lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
 &lt;p&gt;This release was focussed on providing the capabilities to use the Chef toolset to create new
 resources. All the work items that have been closed for this release can be found on
@@ -2179,71 +1453,17 @@ was added to allow restoring Chef cookbooks via &lt;a href="https://github.com/b
 packer function which allows keeping the resources generated with packer in case the packer
 build fails. This improves the ability to debug issues in the packer build.&lt;/li&gt;
 &lt;/ul&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V092" title="Previous Post: nBuildKit release - V0.9.2" class="navlinks-prev"&gt;« nBuildKit release - V0.9.2&lt;/a&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V030" title="Next Post: Ops-Tools-Build release - V0.3.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.3.0 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Ops-Tools-Build-release-V020';
-    var disqus_title = 'Ops-Tools-Build release - V0.2.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>nBuildKit release - V0.9.2</title>
 			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V092</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.2"&gt;0.9.2&lt;/a&gt;
+of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt; has been released. This release fixes
+a number of bugs and adds a few new improvements&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V092</guid>
 			<pubDate>Sun, 14 May 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-nBuildKit release - V0.9.2&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Sunday, May 14, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.2"&gt;0.9.2&lt;/a&gt;
+			<content:encoded>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.2"&gt;0.9.2&lt;/a&gt;
 of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt; has been released. This release fixes
 a number of bugs and adds a few new improvements&lt;/p&gt;
 &lt;p&gt;All the work items that have been closed for this release can be found on
@@ -2286,153 +1506,17 @@ additionally be unzipped before the final copy takes place.&lt;/li&gt;
 &lt;p&gt;Additionally the first steps to better documentation have been taken. The &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/blob/master/README.md"&gt;readme&lt;/a&gt;,
 the &lt;a href="https://nbuildkit.github.io/nBuildKit.MsBuild/"&gt;introduction&lt;/a&gt; and the &lt;a href="https://nbuildkit.github.io/nBuildKit.MsBuild/docs/contributing"&gt;contributing&lt;/a&gt;
 documents have been updated.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V091" title="Previous Post: nBuildKit release - V0.9.1" class="navlinks-prev"&gt;« nBuildKit release - V0.9.1&lt;/a&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V020" title="Next Post: Ops-Tools-Build release - V0.2.0" class="navlinks-next"&gt;Ops-Tools-Build release - V0.2.0 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'nBuildKit-release-V092';
-    var disqus_title = 'nBuildKit release - V0.9.2';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V092';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
-		</item>
-		<item>
-			<title>Ops-Tools-Build release - V0.1.0 and V0.1.1</title>
-			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</link>
-			<description>Welcome!</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</guid>
-			<pubDate>Sun, 09 Apr 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Ops-Tools-Build release - V0.1.0 and V0.1.1&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Sunday, April 9, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/ops-resource" class="btn btn-default btn-xs"&gt;Ops-Resource&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/ops-tools-build" class="btn btn-default btn-xs"&gt;Ops-Tools-Build&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
-&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
-of the Ops-Tools-Build toolkit was released.&lt;/p&gt;
-&lt;p&gt;All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/1?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;New functionality&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/3"&gt;3&lt;/a&gt; - New scripts have been added to allow
-the creation of an ISO file using the &lt;a href="https://sourceforge.net/projects/tumagcc"&gt;MakeIsoFS&lt;/a&gt; command
-line application.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/4"&gt;4&lt;/a&gt; - New scripts have been added to allow
-invocation of the &lt;a href="https://www.packer.io/"&gt;packer&lt;/a&gt; command line tool used to generate VM and
-container images from a set of configuration files.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/10"&gt;10&lt;/a&gt; - New scripts were added to allow
-calculation of the hash of one or more files&lt;/li&gt;
-&lt;/ul&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Ubiquiti-networking-gear" title="Previous Post: Setting up a home network with Ubiquiti" class="navlinks-prev"&gt;« Setting up a home network with Ubiquiti&lt;/a&gt;
-                &lt;a href="/posts/nBuildKit-release-V091" title="Next Post: nBuildKit release - V0.9.1" class="navlinks-next"&gt;nBuildKit release - V0.9.1 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Ops-Tools-Build-release-V011';
-    var disqus_title = 'Ops-Tools-Build release - V0.1.0 and V0.1.1';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>nBuildKit release - V0.9.1</title>
 			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;Hot on the heels of the last release version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.1"&gt;0.9.1&lt;/a&gt;
+of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt; has been released. This release fixes
+two bugs and adds a few internal improvements.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091</guid>
 			<pubDate>Sun, 09 Apr 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-nBuildKit release - V0.9.1&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Sunday, April 9, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Hot on the heels of the last release version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.1"&gt;0.9.1&lt;/a&gt;
+			<content:encoded>&lt;p&gt;Hot on the heels of the last release version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.1"&gt;0.9.1&lt;/a&gt;
 of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt; has been released. This release fixes
 two bugs and adds a few internal improvements.&lt;/p&gt;
 &lt;p&gt;All the work items that have been closed for this release can be found on
@@ -2462,73 +1546,51 @@ branch respectively.&lt;/li&gt;
 is being moved from the wiki to a GitHub pages website. As of this release the build for nBuildKit
 will generate the website using &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V011" title="Previous Post: Ops-Tools-Build release - V0.1.0 and V0.1.1" class="navlinks-prev"&gt;« Ops-Tools-Build release - V0.1.0 and V0.1.1&lt;/a&gt;
-                &lt;a href="/posts/nBuildKit-release-V092" title="Next Post: nBuildKit release - V0.9.2" class="navlinks-next"&gt;nBuildKit release - V0.9.2 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'nBuildKit-release-V091';
-    var disqus_title = 'nBuildKit release - V0.9.1';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
+		</item>
+		<item>
+			<title>Ops-Tools-Build release - V0.1.0 and V0.1.1</title>
+			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</link>
+			<description>&lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
+&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
+of the Ops-Tools-Build toolkit was released.&lt;/p&gt;</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</guid>
+			<pubDate>Sun, 09 Apr 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
+&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
+of the Ops-Tools-Build toolkit was released.&lt;/p&gt;
+&lt;p&gt;All the work items that have been closed for this release can be found on
+&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/1?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;New functionality&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/3"&gt;3&lt;/a&gt; - New scripts have been added to allow
+the creation of an ISO file using the &lt;a href="https://sourceforge.net/projects/tumagcc"&gt;MakeIsoFS&lt;/a&gt; command
+line application.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/4"&gt;4&lt;/a&gt; - New scripts have been added to allow
+invocation of the &lt;a href="https://www.packer.io/"&gt;packer&lt;/a&gt; command line tool used to generate VM and
+container images from a set of configuration files.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/10"&gt;10&lt;/a&gt; - New scripts were added to allow
+calculation of the hash of one or more files&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded>
 		</item>
 		<item>
 			<title>Setting up a home network with Ubiquiti</title>
 			<link>https://www.petrikvandervelde.nl/posts/Ubiquiti-networking-gear</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;A little while back we finally got fibre in our street. After spending many years on ADSL (we don't
+talk about the time of dial-up ...) it was finally time for some decent network speeds at home. As
+the fibre was being installed in my house it was also time to evaluate the networking gear I was
+using. Until now I had always used the modem / router provided by the ISP with an additional cheap
+switch. The gear always worked fine, but didn't provide configuration options other than the ones that
+describe the connection to the ISP. As I was starting to use my &lt;a href="./posts/Updating-Hyper-v-server-to-Windows2016"&gt;Hyper-V server&lt;/a&gt;
+a lot more and was starting to run multiple VM's it would be nice to get some better control over
+the network. Additionally based on one of &lt;a href="https://www.troyhunt.com/no-you-cant-join-my-wifi-network/"&gt;Troy Hunt's&lt;/a&gt;
+blog posts I would also like to set up a separate guest network.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Ubiquiti-networking-gear</guid>
 			<pubDate>Fri, 07 Apr 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Setting up a home network with Ubiquiti&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Friday, April 7, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/hardware" class="btn btn-default btn-xs"&gt;Hardware&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/home-network" class="btn btn-default btn-xs"&gt;Home network&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/ubiquiti" class="btn btn-default btn-xs"&gt;Ubiquiti&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;A little while back we finally got fibre in our street. After spending many years on ADSL (we don't
+			<content:encoded>&lt;p&gt;A little while back we finally got fibre in our street. After spending many years on ADSL (we don't
 talk about the time of dial-up ...) it was finally time for some decent network speeds at home. As
 the fibre was being installed in my house it was also time to evaluate the networking gear I was
 using. Until now I had always used the modem / router provided by the ISP with an additional cheap
@@ -2594,7 +1656,7 @@ is no relation between the wireless network and the subnet other than the vlan t
 same vlan tag is enough to direct the clients onto the the correct subnet.&lt;/p&gt;
 &lt;p&gt;The last step of the configuration of the guest network is to configure the switch. Because the
 access point has three different subnets going to it, the managment subnet for the access point itself,
-the guest wifi and the internal wifi, you need to create a custom ‘network’ on the switch which carries
+the guest wifi and the internal wifi, you need to create a custom &amp;lsquo;network&amp;rsquo; on the switch which carries
 all three networks, making sure that the untagged network is the one on which you want the access
 point to get an IP address.&lt;/p&gt;
 &lt;p&gt;Another item I found was that for some purposes the standard IP lease of 24 hours is a bit long. One
@@ -2612,71 +1674,19 @@ about their product that they want to keep it running, unlike much of the consum
 &lt;p&gt;The unifi software provides a lot of useful and interesting capabilities and it's obviously aimed
 at the business / educational environment. There are a lot of of features that I don't need, but they
 are fun to play with&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/nBuildKit-release-V090" title="Previous Post: nBuildKit release - V0.9.0" class="navlinks-prev"&gt;« nBuildKit release - V0.9.0&lt;/a&gt;
-                &lt;a href="/posts/Ops-Tools-Build-release-V011" title="Next Post: Ops-Tools-Build release - V0.1.0 and V0.1.1" class="navlinks-next"&gt;Ops-Tools-Build release - V0.1.0 and V0.1.1 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Ubiquiti-networking-gear';
-    var disqus_title = 'Setting up a home network with Ubiquiti';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ubiquiti-networking-gear';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>nBuildKit release - V0.9.0</title>
 			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.0"&gt;0.9.0&lt;/a&gt; of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt;
+has been released. The last release I talked about on this blog was &lt;a href="posts/nBuildKit-release-V051"&gt;0.5.1&lt;/a&gt;.
+Since then a &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases"&gt;lot more versions&lt;/a&gt; have been
+released. The &lt;code&gt;0.9.0&lt;/code&gt; release was supposed to be a stabilization release but there were many major
+improvements which makes this a major change release.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090</guid>
 			<pubDate>Mon, 03 Apr 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-nBuildKit release - V0.9.0&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Monday, April 3, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/nbuildkit" class="btn btn-default btn-xs"&gt;nBuildKit&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.0"&gt;0.9.0&lt;/a&gt; of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt;
+			<content:encoded>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.0"&gt;0.9.0&lt;/a&gt; of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt;
 has been released. The last release I talked about on this blog was &lt;a href="posts/nBuildKit-release-V051"&gt;0.5.1&lt;/a&gt;.
 Since then a &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases"&gt;lot more versions&lt;/a&gt; have been
 released. The &lt;code&gt;0.9.0&lt;/code&gt; release was supposed to be a stabilization release but there were many major
@@ -2739,72 +1749,21 @@ tokens are &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/242
 overall speed up for the nBuildKit build itself is about a factor two.&lt;/p&gt;
 &lt;p&gt;All the work items that have been closed for this release can be found on
 &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/26?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Updating-Hyper-v-server-to-Windows2016" title="Previous Post: Updating my Hyper-V server to Windows 2016" class="navlinks-prev"&gt;« Updating my Hyper-V server to Windows 2016&lt;/a&gt;
-                &lt;a href="/posts/Ubiquiti-networking-gear" title="Next Post: Setting up a home network with Ubiquiti" class="navlinks-next"&gt;Setting up a home network with Ubiquiti »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'nBuildKit-release-V090';
-    var disqus_title = 'nBuildKit release - V0.9.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 		<item>
 			<title>Updating my Hyper-V server to Windows 2016</title>
 			<link>https://www.petrikvandervelde.nl/posts/Updating-Hyper-v-server-to-Windows2016</link>
-			<description>Welcome!</description>
+			<description>&lt;p&gt;One of the computers I have in my home is a Hyper-V server which I use to experiment with all things
+virtual machines, e.g. &lt;a href="https://www.thoughtworks.com/insights/blog/infrastructure-code-reason-smile"&gt;infrastructure-as-code&lt;/a&gt;.
+This server was until recently running Windows 2012R2 with the associated version of Hyper-V. With
+the release of Windows 2016 a new version of Hyper-V was available which had some interesting
+features, like &lt;a href="https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/user-guide/nested-virtualization"&gt;nested virtualization&lt;/a&gt;
+which allows running VMs on VMs and running Hyper-V containers. All in all enough interesting features
+to warrant upgrading my server.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Updating-Hyper-v-server-to-Windows2016</guid>
 			<pubDate>Sat, 18 Mar 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;div id="post"&gt;
-    &lt;div id="post-header"&gt;
-        &lt;!--
-    Model is: Tuple&lt;IDocument, IDocument&gt;.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
---&gt;
-
-
-&lt;h2&gt;
-Updating my Hyper-V server to Windows 2016&lt;/h2&gt;
-&lt;div id="post-meta"&gt;
-    &lt;p&gt;
-Saturday, March 18, 2017
- |         Posted in                     &lt;a id="post-category" role="button" href="/tags/hyper-v" class="btn btn-default btn-xs"&gt;Hyper-V&lt;/a&gt;
-                    &lt;a id="post-category" role="button" href="/tags/windows2016" class="btn btn-default btn-xs"&gt;Windows2016&lt;/a&gt;
-    &lt;/p&gt;
-&lt;/div&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-content"&gt;
-        &lt;p&gt;One of the computers I have in my home is a Hyper-V server which I use to experiment with all things
+			<content:encoded>&lt;p&gt;One of the computers I have in my home is a Hyper-V server which I use to experiment with all things
 virtual machines, e.g. &lt;a href="https://www.thoughtworks.com/insights/blog/infrastructure-code-reason-smile"&gt;infrastructure-as-code&lt;/a&gt;.
 This server was until recently running Windows 2012R2 with the associated version of Hyper-V. With
 the release of Windows 2016 a new version of Hyper-V was available which had some interesting
@@ -2853,7 +1812,7 @@ on the Hyper-V machine, and thus the network profile is set to be public for sec
 after the AD server has started, or we need to restart the service after a short period. In my case
 setting the service start in delayed mode didn't really work so I created a scheduled task which
 restarted the service by calling the following command line&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -nologo -command "restart-service nlasvc -force"
+&lt;pre&gt;&lt;code&gt;C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -nologo -command &amp;quot;restart-service nlasvc -force&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Over all the upgrade was easier than I thought and there were only minor set backs. Some of the lessons
 that were learned are:&lt;/p&gt;
@@ -2865,43 +1824,7 @@ are.&lt;/li&gt;
 &lt;li&gt;Ideally you would have multiple AD servers, running of different physical machines. Then again
 ideally I'd also have lots of money to pay for all these physical machines 😉&lt;/li&gt;
 &lt;/ul&gt;
-
-    &lt;/div&gt;
-
-    &lt;div id="post-footer"&gt;
-        &lt;div&gt;
-    &lt;div class="navlinks"&gt;
-                &lt;a href="/posts/Blog-publishing-with-AppVeyor" title="Previous Post: Blog publishing with AppVeyor" class="navlinks-prev"&gt;« Blog publishing with AppVeyor&lt;/a&gt;
-                &lt;a href="/posts/nBuildKit-release-V090" title="Next Post: nBuildKit release - V0.9.0" class="navlinks-next"&gt;nBuildKit release - V0.9.0 »&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id="disqus_thread"&gt;&lt;/div&gt;
-&lt;script type="text/javascript"&gt;
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Updating-Hyper-v-server-to-Windows2016';
-    var disqus_title = 'Updating my Hyper-V server to Windows 2016';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Updating-Hyper-v-server-to-Windows2016';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-&lt;/script&gt;
-&lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
-&lt;a href="https://disqus.com" class="dsq-brlink"&gt;comments powered by &lt;span class="logo-disqus"&gt;Disqus&lt;/span&gt;&lt;/a&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</content:encoded>
+</content:encoded>
 		</item>
 	</channel>
 </rss>
