@@ -162,13 +162,13 @@
                                     <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
                                 </li>
                                 <li>
+                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (9)</a>
+                                </li>
+                                <li>
                                     <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (9)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
@@ -269,7 +269,7 @@ storage and distribution of secrets</li>
 <ul>
 <li><a href="https://jenkins.io">Jenkins</a> is used as the
 <a href="https://github.com/Calvinverse/resource.build.master">build controller</a>.</li>
-<li>Build executors connect to jenkins using the <a href="https://plugins.jenkins.io/swarm">swarm plugin</a> so
+<li>Build executors connect to Jenkins using the <a href="https://plugins.jenkins.io/swarm">swarm plugin</a> so
 that agents can connect when it starts. In the Calvinverse project there are currently only
 <a href="https://github.com/Calvinverse/resource.build.agent.windows">Windows</a> based executors.</li>
 </ul>
@@ -301,8 +301,8 @@ and build logs</li>
 <li><a href="https://www.elastic.co/products/kibana">Kibana</a> for
 <a href="https://github.com/Calvinverse/resource.documents.dashboard">log dashboards</a>.</li>
 <li>Logs collected via <a href="https://www.syslog-ng.com/products/open-source-log-management/">syslog-ng</a> on
-linux and a modified version of <a href="https://github.com/pvandervelde/filebeat.mqtt">filebeat</a> on windows.
-Logs are sent to rabbitmq to ensure that the unprocessed logs aren't lost when something any part
+Linux and a modified version of <a href="https://github.com/pvandervelde/filebeat.mqtt">Filebeat</a> on windows.
+Logs are sent to RabbitMQ to ensure that the unprocessed logs aren't lost when something any part
 of the log stack goes offline.</li>
 <li><a href="https://www.elastic.co/products/logstash">Logstash</a> for
 <a href="https://github.com/Calvinverse/resource.logs.processor">processing logs</a> from RabbitMQ to
@@ -386,7 +386,7 @@ that is required with custom capabilities, either directly added to the CI syste
 services. It should of course be noted that this requires resources and is thus not free.</p>
 <h3>Selecting a location for your CI system</h3>
 <p>So how does one select a location for a CI system. Both cloud and on-prem have pros and cons and in the
-end the location of the system depends very much on the situation fo the development team. If the team works
+end the location of the system depends very much on the situation of the development team. If the team works
 for a company where there is no on-prem server infrastructure then a cloud based system will be the
 only sensible approach. However there will also be cases where an on-prem system is the only sensible
 option.</p>
@@ -454,7 +454,7 @@ single point of failure. More on how to reduce the dependency on CI systems and 
 follow in another post.</p>
 <p>Just like any other piece of infrastructure the development pipeline will need to be updated
 and improved on a regular basis, either to fix bugs, patch security issues or to add new features
-that will make the development team more productive. Because the pipeline falls in the cricital
+that will make the development team more productive. Because the pipeline falls in the critical
 infrastructure category it is important to keep disturbances to a minimum while performing these
 changes. There are two main parts to providing (nearly) continuous service while still providing
 improvements and updates. The first is to ensure that the changes are tracked and tested properly,
@@ -633,7 +633,7 @@ are also drawbacks to having the pipeline in the build system.</p>
 <li><p>Having the pipeline in the build system makes some assumptions that may not be correct in certain
 cases.</p>
 <ul>
-<li>The first assumption is that the build system is the center of all the work being done
+<li>The first assumption is that the build system is the centre of all the work being done
 because the pipeline is controlled by the build system, thus requiring that all actions feed back
 into said build system. This however shouldn't be a given, after all why would the build system
 be the core system and not the source control system or the issue tracker. In reality all systems
@@ -654,14 +654,14 @@ while builds are only part of the pipeline.</li>
 <li>A third assumption is that every task can somehow be run through the build system, but this is
 not always the case and even when it is possible it is not necessarily sensible. For instance
 builds and deploys are fundamentally different things, one should be repeatable (builds) and
-can just be stopped on failure and restarted if necesary and the other is often not exactly
+can just be stopped on failure and restarted if necessary and the other is often not exactly
 repeatable (because artefacts can only be moved from a location once etc.) and should often
 not just be stopped (but rolled-back or not &lsquo;committed&rsquo;). Another example is long running tests
 for which the results may be fed back into the build system if required but that doesn't
 necessarily make sense.</li>
 </ul>
 </li>
-<li><p>If the build system is the the center of the pipeline then that means that the build system has to
+<li><p>If the build system is the the centre of the pipeline then that means that the build system has to
 start storing persistent data about the state of the pipeline with all the issues that come with this
 kind of data, for instance:</p>
 <ul>
@@ -670,7 +670,7 @@ in the future when the development team needs to determine where an artefact com
 that the data potentially needs to be kept safe for much longer than build information is
 normally kept. In order to achieve this the standard data protection rules apply for instance
 access controls and backups.</li>
-<li>The information about the pipeline needs to be easily accessible and changable both by the build
+<li>The information about the pipeline needs to be easily accessible and changeable both by the build
 system and by systems external to the build system. It should be possible to add additional
 information, e.g. the versions / names of artefacts created by a build. The status of the artefact
 as it progresses through the pipeline etc.. All this information is important either during the
@@ -694,7 +694,7 @@ or have access to. While this may seem to be a benefit for the developers, no mo
 getting in the way, it is in fact a drawback because this behaviour means that the developers take
 on the responsibility to administer some or all of the underlying build system. Examples of the
 change of control are for instance in the Jenkins pipeline it is possible for developers to use
-all the credentials that jenkins has access to. However this might not be desirable for high power
+all the credentials that Jenkins has access to. However this might not be desirable for high power
 credentials or credentials for highly restricted resources. An other example is that the selection
 of the build executor is done in the pipeline configuration, however in some cases it may make sense
 to limit access to executors, after all having a build that can migrate from node to node makes
@@ -851,7 +851,7 @@ to wait until another post.</p>
     </div>
     <div id="fbox2">
         <h2 id="copyright">Copyright</h2>
-        <p>Copyright (c) 2019 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
+        <p>Copyright (c) 2020 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
 
         <h2 id="disclaimer">Disclaimer</h2>
         <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
@@ -864,9 +864,9 @@ to wait until another post.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 24 Aug 2019 11:58:40 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Mon, 26 Oct 2020 22:28:41 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/af88e3bba538cf70697d94cfaabe530a4fc18828">af88e3bba538cf70697d94cfaabe530a4fc18828</a> at version 3.1.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/b471e86a1c4ec6f0a1a9bb0a8b946052854c3608">b471e86a1c4ec6f0a1a9bb0a8b946052854c3608</a> at version 3.1.1.        </p>
     </div>
 
     <p>

@@ -4,9 +4,9 @@
 		<title>Mind vortex</title>
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
-		<copyright>2019</copyright>
-		<pubDate>Sat, 24 Aug 2019 11:58:41 GMT</pubDate>
-		<lastBuildDate>Sat, 24 Aug 2019 11:58:41 GMT</lastBuildDate>
+		<copyright>2020</copyright>
+		<pubDate>Mon, 26 Oct 2020 22:28:42 GMT</pubDate>
+		<lastBuildDate>Mon, 26 Oct 2020 22:28:42 GMT</lastBuildDate>
 		<item>
 			<title>Calvinverse - An example build infrastructure</title>
 			<link>https://www.petrikvandervelde.nl/posts/Calvinverse-an-example-build-infrastructure</link>
@@ -68,7 +68,7 @@ storage and distribution of secrets&lt;/li&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://jenkins.io"&gt;Jenkins&lt;/a&gt; is used as the
 &lt;a href="https://github.com/Calvinverse/resource.build.master"&gt;build controller&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Build executors connect to jenkins using the &lt;a href="https://plugins.jenkins.io/swarm"&gt;swarm plugin&lt;/a&gt; so
+&lt;li&gt;Build executors connect to Jenkins using the &lt;a href="https://plugins.jenkins.io/swarm"&gt;swarm plugin&lt;/a&gt; so
 that agents can connect when it starts. In the Calvinverse project there are currently only
 &lt;a href="https://github.com/Calvinverse/resource.build.agent.windows"&gt;Windows&lt;/a&gt; based executors.&lt;/li&gt;
 &lt;/ul&gt;
@@ -100,8 +100,8 @@ and build logs&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.elastic.co/products/kibana"&gt;Kibana&lt;/a&gt; for
 &lt;a href="https://github.com/Calvinverse/resource.documents.dashboard"&gt;log dashboards&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;Logs collected via &lt;a href="https://www.syslog-ng.com/products/open-source-log-management/"&gt;syslog-ng&lt;/a&gt; on
-linux and a modified version of &lt;a href="https://github.com/pvandervelde/filebeat.mqtt"&gt;filebeat&lt;/a&gt; on windows.
-Logs are sent to rabbitmq to ensure that the unprocessed logs aren't lost when something any part
+Linux and a modified version of &lt;a href="https://github.com/pvandervelde/filebeat.mqtt"&gt;Filebeat&lt;/a&gt; on windows.
+Logs are sent to RabbitMQ to ensure that the unprocessed logs aren't lost when something any part
 of the log stack goes offline.&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.elastic.co/products/logstash"&gt;Logstash&lt;/a&gt; for
 &lt;a href="https://github.com/Calvinverse/resource.logs.processor"&gt;processing logs&lt;/a&gt; from RabbitMQ to
@@ -169,7 +169,7 @@ that is required with custom capabilities, either directly added to the CI syste
 services. It should of course be noted that this requires resources and is thus not free.&lt;/p&gt;
 &lt;h3&gt;Selecting a location for your CI system&lt;/h3&gt;
 &lt;p&gt;So how does one select a location for a CI system. Both cloud and on-prem have pros and cons and in the
-end the location of the system depends very much on the situation fo the development team. If the team works
+end the location of the system depends very much on the situation of the development team. If the team works
 for a company where there is no on-prem server infrastructure then a cloud based system will be the
 only sensible approach. However there will also be cases where an on-prem system is the only sensible
 option.&lt;/p&gt;
@@ -226,7 +226,7 @@ single point of failure. More on how to reduce the dependency on CI systems and 
 follow in another post.&lt;/p&gt;
 &lt;p&gt;Just like any other piece of infrastructure the development pipeline will need to be updated
 and improved on a regular basis, either to fix bugs, patch security issues or to add new features
-that will make the development team more productive. Because the pipeline falls in the cricital
+that will make the development team more productive. Because the pipeline falls in the critical
 infrastructure category it is important to keep disturbances to a minimum while performing these
 changes. There are two main parts to providing (nearly) continuous service while still providing
 improvements and updates. The first is to ensure that the changes are tracked and tested properly,
@@ -390,7 +390,7 @@ are also drawbacks to having the pipeline in the build system.&lt;/p&gt;
 &lt;li&gt;&lt;p&gt;Having the pipeline in the build system makes some assumptions that may not be correct in certain
 cases.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;The first assumption is that the build system is the center of all the work being done
+&lt;li&gt;The first assumption is that the build system is the centre of all the work being done
 because the pipeline is controlled by the build system, thus requiring that all actions feed back
 into said build system. This however shouldn't be a given, after all why would the build system
 be the core system and not the source control system or the issue tracker. In reality all systems
@@ -411,14 +411,14 @@ while builds are only part of the pipeline.&lt;/li&gt;
 &lt;li&gt;A third assumption is that every task can somehow be run through the build system, but this is
 not always the case and even when it is possible it is not necessarily sensible. For instance
 builds and deploys are fundamentally different things, one should be repeatable (builds) and
-can just be stopped on failure and restarted if necesary and the other is often not exactly
+can just be stopped on failure and restarted if necessary and the other is often not exactly
 repeatable (because artefacts can only be moved from a location once etc.) and should often
 not just be stopped (but rolled-back or not &amp;lsquo;committed&amp;rsquo;). Another example is long running tests
 for which the results may be fed back into the build system if required but that doesn't
 necessarily make sense.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;If the build system is the the center of the pipeline then that means that the build system has to
+&lt;li&gt;&lt;p&gt;If the build system is the the centre of the pipeline then that means that the build system has to
 start storing persistent data about the state of the pipeline with all the issues that come with this
 kind of data, for instance:&lt;/p&gt;
 &lt;ul&gt;
@@ -427,7 +427,7 @@ in the future when the development team needs to determine where an artefact com
 that the data potentially needs to be kept safe for much longer than build information is
 normally kept. In order to achieve this the standard data protection rules apply for instance
 access controls and backups.&lt;/li&gt;
-&lt;li&gt;The information about the pipeline needs to be easily accessible and changable both by the build
+&lt;li&gt;The information about the pipeline needs to be easily accessible and changeable both by the build
 system and by systems external to the build system. It should be possible to add additional
 information, e.g. the versions / names of artefacts created by a build. The status of the artefact
 as it progresses through the pipeline etc.. All this information is important either during the
@@ -451,7 +451,7 @@ or have access to. While this may seem to be a benefit for the developers, no mo
 getting in the way, it is in fact a drawback because this behaviour means that the developers take
 on the responsibility to administer some or all of the underlying build system. Examples of the
 change of control are for instance in the Jenkins pipeline it is possible for developers to use
-all the credentials that jenkins has access to. However this might not be desirable for high power
+all the credentials that Jenkins has access to. However this might not be desirable for high power
 credentials or credentials for highly restricted resources. An other example is that the selection
 of the build executor is done in the pipeline configuration, however in some cases it may make sense
 to limit access to executors, after all having a build that can migrate from node to node makes
@@ -582,10 +582,10 @@ expected and unexpected changes to the environment it executes in and uses.&lt;/
 &lt;em&gt;resilience&lt;/em&gt;, which in this case means that the pipeline should be able to cope with
 expected and unexpected changes to the environment it executes in and uses.&lt;/p&gt;
 &lt;p&gt;David Woods defines &lt;a href="https://www.researchgate.net/publication/276139783_Four_concepts_for_resilience_and_the_implications_for_the_future_of_resilience_engineering"&gt;four different types of &amp;lsquo;resilience&amp;rsquo;&lt;/a&gt; in a paper in the journal of reliability engineering and system safety. One of the different types
-is the generally well known form of robustness, i.e. the ability to absorb pertubations or disturbances.
+is the generally well known form of robustness, i.e. the ability to absorb perturbations or disturbances.
 In order to be robust for given disturbances one has to know in advance where the disturbances will
 come from, e.g. in the case of a development pipeline it might be expected that pipeline stages will
-fail and will polute or damage parts or all of the executor it was running on. Robustness in this
+fail and will pollute or damage parts or all of the executor it was running on. Robustness in this
 case would be defined as the ability of the pipeline to handle this damage, for instance by repairing
 or replacing the executor. The other definitions for resilience are:&lt;/p&gt;
 &lt;ul&gt;
@@ -594,7 +594,7 @@ required, i.e. in order to recover from a disturbance one needs to be able to de
 and capacity that was available in excess before the issues occurred.&lt;/li&gt;
 &lt;li&gt;Graceful extensibility, the ability to extend adaptive capacity in the face of surprise. This is
 the ability to stretch resources and capabilities in the face of surprises.&lt;/li&gt;
-&lt;li&gt;Sustained adaptibility, which is the ability to adapt and grow new capabilities in the face of
+&lt;li&gt;Sustained adaptability, which is the ability to adapt and grow new capabilities in the face of
 unexpected issues. In general this definition applies more to systems / layered networks where
 the loss of sub-systems can be compensated.&lt;/li&gt;
 &lt;/ul&gt;
@@ -619,7 +619,7 @@ errors to issues with executors&lt;/li&gt;
 &lt;p&gt;Once it is known what resilience actually means and what type of situations the pipeline is expected
 to be able to handle the next question is how the pipeline can handle these situations, both in
 terms of what the expected responses are and in terms of how the pipeline should be designed.&lt;/p&gt;
-&lt;p&gt;There are a mirriad of simple steps that can be taken to provide a base level of resilience. None
+&lt;p&gt;There are a myriad of simple steps that can be taken to provide a base level of resilience. None
 of these simple steps will guard against major trauma but they will be able to either prevent or
 smooth out many of the smaller issues that would otherwise cause the development team to lose faith
 in the pipeline outputs. Some examples of simple steps that can be taken to improve resilience in
@@ -634,23 +634,23 @@ pipeline step in the same workspace. This type of behaviour should therefore be 
 possible&lt;/li&gt;
 &lt;li&gt;Do not depend on global, i.e. machine, container or network, state. Global state has a tendency
 to change in random ways at random times.&lt;/li&gt;
-&lt;li&gt;Avoid using source which are external to the pipeline infrastructure becaues these are prone to
-unspected random changes. If a build step requires data from an external source then the external
-source should be mirrored and mirrors should be carefully controled for their content. This should
+&lt;li&gt;Avoid using source which are external to the pipeline infrastructure because these are prone to
+unexpected random changes. If a build step requires data from an external source then the external
+source should be mirrored and mirrors should be carefully controlled for their content. This should
 prevent issues with external packages and inputs changing or disappearing, e.g.&lt;a href="https://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/"&gt;leftpad&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;If external sources are suitably mirrored inside the pipeline infrastructure then it is possible
 to remove the caches for these external sources on the executors. By pulling data in fresh from the
-local data store cache polution issues can be prevented&lt;/li&gt;
-&lt;li&gt;Ensure that each resource is appropriately secured against undesirable acces. This is especially
+local data store cache pollution issues can be prevented&lt;/li&gt;
+&lt;li&gt;Ensure that each resource is appropriately secured against undesirable access. This is especially
 true for the executor resources. It is important to note that pipeline steps are essentially random
 scripts from an unknown source, even if the scripts are pulled from internal sources, because the
 scripts will not be security verified before being used. This means that the pipeline scripts should
 not be allowed to to make any changes or to obtain secrets that they shouldn't have access to.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;As mentioned the afforementioned steps form a decent base for improving resilience and they are
+&lt;p&gt;As mentioned the aforementioned steps form a decent base for improving resilience and they are
 fairly easy to implement, hence they make a good first stage in the improvement of the resilience
 of the development pipeline. Once these steps have been implemented more complex steps can be taken
-to futher improve the state of the development pipeline. These additional steps can be divided into
+to further improve the state of the development pipeline. These additional steps can be divided into
 items that help prevent issues, items that test and verify the current state, items that aid in
 recovery and finally items, like logging and metrics, that help during post-mortems of failure cases.&lt;/p&gt;
 &lt;p&gt;One way prevention of trauma / outages can partially be improved is by ensuring that all parts of the
@@ -658,7 +658,7 @@ development pipeline are able to handle different error states which can be achi
 extensive error handling capabilities, both for known cases, e.g. service offline, and general error
 handling for unexpected cases. For the tooling / script side of the pipeline this means for instance
 adding error handling structures nearly everywhere and providing the ability to retry actions.
-For the infrastructure side of the pipeline this could mean providng highly available services and
+For the infrastructure side of the pipeline this could mean providing highly available services and
 ensuring that service delivery gracefully degrades if it can no longer be provided at the required
 standard.&lt;/p&gt;
 &lt;p&gt;Even if every possible precaution is taken it is not possible to prevent all modes of failure. Unexpected
@@ -1254,7 +1254,7 @@ during the deploy process.&lt;/li&gt;
 in the test and deploy stages.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;All the work items that have been closed for this release can be found on
-github in the milestone list for the &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/36?closed=1"&gt;0.10.2&lt;/a&gt; release.&lt;/p&gt;
+GitHub in the milestone list for the &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/36?closed=1"&gt;0.10.2&lt;/a&gt; release.&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
@@ -1350,7 +1350,7 @@ considerations.&lt;/p&gt;
 is a better description of the combined concepts of consistency and correctness.&lt;/li&gt;
 &lt;li&gt;September 4th 2017: Added the link to the post providing the high level description on
 how to achieve accuracy for a development pipeline.&lt;/li&gt;
-&lt;li&gt;Nobember 5th 2017: Replaced the term &lt;code&gt;robustness&lt;/code&gt; with the term &lt;code&gt;resilience&lt;/code&gt; because it
+&lt;li&gt;November 5th 2017: Replaced the term &lt;code&gt;robustness&lt;/code&gt; with the term &lt;code&gt;resilience&lt;/code&gt; because it
 captures a broader perspective on the ability of the system to handle expected and unexpected
 changes.&lt;/li&gt;
 &lt;/ul&gt;
@@ -1398,7 +1398,7 @@ path and &lt;code&gt;destination&lt;/code&gt; of the &lt;code&gt;ArchiveFilesToC
 from &lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;All the work items that have been closed for this release can be found on
-github in the milestone list for releases &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/30?closed=1"&gt;0.10.0&lt;/a&gt;
+GitHub in the milestone list for releases &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/30?closed=1"&gt;0.10.0&lt;/a&gt;
 and &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/35?closed=1"&gt;0.10.1&lt;/a&gt;.&lt;/p&gt;
 </content:encoded>
 		</item>
@@ -1414,7 +1414,7 @@ and &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/35?clos
 &lt;p&gt;This release was focussed on providing the capabilities to use the Docker toolset to create new
 containers and to run validation of VM resources generated by &lt;a href="https://packer.io"&gt;Packer&lt;/a&gt;.
 All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/3?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/3?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;New functionality&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/33"&gt;33&lt;/a&gt; - Added the ability to
@@ -1424,34 +1424,6 @@ docker to create container resources.&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/32"&gt;32&lt;/a&gt; - Added functions to validate
 a &lt;a href="https://packer.io"&gt;Packer&lt;/a&gt; image by executing packer with the previously created image and
 executing tests during the packer test build.&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Ops-Tools-Build release - V0.2.0</title>
-			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</link>
-			<description>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</guid>
-			<pubDate>Sun, 14 May 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
-&lt;p&gt;This release was focussed on providing the capabilities to use the Chef toolset to create new
-resources. All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;New functionality&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/5"&gt;5&lt;/a&gt; - A new function which provides
-the ability to execute &lt;a href="https://github.com/sethvargo/chefspec"&gt;ChefSpec&lt;/a&gt; tests.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/6"&gt;6&lt;/a&gt; - A new function which
-invokes the Chef linting tool &lt;a href="https://www.foodcritic.io/"&gt;Foodcritic&lt;/a&gt; on the selected Chef cookbooks.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/7"&gt;7&lt;/a&gt; - A new function which invokes the
-Ruby linting tool &lt;a href="https://github.com/bbatsov/rubocop"&gt;RuboCop&lt;/a&gt; on selected Ruby source files.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/20"&gt;20&lt;/a&gt; - A new package restore script
-was added to allow restoring Chef cookbooks via &lt;a href="https://github.com/berkshelf/berkshelf"&gt;Berkshelf&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/21"&gt;21&lt;/a&gt; - A new switch was added to the
-packer function which allows keeping the resources generated with packer in case the packer
-build fails. This improves the ability to debug issues in the packer build.&lt;/li&gt;
 &lt;/ul&gt;
 </content:encoded>
 		</item>
@@ -1467,7 +1439,7 @@ a number of bugs and adds a few new improvements&lt;/p&gt;</description>
 of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt; has been released. This release fixes
 a number of bugs and adds a few new improvements&lt;/p&gt;
 &lt;p&gt;All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/31?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/31?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;Bugs fixed&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/280"&gt;280&lt;/a&gt; - The &lt;code&gt;deploy.pushto.gitbranch&lt;/code&gt;
@@ -1509,6 +1481,62 @@ documents have been updated.&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
+			<title>Ops-Tools-Build release - V0.2.0</title>
+			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</link>
+			<description>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</guid>
+			<pubDate>Sun, 14 May 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
+&lt;p&gt;This release was focussed on providing the capabilities to use the Chef toolset to create new
+resources. All the work items that have been closed for this release can be found on
+&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;New functionality&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/5"&gt;5&lt;/a&gt; - A new function which provides
+the ability to execute &lt;a href="https://github.com/sethvargo/chefspec"&gt;ChefSpec&lt;/a&gt; tests.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/6"&gt;6&lt;/a&gt; - A new function which
+invokes the Chef linting tool &lt;a href="https://www.foodcritic.io/"&gt;Foodcritic&lt;/a&gt; on the selected Chef cookbooks.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/7"&gt;7&lt;/a&gt; - A new function which invokes the
+Ruby linting tool &lt;a href="https://github.com/bbatsov/rubocop"&gt;RuboCop&lt;/a&gt; on selected Ruby source files.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/20"&gt;20&lt;/a&gt; - A new package restore script
+was added to allow restoring Chef cookbooks via &lt;a href="https://github.com/berkshelf/berkshelf"&gt;Berkshelf&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/21"&gt;21&lt;/a&gt; - A new switch was added to the
+packer function which allows keeping the resources generated with packer in case the packer
+build fails. This improves the ability to debug issues in the packer build.&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Ops-Tools-Build release - V0.1.0 and V0.1.1</title>
+			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</link>
+			<description>&lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
+&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
+of the Ops-Tools-Build toolkit was released.&lt;/p&gt;</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</guid>
+			<pubDate>Sun, 09 Apr 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
+&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
+of the Ops-Tools-Build toolkit was released.&lt;/p&gt;
+&lt;p&gt;All the work items that have been closed for this release can be found on
+&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/1?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;New functionality&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/3"&gt;3&lt;/a&gt; - New scripts have been added to allow
+the creation of an ISO file using the &lt;a href="https://sourceforge.net/projects/tumagcc"&gt;MakeIsoFS&lt;/a&gt; command
+line application.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/4"&gt;4&lt;/a&gt; - New scripts have been added to allow
+invocation of the &lt;a href="https://www.packer.io/"&gt;packer&lt;/a&gt; command line tool used to generate VM and
+container images from a set of configuration files.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/10"&gt;10&lt;/a&gt; - New scripts were added to allow
+calculation of the hash of one or more files&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded>
+		</item>
+		<item>
 			<title>nBuildKit release - V0.9.1</title>
 			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091</link>
 			<description>&lt;p&gt;Hot on the heels of the last release version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.1"&gt;0.9.1&lt;/a&gt;
@@ -1520,7 +1548,7 @@ two bugs and adds a few internal improvements.&lt;/p&gt;</description>
 of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt; has been released. This release fixes
 two bugs and adds a few internal improvements.&lt;/p&gt;
 &lt;p&gt;All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/29?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/29?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;h3&gt;Bugs fixed&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/273"&gt;273&lt;/a&gt; - The &lt;code&gt;CalculateSemanticVersionWithGitVersion&lt;/code&gt;
@@ -1545,34 +1573,6 @@ branch respectively.&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/69"&gt;69&lt;/a&gt; - The documentation for nBuildKit itself
 is being moved from the wiki to a GitHub pages website. As of this release the build for nBuildKit
 will generate the website using &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Ops-Tools-Build release - V0.1.0 and V0.1.1</title>
-			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</link>
-			<description>&lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
-&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
-of the Ops-Tools-Build toolkit was released.&lt;/p&gt;</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</guid>
-			<pubDate>Sun, 09 Apr 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
-&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
-of the Ops-Tools-Build toolkit was released.&lt;/p&gt;
-&lt;p&gt;All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/1?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;New functionality&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/3"&gt;3&lt;/a&gt; - New scripts have been added to allow
-the creation of an ISO file using the &lt;a href="https://sourceforge.net/projects/tumagcc"&gt;MakeIsoFS&lt;/a&gt; command
-line application.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/4"&gt;4&lt;/a&gt; - New scripts have been added to allow
-invocation of the &lt;a href="https://www.packer.io/"&gt;packer&lt;/a&gt; command line tool used to generate VM and
-container images from a set of configuration files.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/10"&gt;10&lt;/a&gt; - New scripts were added to allow
-calculation of the hash of one or more files&lt;/li&gt;
 &lt;/ul&gt;
 </content:encoded>
 		</item>
@@ -1605,42 +1605,42 @@ setup so I used that as my starting point for finding some new network gear. For
 I don't have as much area to cover as Troy does so I didn't need nearly as much hardware. The parts
 I got are:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.ubnt.com/unifi-routing/usg/"&gt;Unifi security gateway&lt;/a&gt;: The router which provides amongst
+&lt;li&gt;&lt;a href="https://www.ubnt.com/UniFi-routing/usg/"&gt;UniFi security gateway&lt;/a&gt;: The router which provides amongst
 other things a firewall, subnet capabilities and DHCP.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.ubnt.com/unifi-switching/unifi-switch-8/"&gt;Unifi switch 8 (US-8-60W)&lt;/a&gt;: The managed switch
+&lt;li&gt;&lt;a href="https://www.ubnt.com/UniFi-switching/UniFi-switch-8/"&gt;UniFi switch 8 (US-8-60W)&lt;/a&gt;: The managed switch
 which has 4 &lt;a href="https://en.wikipedia.org/wiki/Power_over_Ethernet"&gt;PoE&lt;/a&gt; ports.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.ubnt.com/unifi/unifi-ap-ac-lite/"&gt;Unifi AP AC LITE&lt;/a&gt;: The smallest indoor access point
+&lt;li&gt;&lt;a href="https://www.ubnt.com/UniFi/UniFi-ap-ac-lite/"&gt;UniFi AP AC LITE&lt;/a&gt;: The smallest indoor access point
 available from Ubiquiti. Given that my apartment is relatively small I don't have to worry about
 covering a lot of area, and smaller access points are cheaper.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.ubnt.com/unifi/unifi-cloud-key/"&gt;Unifi cloud key&lt;/a&gt;: The management device which runs
-the Unfi software for managing the network.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.ubnt.com/UniFi/UniFi-cloud-key/"&gt;UniFi cloud key&lt;/a&gt;: The management device which runs
+the UniFi software for managing the network.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Except for the cloud key this is pretty much the minimal set of hardware required. The cloud key runs
-the unifi software which is used to manage the network configuration. You can install the unifi
+the UniFi software which is used to manage the network configuration. You can install the UniFi
 software on a PC but then you need an extra PC or VM running. While I have a Hyper-V server it was easier
 just to pay for the cloud key and have a separate controller for the network. Note that the network
 functions just fine without any configuration. However if you want to make changes the easiest way
-to do so is through the unifi software, although you could do it by SSH-ing into each device.&lt;/p&gt;
+to do so is through the UniFi software, although you could do it by SSH-ing into each device.&lt;/p&gt;
 &lt;p&gt;Another thing to note is that the the 60W switch has 4 PoE ports of the 802.3af kind. Unfortunately
 the access point requires 24V passive PoE. So either you have to:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Power the access point of the converter that you get with the access point.&lt;/li&gt;
-&lt;li&gt;Upgrade the access point to the &lt;a href="https://www.ubnt.com/unifi/unifi-ap-ac-pro/"&gt;UAP-AC-PRO&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Upgrade the switch to the &lt;a href="https://www.ubnt.com/unifi-switching/unifi-switch-8-150w/"&gt;US-8-150W&lt;/a&gt;
+&lt;li&gt;Upgrade the access point to the &lt;a href="https://www.ubnt.com/UniFi/UniFi-ap-ac-pro/"&gt;UAP-AC-PRO&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Upgrade the switch to the &lt;a href="https://www.ubnt.com/UniFi-switching/UniFi-switch-8-150w/"&gt;US-8-150W&lt;/a&gt;
 switch which has both 802.3af PoE and 24V passive PoE.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;As much as I would like to power the access point of the switch I still opted for the first option,
 the additional investment wasn't quite worth having one less cable around.&lt;/p&gt;
 &lt;h3&gt;Configuration&lt;/h3&gt;
 &lt;p&gt;The actual configuration was pretty easy, plug in all the parts and things start working, at least
-for the internal network. Once this is done you can configure the network through the unifi software.
+for the internal network. Once this is done you can configure the network through the UniFi software.
 To do so the first thing to do is to to find the cloud key. There's a useful plugin for
 &lt;a href="https://chrome.google.com/webstore/detail/ubiquiti-device-discovery/hmpigflbjeapnknladcfphgkemopofig?utm_source=chrome-app-launcher-info-dialog"&gt;chrome&lt;/a&gt;
 that allows you to find any Ubiquiti devices on your local network, otherwise you can try to guess
 the IP address of the cloud key. If you only have 4 devices like I do that shouldn't take very long.
 The gateway by default assumes you are using the &lt;code&gt;192.168.1.0/24&lt;/code&gt; subnet and the gateway is always
 the first one.&lt;/p&gt;
-&lt;p&gt;Once you are logged on to the unifi software it makes sense to give the cloud key a fixed IP address
+&lt;p&gt;Once you are logged on to the UniFi software it makes sense to give the cloud key a fixed IP address
 I gave mine the 192.168.1.2 IP address as I am using the &lt;code&gt;192.168.1.1/24&lt;/code&gt; subnet for all my networking
 gear. And yes I know I don't have enough networking devices for them to warrant being on their own
 subnet but it makes things a little easier and it allows me to learn about &lt;a href="https://en.wikipedia.org/wiki/Subnetwork"&gt;subnetting&lt;/a&gt;
@@ -1655,8 +1655,8 @@ applies the guest firewall rules.&lt;/p&gt;
 is no relation between the wireless network and the subnet other than the vlan tag. Somehow having the
 same vlan tag is enough to direct the clients onto the the correct subnet.&lt;/p&gt;
 &lt;p&gt;The last step of the configuration of the guest network is to configure the switch. Because the
-access point has three different subnets going to it, the managment subnet for the access point itself,
-the guest wifi and the internal wifi, you need to create a custom &amp;lsquo;network&amp;rsquo; on the switch which carries
+access point has three different subnets going to it, the management subnet for the access point itself,
+the guest Wi-Fi and the internal Wi-Fi, you need to create a custom &amp;lsquo;network&amp;rsquo; on the switch which carries
 all three networks, making sure that the untagged network is the one on which you want the access
 point to get an IP address.&lt;/p&gt;
 &lt;p&gt;Another item I found was that for some purposes the standard IP lease of 24 hours is a bit long. One
@@ -1671,7 +1671,7 @@ time is 2 hours (which is more than long enough to create a VM and capture a bas
 &lt;p&gt;In conclusion it's a good set of hardware and software and as a bonus, there are updates which apply
 without problems. There is something reassuring in the fact that the manufacturer actually cares enough
 about their product that they want to keep it running, unlike much of the consumer gear.&lt;/p&gt;
-&lt;p&gt;The unifi software provides a lot of useful and interesting capabilities and it's obviously aimed
+&lt;p&gt;The UniFi software provides a lot of useful and interesting capabilities and it's obviously aimed
 at the business / educational environment. There are a lot of of features that I don't need, but they
 are fun to play with&lt;/p&gt;
 </content:encoded>
@@ -1748,7 +1748,7 @@ during the build process. Note that this is a late addition and hasn't been test
 tokens are &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/242"&gt;generated and loaded&lt;/a&gt;. The
 overall speed up for the nBuildKit build itself is about a factor two.&lt;/p&gt;
 &lt;p&gt;All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/26?closed=1"&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/26?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
@@ -1775,7 +1775,7 @@ we going to install? The ideal version to install would be the &lt;a href="https
 option with &lt;a href="https://technet.microsoft.com/en-us/windows-server-docs/get-started/windows-server-2016"&gt;Windows 2016 server Core&lt;/a&gt;
 being the second best option. The problem with these version is that it might be harder to
 configure the network and attach the machine to the active directory. I currently don't have enough
-experience managing Windows through (remote) powershell in order to be able to resolve those kinds
+experience managing Windows through (remote) Powershell in order to be able to resolve those kinds
 of issues without a large amount of help from Google or Bing. The goal for this exercise is to get
 the machine updated so that we can use it, not to get the most lean version of Windows installed, so
 I opted to go for the full GUI version of Windows 2016.&lt;/p&gt;
