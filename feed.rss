@@ -5,8 +5,76 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2020</copyright>
-		<pubDate>Fri, 30 Oct 2020 00:36:10 GMT</pubDate>
-		<lastBuildDate>Fri, 30 Oct 2020 00:36:10 GMT</lastBuildDate>
+		<pubDate>Mon, 02 Nov 2020 03:56:38 GMT</pubDate>
+		<lastBuildDate>Mon, 02 Nov 2020 03:56:38 GMT</lastBuildDate>
+		<item>
+			<title>Software development pipeline - Infrastructure dependency reduction</title>
+			<link>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-infrastructure-dependency-reduction</link>
+			<description>&lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements.html"&gt;last post&lt;/a&gt;
+I explained a few ways to improve the development pipeline infrastructure while
+keeping downtime minimal. One important consideration for the
+&lt;a href="/posts/Software-development-pipeline-Design-resilience.html"&gt;resilience&lt;/a&gt; of the
+pipeline is to reduce the dependencies between the pipeline and the infrastructure.&lt;/p&gt;</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-infrastructure-dependency-reduction</guid>
+			<pubDate>Sun, 01 Nov 2020 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements.html"&gt;last post&lt;/a&gt;
+I explained a few ways to improve the development pipeline infrastructure while
+keeping downtime minimal. One important consideration for the
+&lt;a href="/posts/Software-development-pipeline-Design-resilience.html"&gt;resilience&lt;/a&gt; of the
+pipeline is to reduce the dependencies between the pipeline and the infrastructure.&lt;/p&gt;
+&lt;p&gt;So what does unwanted coupling between the pipeline and the
+infrastructure mean? After all the pipeline code makes assumptions about the capabilities
+of the infrastructure it runs on, just like every other piece of code.
+For development pipelines examples of unwanted dependencies are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The pipeline is created by using tasks specific to a CI/CD system which means that the artefacts
+can only be created on the infrastructure&lt;/li&gt;
+&lt;li&gt;Pipeline stages expect the outputs from previous stages to be available on the executor,
+or worse, they expect the outputs from other pipelines to be on the executor&lt;/li&gt;
+&lt;li&gt;A pipeline task assumes that certain tools have been installed on the executors&lt;/li&gt;
+&lt;li&gt;A pipeline task assumes that it has specific permissions on an executor&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The first two items mentioned impacts the velocity at which development can take place. By relying
+completely on the CI/CD system for artefact creation cycle times increases. Additionally
+making changes to the pipeline often requires executing it multiple times to debug it.&lt;/p&gt;
+&lt;p&gt;The second set of items are related to the ease of switching tooling, e.g. when changing vendors
+or during disaster recovery. These may or may not be of concern depending on the direction of
+development and technology. In my experience vendor lock-in is something to keep in mind if for no
+other reason then that switching vendors can be prohibitively complicated if pipeline processes are
+too tightly coupled to the CI/CD system.&lt;/p&gt;
+&lt;p&gt;If any of the issues mentioned are concerning to you then partially or completely decoupling
+the development pipeline from the infrastructure will be a worthwhile exercise. This
+can be achieved with some of the following steps.&lt;/p&gt;
+&lt;h4&gt;Versions for everybody&lt;/h4&gt;
+&lt;p&gt;Ensure that all code, tools, scripts and resources used in the pipeline are versioned. That way you
+know exactly what is required for a specific pipeline execution. Which make executions repeatable
+in the future when newer versions of tools and resources have been released.&lt;/p&gt;
+&lt;h4&gt;Only the workspace is yours&lt;/h4&gt;
+&lt;p&gt;Pipeline actions should work only in their own workspace. Any code, scripts or tools they require
+are put in the workspace. This reduces scattering of data during the execution of a pipeline and
+reduces pollution of the executors.&lt;/p&gt;
+&lt;h4&gt;Lean executors&lt;/h4&gt;
+&lt;p&gt;Make your pipeline actions assume they will run on a bare minimum runtime. This will
+ensure that your pipelines will obtain their preferred version of tools they need and
+install them in their own workspace. The benefit of doing this that a pipeline can be executed on
+any available executor, either in your CI/CD system or on a developer machine, as it will not be
+making any assumptions about the capabilities of an executor.&lt;/p&gt;
+&lt;h4&gt;Single use executors are cleaner&lt;/h4&gt;
+&lt;p&gt;Configure the CI/CD system to use a clean executor for every job. This will ensure that changes made
+during a previous job don't interfere with the current job. Additionally it will enforce the use of
+immutable infrastructure for the executors, thus allowing versioning of the executors.&lt;/p&gt;
+&lt;h4&gt;Use the CI/CD system as a task executor&lt;/h4&gt;
+&lt;p&gt;Keep the configuration for the jobs in the CI/CD system to a minimum. Ideally the entire configuration
+is the execution of a script or tools with a simple set of arguments. By reducing the job of the
+CI/CD system to executing a script or tool it is simple to execute the pipeline actions somewhere
+else, e.g. on a developer machine or a different CI/CD system.&lt;/p&gt;
+&lt;h4&gt;Treat pipeline services as critical&lt;/h4&gt;
+&lt;p&gt;All services used by the pipeline should be treated as mission critical systems. After all a failure
+in one of these systems can stop all your pipelines from executing. So reduce the number of services
+you use in your pipeline and improve the resilience the services you have to rely on using the standard
+approaches.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Calvinverse - An example build infrastructure</title>
 			<link>https://www.petrikvandervelde.nl/posts/Calvinverse-an-example-build-infrastructure</link>
@@ -1509,34 +1577,6 @@ build fails. This improves the ability to debug issues in the packer build.&lt;/
 </content:encoded>
 		</item>
 		<item>
-			<title>Ops-Tools-Build release - V0.1.0 and V0.1.1</title>
-			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</link>
-			<description>&lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
-&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
-of the Ops-Tools-Build toolkit was released.&lt;/p&gt;</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</guid>
-			<pubDate>Sun, 09 Apr 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
-&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
-of the Ops-Tools-Build toolkit was released.&lt;/p&gt;
-&lt;p&gt;All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/1?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;New functionality&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/3"&gt;3&lt;/a&gt; - New scripts have been added to allow
-the creation of an ISO file using the &lt;a href="https://sourceforge.net/projects/tumagcc"&gt;MakeIsoFS&lt;/a&gt; command
-line application.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/4"&gt;4&lt;/a&gt; - New scripts have been added to allow
-invocation of the &lt;a href="https://www.packer.io/"&gt;packer&lt;/a&gt; command line tool used to generate VM and
-container images from a set of configuration files.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/10"&gt;10&lt;/a&gt; - New scripts were added to allow
-calculation of the hash of one or more files&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
-		</item>
-		<item>
 			<title>nBuildKit release - V0.9.1</title>
 			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091</link>
 			<description>&lt;p&gt;Hot on the heels of the last release version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.1"&gt;0.9.1&lt;/a&gt;
@@ -1573,6 +1613,34 @@ branch respectively.&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/69"&gt;69&lt;/a&gt; - The documentation for nBuildKit itself
 is being moved from the wiki to a GitHub pages website. As of this release the build for nBuildKit
 will generate the website using &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Ops-Tools-Build release - V0.1.0 and V0.1.1</title>
+			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</link>
+			<description>&lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
+&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
+of the Ops-Tools-Build toolkit was released.&lt;/p&gt;</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</guid>
+			<pubDate>Sun, 09 Apr 2017 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
+&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
+of the Ops-Tools-Build toolkit was released.&lt;/p&gt;
+&lt;p&gt;All the work items that have been closed for this release can be found on
+&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/1?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;New functionality&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/3"&gt;3&lt;/a&gt; - New scripts have been added to allow
+the creation of an ISO file using the &lt;a href="https://sourceforge.net/projects/tumagcc"&gt;MakeIsoFS&lt;/a&gt; command
+line application.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/4"&gt;4&lt;/a&gt; - New scripts have been added to allow
+invocation of the &lt;a href="https://www.packer.io/"&gt;packer&lt;/a&gt; command line tool used to generate VM and
+container images from a set of configuration files.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/10"&gt;10&lt;/a&gt; - New scripts were added to allow
+calculation of the hash of one or more files&lt;/li&gt;
 &lt;/ul&gt;
 </content:encoded>
 		</item>
@@ -1749,81 +1817,6 @@ tokens are &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/242
 overall speed up for the nBuildKit build itself is about a factor two.&lt;/p&gt;
 &lt;p&gt;All the work items that have been closed for this release can be found on
 &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/26?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Updating my Hyper-V server to Windows 2016</title>
-			<link>https://www.petrikvandervelde.nl/posts/Updating-Hyper-v-server-to-Windows2016</link>
-			<description>&lt;p&gt;One of the computers I have in my home is a Hyper-V server which I use to experiment with all things
-virtual machines, e.g. &lt;a href="https://www.thoughtworks.com/insights/blog/infrastructure-code-reason-smile"&gt;infrastructure-as-code&lt;/a&gt;.
-This server was until recently running Windows 2012R2 with the associated version of Hyper-V. With
-the release of Windows 2016 a new version of Hyper-V was available which had some interesting
-features, like &lt;a href="https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/user-guide/nested-virtualization"&gt;nested virtualization&lt;/a&gt;
-which allows running VMs on VMs and running Hyper-V containers. All in all enough interesting features
-to warrant upgrading my server.&lt;/p&gt;</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Updating-Hyper-v-server-to-Windows2016</guid>
-			<pubDate>Sat, 18 Mar 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;One of the computers I have in my home is a Hyper-V server which I use to experiment with all things
-virtual machines, e.g. &lt;a href="https://www.thoughtworks.com/insights/blog/infrastructure-code-reason-smile"&gt;infrastructure-as-code&lt;/a&gt;.
-This server was until recently running Windows 2012R2 with the associated version of Hyper-V. With
-the release of Windows 2016 a new version of Hyper-V was available which had some interesting
-features, like &lt;a href="https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/user-guide/nested-virtualization"&gt;nested virtualization&lt;/a&gt;
-which allows running VMs on VMs and running Hyper-V containers. All in all enough interesting features
-to warrant upgrading my server.&lt;/p&gt;
-&lt;p&gt;There are however some issues to deal with. The first one being, which version of Windows 2016 are
-we going to install? The ideal version to install would be the &lt;a href="https://technet.microsoft.com/en-us/hyper-v-server-docs/hyper-v-server-2016?f=255&amp;amp;MSPPError=-2147217396"&gt;bare metal Hyper-V&lt;/a&gt;
-option with &lt;a href="https://technet.microsoft.com/en-us/windows-server-docs/get-started/windows-server-2016"&gt;Windows 2016 server Core&lt;/a&gt;
-being the second best option. The problem with these version is that it might be harder to
-configure the network and attach the machine to the active directory. I currently don't have enough
-experience managing Windows through (remote) Powershell in order to be able to resolve those kinds
-of issues without a large amount of help from Google or Bing. The goal for this exercise is to get
-the machine updated so that we can use it, not to get the most lean version of Windows installed, so
-I opted to go for the full GUI version of Windows 2016.&lt;/p&gt;
-&lt;p&gt;To make things more interesting my Active Directory server is a VM running on the Hyper-V server.
-And yes I know there should be at least two Active Directory servers on different physical machines
-but until I have lots of money and can afford to have multiple servers in my house I will work
-with having a single AD server.&lt;/p&gt;
-&lt;p&gt;The approach I followed to upgrade the operating system on my server to Windows 2016 was as follows.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Make backups of everything and be ready to spend some time restoring the AD server, i.e. this is
-probably better done as a weekend job.&lt;/li&gt;
-&lt;li&gt;Create a &lt;a href="https://www.microsoft.com/en-us/download/windows-usb-dvd-download-tool"&gt;bootable USB&lt;/a&gt;
-with the Windows2016 installer.&lt;/li&gt;
-&lt;li&gt;Attach a keyboard, mouse and monitor to the server so that we can log in to the server directly.
-Installing Windows remotely is not possible with my local configuration.&lt;/li&gt;
-&lt;li&gt;Insert the USB drive, reboot the server and make sure it boots from the USB key&lt;/li&gt;
-&lt;li&gt;After the Windows installation starts make sure to remove the existing partitions on the original
-OS drive. While the OS could be upgraded that also leaves a lot of unused files around. Unfortunately
-in that case it will be hard to determine if these files can be deleted or not. By doing a clean
-install we can be sure that there will not be any left-overs from the upgrade.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Once the new operating system is installed the next step is to restore the VMs. Because all the
-VM information was stored on physically different disks than the OS disk all the virtual hard drives
-and VM configuration files still exist. In this case it is easy to import the old virtual machines
-via the Hyper-V manager.&lt;/p&gt;
-&lt;p&gt;Once all the VMs were up and running again the last step was to attach the Hyper-V machine to the
-domain so that it is easy to use the remote desktop capabilities. Now attaching the machine to
-the domain is easy, the problem occurs when you have to restart the Hyper-V machine because after
-the reboot the network connection will be set to the public profile instead of the domain profile
-which means remote desktop and friends are all blocked. This is all caused by the fact that when the
-Hyper-V machine boots up it doesn't have connection to the AD server, because that is a VM running
-on the Hyper-V machine, and thus the network profile is set to be public for security purposes.&lt;/p&gt;
-&lt;p&gt;In order to fix this we need to either force the &lt;a href="https://newsignature.com/articles/network-location-awareness-service-can-ruin-day-fix/"&gt;Network Location Awareness service&lt;/a&gt; to run
-after the AD server has started, or we need to restart the service after a short period. In my case
-setting the service start in delayed mode didn't really work so I created a scheduled task which
-restarted the service by calling the following command line&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -nologo -command &amp;quot;restart-service nlasvc -force&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Over all the upgrade was easier than I thought and there were only minor set backs. Some of the lessons
-that were learned are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Ideally for jobs like this you would have an extra keyboard, mouse and monitor around, that way you
-can still use the normal PC for googling issues that you come across.&lt;/li&gt;
-&lt;li&gt;Importing old VMs in Hyper-V is easy as long as you make sure that you know where all the files
-are.&lt;/li&gt;
-&lt;li&gt;Ideally you would have multiple AD servers, running of different physical machines. Then again
-ideally I'd also have lots of money to pay for all these physical machines 😉&lt;/li&gt;
-&lt;/ul&gt;
 </content:encoded>
 		</item>
 	</channel>

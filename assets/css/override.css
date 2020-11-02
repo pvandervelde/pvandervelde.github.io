@@ -82,6 +82,20 @@ hr {
     border-radius: 0.4em;
 }
 
+.meta-date {
+    flex: 0 0 auto;
+    margin-right: 0.5em;
+    width: fit-content;
+}
+
+.meta-tags {
+    margin-left: 0.5em;
+}
+
+.tag-no-wrap {
+    white-space: nowrap;
+}
+
 /** WRAPPER */
 
 #wrapper {
@@ -253,6 +267,8 @@ hr {
 
 #post-meta {
     color: #D3D3D3;
+    display: flex;
+    line-height: 2.5em;
     padding-top: 0.2em;
     padding-bottom: 0.2em;
     margin-bottom: 0.2em;
@@ -343,6 +359,8 @@ hr {
 
 .archive-tags {
     color: #989898;
+    display: flex;
+    line-height: 2.5em;
     padding-top: 0.2em;
 }
 
