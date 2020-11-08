@@ -4,8 +4,87 @@
 	<title>Mind vortex</title>
 	<link rel="self" href="https://www.petrikvandervelde.nl/" />
 	<rights>2020</rights>
-	<updated>2020-11-02T03:56:38Z</updated>
+	<updated>2020-11-08T05:19:22Z</updated>
 	<subtitle>Welcome!</subtitle>
+	<entry>
+		<id>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-security</id>
+		<title>Software development pipeline - Security</title>
+		<link href="https://www.petrikvandervelde.nl/posts/Software-development-pipeline-security" />
+		<updated>2020-11-08T00:00:00Z</updated>
+		<content>&lt;p&gt;One of the final chapters in the description of the development pipeline deals with security. In
+this case I specifically mean the security of the pipeline and the underlying infrastructure,
+not the security of the applications which are created using the pipeline.&lt;/p&gt;
+&lt;p&gt;The first question is why should you care about the security of the pipeline? After all
+developers use the development pipelines via secured networks and their access permissions will be
+set at the source control level. Additionally high trust levels exist between the pipeline
+processes, the infrastructure and the source repository. In general this leads to the
+security of the pipeline being placed lower on the priority list.&lt;/p&gt;
+&lt;p&gt;Which issues could you run into if you deem the security of the pipeline less critical? One
+argument comes from
+&lt;a href="https://www.researchgate.net/publication/332834111_Vulnerabilities_in_Continuous_Delivery_Pipelines_A_Case_Study"&gt;pen tests&lt;/a&gt;
+which show that CI/CD systems are a great way into
+&lt;a href="https://www.blackhat.com/docs/eu-15/materials/eu-15-Mittal-Continuous-Intrusion-Why-CI-Tools-Are-An-Attackers-Best-Friend.pdf"&gt;corporate networks&lt;/a&gt;.
+Additionally there have been a number of attacks aimed at
+&lt;a href="https://medium.com/&amp;#64;hkparker/analysis-of-a-supply-chain-attack-2bd8fa8286ac"&gt;distributing&lt;/a&gt; malicious
+code through trusted software packages. These so called
+&lt;a href="https://en.wikipedia.org/wiki/Supply_chain_attack"&gt;supply chain attacks&lt;/a&gt; try to compromise the user
+by inserting malicious code in third-party dependencies, i.e. the source code supply chain.&lt;/p&gt;
+&lt;p&gt;In essence the problem comes down to the fact that the build pipeline and its associated infrastructure
+have access to many different systems and resources which are normally not easily accessible for
+its users. This makes your pipeline a target for malicious actors who could abuse some of the
+following states for their own purposes.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The development pipeline runs all tasks with the same user account on the executors and thereby
+the same permissions. Obviously the worst case scenario would be running as an administrator.&lt;/li&gt;
+&lt;li&gt;Multiple pipeline invocations executed on a single machine, either in parallel or sequential,
+which allows a task in a pipeline to access the workspace of another pipeline. This ability can
+for instance be used to by-pass access controls on source code.&lt;/li&gt;
+&lt;li&gt;Downloading packages directly from external package repositories, e.g. NPM or Docker.&lt;/li&gt;
+&lt;li&gt;Direct access to the internet, which allows downloading of malicious code and uploading of artefacts
+to undesired locations.&lt;/li&gt;
+&lt;li&gt;The development pipeline has the ability to update or overwrite existing artefacts.&lt;/li&gt;
+&lt;li&gt;The executors have direct access to different resources that normal pipeline users don't have
+access to. Specifically if the same infrastructure is used to build artefacts and
+to deploy them to the production environment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;One of the problems with securing the development pipeline is that all the actions mentioned above
+are in one way or another required for the pipeline to function, after all the pipeline needs to be
+able to build and distribute artefacts. The follow up question then becomes can you distinguish between
+normal use and malicious use?&lt;/p&gt;
+&lt;p&gt;It turns out that distinguishing that this will be difficult because both forms of actions are
+essentially the same, they both use the development pipeline for its intended purpose. So then in
+order to prevent malicious use put up as many barriers to malicious use as possible, aka
+&lt;a href="https://en.wikipedia.org/wiki/Defense_in_depth_(computing)"&gt;defence in depth&lt;/a&gt;. The following are a
+number of possible ways to add barriers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Grant the minimal possible permissions for the executors, both on the executor and from the executor
+to the external resources. It is better to run the pipeline actions as a local user on the executor,
+rather than using a domain user. Grant permissions to a specific resource to the action that
+interacts with the resource.&lt;/li&gt;
+&lt;li&gt;Execute a single pipeline per executor and never reuse the executor.&lt;/li&gt;
+&lt;li&gt;Limit network connections to and from executors. In general executors do not need internet access,
+save for a few pre-approved sites, .e.g. an artefact storage. There is also very little reason
+for executors to connect to each other, especially if executors are short lived.&lt;/li&gt;
+&lt;li&gt;Pull packages, e.g. NPM or Docker, only from an internal feed. Additions to the internal feed are made
+after the specific package has been reviewed.&lt;/li&gt;
+&lt;li&gt;The artefacts created with the pipeline should be tracked so that you know the origin, creation time,
+storage locations and other data that can help identity an exact instance of an artefact. Under
+ideal circumstances you would know exactly which sources and packages were used to create
+the artefact as well.&lt;/li&gt;
+&lt;li&gt;Artefacts should be immutable and never be allowed to overwritten.&lt;/li&gt;
+&lt;li&gt;Do not use the executors that perform builds for deployments, use a set of executors that only
+have deployment permissions but no permissions to source control etc..&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Beyond these changes there are many other ways to reduce the attack surface as documented in the
+security literature. In the end the goal of this post is more to point out that the security of the
+development pipeline is important, rather than providing ways to make a pipeline more secure. The
+exact solutions for pipeline security depend very heavily on the way the pipeline is constructed and
+what other forms of security validation have been placed around the pipeline.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;One of the final chapters in the description of the development pipeline deals with security. In
+this case I specifically mean the security of the pipeline and the underlying infrastructure,
+not the security of the applications which are created using the pipeline.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-infrastructure-dependency-reduction</id>
 		<title>Software development pipeline - Infrastructure dependency reduction</title>
@@ -1742,80 +1821,5 @@ describe the connection to the ISP. As I was starting to use my &lt;a href="./po
 a lot more and was starting to run multiple VM's it would be nice to get some better control over
 the network. Additionally based on one of &lt;a href="https://www.troyhunt.com/no-you-cant-join-my-wifi-network/"&gt;Troy Hunt's&lt;/a&gt;
 blog posts I would also like to set up a separate guest network.&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090</id>
-		<title>nBuildKit release - V0.9.0</title>
-		<link href="https://www.petrikvandervelde.nl/posts/nBuildKit-release-V090" />
-		<updated>2017-04-03T00:00:00Z</updated>
-		<content>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.0"&gt;0.9.0&lt;/a&gt; of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt;
-has been released. The last release I talked about on this blog was &lt;a href="posts/nBuildKit-release-V051"&gt;0.5.1&lt;/a&gt;.
-Since then a &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases"&gt;lot more versions&lt;/a&gt; have been
-released. The &lt;code&gt;0.9.0&lt;/code&gt; release was supposed to be a stabilization release but there were many major
-improvements which makes this a major change release.&lt;/p&gt;
-&lt;p&gt;The highlights are&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The settings describing artefacts, e.g. the nuspec and zip archive files to build, have moved to
-a &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/215"&gt;separate file&lt;/a&gt; &lt;code&gt;artefacts.settings.props&lt;/code&gt;.
-This allows each of the different stages, build, test and release, to easily use these settings
-without having to load configuration files from the other stages.&lt;/li&gt;
-&lt;li&gt;All user specific configuration files now have a &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/224"&gt;version number&lt;/a&gt;
-which indicates for which version of nBuildKit they were created. This will allow nBuildKit to
-transform older configuration files prior to using them.&lt;/li&gt;
-&lt;li&gt;The inline tasks have been &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/230"&gt;moved to a .NET assembly&lt;/a&gt;.
-This simplifies the project includes that need to be made to get all the required tasks loaded.
-Additionally more complex tasks can be created and &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/234"&gt;unit tests can be written and executed&lt;/a&gt;
-which should improve the quality of the tasks.&lt;/li&gt;
-&lt;li&gt;User &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/191"&gt;defined location&lt;/a&gt; and
-&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/192"&gt;transformation&lt;/a&gt; of the configuration
-files prior to starting the build. In combination with the version numbers in the configuration
-files this allows nBuildKit to use configuration files from a previous version while still using
-the most recent version of nBuildKit. Note that it is currently not possible to upgrade the old
-(0.8.3 and prior) configurations to 0.9.0 this way.&lt;/li&gt;
-&lt;li&gt;Build, test and deploy steps can define &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/196"&gt;pre- and post-steps&lt;/a&gt;
-which are executed before and after the execution of the step. Additionally global pre- and post-steps
-can be defined which areo executed before and after each step. These pre- and post-steps can for
-instance be used to &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/185"&gt;write information to a log file&lt;/a&gt;
-or to gather post step information.&lt;/li&gt;
-&lt;li&gt;The &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/206"&gt;build server specific code&lt;/a&gt; was
-moved into separate NuGet packages so that these can be pulled down on the build server only. Three
-different packages have been created for &lt;a href="https://jenkins.io/"&gt;Jenkins&lt;/a&gt;,
-&lt;a href="https://msdn.microsoft.com/library/ms181709%28v=vs.120%29.aspx?f=255&amp;amp;MSPPError=-2147217396"&gt;TFS2013&lt;/a&gt;
-and &lt;a href="https://www.visualstudio.com/en-us/docs/build/overview"&gt;TFS2015 / TFS2017&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;The layout of the scripts and NuGet packages has changed so that it is easier to create a
-&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/220"&gt;new set of build tools based on nBuildKit&lt;/a&gt;.
-With this change it is now possible to create a build / test / deploy library that includes all or
-some of the nBuildKit capabilities while providing its own additional capabilities. An example is
-the &lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;ops-tools-build&lt;/a&gt; library which is being used
-in the &lt;a href="https://en.wikipedia.org/wiki/Infrastructure_as_Code"&gt;infrastructure-as-code&lt;/a&gt; work I'm doing.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;In addition to the major changes some additional build, test and deploy steps have also been defined:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Complete a &lt;a href="https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow"&gt;gitflow&lt;/a&gt;
-stage, e.g. finishing the feature, hotfix or release branch, to verify that the pending merge will
-not break the build. Additionally the results of the merge can be captured, by archiving the
-&lt;code&gt;.git&lt;/code&gt; folder, and can later be used in the deploy process to push the merge to a git remote.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/255"&gt;Copying files&lt;/a&gt; from the file system or
-from a NuGet package.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/238"&gt;ILMerge&lt;/a&gt; one or more assemblies into a
-target assembly.&lt;/li&gt;
-&lt;li&gt;Generating a targets file from an assembly containing MsBuild tasks.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/146"&gt;Invoking&lt;/a&gt; &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;
-during the build process. Note that this is a late addition and hasn't been tested completely yet&lt;/li&gt;
-&lt;li&gt;Invoking &lt;a href="https://github.com/pester/Pester"&gt;Pester&lt;/a&gt; during the test phase.&lt;/li&gt;
-&lt;li&gt;Pushing files to a git branch during the deploy stage.&lt;/li&gt;
-&lt;li&gt;Pushing an entire repository to a git remote during the deploy stage.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Finally the performance of the whole build process has been improved by changing how the template
-tokens are &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/242"&gt;generated and loaded&lt;/a&gt;. The
-overall speed up for the nBuildKit build itself is about a factor two.&lt;/p&gt;
-&lt;p&gt;All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/26?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.0"&gt;0.9.0&lt;/a&gt; of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt;
-has been released. The last release I talked about on this blog was &lt;a href="posts/nBuildKit-release-V051"&gt;0.5.1&lt;/a&gt;.
-Since then a &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases"&gt;lot more versions&lt;/a&gt; have been
-released. The &lt;code&gt;0.9.0&lt;/code&gt; release was supposed to be a stabilization release but there were many major
-improvements which makes this a major change release.&lt;/p&gt;</summary>
 	</entry>
 </feed>

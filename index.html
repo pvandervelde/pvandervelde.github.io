@@ -19,6 +19,8 @@
         <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
         <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
         <link href="/assets/css/override.css" rel="stylesheet" />
         <link href="/assets/css/github.css" rel="stylesheet" type="text/css">
 
@@ -121,10 +123,10 @@
     <img src="https://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
 </p>
 <p>
-    Dutch software developer, living, working and playing in New Zealand.
-    Rock climber, and paragliding pilot. Developer of
+    Dutch software developer who is living, working and playing in New Zealand.
+    Rock climber and paragliding pilot. Developer of
     <a href="https://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
-    <a href="https://github.com/Calvinverse">the Calvinverse resources</a> and other projects
+    <a href="https://github.com/Calvinverse">the Calvinverse resources</a> and other projects.
 </p>
 <p>
     <a href="/about.html">More ...</a>
@@ -134,6 +136,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Software-development-pipeline-security">Software development pipeline - Security</a></li>
                             <li><a href="/posts/Software-development-pipeline-infrastructure-dependency-reduction">Software development pipeline - Infrastructure dependency reduction</a></li>
                             <li><a href="/posts/Calvinverse-an-example-build-infrastructure">Calvinverse - An example build infrastructure</a></li>
                             <li><a href="/posts/On-prem-vs-cloud-build-systems">Software development pipeline - On-prem or in the cloud?</a></li>
@@ -143,7 +146,6 @@
                             <li><a href="/posts/Software-development-pipeline-Design-resilience">Software development pipeline - Design resilience</a></li>
                             <li><a href="/posts/Software-development-pipeline-Design-performance">Software development pipeline - Design performance</a></li>
                             <li><a href="/posts/Exportable-Linux-virtual-hard-drives-for-hyper-v">Exportable Linux virtual hard-drives for Hyper-V</a></li>
-                            <li><a href="/posts/Software-development-pipeline-Design-accuracy">Software development pipeline - Design accuracy</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -157,19 +159,19 @@
                                     <a role="button" href="/tags/nBuildKit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (10)</a>
+                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (10)</a>
+                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (10)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
@@ -193,6 +195,106 @@
 
             <div id="content">
 
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Software-development-pipeline-security">Software development pipeline - Security</a>
+</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Sunday, November 8, 2020
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Build-configuration-as-code" class="btn btn-default btn-xs tag-no-wrap">Build&nbsp;configuration&nbsp;as&nbsp;code</a>
+                        <a id="post-category" role="button" href="/tags/Delivering-software" class="btn btn-default btn-xs tag-no-wrap">Delivering&nbsp;software</a>
+                        <a id="post-category" role="button" href="/tags/DevOps" class="btn btn-default btn-xs tag-no-wrap">DevOps</a>
+                        <a id="post-category" role="button" href="/tags/Security" class="btn btn-default btn-xs tag-no-wrap">Security</a>
+                        <a id="post-category" role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-xs tag-no-wrap">Software&nbsp;development&nbsp;pipeline</a>
+    </div>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>One of the final chapters in the description of the development pipeline deals with security. In
+this case I specifically mean the security of the pipeline and the underlying infrastructure,
+not the security of the applications which are created using the pipeline.</p>
+<p>The first question is why should you care about the security of the pipeline? After all
+developers use the development pipelines via secured networks and their access permissions will be
+set at the source control level. Additionally high trust levels exist between the pipeline
+processes, the infrastructure and the source repository. In general this leads to the
+security of the pipeline being placed lower on the priority list.</p>
+<p>Which issues could you run into if you deem the security of the pipeline less critical? One
+argument comes from
+<a href="https://www.researchgate.net/publication/332834111_Vulnerabilities_in_Continuous_Delivery_Pipelines_A_Case_Study">pen tests</a>
+which show that CI/CD systems are a great way into
+<a href="https://www.blackhat.com/docs/eu-15/materials/eu-15-Mittal-Continuous-Intrusion-Why-CI-Tools-Are-An-Attackers-Best-Friend.pdf">corporate networks</a>.
+Additionally there have been a number of attacks aimed at
+<a href="https://medium.com/&#64;hkparker/analysis-of-a-supply-chain-attack-2bd8fa8286ac">distributing</a> malicious
+code through trusted software packages. These so called
+<a href="https://en.wikipedia.org/wiki/Supply_chain_attack">supply chain attacks</a> try to compromise the user
+by inserting malicious code in third-party dependencies, i.e. the source code supply chain.</p>
+<p>In essence the problem comes down to the fact that the build pipeline and its associated infrastructure
+have access to many different systems and resources which are normally not easily accessible for
+its users. This makes your pipeline a target for malicious actors who could abuse some of the
+following states for their own purposes.</p>
+<ul>
+<li>The development pipeline runs all tasks with the same user account on the executors and thereby
+the same permissions. Obviously the worst case scenario would be running as an administrator.</li>
+<li>Multiple pipeline invocations executed on a single machine, either in parallel or sequential,
+which allows a task in a pipeline to access the workspace of another pipeline. This ability can
+for instance be used to by-pass access controls on source code.</li>
+<li>Downloading packages directly from external package repositories, e.g. NPM or Docker.</li>
+<li>Direct access to the internet, which allows downloading of malicious code and uploading of artefacts
+to undesired locations.</li>
+<li>The development pipeline has the ability to update or overwrite existing artefacts.</li>
+<li>The executors have direct access to different resources that normal pipeline users don't have
+access to. Specifically if the same infrastructure is used to build artefacts and
+to deploy them to the production environment.</li>
+</ul>
+<p>One of the problems with securing the development pipeline is that all the actions mentioned above
+are in one way or another required for the pipeline to function, after all the pipeline needs to be
+able to build and distribute artefacts. The follow up question then becomes can you distinguish between
+normal use and malicious use?</p>
+<p>It turns out that distinguishing that this will be difficult because both forms of actions are
+essentially the same, they both use the development pipeline for its intended purpose. So then in
+order to prevent malicious use put up as many barriers to malicious use as possible, aka
+<a href="https://en.wikipedia.org/wiki/Defense_in_depth_(computing)">defence in depth</a>. The following are a
+number of possible ways to add barriers:</p>
+<ul>
+<li>Grant the minimal possible permissions for the executors, both on the executor and from the executor
+to the external resources. It is better to run the pipeline actions as a local user on the executor,
+rather than using a domain user. Grant permissions to a specific resource to the action that
+interacts with the resource.</li>
+<li>Execute a single pipeline per executor and never reuse the executor.</li>
+<li>Limit network connections to and from executors. In general executors do not need internet access,
+save for a few pre-approved sites, .e.g. an artefact storage. There is also very little reason
+for executors to connect to each other, especially if executors are short lived.</li>
+<li>Pull packages, e.g. NPM or Docker, only from an internal feed. Additions to the internal feed are made
+after the specific package has been reviewed.</li>
+<li>The artefacts created with the pipeline should be tracked so that you know the origin, creation time,
+storage locations and other data that can help identity an exact instance of an artefact. Under
+ideal circumstances you would know exactly which sources and packages were used to create
+the artefact as well.</li>
+<li>Artefacts should be immutable and never be allowed to overwritten.</li>
+<li>Do not use the executors that perform builds for deployments, use a set of executors that only
+have deployment permissions but no permissions to source control etc..</li>
+</ul>
+<p>Beyond these changes there are many other ways to reduce the attack surface as documented in the
+security literature. In the end the goal of this post is more to point out that the security of the
+development pipeline is important, rather than providing ways to make a pipeline more secure. The
+exact solutions for pipeline security depend very heavily on the way the pipeline is constructed and
+what other forms of security validation have been placed around the pipeline.</p>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -658,163 +760,6 @@ the other posts.</p>
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not">Software development pipeline - In the build system or not</a>
-</h2>
-<div id="post-meta">
-    <div class="meta-date">
-Monday, December 3, 2018
- |             Posted in     </div>
-    <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Delivering-software" class="btn btn-default btn-xs tag-no-wrap">Delivering&nbsp;software</a>
-                        <a id="post-category" role="button" href="/tags/DevOps" class="btn btn-default btn-xs tag-no-wrap">DevOps</a>
-                        <a id="post-category" role="button" href="/tags/Pipeline-design" class="btn btn-default btn-xs tag-no-wrap">Pipeline&nbsp;design</a>
-                        <a id="post-category" role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-xs tag-no-wrap">Software&nbsp;development&nbsp;pipeline</a>
-    </div>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>Over the last few years the use of build pipelines has been gaining traction backed by the ever growing
-use of Continuous Integration (CI) and Continuous Delivery and Deployment (CD) processes. By using a
-build pipeline the development team get benefits like being able to execute parts of the build, test,
-release and deployment processes in parallel, being able to restart the process part way through
-in case of environmental issues, and vastly improved feedback cycles which improve the velocity
-at which features can be delivered to the customer.</p>
-<p>Most modern build systems have the ability to create a build pipelines in one form or another, e.g.
-<a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/get-started/what-is-azure-pipelines?toc=/azure/devops/pipelines/toc.json&amp;bc=/azure/devops/boards/pipelines/breadcrumb/toc.json&amp;view=vsts">VSTS / Azure Devops builds</a>,
-<a href="https://jenkins.io/solutions/pipeline/">Jenkins pipeline</a>,
-<a href="https://docs.gitlab.com/ee/ci/pipelines.html">GitLab</a>, <a href="https://bitbucket.org/product/features/pipelines">BitBucket</a>
-and <a href="https://confluence.jetbrains.com/display/TCD18/Build+Chain">TeamCity</a>. With these capabilities
-built into the build system it is easy for developers to quickly create a new pipeline from scratch.
-While this is quick and easy often the pipeline for a product is created by the development team
-without considering if this is the best way to achieve their goal, which is to deliver their product
-faster with higher quality. Before using the built-in pipeline capability in the build system the second
-question a development team should ask is when should one use this ability and when should one not
-use this ability? Obviously the first question is, do we need a pipeline at all, which is a question
-for another post.</p>
-<p>The advantages of creating a pipeline in your build system are:</p>
-<ul>
-<li>It is easy to quickly create pipelines. Either the is a click and point UI of some form or the
-pipeline is defined by a, relatively, simple configuration file. This means that a development
-team can configure a new build pipeline quickly when one is desired.</li>
-<li>Pipelines created in a build system can often use multiple build executors or have a job move
-from one executor to another if different capabilities are required for a new step, for instance
-if different steps in the pipeline need different operating systems to be executed.</li>
-<li>In many cases, but not all, the build system provides a way for humans to interact with a running
-pipeline, for instance to approve the continuation of the pipeline in case of deployments or
-to mark a manual test phase as passed or failed.</li>
-<li>If the configuration of the pipeline is stored in a file it can generally be stored in a source
-control system, thus providing all the benefits of using a source control system. In these cases
-the build system can generally update the build configurations in response to a commit / push
-notification from the version control system. Thus ensuring that the active build configuration
-is always up to date.</li>
-<li>The development team has nearly complete control over the build configuration which ensures that
-it is easy for the development teams to have a pipeline that suits their needs.</li>
-</ul>
-<p>Based on the advantages of having a pipeline in the build system it seems pretty straight forward to
-say that having the pipeline in the build system is a good thing. However as with all things there
-are also drawbacks to having the pipeline in the build system.</p>
-<ul>
-<li><p>Having the pipeline in the build system makes some assumptions that may not be correct in certain
-cases.</p>
-<ul>
-<li>The first assumption is that the build system is the centre of all the work being done
-because the pipeline is controlled by the build system, thus requiring that all actions feed back
-into said build system. This however shouldn't be a given, after all why would the build system
-be the core system and not the source control system or the issue tracker. In reality all systems
-are required to deliver high quality software. This means in most cases that none of these systems
-have enough knowledge by themselves to make decisions about the complete state of the pipeline.
-By making the assumption that the build system is at the core of the pipeline the result will
-be that the knowledge of the pipeline work flow will end up being encoded in the build configurations
-and the build scripts. For simple pipelines this is a sensible thing to do but as the pipeline
-gets more complex this approach will be sub-optimal at best and more likely detrimental due to
-the complexity of providing all users with the overview of how the pipeline functions.</li>
-<li>The second, but potentially more important, assumption is that the item the development teams
-care most about is &lsquo;build&rsquo; or 'build job'. This however is not the case most of the time because
-a &lsquo;build&rsquo; is just a way to create or alter an artefact, i.e. the package, container, installer
-etc.. It is artefacts that people care about most because artefacts are the carrying vehicle
-for the features and bug fixes that the customer cares about. From this perspective it makes
-sense to track the artefacts instead of builds because the artefact flows through the entire pipeline
-while builds are only part of the pipeline.</li>
-<li>A third assumption is that every task can somehow be run through the build system, but this is
-not always the case and even when it is possible it is not necessarily sensible. For instance
-builds and deploys are fundamentally different things, one should be repeatable (builds) and
-can just be stopped on failure and restarted if necessary and the other is often not exactly
-repeatable (because artefacts can only be moved from a location once etc.) and should often
-not just be stopped (but rolled-back or not &lsquo;committed&rsquo;). Another example is long running tests
-for which the results may be fed back into the build system if required but that doesn't
-necessarily make sense.</li>
-</ul>
-</li>
-<li><p>If the build system is the the centre of the pipeline then that means that the build system has to
-start storing persistent data about the state of the pipeline with all the issues that come with this
-kind of data, for instance:</p>
-<ul>
-<li>The data stored in the pipeline is valuable to the development team both at the current time and
-in the future when the development team needs to determine where an artefact comes from. This means
-that the data potentially needs to be kept safe for much longer than build information is
-normally kept. In order to achieve this the standard data protection rules apply for instance
-access controls and backups.</li>
-<li>The information about the pipeline needs to be easily accessible and changeable both by the build
-system and by systems external to the build system. It should be possible to add additional
-information, e.g. the versions / names of artefacts created by a build. The status of the artefact
-as it progresses through the pipeline etc.. All this information is important either during the
-pipeline process or after the artefacts have been delivered to the customer. Often build
-systems don't have this capability, they store just enough information that they can do what
-they need to do, and in general they are not database systems (and if they are it is recommended
-that you don't tinker with them and in general it is made difficult to append or add information).</li>
-<li>Build systems work much better if they are immutable, i.e. created from standard components (e.g.
-controller and agents) with automatically generated build jobs (more about the reasons both of
-these will follow in future posts). This allows a build system to be expanded or replaced really
-easily (<a href="https://medium.com/&#64;Joachim8675309/devops-concepts-pets-vs-cattle-2380b5aab313">cattle not pets</a>
-even for build systems). That is much harder if the build system is the core of your pipeline
-and stores all the data for it.</li>
-</ul>
-</li>
-<li><p>Having the pipeline in the build system in general provides more control for the development teams,
-which is a great benefit, but less control for the administrators. Because the pipeline provides the
-development teams with all the abilities there is, in general, less ability for the admins to guide
-things in the right direction or to block developers from doing things that they shouldn't be doing
-or have access to. While this may seem to be a benefit for the developers, no more annoying admins
-getting in the way, it is in fact a drawback because this behaviour means that the developers take
-on the responsibility to administer some or all of the underlying build system. Examples of the
-change of control are for instance in the Jenkins pipeline it is possible for developers to use
-all the credentials that Jenkins has access to. However this might not be desirable for high power
-credentials or credentials for highly restricted resources. An other example is that the selection
-of the build executor is done in the pipeline configuration, however in some cases it may make sense
-to limit access to executors, after all having a build that can migrate from node to node makes
-sense in some cases but it's not free. Further the ease with which parallel steps can be created will
-lead to many parallel jobs. This might be great for one pipeline but isn't necessarily the best for
-the overall system. In some cases serializing the steps for a single pipeline can lead to greater
-overall throughput if there are many different jobs for many different teams.</p>
-</li>
-</ul>
-<p>Based on all the advantages and disadvantages that are listed here it may be difficult to decide whether
-or not a development team should use the pipeline in their build system or not. In general it will be
-sensible to use the pipeline capabilities that are build into your build system in cases where you either
-have a fairly simple pipeline that is easy to reason about or where no external systems need to interact
-with the data in the pipeline.</p>
-<p>Once the pipeline gets more complicated, external systems need access to the metadata describing the
-pipeline or the pipeline gets stages that are incompatible with being executed by a build system it
-will be time to migrate to a different approach to the build and deployment pipeline. In this case
-it is worth it to develop some custom software that tracks artefacts through the pipeline. This makes
-it possible to treat the pipeline system as the critical infrastructure that it is, with the appropriate
-separation of data and business rule processing, data security and controlled access to the data for
-external systems.</p>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -846,9 +791,9 @@ external systems.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Mon, 02 Nov 2020 03:56:38 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 08 Nov 2020 05:19:21 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/288bf9c632030fc4c577d7a84a187f8d06566df1">288bf9c632030fc4c577d7a84a187f8d06566df1</a> at version 3.2.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/d4df0d1b82fc07e5f18bf11d0c4414cb403f9303">d4df0d1b82fc07e5f18bf11d0c4414cb403f9303</a> at version 3.3.0.        </p>
     </div>
 
     <p>

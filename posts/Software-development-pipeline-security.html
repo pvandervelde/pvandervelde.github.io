@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - Sherlock</title>
+        <title>Mind vortex - Software development pipeline - Security</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,9 +29,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - Sherlock" />
+        <meta property="og:title" content="Mind vortex - Software development pipeline - Security" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/tags/Sherlock" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Software-development-pipeline-security" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -82,6 +82,9 @@
         <!-- Index -->
         <!-- RenderTagIndex -->
         <!-- RenderTags -->
+        <!-- RenderBlogArchive -->
+        <!-- Feed -->
+        <!-- RenderBlogPosts -->
     <!-- Context.Documents['Pages'] -->
         <!-- 404 Not Found - False - /404 -->
         <!-- About - True - /about -->
@@ -197,89 +200,144 @@
 
             <div id="content">
 
-<div id="posts">
-    <h3 id="post-tags-header">Posts tagged with: Sherlock</h3>
-    
-        <div class="post-list">
-            <a href="/posts/Integrating-Sherlock-with-a-build-server">
-                <h3 class="post-title">Sherlock configuration - Build server integration</h3>
-            </a>
-            <p class="post-meta">Posted on Monday, January 13, 2014</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Sherlock-Release-V0480">
-                <h3 class="post-title">Sherlock release - V0.4.8.0</h3>
-            </a>
-            <p class="post-meta">Posted on Friday, December 27, 2013</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Setting-up-Sherlock-verification">
-                <h3 class="post-title">Sherlock configuration - Verification</h3>
-            </a>
-            <p class="post-meta">Posted on Tuesday, December 24, 2013</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Setting-up-Sherlock-virtualmachines">
-                <h3 class="post-title">Sherlock configuration - Virtual machines</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, December 11, 2013</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Setting-up-Sherlock-serverside">
-                <h3 class="post-title">Sherlock configuration - Server side</h3>
-            </a>
-            <p class="post-meta">Posted on Tuesday, December 10, 2013</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Regression-testing-with-Sherlock">
-                <h3 class="post-title">Regression testing with Sherlock</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, December 4, 2013</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Sherlock-Release-V0470">
-                <h3 class="post-title">Sherlock release - V0.4.7.0</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, October 30, 2013</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Sherlock-Release-V0460">
-                <h3 class="post-title">Sherlock release - V0.4.6.0</h3>
-            </a>
-            <p class="post-meta">Posted on Thursday, October 24, 2013</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Sherlock-Release-V0450">
-                <h3 class="post-title">Sherlock release - V0.4.5.0</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, October 23, 2013</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Sherlock-Release-v0440">
-                <h3 class="post-title">Sherlock release - V0.4.4.0</h3>
-            </a>
-            <p class="post-meta">Posted on Saturday, September 21, 2013</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Sherlock-Release-v0430">
-                <h3 class="post-title">Sherlock release - V0.4.3.0</h3>
-            </a>
-            <p class="post-meta">Posted on Saturday, September 14, 2013</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Sherlock-Release-v0420">
-                <h3 class="post-title">Sherlock release - V0.4.2.0</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, September 11, 2013</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Sherlock-Release-v0401">
-                <h3 class="post-title">Sherlock release - V0.4.0.1</h3>
-            </a>
-            <p class="post-meta">Posted on Sunday, September 8, 2013</p>      
-        </div>   
+<div id="post">
+    <div id="post-header">
+        <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
 
+
+<h2>
+Software development pipeline - Security</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Sunday, November 8, 2020
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Build-configuration-as-code" class="btn btn-default btn-xs tag-no-wrap">Build&nbsp;configuration&nbsp;as&nbsp;code</a>
+                        <a id="post-category" role="button" href="/tags/Delivering-software" class="btn btn-default btn-xs tag-no-wrap">Delivering&nbsp;software</a>
+                        <a id="post-category" role="button" href="/tags/DevOps" class="btn btn-default btn-xs tag-no-wrap">DevOps</a>
+                        <a id="post-category" role="button" href="/tags/Security" class="btn btn-default btn-xs tag-no-wrap">Security</a>
+                        <a id="post-category" role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-xs tag-no-wrap">Software&nbsp;development&nbsp;pipeline</a>
+    </div>
 </div>
+
+    </div>
+
+    <div id="post-content">
+        <p>One of the final chapters in the description of the development pipeline deals with security. In
+this case I specifically mean the security of the pipeline and the underlying infrastructure,
+not the security of the applications which are created using the pipeline.</p>
+<p>The first question is why should you care about the security of the pipeline? After all
+developers use the development pipelines via secured networks and their access permissions will be
+set at the source control level. Additionally high trust levels exist between the pipeline
+processes, the infrastructure and the source repository. In general this leads to the
+security of the pipeline being placed lower on the priority list.</p>
+<p>Which issues could you run into if you deem the security of the pipeline less critical? One
+argument comes from
+<a href="https://www.researchgate.net/publication/332834111_Vulnerabilities_in_Continuous_Delivery_Pipelines_A_Case_Study">pen tests</a>
+which show that CI/CD systems are a great way into
+<a href="https://www.blackhat.com/docs/eu-15/materials/eu-15-Mittal-Continuous-Intrusion-Why-CI-Tools-Are-An-Attackers-Best-Friend.pdf">corporate networks</a>.
+Additionally there have been a number of attacks aimed at
+<a href="https://medium.com/&#64;hkparker/analysis-of-a-supply-chain-attack-2bd8fa8286ac">distributing</a> malicious
+code through trusted software packages. These so called
+<a href="https://en.wikipedia.org/wiki/Supply_chain_attack">supply chain attacks</a> try to compromise the user
+by inserting malicious code in third-party dependencies, i.e. the source code supply chain.</p>
+<p>In essence the problem comes down to the fact that the build pipeline and its associated infrastructure
+have access to many different systems and resources which are normally not easily accessible for
+its users. This makes your pipeline a target for malicious actors who could abuse some of the
+following states for their own purposes.</p>
+<ul>
+<li>The development pipeline runs all tasks with the same user account on the executors and thereby
+the same permissions. Obviously the worst case scenario would be running as an administrator.</li>
+<li>Multiple pipeline invocations executed on a single machine, either in parallel or sequential,
+which allows a task in a pipeline to access the workspace of another pipeline. This ability can
+for instance be used to by-pass access controls on source code.</li>
+<li>Downloading packages directly from external package repositories, e.g. NPM or Docker.</li>
+<li>Direct access to the internet, which allows downloading of malicious code and uploading of artefacts
+to undesired locations.</li>
+<li>The development pipeline has the ability to update or overwrite existing artefacts.</li>
+<li>The executors have direct access to different resources that normal pipeline users don't have
+access to. Specifically if the same infrastructure is used to build artefacts and
+to deploy them to the production environment.</li>
+</ul>
+<p>One of the problems with securing the development pipeline is that all the actions mentioned above
+are in one way or another required for the pipeline to function, after all the pipeline needs to be
+able to build and distribute artefacts. The follow up question then becomes can you distinguish between
+normal use and malicious use?</p>
+<p>It turns out that distinguishing that this will be difficult because both forms of actions are
+essentially the same, they both use the development pipeline for its intended purpose. So then in
+order to prevent malicious use put up as many barriers to malicious use as possible, aka
+<a href="https://en.wikipedia.org/wiki/Defense_in_depth_(computing)">defence in depth</a>. The following are a
+number of possible ways to add barriers:</p>
+<ul>
+<li>Grant the minimal possible permissions for the executors, both on the executor and from the executor
+to the external resources. It is better to run the pipeline actions as a local user on the executor,
+rather than using a domain user. Grant permissions to a specific resource to the action that
+interacts with the resource.</li>
+<li>Execute a single pipeline per executor and never reuse the executor.</li>
+<li>Limit network connections to and from executors. In general executors do not need internet access,
+save for a few pre-approved sites, .e.g. an artefact storage. There is also very little reason
+for executors to connect to each other, especially if executors are short lived.</li>
+<li>Pull packages, e.g. NPM or Docker, only from an internal feed. Additions to the internal feed are made
+after the specific package has been reviewed.</li>
+<li>The artefacts created with the pipeline should be tracked so that you know the origin, creation time,
+storage locations and other data that can help identity an exact instance of an artefact. Under
+ideal circumstances you would know exactly which sources and packages were used to create
+the artefact as well.</li>
+<li>Artefacts should be immutable and never be allowed to overwritten.</li>
+<li>Do not use the executors that perform builds for deployments, use a set of executors that only
+have deployment permissions but no permissions to source control etc..</li>
+</ul>
+<p>Beyond these changes there are many other ways to reduce the attack surface as documented in the
+security literature. In the end the goal of this post is more to point out that the security of the
+development pipeline is important, rather than providing ways to make a pipeline more secure. The
+exact solutions for pipeline security depend very heavily on the way the pipeline is constructed and
+what other forms of security validation have been placed around the pipeline.</p>
+
+    </div>
+
+    <div id="post-footer">
+        <div>
+    <div class="navlinks">
+                <a href="/posts/Software-development-pipeline-infrastructure-dependency-reduction" title="Previous Post: Software development pipeline - Infrastructure dependency reduction" class="navlinks-prev">« Software development pipeline - Infrastructure dependency reduction</a>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Software-development-pipeline-security';
+    var disqus_title = 'Software development pipeline - Security';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Software-development-pipeline-security';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+</div>
+
+
+
+
+
+
+
             </div>
         </div>
 
