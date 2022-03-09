@@ -3,9 +3,50 @@
 	<id>https://www.petrikvandervelde.nl/</id>
 	<title>Mind vortex</title>
 	<link rel="self" href="https://www.petrikvandervelde.nl/" />
-	<rights>2020</rights>
-	<updated>2020-11-26T10:30:51Z</updated>
+	<rights>2022</rights>
+	<updated>2022-03-09T08:47:35Z</updated>
 	<subtitle>Welcome!</subtitle>
+	<entry>
+		<id>https://www.petrikvandervelde.nl/posts/Building-autonomous-mobile-robot-why</id>
+		<title>Building an autonomous mobile robot - But why?</title>
+		<link href="https://www.petrikvandervelde.nl/posts/Building-autonomous-mobile-robot-why" />
+		<updated>2022-03-07T00:00:00Z</updated>
+		<content>&lt;p&gt;Over the last decade I have been developing software of all kinds. I have coded both for work and
+for my own learning and entertainment. The majority of the coding I did over that period was code
+that lived only in the virtual world. Things from from numerical simulations to building software
+infrastructure.&lt;/p&gt;
+&lt;p&gt;While I have always greatly enjoyed writing code and learning new skills I have found myself being
+less and less interested in writing more code that only lives in a virtual world. It feels like
+there is no purpose for this code, like something is missing.&lt;/p&gt;
+&lt;p&gt;The main thing I feel is missing is interaction with the physical world. The ability to see the
+effects of the code when it is executed, to see things move and react to the world. While in
+university I studied &lt;a href="https://www.tudelft.nl/en/ae"&gt;Aerospace engineering&lt;/a&gt; and
+&lt;a href="https://www.auckland.ac.nz/en/engineering.html"&gt;Mechanical engineering&lt;/a&gt;. Two disciplines heavily
+involved with real world physics. The fact that a design lives in the physical world adds all kinds
+of additional constraints and behaviours. Some of which the result of interesting physical
+behaviour and others the result of the continuous and analogue nature of the physical world.
+All of this makes the engineering problems more interesting and challenging.&lt;/p&gt;
+&lt;p&gt;One of the ways I have been incorporating making physical things is by working with timber. I've
+build several bits of furniture and generally greatly enjoy working with wood. However working with
+wood misses the technological side that I do also enjoy.&lt;/p&gt;
+&lt;p&gt;A domain that combines both the physical and virtual worlds with large amounts of technology that
+recently caught my eye is the world of robotics. As robotics is a combination of many different
+fields there is a lot to discover and learn about. Even for the design of a simple robot you will
+have to deal with fields like structural mechanics, electronics, software, perception, machine
+intelligence etc.. As a bonus thanks to the availability of relatively cheap electronics and
+structural components it is possible to build an interesting robot yourself.&lt;/p&gt;
+&lt;p&gt;My current goal is to build an &lt;a href="https://en.wikipedia.org/wiki/Autonomous_robot"&gt;autonomous mobile robot&lt;/a&gt;
+that is capable of navigating outdoor spaces while carrying some kind of cargo from
+one location to another. Before I get to designing and building a robot from the ground
+up there are a lot of things to learn. In order to speed up the learning process I
+picked up a &lt;a href="https://scuttlerobot.org/"&gt;SCUTTLE&lt;/a&gt; robot kit and started learning about
+&lt;a href="https://www.ros.org/"&gt;ROS&lt;/a&gt;. More on that will follow in a future post.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;Over the last decade I have been developing software of all kinds. I have coded both for work and
+for my own learning and entertainment. The majority of the coding I did over that period was code
+that lived only in the virtual world. Things from from numerical simulations to building software
+infrastructure.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-security</id>
 		<title>Software development pipeline - Security</title>
@@ -1721,105 +1762,5 @@ calculation of the hash of one or more files&lt;/li&gt;
 &lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
 &lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
 of the Ops-Tools-Build toolkit was released.&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://www.petrikvandervelde.nl/posts/Ubiquiti-networking-gear</id>
-		<title>Setting up a home network with Ubiquiti</title>
-		<link href="https://www.petrikvandervelde.nl/posts/Ubiquiti-networking-gear" />
-		<updated>2017-04-07T00:00:00Z</updated>
-		<content>&lt;p&gt;A little while back we finally got fibre in our street. After spending many years on ADSL (we don't
-talk about the time of dial-up ...) it was finally time for some decent network speeds at home. As
-the fibre was being installed in my house it was also time to evaluate the networking gear I was
-using. Until now I had always used the modem / router provided by the ISP with an additional cheap
-switch. The gear always worked fine, but didn't provide configuration options other than the ones that
-describe the connection to the ISP. As I was starting to use my &lt;a href="./posts/Updating-Hyper-v-server-to-Windows2016"&gt;Hyper-V server&lt;/a&gt;
-a lot more and was starting to run multiple VM's it would be nice to get some better control over
-the network. Additionally based on one of &lt;a href="https://www.troyhunt.com/no-you-cant-join-my-wifi-network/"&gt;Troy Hunt's&lt;/a&gt;
-blog posts I would also like to set up a separate guest network.&lt;/p&gt;
-&lt;h3&gt;The selection&lt;/h3&gt;
-&lt;p&gt;The prolific Troy Hunt has written about his &lt;a href="https://www.troyhunt.com/ubiquiti-all-the-things-how-i-finally-fixed-my-dodgy-wifi/"&gt;network&lt;/a&gt;
-setup so I used that as my starting point for finding some new network gear. Fortunately (or unfortunately)
-I don't have as much area to cover as Troy does so I didn't need nearly as much hardware. The parts
-I got are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.ubnt.com/UniFi-routing/usg/"&gt;UniFi security gateway&lt;/a&gt;: The router which provides amongst
-other things a firewall, subnet capabilities and DHCP.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.ubnt.com/UniFi-switching/UniFi-switch-8/"&gt;UniFi switch 8 (US-8-60W)&lt;/a&gt;: The managed switch
-which has 4 &lt;a href="https://en.wikipedia.org/wiki/Power_over_Ethernet"&gt;PoE&lt;/a&gt; ports.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.ubnt.com/UniFi/UniFi-ap-ac-lite/"&gt;UniFi AP AC LITE&lt;/a&gt;: The smallest indoor access point
-available from Ubiquiti. Given that my apartment is relatively small I don't have to worry about
-covering a lot of area, and smaller access points are cheaper.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.ubnt.com/UniFi/UniFi-cloud-key/"&gt;UniFi cloud key&lt;/a&gt;: The management device which runs
-the UniFi software for managing the network.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Except for the cloud key this is pretty much the minimal set of hardware required. The cloud key runs
-the UniFi software which is used to manage the network configuration. You can install the UniFi
-software on a PC but then you need an extra PC or VM running. While I have a Hyper-V server it was easier
-just to pay for the cloud key and have a separate controller for the network. Note that the network
-functions just fine without any configuration. However if you want to make changes the easiest way
-to do so is through the UniFi software, although you could do it by SSH-ing into each device.&lt;/p&gt;
-&lt;p&gt;Another thing to note is that the the 60W switch has 4 PoE ports of the 802.3af kind. Unfortunately
-the access point requires 24V passive PoE. So either you have to:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Power the access point of the converter that you get with the access point.&lt;/li&gt;
-&lt;li&gt;Upgrade the access point to the &lt;a href="https://www.ubnt.com/UniFi/UniFi-ap-ac-pro/"&gt;UAP-AC-PRO&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Upgrade the switch to the &lt;a href="https://www.ubnt.com/UniFi-switching/UniFi-switch-8-150w/"&gt;US-8-150W&lt;/a&gt;
-switch which has both 802.3af PoE and 24V passive PoE.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;As much as I would like to power the access point of the switch I still opted for the first option,
-the additional investment wasn't quite worth having one less cable around.&lt;/p&gt;
-&lt;h3&gt;Configuration&lt;/h3&gt;
-&lt;p&gt;The actual configuration was pretty easy, plug in all the parts and things start working, at least
-for the internal network. Once this is done you can configure the network through the UniFi software.
-To do so the first thing to do is to to find the cloud key. There's a useful plugin for
-&lt;a href="https://chrome.google.com/webstore/detail/ubiquiti-device-discovery/hmpigflbjeapnknladcfphgkemopofig?utm_source=chrome-app-launcher-info-dialog"&gt;chrome&lt;/a&gt;
-that allows you to find any Ubiquiti devices on your local network, otherwise you can try to guess
-the IP address of the cloud key. If you only have 4 devices like I do that shouldn't take very long.
-The gateway by default assumes you are using the &lt;code&gt;192.168.1.0/24&lt;/code&gt; subnet and the gateway is always
-the first one.&lt;/p&gt;
-&lt;p&gt;Once you are logged on to the UniFi software it makes sense to give the cloud key a fixed IP address
-I gave mine the 192.168.1.2 IP address as I am using the &lt;code&gt;192.168.1.1/24&lt;/code&gt; subnet for all my networking
-gear. And yes I know I don't have enough networking devices for them to warrant being on their own
-subnet but it makes things a little easier and it allows me to learn about &lt;a href="https://en.wikipedia.org/wiki/Subnetwork"&gt;subnetting&lt;/a&gt;
-and &lt;a href="https://en.wikipedia.org/wiki/Virtual_LAN"&gt;vlans&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;Subnetting adventures&lt;/h3&gt;
-&lt;p&gt;As mentioned in the introduction one of the changes I wanted to make was to create a separate guest
-network. By default a vlan only guest network is created, however I wanted to move the guests onto
-their own subnet so I created a new network with the &lt;code&gt;192.168.5.1/24&lt;/code&gt; subnet. I also set the vlan
-specifier to &lt;code&gt;1685&lt;/code&gt;. And finally I marked this network as a guest network so that the controller
-applies the guest firewall rules.&lt;/p&gt;
-&lt;p&gt;Then I created a wireless guest network with the same vlan. What confused me initially is that there
-is no relation between the wireless network and the subnet other than the vlan tag. Somehow having the
-same vlan tag is enough to direct the clients onto the the correct subnet.&lt;/p&gt;
-&lt;p&gt;The last step of the configuration of the guest network is to configure the switch. Because the
-access point has three different subnets going to it, the management subnet for the access point itself,
-the guest Wi-Fi and the internal Wi-Fi, you need to create a custom &amp;lsquo;network&amp;rsquo; on the switch which carries
-all three networks, making sure that the untagged network is the one on which you want the access
-point to get an IP address.&lt;/p&gt;
-&lt;p&gt;Another item I found was that for some purposes the standard IP lease of 24 hours is a bit long. One
-of the things I'm currently working on is building VM images of different services for use in a test
-build environment. While doing that I'm creating &lt;a href="https://github.com/Calvinverse"&gt;base boxes&lt;/a&gt; for
-Windows and Linux which involves spinning up a VM, installing the OS, configuring it and capturing
-the image. While working on the code to automate this process I spin up and shut down VMs quite a lot.
-If you're using the gateway as the DHCP server and use the standard IP lease time then you run through
-IP addresses quite quickly. So I created have a separate IP subnet for those VMs where the IP lease
-time is 2 hours (which is more than long enough to create a VM and capture a base image).&lt;/p&gt;
-&lt;h3&gt;In the end&lt;/h3&gt;
-&lt;p&gt;In conclusion it's a good set of hardware and software and as a bonus, there are updates which apply
-without problems. There is something reassuring in the fact that the manufacturer actually cares enough
-about their product that they want to keep it running, unlike much of the consumer gear.&lt;/p&gt;
-&lt;p&gt;The UniFi software provides a lot of useful and interesting capabilities and it's obviously aimed
-at the business / educational environment. There are a lot of of features that I don't need, but they
-are fun to play with&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;A little while back we finally got fibre in our street. After spending many years on ADSL (we don't
-talk about the time of dial-up ...) it was finally time for some decent network speeds at home. As
-the fibre was being installed in my house it was also time to evaluate the networking gear I was
-using. Until now I had always used the modem / router provided by the ISP with an additional cheap
-switch. The gear always worked fine, but didn't provide configuration options other than the ones that
-describe the connection to the ISP. As I was starting to use my &lt;a href="./posts/Updating-Hyper-v-server-to-Windows2016"&gt;Hyper-V server&lt;/a&gt;
-a lot more and was starting to run multiple VM's it would be nice to get some better control over
-the network. Additionally based on one of &lt;a href="https://www.troyhunt.com/no-you-cant-join-my-wifi-network/"&gt;Troy Hunt's&lt;/a&gt;
-blog posts I would also like to set up a separate guest network.&lt;/p&gt;</summary>
 	</entry>
 </feed>
