@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - First time paragliding</title>
+        <title>Mind vortex - Starting robotics with the SCUTTLE robot</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,9 +29,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - First time paragliding" />
+        <meta property="og:title" content="Mind vortex - Starting robotics with the SCUTTLE robot" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/First-time-paragliding" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Starting-robotics-with-scuttle" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -209,71 +209,93 @@
 
 
 <h2>
-First time paragliding</h2>
+Starting robotics with the SCUTTLE robot</h2>
 <div id="post-meta">
     <div class="meta-date">
-Tuesday, September 3, 2013
+Friday, March 18, 2022
  |             Posted in     </div>
     <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Paragliding" class="btn btn-default btn-xs tag-no-wrap">Paragliding</a>
-                        <a id="post-category" role="button" href="/tags/PG2" class="btn btn-default btn-xs tag-no-wrap">PG2</a>
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/Scuttle" class="btn btn-default btn-xs tag-no-wrap">Scuttle</a>
     </div>
 </div>
 
     </div>
 
     <div id="post-content">
-        <p>A little while ago I signed up for a <a href="http://paraglidingnewzealand.com/information/learning-to-fly">PG2</a>
-paragliding course with <a href="http://wingsandwaves.co.nz">Wings and Waves</a>. Unfortunately I signed up just
-before winter crept in and made it impossible to fly. As we are moving towards spring the weather
-has been getting better and last Sunday the weather was good enough for us (my girlfriend and me) to
-have our first shot at flying a paraglider.</p>
-<p><img align="left" alt="Casey ground handling the old glider" src="/assets/images/paragliding/paraglide_0001.JPG" /></p>
-<p>So on Sunday morning we met up with the Wings and Waves crew and drove over to a nice, if some what
-soggy, hill somewhere around Pukemore, south of the Bombay hills for the first steps of our training.</p>
-<p>The first part consisted of learning how to ground handle a paraglider. Ground handling is the art
-of controlling the paraglider while on the ground. This turns out to be harder than it first looks.
-In the air the pilot will normally be centred underneath the paraglider. On the ground however the
-pilot may not be directly below the paraglider which means the pilot needs to actively move around
-to keep the paraglider above them.</p>
-<p><img align="right" alt="Me doing a forward start with the old glider" src="/assets/images/paragliding/paraglide_0002.JPG" /></p>
-<p>Once we got the hang of the ground handling we started learning forwards starts, or alpine starts.
-With this method of starting you face forward with the glider behind you. Once you have sorted out
-the lines you move forwards until the lines are tensioned and then you run at a constant pace. The
-first glider we used was the really old one we used in ground handling. Given that it was not very
-large it was pretty easy to run with, and running we did, lots of it.</p>
-<p>Once we got a few good runs in with the old glider the instructor found us a more modern paraglider
-to play with. This one was considerably larger and far more interesting. Over the remainder of the
-day we slowly worked our way up the hill, starting from a higher position each time, and being
-rewarded with a little more flight time and a little more height each time.</p>
-<p><img align="left" alt="Casey having a little flight with the newer glider" src="/assets/images/paragliding/paraglide_0003.JPG" /></p>
-<p>In the beginning both my girl friend and me got to use the same glider but it turns out I've got a
-big fat ass and so I had to upgrade to bigger gliders a few more times. Each time being reminded that
-bigger gliders also mean more backwards pull on start and higher flights.</p>
-<p>In all it was a good day flying. I still have a lot of work to do on all parts of my launching and
-flying skills (obviously given that this is the first time), but the one thing I really noticed I
-need to work on is distance estimation and flare timing. I got that wrong a few times and it was
-fortunate that the landing area was soggy because it made for nice, if what splashy, landings even
-if I miscalculated my flare timing.</p>
-<p>All in all a good time was had by all and we are definitely keen for more flying. Hopefully with less
-running and more flying next time.</p>
+        <p>As mentioned in my last post I have started tinkering with mobile robots. My current goal is to
+build an outdoor capable <a href="https://en.wikipedia.org/wiki/Autonomous_robot">autonomous mobile robot</a>.
+The first problem I have to solve in order to move towards my goal is that I know a decent amount
+about software, a reasonable amount about structures and mechanics and very little about electronics.
+Oh and I know nothing about the robotics algorithms like how navigation works, the fact that robots
+may have a hard time
+<a href="https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping">figuring out where they are</a>
+and that decision making is hard for robots.</p>
+<p>So in order to not have to learn all the things at the same time I decided it would be sensible to
+start off buying a kit that I could assemble and learn to work with. The basic requirements were</p>
+<ul>
+<li>Something that didn't require me to solder electronics or 3d print parts, because I have neither
+of those tools, yet ...</li>
+<li>Capable of actually carrying a load of some sort. Most robot kits are fun platforms to play with
+but other than driving around they're not actually capable of carrying things. I want my robot to
+be able to carry things for me.</li>
+<li>With accessible hardware and software so that I could modify and extend it.</li>
+<li>Affordable, because money is still finite</li>
+</ul>
+<figure style="float:right">
+<img alt="Scuttle assembled" src="/assets/images/robotics/scuttle/scuttle-assembled.jpg" />
+<figcaption>SCUTTLE robot assembled</figcaption>
+</figure>
+<p>After a little bit of searching I decided to buy the <a href="https://scuttlerobot.org/">SCUTTLE robot</a> kit.
+The SCUTTLE kit is an <a href="https://github.com/scuttlerobot">open source kit</a> for which all the build
+information is available online, from the <a href="https://grabcad.com/library/scuttle-robot-v2-3-1">3D drawings</a>
+to the material BOM. Additionally there is a lot of sample code that makes it easy to get going with
+the robot. There are code samples that allow you to drive the robot with a gamepad or by putting it in
+follow mode where it follows a coloured object. Note that when you pick a coloured object apparently
+orange is the best colour because of the colour difference with the surroundings. In my case initially
+I picked a dark red object in a poorly lit environment with lots of other variations of red around.
+You can probably imagine how well that went ...&hellip; [*]</p>
+<p>Assembly of the SCUTTLE robot is pretty easy, it consists of aluminium T-slot lengths, some 3D
+printed parts and some electronics parts. The T-slot lengths are fastened with angle brackets and
+the 3D printed parts bolt to the T-slot lengths. The kit I bought only required connecting electronic parts
+with connectors, no soldering required. If you build a SCUTTLE from scratch there is some soldering to
+be done.</p>
+<p>Once you have assembled your SCUTTLE you can test the functionality by using the code samples to
+verify the encoders and the motors. Note that it is wise to review your cabling before turning anything
+on because it is possible to connect some of the electronics incorrectly. I ended up breaking my
+Raspberry Pi, quite possibly by connecting the encoders backwards or something similar.</p>
+<figure style="float:left">
+<img alt="Scuttle in RViz" src="/assets/images/robotics/scuttle/scuttle-rviz.png" />
+<figcaption>SCUTTLE in RViz</figcaption>
+</figure>
+<p>After verifying that the motors rotate in the correct direction you can try controlling the
+robot via the gamepad and drive it around the house.</p>
+<p>Currently I'm working to update my SCUTTLE with the <a href="https://www.ros.org/">ROS</a> software. Currently
+I'm testing with ROS noetic but I am looking to eventually switch to using ROS2 as it seems to have
+a more flexible navigation stack. More on that in a future post.</p>
+<p>I'm also planning to add some sensors to my SCUTTLE to make it a bit more autonomous. The first
+plan is to add a bumper that will tell the robot if it has hit something. I have picked up some
+contact switches but am still thinking about the design for the bumper. Later on I want to add
+sonar, <a href="https://en.wikipedia.org/wiki/Time-of-flight_camera">Time of Flight (ToF) sensors</a> and
+potentially cameras as well.</p>
+<p>[*] SCUTTLE drove straight at the red coloured couch instead of following the red object I wanted
+it to follow</p>
 
     </div>
 
     <div id="post-footer">
         <div>
     <div class="navlinks">
-                <a href="/posts/Why-this-blog-was-created" title="Previous Post: Why this blog was created" class="navlinks-prev">« Why this blog was created</a>
-                <a href="/posts/Sherlock-Release-v0401" title="Next Post: Sherlock release - V0.4.0.1" class="navlinks-next">Sherlock release - V0.4.0.1 »</a>
+                <a href="/posts/Building-autonomous-mobile-robot-why" title="Previous Post: Building an autonomous mobile robot - But why?" class="navlinks-prev">« Building an autonomous mobile robot - But why?</a>
     </div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'First-time-paragliding';
-    var disqus_title = 'First time paragliding';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/First-time-paragliding';
+    var disqus_identifier = 'Starting-robotics-with-scuttle';
+    var disqus_title = 'Starting robotics with the SCUTTLE robot';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Starting-robotics-with-scuttle';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
@@ -331,7 +353,7 @@ running and more flying next time.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Fri, 18 Mar 2022 07:54:04 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Fri, 18 Mar 2022 07:54:01 GMT
 
  from commit <a href="https://github.com/pvandervelde/mindvortex/tree/e02cc96ae171bd83329295c55f60182d8ff44717">e02cc96ae171bd83329295c55f60182d8ff44717</a> at version 3.5.0.        </p>
     </div>

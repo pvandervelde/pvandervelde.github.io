@@ -97,6 +97,18 @@ hr {
     white-space: nowrap;
 }
 
+figure {
+    display: inline-block;
+    text-align: center;
+    margin: 15px;
+    font-size: 13px;
+    /* adjust as needed */
+}
+
+figure img {
+    vertical-align: top;
+}
+
 /** WRAPPER */
 
 #wrapper {

@@ -4,8 +4,80 @@
 	<title>Mind vortex</title>
 	<link rel="self" href="https://www.petrikvandervelde.nl/" />
 	<rights>2022</rights>
-	<updated>2022-03-09T08:47:35Z</updated>
+	<updated>2022-03-18T07:54:01Z</updated>
 	<subtitle>Welcome!</subtitle>
+	<entry>
+		<id>https://www.petrikvandervelde.nl/posts/Starting-robotics-with-scuttle</id>
+		<title>Starting robotics with the SCUTTLE robot</title>
+		<link href="https://www.petrikvandervelde.nl/posts/Starting-robotics-with-scuttle" />
+		<updated>2022-03-18T00:00:00Z</updated>
+		<content>&lt;p&gt;As mentioned in my last post I have started tinkering with mobile robots. My current goal is to
+build an outdoor capable &lt;a href="https://en.wikipedia.org/wiki/Autonomous_robot"&gt;autonomous mobile robot&lt;/a&gt;.
+The first problem I have to solve in order to move towards my goal is that I know a decent amount
+about software, a reasonable amount about structures and mechanics and very little about electronics.
+Oh and I know nothing about the robotics algorithms like how navigation works, the fact that robots
+may have a hard time
+&lt;a href="https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping"&gt;figuring out where they are&lt;/a&gt;
+and that decision making is hard for robots.&lt;/p&gt;
+&lt;p&gt;So in order to not have to learn all the things at the same time I decided it would be sensible to
+start off buying a kit that I could assemble and learn to work with. The basic requirements were&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Something that didn't require me to solder electronics or 3d print parts, because I have neither
+of those tools, yet ...&lt;/li&gt;
+&lt;li&gt;Capable of actually carrying a load of some sort. Most robot kits are fun platforms to play with
+but other than driving around they're not actually capable of carrying things. I want my robot to
+be able to carry things for me.&lt;/li&gt;
+&lt;li&gt;With accessible hardware and software so that I could modify and extend it.&lt;/li&gt;
+&lt;li&gt;Affordable, because money is still finite&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure style="float:right"&gt;
+&lt;img alt="Scuttle assembled" src="/assets/images/robotics/scuttle/scuttle-assembled.jpg" /&gt;
+&lt;figcaption&gt;SCUTTLE robot assembled&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;After a little bit of searching I decided to buy the &lt;a href="https://scuttlerobot.org/"&gt;SCUTTLE robot&lt;/a&gt; kit.
+The SCUTTLE kit is an &lt;a href="https://github.com/scuttlerobot"&gt;open source kit&lt;/a&gt; for which all the build
+information is available online, from the &lt;a href="https://grabcad.com/library/scuttle-robot-v2-3-1"&gt;3D drawings&lt;/a&gt;
+to the material BOM. Additionally there is a lot of sample code that makes it easy to get going with
+the robot. There are code samples that allow you to drive the robot with a gamepad or by putting it in
+follow mode where it follows a coloured object. Note that when you pick a coloured object apparently
+orange is the best colour because of the colour difference with the surroundings. In my case initially
+I picked a dark red object in a poorly lit environment with lots of other variations of red around.
+You can probably imagine how well that went ...&amp;hellip; [*]&lt;/p&gt;
+&lt;p&gt;Assembly of the SCUTTLE robot is pretty easy, it consists of aluminium T-slot lengths, some 3D
+printed parts and some electronics parts. The T-slot lengths are fastened with angle brackets and
+the 3D printed parts bolt to the T-slot lengths. The kit I bought only required connecting electronic parts
+with connectors, no soldering required. If you build a SCUTTLE from scratch there is some soldering to
+be done.&lt;/p&gt;
+&lt;p&gt;Once you have assembled your SCUTTLE you can test the functionality by using the code samples to
+verify the encoders and the motors. Note that it is wise to review your cabling before turning anything
+on because it is possible to connect some of the electronics incorrectly. I ended up breaking my
+Raspberry Pi, quite possibly by connecting the encoders backwards or something similar.&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+&lt;img alt="Scuttle in RViz" src="/assets/images/robotics/scuttle/scuttle-rviz.png" /&gt;
+&lt;figcaption&gt;SCUTTLE in RViz&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;After verifying that the motors rotate in the correct direction you can try controlling the
+robot via the gamepad and drive it around the house.&lt;/p&gt;
+&lt;p&gt;Currently I'm working to update my SCUTTLE with the &lt;a href="https://www.ros.org/"&gt;ROS&lt;/a&gt; software. Currently
+I'm testing with ROS noetic but I am looking to eventually switch to using ROS2 as it seems to have
+a more flexible navigation stack. More on that in a future post.&lt;/p&gt;
+&lt;p&gt;I'm also planning to add some sensors to my SCUTTLE to make it a bit more autonomous. The first
+plan is to add a bumper that will tell the robot if it has hit something. I have picked up some
+contact switches but am still thinking about the design for the bumper. Later on I want to add
+sonar, &lt;a href="https://en.wikipedia.org/wiki/Time-of-flight_camera"&gt;Time of Flight (ToF) sensors&lt;/a&gt; and
+potentially cameras as well.&lt;/p&gt;
+&lt;p&gt;[*] SCUTTLE drove straight at the red coloured couch instead of following the red object I wanted
+it to follow&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;As mentioned in my last post I have started tinkering with mobile robots. My current goal is to
+build an outdoor capable &lt;a href="https://en.wikipedia.org/wiki/Autonomous_robot"&gt;autonomous mobile robot&lt;/a&gt;.
+The first problem I have to solve in order to move towards my goal is that I know a decent amount
+about software, a reasonable amount about structures and mechanics and very little about electronics.
+Oh and I know nothing about the robotics algorithms like how navigation works, the fact that robots
+may have a hard time
+&lt;a href="https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping"&gt;figuring out where they are&lt;/a&gt;
+and that decision making is hard for robots.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://www.petrikvandervelde.nl/posts/Building-autonomous-mobile-robot-why</id>
 		<title>Building an autonomous mobile robot - But why?</title>
@@ -1615,34 +1687,6 @@ executing tests during the packer test build.&lt;/li&gt;
 &lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</id>
-		<title>Ops-Tools-Build release - V0.2.0</title>
-		<link href="https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020" />
-		<updated>2017-05-14T00:00:00Z</updated>
-		<content>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
-&lt;p&gt;This release was focussed on providing the capabilities to use the Chef toolset to create new
-resources. All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;New functionality&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/5"&gt;5&lt;/a&gt; - A new function which provides
-the ability to execute &lt;a href="https://github.com/sethvargo/chefspec"&gt;ChefSpec&lt;/a&gt; tests.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/6"&gt;6&lt;/a&gt; - A new function which
-invokes the Chef linting tool &lt;a href="https://www.foodcritic.io/"&gt;Foodcritic&lt;/a&gt; on the selected Chef cookbooks.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/7"&gt;7&lt;/a&gt; - A new function which invokes the
-Ruby linting tool &lt;a href="https://github.com/bbatsov/rubocop"&gt;RuboCop&lt;/a&gt; on selected Ruby source files.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/20"&gt;20&lt;/a&gt; - A new package restore script
-was added to allow restoring Chef cookbooks via &lt;a href="https://github.com/berkshelf/berkshelf"&gt;Berkshelf&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/21"&gt;21&lt;/a&gt; - A new switch was added to the
-packer function which allows keeping the resources generated with packer in case the packer
-build fails. This improves the ability to debug issues in the packer build.&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-		<summary>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;</summary>
-	</entry>
-	<entry>
 		<id>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V092</id>
 		<title>nBuildKit release - V0.9.2</title>
 		<link href="https://www.petrikvandervelde.nl/posts/nBuildKit-release-V092" />
@@ -1696,6 +1740,34 @@ of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/
 a number of bugs and adds a few new improvements&lt;/p&gt;</summary>
 	</entry>
 	<entry>
+		<id>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</id>
+		<title>Ops-Tools-Build release - V0.2.0</title>
+		<link href="https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020" />
+		<updated>2017-05-14T00:00:00Z</updated>
+		<content>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
+&lt;p&gt;This release was focussed on providing the capabilities to use the Chef toolset to create new
+resources. All the work items that have been closed for this release can be found on
+&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;New functionality&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/5"&gt;5&lt;/a&gt; - A new function which provides
+the ability to execute &lt;a href="https://github.com/sethvargo/chefspec"&gt;ChefSpec&lt;/a&gt; tests.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/6"&gt;6&lt;/a&gt; - A new function which
+invokes the Chef linting tool &lt;a href="https://www.foodcritic.io/"&gt;Foodcritic&lt;/a&gt; on the selected Chef cookbooks.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/7"&gt;7&lt;/a&gt; - A new function which invokes the
+Ruby linting tool &lt;a href="https://github.com/bbatsov/rubocop"&gt;RuboCop&lt;/a&gt; on selected Ruby source files.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/20"&gt;20&lt;/a&gt; - A new package restore script
+was added to allow restoring Chef cookbooks via &lt;a href="https://github.com/berkshelf/berkshelf"&gt;Berkshelf&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/21"&gt;21&lt;/a&gt; - A new switch was added to the
+packer function which allows keeping the resources generated with packer in case the packer
+build fails. This improves the ability to debug issues in the packer build.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+		<summary>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
+&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;</summary>
+	</entry>
+	<entry>
 		<id>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091</id>
 		<title>nBuildKit release - V0.9.1</title>
 		<link href="https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091" />
@@ -1734,33 +1806,5 @@ will generate the website using &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;.&
 		<summary>&lt;p&gt;Hot on the heels of the last release version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.1"&gt;0.9.1&lt;/a&gt;
 of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt; has been released. This release fixes
 two bugs and adds a few internal improvements.&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011</id>
-		<title>Ops-Tools-Build release - V0.1.0 and V0.1.1</title>
-		<link href="https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V011" />
-		<updated>2017-04-09T00:00:00Z</updated>
-		<content>&lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
-&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
-of the Ops-Tools-Build toolkit was released.&lt;/p&gt;
-&lt;p&gt;All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/1?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;New functionality&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/3"&gt;3&lt;/a&gt; - New scripts have been added to allow
-the creation of an ISO file using the &lt;a href="https://sourceforge.net/projects/tumagcc"&gt;MakeIsoFS&lt;/a&gt; command
-line application.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/4"&gt;4&lt;/a&gt; - New scripts have been added to allow
-invocation of the &lt;a href="https://www.packer.io/"&gt;packer&lt;/a&gt; command line tool used to generate VM and
-container images from a set of configuration files.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/10"&gt;10&lt;/a&gt; - New scripts were added to allow
-calculation of the hash of one or more files&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-		<summary>&lt;p&gt;Last week version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.0"&gt;0.1.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released. With the recent
-&lt;a href="./posts/nBuildKit-release-V091"&gt;0.9.1 release of nBuildKit&lt;/a&gt; version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.1.1"&gt;0.1.1&lt;/a&gt;
-of the Ops-Tools-Build toolkit was released.&lt;/p&gt;</summary>
 	</entry>
 </feed>
