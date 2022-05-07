@@ -5,8 +5,110 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2022</copyright>
-		<pubDate>Sat, 16 Apr 2022 05:32:04 GMT</pubDate>
-		<lastBuildDate>Sat, 16 Apr 2022 05:32:04 GMT</lastBuildDate>
+		<pubDate>Sat, 07 May 2022 02:10:48 GMT</pubDate>
+		<lastBuildDate>Sat, 07 May 2022 02:10:48 GMT</lastBuildDate>
+		<item>
+			<title>Starting robotics - Learning Robot Operating System (ROS)</title>
+			<link>https://www.petrikvandervelde.nl/posts/Robotics-learning-ros</link>
+			<description>&lt;p&gt;As part of my &lt;a href="tags/Robotics"&gt;journey into robotics&lt;/a&gt; I have been working on updating my
+&lt;a href="https://www.scuttlerobot.org/"&gt;SCUTTLE robot&lt;/a&gt; to use the
+&lt;a href="http://wiki.ros.org/"&gt;Robot Operating System (ROS)&lt;/a&gt;. ROS provides a number of different things
+that make robot development much easier. The main items are a middleware layer for communication
+between different parts of the robot, hardware abstractions for different sensors, motors and
+controllers, device drivers and many other libraries and packages.&lt;/p&gt;</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Robotics-learning-ros</guid>
+			<pubDate>Tue, 03 May 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;As part of my &lt;a href="tags/Robotics"&gt;journey into robotics&lt;/a&gt; I have been working on updating my
+&lt;a href="https://www.scuttlerobot.org/"&gt;SCUTTLE robot&lt;/a&gt; to use the
+&lt;a href="http://wiki.ros.org/"&gt;Robot Operating System (ROS)&lt;/a&gt;. ROS provides a number of different things
+that make robot development much easier. The main items are a middleware layer for communication
+between different parts of the robot, hardware abstractions for different sensors, motors and
+controllers, device drivers and many other libraries and packages.&lt;/p&gt;
+&lt;p&gt;The main benefit of using ROS is that it provides a lot of integrations and functionality that you
+can quickly use. On the other hand the drawback that comes with all of this is that the learning curve
+for ROS is very steep. The documentation is pretty good and so are the tutorials, however there are
+a lot of different parts in ROS, which makes for a lot of interesting ways to get confused. So to
+speed up my progress with ROS I decided to do the &lt;a href="https://www.udemy.com/course/ros-essentials/"&gt;ROS for beginners I&lt;/a&gt;
+and &lt;a href="https://www.udemy.com/course/ros-navigation/"&gt;II courses&lt;/a&gt; on Udemy. These courses were very helpful
+to reduce the learning curve for ROS and quickly get me familiar with ROS.&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+&lt;img alt="Scuttle in Gazebo" src="/assets/images/robotics/scuttle/scuttle-in-gazebo.jpg" /&gt;
+&lt;figcaption&gt;SCUTTLE robot in Gazebo&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;This post won't explain how ROS works, there are
+&lt;a href="https://www.google.com/search?q=getting+started+with+ros&amp;amp;rlz=1C1CHBF_enNZ825NZ825&amp;amp;oq=getting+started+with+ros&amp;amp;aqs=chrome..69i57j69i61.2633j0j7&amp;amp;sourceid=chrome&amp;amp;ie=UTF-8"&gt;many, many, many tutorials out on the web&lt;/a&gt;
+that will do a far better job than I can. However I do want to share some of the things I learned
+from working with ROS.&lt;/p&gt;
+&lt;p&gt;The first thing to note is the operating system on which you want to run ROS. ROS is developed
+to be run on Ubuntu. My home PC runs on the Windows Operating System. ROS 1 wasn't designed to run
+directly on Windows (ROS2 will be able to) but there are several ways to run it. First you can run
+ROS Noetic straight on Windows using &lt;a href="https://robostack.github.io/"&gt;Robostack&lt;/a&gt;. This uses the Conda
+package manager and provides packages for all operating systems. I found that this works moderately
+well, there are a number of packages missing and occasionally things error out. This approach works
+well for simple learning exercises but may yet not be suitable for large ROS applications.&lt;/p&gt;
+&lt;p&gt;A second approach is to &lt;a href="https://ishkapoor.medium.com/how-to-install-ros-noetic-on-wsl2-9bbe6c00b89a"&gt;run ROS on WSL2&lt;/a&gt;.
+This is able to run the Ubuntu native packages so you can run all parts of ROS and with the help of
+an XServer like &lt;a href="https://sourceforge.net/projects/vcxsrv/"&gt;VcXsrv&lt;/a&gt; you can even run all the graphical
+tools. One thing to keep in mind if you use WSL is that networking may cause problems if you run
+ROS distributed over more than one computing device, e.g. a laptop and a physical robot. With WSL
+there is no easy way to expose WSL applications to uninitiated network connections, i.e.
+a request started from inside WSL works, but a request started from outside WSL won't be able to
+connect. This is important because ROS nodes need to be able to communicate with each other freely.
+The result will be that the nodes on the WSL side will seem to be connected and functional while the
+other nodes won't be able to send messages to the WSL nodes.&lt;/p&gt;
+&lt;p&gt;The final approach to running ROS is to create an &lt;a href="https://gist.github.com/pvandervelde/2282dafc080945ecb7981edb740ed47c"&gt;Ubuntu VM&lt;/a&gt;
+or physical machine. In this case as long as the machine is reachable over the network for other
+compute devices, it is possible to run ROS distributed over the network. This is the way I currently
+run ROS.&lt;/p&gt;
+&lt;figure style="float:right"&gt;
+&lt;img alt="Scuttle in RViz" src="/assets/images/robotics/scuttle/scuttle-in-rviz-no-sensors.jpg" /&gt;
+&lt;figcaption&gt;SCUTTLE robot in RViz&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Once you have a working ROS installation the next thing you'll find out is that ROS configurations
+can be difficult to get right, especially when you're working with a physical robot where visibility
+of what is going on may not be the best. There are a number of useful tools available to provide
+insights into what is going on with your robot.&lt;/p&gt;
+&lt;p&gt;The first tool is &lt;a href="https://gazebosim.org/"&gt;Gazebo&lt;/a&gt; which provides a simulated environment for
+ROS robots. The simulation is based on a physics engine with good accuracy of real world physics. It
+also provides models for sensors, like LIDAR and cameras, and sensor noise to simulate real-world
+sensor behaviour. Having a simulated environment allows you to repeat behaviours many times in
+the same way in rapid succession. Having a way to easily repeat behaviours and control the environment
+means that you can quickly test and debug specific behaviours, something which can be much more difficult
+with a physical robot.&lt;/p&gt;
+&lt;p&gt;The second tool, &lt;a href="http://wiki.ros.org/rviz"&gt;RViz&lt;/a&gt;, provides visualization of the environment of the
+robot and how the robot perceives that environment. It allows you to visualize what the robot can
+&amp;lsquo;see&amp;rsquo;. RViz works by subscribing to the different message topics that are available. This means
+it works both for simulated robots (using Gazebo) and physical robots.&lt;/p&gt;
+&lt;p&gt;The final tool worth discussing is &lt;a href="https://foxglove.dev/"&gt;Foxglove studio&lt;/a&gt; which also provides
+insight into the data that the robot generates, both from sensors but also in the form of messages
+sent between the different components of the robot. One of the nice features of Foxglove is that
+you can make plots with values provided by messages. For instance you can plot the velocity
+components of a &lt;a href="http://docs.ros.org/en/lunar/api/geometry_msgs/html/msg/Twist.html"&gt;Twist message&lt;/a&gt;.
+This is useful to compare requested velocities compared to actual achieved velocities.
+Another great feature of Foxglove is that it is able to display the &lt;a href="http://wiki.ros.org/rosout"&gt;ROS logs&lt;/a&gt;
+and it also allows you to filter and search these logs. Given that ROS logs can quickly become
+large the ability to filter is very useful.&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+&lt;img alt="Scuttle in RViz with LIDAR overlay" src="/assets/images/robotics/scuttle/scuttle-in-rviz-slam-enabled.jpg" /&gt;
+&lt;figcaption&gt;SCUTTLE robot in RViz with LIDAR overlay&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;When working with a mobile robot, like I am, getting the robot to navigate a space is often one of
+the first achievable goals. The &lt;a href="http://wiki.ros.org/navigation"&gt;navigation stack&lt;/a&gt; in ROS provides
+a lot of the basic capabilities to get started with robot navigation in a reasonable time span. Do
+note however that the navigation stack in ROS is fairly large and has a lot of different configuration
+options so it is wise to set some time aside for learning about the different options. I'll talk about
+navigating with SCUTTLE in a future post.&lt;/p&gt;
+&lt;p&gt;As mentioned I started learning ROS1 with Udemy. My goal for learning ROS was to use it for
+navigation with my SCUTTLE  robot, more on that in a future post. Once I manage to get navigation
+working for SCUTTLE I plan to start adding different sensors. Finally I want to enable task planning
+for SCUTTLE, e.g. tasks like &amp;ldquo;drive to the living room and collect my coffee cup and bring it back
+to me&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Another part of my plans is to upgrade to using &lt;a href="https://docs.ros.org/en/galactic/index.html"&gt;ROS2&lt;/a&gt;.
+ROS1 end-of-life is 2025, which is only 3 years away, and additionally ROS2 has a more modern stack
+with python 3, better communication security, an improved navigation stack and more active development.
+More on this will follow in a future post once I have upgraded my robot to ROS2&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Starting robotics with the SCUTTLE robot</title>
 			<link>https://www.petrikvandervelde.nl/posts/Starting-robotics-with-scuttle</link>
@@ -1765,46 +1867,6 @@ was added to allow restoring Chef cookbooks via &lt;a href="https://github.com/b
 &lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/21"&gt;21&lt;/a&gt; - A new switch was added to the
 packer function which allows keeping the resources generated with packer in case the packer
 build fails. This improves the ability to debug issues in the packer build.&lt;/li&gt;
-&lt;/ul&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>nBuildKit release - V0.9.1</title>
-			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091</link>
-			<description>&lt;p&gt;Hot on the heels of the last release version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.1"&gt;0.9.1&lt;/a&gt;
-of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt; has been released. This release fixes
-two bugs and adds a few internal improvements.&lt;/p&gt;</description>
-			<guid>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V091</guid>
-			<pubDate>Sun, 09 Apr 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Hot on the heels of the last release version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.1"&gt;0.9.1&lt;/a&gt;
-of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt; has been released. This release fixes
-two bugs and adds a few internal improvements.&lt;/p&gt;
-&lt;p&gt;All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/29?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;Bugs fixed&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/273"&gt;273&lt;/a&gt; - The &lt;code&gt;CalculateSemanticVersionWithGitVersion&lt;/code&gt;
-task used the current directory as the working directory. While that is correct in most cases
-there are some cases, especially when running the integration tests, where that is not correct.
-This has been fixed by requiring the specification of the working directory.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/277"&gt;277&lt;/a&gt; - In the same way all NuGet tasks
-now need a working directory specified in order to make sure that the correct workspace is used
-when interacting with the NuGet command line.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Improvements&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/272"&gt;272&lt;/a&gt; - The
-&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/blob/master/src/tests/TestFunctions.PrepareWorkspace.ps1"&gt;TestFunctions.PrepareWorkspace.ps1&lt;/a&gt;
-and the &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/blob/master/src/tests/TestFunctions.Git.ps1"&gt;TestFunctions.Git.ps1&lt;/a&gt;
-have been updated with additional functions and checks so that when creating a test workspace the
-existing git flow process is only completed if the specified branch exists on the remote. This changes
-the completion of the git flow process from mandatory to optional.&lt;/li&gt;
-&lt;li&gt;Additionally the &lt;code&gt;IsMasterBranch&lt;/code&gt; and &lt;code&gt;IsDevelopBranch&lt;/code&gt; properties have been defined in the settings
-file. These two properties indicate whether or not the current branch is the &lt;code&gt;master&lt;/code&gt; or &lt;code&gt;develop&lt;/code&gt;
-branch respectively.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/69"&gt;69&lt;/a&gt; - The documentation for nBuildKit itself
-is being moved from the wiki to a GitHub pages website. As of this release the build for nBuildKit
-will generate the website using &lt;a href="https://wyam.io"&gt;Wyam&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 </content:encoded>
 		</item>
