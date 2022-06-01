@@ -136,6 +136,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">Starting robotics - Driving scuttle with ROS - Gazebo simulation</a></li>
                             <li><a href="/posts/Robotics-learning-ros">Starting robotics - Learning Robot Operating System (ROS)</a></li>
                             <li><a href="/posts/Starting-robotics-with-scuttle">Starting robotics with the SCUTTLE robot</a></li>
                             <li><a href="/posts/Building-autonomous-mobile-robot-why">Building an autonomous mobile robot - But why?</a></li>
@@ -145,7 +146,6 @@
                             <li><a href="/posts/On-prem-vs-cloud-build-systems">Software development pipeline - On-prem or in the cloud?</a></li>
                             <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software development pipeline - Considerations for infrastructure improvements</a></li>
                             <li><a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not">Software development pipeline - In the build system or not</a></li>
-                            <li><a href="/posts/Software-development-pipeline-Design-flexibility">Software development pipeline - Design flexibility</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -159,13 +159,13 @@
                                     <a role="button" href="/tags/nBuildKit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
-                                </li>
-                                <li>
                                     <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
@@ -195,6 +195,107 @@
 
             <div id="content">
 
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">Starting robotics - Driving scuttle with ROS - Gazebo simulation</a>
+</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Wednesday, June 1, 2022
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/ROS" class="btn btn-default btn-xs tag-no-wrap">ROS</a>
+                        <a id="post-category" role="button" href="/tags/ROS-Noetic" class="btn btn-default btn-xs tag-no-wrap">ROS&nbsp;Noetic</a>
+                        <a id="post-category" role="button" href="/tags/Scuttle" class="btn btn-default btn-xs tag-no-wrap">Scuttle</a>
+    </div>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>After getting familiar with <a href="posts/Robotics-learning-ros">ROS</a>, the next step was to get the
+navigation stack working in Gazebo for the SCUTTLE robot. Fortunately, the SCUTTLE developers
+had already created a number of ROS packages containing the
+<a href="https://github.com/scuttlerobot/scuttle_description">scuttle model</a>,
+<a href="https://github.com/scuttlerobot/scuttle_bringup">the startup scripts</a> and the
+<a href="https://github.com/scuttlerobot/scuttle_driver">driver code</a>. All the bits you need to drive SCUTTLE
+around using ROS.</p>
+<p>The first challenge is to drive the SCUTTLE model around in <a href="https://gazebosim.org/">Gazebo</a>
+using the <a href="http://wiki.ros.org/teleop_twist_keyboard">keyboard</a>.
+This was easily achieved using Gazebo and RViz using WSL2, but it was a bit slow.</p>
+<iframe
+    style="float:right"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/TI9tfzn8yXE"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+</iframe>
+<p>The next challenge was to make the virtual SCUTTLE drive to a specific point using a custom
+ROS node. While doing the <a href="https://www.udemy.com/course/ros-essentials/">ROS for beginners I</a> course
+I wrote some code to do a move-to-goal for the <a href="http://wiki.ros.org/turtlesim">turtlesim</a> virtual
+robot. The <a href="https://gist.github.com/pvandervelde/35200cce52d416d899c3db600c98a4a5">code</a> was updated
+and then used for the SCUTTLE robot. The result is a robot that moves to a goal, mission accomplished!</p>
+<p>The final challenge, for now at least, is to get the navigation stack to work for SCUTTLE. In order
+to do so a few new packages needed to be created. The packages I created are</p>
+<ul>
+<li><a href="https://github.com/scuttlerobot/scuttle_slam">scuttle_slam</a> - Contains the configurations and
+launch files for running <a href="http://wiki.ros.org/gmapping">gmapping</a> SLAM using the SCUTTLE LIDAR.</li>
+<li><a href="https://github.com/scuttlerobot/scuttle_navigation">scuttle_navigation</a> - Contains the
+configuration for working with the <a href="http://wiki.ros.org/navigation">navigation stack</a>.</li>
+<li><a href="https://github.com/scuttlerobot/scuttle_gazebo">scuttle_gazebo</a> - Contains a number of Gazebo
+worlds for testing our virtual SCUTTLE.</li>
+</ul>
+<p>The <code>scuttle_slam</code> and <code>scuttle_navigation</code> packages are based on the similar packages for
+<a href="https://github.com/ROBOTIS-GIT/turtlebot3">turtlebot3</a> with adjustments so that the configuration
+matches SCUTTLE's performance.</p>
+<p>For navigation in ROS1, you need two different types of path planners and a map for each planner. The
+first type is the global planner, which uses a map to determine the fastest path from the current
+location to the goal location. The second type, called the local planner, navigates the robot to
+the goal by trying to follow the path created by the global planner. The path followed by the local
+planner may deviate from the global path due to previously unknown obstacles and limitations of the
+robot, e.g. the ability to follow a turn. The map for each planner is known as a <a href="http://wiki.ros.org/costmap_2d">costmap</a>
+which indicates which part of the surroundings are occupied by obstacles and which parts can be
+navigated. After configuring the planners and the costmaps, the navigation worked. I could use
+RViz to set a point on the map and the virtual SCUTTLE would navigate to that location automatically.
+Success!</p>
+<figure style="float:left">
+<img alt="Scuttle navigating in RViz" src="/assets/images/robotics/scuttle/scuttle-navigate-in-rviz.png" />
+<figcaption>SCUTTLE robot navigating a room in RViz</figcaption>
+</figure>
+<p>Now, not everything was fine. The <a href="https://answers.ros.org/question/397737/dwa-local-planner-cant-find-a-trajectory-unless-rotate-recovery-runs">first issue</a>
+is some weird behaviour with the <a href="http://wiki.ros.org/dwa_local_planner?distro=noetic">DWA local planner</a>.
+Once the robot is moving the local planner mostly does a good job. However, when starting a path it
+takes a while for the local planner to pick up the global path. In fact, the DWA planner doesn't seem
+to <a href="https://www.youtube.com/watch?v=Nt9XyJHzfas&amp;ab_channel=PatrickvanderVelde">accept the global plan</a>
+until after a <a href="http://wiki.ros.org/rotate_recovery?distro=noetic">rotate recovery</a> has taken place.
+So far, I haven't found a solution to this problem.</p>
+<p>The second issue is that, in some cases, the navigation stack fails to find a path out of a narrow
+hallway or though a narrow door. In general, this happens when exploring a location, e.g. using the
+<a href="http://wiki.ros.org/explore_lite">explore_lite</a> package. It seems that the algorithm
+can't find a turn that will rotate the robot in the available space, even though scuttle is
+able to perform in-place rotations. At the start of a navigation exercise, in-place rotations are
+gladly used. However once the robot is on the move, the algorithm doesn't seem to apply in-place
+rotations anymore.</p>
+<p>Finally, you have to keep in mind that the default planners for ROS are path planners. This means that
+they plan a path from the start to the destination. These paths, however, only describe the direction
+a robot should take at a given location. They don't describe velocity or acceleration. Only
+describing the direction can generate paths with abrupt turns that force the robot to slow
+down significantly. Using a trajectory planner, which at least prescribes velocities, makes for a
+smoother experience for robot and cargo.</p>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -555,92 +656,6 @@ what other forms of security validation have been placed around the pipeline.</p
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Software-development-pipeline-infrastructure-dependency-reduction">Software development pipeline - Infrastructure dependency reduction</a>
-</h2>
-<div id="post-meta">
-    <div class="meta-date">
-Sunday, November 1, 2020
- |             Posted in     </div>
-    <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Build-configuration-as-code" class="btn btn-default btn-xs tag-no-wrap">Build&nbsp;configuration&nbsp;as&nbsp;code</a>
-                        <a id="post-category" role="button" href="/tags/Delivering-software" class="btn btn-default btn-xs tag-no-wrap">Delivering&nbsp;software</a>
-                        <a id="post-category" role="button" href="/tags/DevOps" class="btn btn-default btn-xs tag-no-wrap">DevOps</a>
-                        <a id="post-category" role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-xs tag-no-wrap">Software&nbsp;development&nbsp;pipeline</a>
-    </div>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>The <a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements.html">last post</a>
-I explained a few ways to improve the development pipeline infrastructure while
-keeping downtime minimal. One important consideration for the
-<a href="/posts/Software-development-pipeline-Design-resilience.html">resilience</a> of the
-pipeline is to reduce the dependencies between the pipeline and the infrastructure.</p>
-<p>So what does unwanted coupling between the pipeline and the
-infrastructure mean? After all the pipeline code makes assumptions about the capabilities
-of the infrastructure it runs on, just like every other piece of code.
-For development pipelines examples of unwanted dependencies are:</p>
-<ul>
-<li>The pipeline is created by using tasks specific to a CI/CD system which means that the artefacts
-can only be created on the infrastructure</li>
-<li>Pipeline stages expect the outputs from previous stages to be available on the executor,
-or worse, they expect the outputs from other pipelines to be on the executor</li>
-<li>A pipeline task assumes that certain tools have been installed on the executors</li>
-<li>A pipeline task assumes that it has specific permissions on an executor</li>
-</ul>
-<p>The first two items mentioned impacts the velocity at which development can take place. By relying
-completely on the CI/CD system for artefact creation cycle times increases. Additionally
-making changes to the pipeline often requires executing it multiple times to debug it.</p>
-<p>The second set of items are related to the ease of switching tooling, e.g. when changing vendors
-or during disaster recovery. These may or may not be of concern depending on the direction of
-development and technology. In my experience vendor lock-in is something to keep in mind if for no
-other reason then that switching vendors can be prohibitively complicated if pipeline processes are
-too tightly coupled to the CI/CD system.</p>
-<p>If any of the issues mentioned are concerning to you then partially or completely decoupling
-the development pipeline from the infrastructure will be a worthwhile exercise. This
-can be achieved with some of the following steps.</p>
-<h4>Versions for everybody</h4>
-<p>Ensure that all code, tools, scripts and resources used in the pipeline are versioned. That way you
-know exactly what is required for a specific pipeline execution. Which make executions repeatable
-in the future when newer versions of tools and resources have been released.</p>
-<h4>Only the workspace is yours</h4>
-<p>Pipeline actions should work only in their own workspace. Any code, scripts or tools they require
-are put in the workspace. This reduces scattering of data during the execution of a pipeline and
-reduces pollution of the executors.</p>
-<h4>Lean executors</h4>
-<p>Make your pipeline actions assume they will run on a bare minimum runtime. This will
-ensure that your pipelines will obtain their preferred version of tools they need and
-install them in their own workspace. The benefit of doing this that a pipeline can be executed on
-any available executor, either in your CI/CD system or on a developer machine, as it will not be
-making any assumptions about the capabilities of an executor.</p>
-<h4>Single use executors are cleaner</h4>
-<p>Configure the CI/CD system to use a clean executor for every job. This will ensure that changes made
-during a previous job don't interfere with the current job. Additionally it will enforce the use of
-immutable infrastructure for the executors, thus allowing versioning of the executors.</p>
-<h4>Use the CI/CD system as a task executor</h4>
-<p>Keep the configuration for the jobs in the CI/CD system to a minimum. Ideally the entire configuration
-is the execution of a script or tools with a simple set of arguments. By reducing the job of the
-CI/CD system to executing a script or tool it is simple to execute the pipeline actions somewhere
-else, e.g. on a developer machine or a different CI/CD system.</p>
-<h4>Treat pipeline services as critical</h4>
-<p>All services used by the pipeline should be treated as mission critical systems. After all a failure
-in one of these systems can stop all your pipelines from executing. So reduce the number of services
-you use in your pipeline and improve the resilience the services you have to rely on using the standard
-approaches.</p>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -671,9 +686,9 @@ approaches.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 07 May 2022 02:10:47 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Wed, 01 Jun 2022 10:48:00 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/33e23d60c7d149ff42b0e0a643ca8311d17013a9">33e23d60c7d149ff42b0e0a643ca8311d17013a9</a> at version 3.6.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/13b9eb34ed9982659e2d015064caa208ad760404">13b9eb34ed9982659e2d015064caa208ad760404</a> at version 3.7.0.        </p>
     </div>
 
     <p>

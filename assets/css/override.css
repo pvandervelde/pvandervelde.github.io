@@ -109,6 +109,14 @@ figure img {
     vertical-align: top;
 }
 
+iframe {
+    display: inline-block;
+    text-align: center;
+    margin: 15px;
+    font-size: 13px;
+    /* adjust as needed */
+}
+
 /** WRAPPER */
 
 #wrapper {

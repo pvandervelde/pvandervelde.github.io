@@ -5,8 +5,93 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2022</copyright>
-		<pubDate>Sat, 07 May 2022 02:10:48 GMT</pubDate>
-		<lastBuildDate>Sat, 07 May 2022 02:10:48 GMT</lastBuildDate>
+		<pubDate>Wed, 01 Jun 2022 10:48:00 GMT</pubDate>
+		<lastBuildDate>Wed, 01 Jun 2022 10:48:00 GMT</lastBuildDate>
+		<item>
+			<title>Starting robotics - Driving scuttle with ROS - Gazebo simulation</title>
+			<link>https://www.petrikvandervelde.nl/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation</link>
+			<description>&lt;p&gt;After getting familiar with &lt;a href="posts/Robotics-learning-ros"&gt;ROS&lt;/a&gt;, the next step was to get the
+navigation stack working in Gazebo for the SCUTTLE robot. Fortunately, the SCUTTLE developers
+had already created a number of ROS packages containing the
+&lt;a href="https://github.com/scuttlerobot/scuttle_description"&gt;scuttle model&lt;/a&gt;,
+&lt;a href="https://github.com/scuttlerobot/scuttle_bringup"&gt;the startup scripts&lt;/a&gt; and the
+&lt;a href="https://github.com/scuttlerobot/scuttle_driver"&gt;driver code&lt;/a&gt;. All the bits you need to drive SCUTTLE
+around using ROS.&lt;/p&gt;</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation</guid>
+			<pubDate>Wed, 01 Jun 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;After getting familiar with &lt;a href="posts/Robotics-learning-ros"&gt;ROS&lt;/a&gt;, the next step was to get the
+navigation stack working in Gazebo for the SCUTTLE robot. Fortunately, the SCUTTLE developers
+had already created a number of ROS packages containing the
+&lt;a href="https://github.com/scuttlerobot/scuttle_description"&gt;scuttle model&lt;/a&gt;,
+&lt;a href="https://github.com/scuttlerobot/scuttle_bringup"&gt;the startup scripts&lt;/a&gt; and the
+&lt;a href="https://github.com/scuttlerobot/scuttle_driver"&gt;driver code&lt;/a&gt;. All the bits you need to drive SCUTTLE
+around using ROS.&lt;/p&gt;
+&lt;p&gt;The first challenge is to drive the SCUTTLE model around in &lt;a href="https://gazebosim.org/"&gt;Gazebo&lt;/a&gt;
+using the &lt;a href="http://wiki.ros.org/teleop_twist_keyboard"&gt;keyboard&lt;/a&gt;.
+This was easily achieved using Gazebo and RViz using WSL2, but it was a bit slow.&lt;/p&gt;
+&lt;iframe
+    style="float:right"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/TI9tfzn8yXE"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"&gt;
+&lt;/iframe&gt;
+&lt;p&gt;The next challenge was to make the virtual SCUTTLE drive to a specific point using a custom
+ROS node. While doing the &lt;a href="https://www.udemy.com/course/ros-essentials/"&gt;ROS for beginners I&lt;/a&gt; course
+I wrote some code to do a move-to-goal for the &lt;a href="http://wiki.ros.org/turtlesim"&gt;turtlesim&lt;/a&gt; virtual
+robot. The &lt;a href="https://gist.github.com/pvandervelde/35200cce52d416d899c3db600c98a4a5"&gt;code&lt;/a&gt; was updated
+and then used for the SCUTTLE robot. The result is a robot that moves to a goal, mission accomplished!&lt;/p&gt;
+&lt;p&gt;The final challenge, for now at least, is to get the navigation stack to work for SCUTTLE. In order
+to do so a few new packages needed to be created. The packages I created are&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/scuttlerobot/scuttle_slam"&gt;scuttle_slam&lt;/a&gt; - Contains the configurations and
+launch files for running &lt;a href="http://wiki.ros.org/gmapping"&gt;gmapping&lt;/a&gt; SLAM using the SCUTTLE LIDAR.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/scuttlerobot/scuttle_navigation"&gt;scuttle_navigation&lt;/a&gt; - Contains the
+configuration for working with the &lt;a href="http://wiki.ros.org/navigation"&gt;navigation stack&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/scuttlerobot/scuttle_gazebo"&gt;scuttle_gazebo&lt;/a&gt; - Contains a number of Gazebo
+worlds for testing our virtual SCUTTLE.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The &lt;code&gt;scuttle_slam&lt;/code&gt; and &lt;code&gt;scuttle_navigation&lt;/code&gt; packages are based on the similar packages for
+&lt;a href="https://github.com/ROBOTIS-GIT/turtlebot3"&gt;turtlebot3&lt;/a&gt; with adjustments so that the configuration
+matches SCUTTLE's performance.&lt;/p&gt;
+&lt;p&gt;For navigation in ROS1, you need two different types of path planners and a map for each planner. The
+first type is the global planner, which uses a map to determine the fastest path from the current
+location to the goal location. The second type, called the local planner, navigates the robot to
+the goal by trying to follow the path created by the global planner. The path followed by the local
+planner may deviate from the global path due to previously unknown obstacles and limitations of the
+robot, e.g. the ability to follow a turn. The map for each planner is known as a &lt;a href="http://wiki.ros.org/costmap_2d"&gt;costmap&lt;/a&gt;
+which indicates which part of the surroundings are occupied by obstacles and which parts can be
+navigated. After configuring the planners and the costmaps, the navigation worked. I could use
+RViz to set a point on the map and the virtual SCUTTLE would navigate to that location automatically.
+Success!&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+&lt;img alt="Scuttle navigating in RViz" src="/assets/images/robotics/scuttle/scuttle-navigate-in-rviz.png" /&gt;
+&lt;figcaption&gt;SCUTTLE robot navigating a room in RViz&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Now, not everything was fine. The &lt;a href="https://answers.ros.org/question/397737/dwa-local-planner-cant-find-a-trajectory-unless-rotate-recovery-runs"&gt;first issue&lt;/a&gt;
+is some weird behaviour with the &lt;a href="http://wiki.ros.org/dwa_local_planner?distro=noetic"&gt;DWA local planner&lt;/a&gt;.
+Once the robot is moving the local planner mostly does a good job. However, when starting a path it
+takes a while for the local planner to pick up the global path. In fact, the DWA planner doesn't seem
+to &lt;a href="https://www.youtube.com/watch?v=Nt9XyJHzfas&amp;amp;ab_channel=PatrickvanderVelde"&gt;accept the global plan&lt;/a&gt;
+until after a &lt;a href="http://wiki.ros.org/rotate_recovery?distro=noetic"&gt;rotate recovery&lt;/a&gt; has taken place.
+So far, I haven't found a solution to this problem.&lt;/p&gt;
+&lt;p&gt;The second issue is that, in some cases, the navigation stack fails to find a path out of a narrow
+hallway or though a narrow door. In general, this happens when exploring a location, e.g. using the
+&lt;a href="http://wiki.ros.org/explore_lite"&gt;explore_lite&lt;/a&gt; package. It seems that the algorithm
+can't find a turn that will rotate the robot in the available space, even though scuttle is
+able to perform in-place rotations. At the start of a navigation exercise, in-place rotations are
+gladly used. However once the robot is on the move, the algorithm doesn't seem to apply in-place
+rotations anymore.&lt;/p&gt;
+&lt;p&gt;Finally, you have to keep in mind that the default planners for ROS are path planners. This means that
+they plan a path from the start to the destination. These paths, however, only describe the direction
+a robot should take at a given location. They don't describe velocity or acceleration. Only
+describing the direction can generate paths with abrupt turns that force the robot to slow
+down significantly. Using a trajectory planner, which at least prescribes velocities, makes for a
+smoother experience for robot and cargo.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Starting robotics - Learning Robot Operating System (ROS)</title>
 			<link>https://www.petrikvandervelde.nl/posts/Robotics-learning-ros</link>
@@ -1840,34 +1925,6 @@ additionally be unzipped before the final copy takes place.&lt;/li&gt;
 &lt;p&gt;Additionally the first steps to better documentation have been taken. The &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/blob/master/README.md"&gt;readme&lt;/a&gt;,
 the &lt;a href="https://nbuildkit.github.io/nBuildKit.MsBuild/"&gt;introduction&lt;/a&gt; and the &lt;a href="https://nbuildkit.github.io/nBuildKit.MsBuild/docs/contributing"&gt;contributing&lt;/a&gt;
 documents have been updated.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Ops-Tools-Build release - V0.2.0</title>
-			<link>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</link>
-			<description>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020</guid>
-			<pubDate>Sun, 14 May 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0"&gt;0.2.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
-&lt;p&gt;This release was focussed on providing the capabilities to use the Chef toolset to create new
-resources. All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;New functionality&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/5"&gt;5&lt;/a&gt; - A new function which provides
-the ability to execute &lt;a href="https://github.com/sethvargo/chefspec"&gt;ChefSpec&lt;/a&gt; tests.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/6"&gt;6&lt;/a&gt; - A new function which
-invokes the Chef linting tool &lt;a href="https://www.foodcritic.io/"&gt;Foodcritic&lt;/a&gt; on the selected Chef cookbooks.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/7"&gt;7&lt;/a&gt; - A new function which invokes the
-Ruby linting tool &lt;a href="https://github.com/bbatsov/rubocop"&gt;RuboCop&lt;/a&gt; on selected Ruby source files.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/20"&gt;20&lt;/a&gt; - A new package restore script
-was added to allow restoring Chef cookbooks via &lt;a href="https://github.com/berkshelf/berkshelf"&gt;Berkshelf&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/21"&gt;21&lt;/a&gt; - A new switch was added to the
-packer function which allows keeping the resources generated with packer in case the packer
-build fails. This improves the ability to debug issues in the packer build.&lt;/li&gt;
-&lt;/ul&gt;
 </content:encoded>
 		</item>
 	</channel>
