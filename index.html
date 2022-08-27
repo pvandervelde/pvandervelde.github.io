@@ -83,17 +83,10 @@
     <!-- Context.Documents['Pages'] -->
         <!-- 404 Not Found - False - /404 -->
         <!-- About - True - /about -->
-        <!-- Apollo - False - /projects/apollo -->
         <!-- Calvinverse - False - /projects/calvinverse -->
-        <!-- nAdoni - False - /projects/nadoni -->
-        <!-- nAnicitus - False - /projects/nanicitus -->
         <!-- nBuildKit - False - /projects/nbuildkit -->
-        <!-- nRefs - False - /projects/nrefs -->
-        <!-- nTreva - False - /projects/ntreva -->
-        <!-- Nuclei - False - /projects/nuclei -->
-        <!-- Ops-Resource - False - /projects/ops-resource -->
         <!-- Projects - True - /projects -->
-        <!-- Sherlock - False - /projects/sherlock -->
+        <!-- Scuttle - False - /projects/scuttle -->
             <li class="active" >
                 Home
             </li>
@@ -136,6 +129,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Robotics-a-bumper-for-scuttle-overview">Starting robotics - Building a bumper for scuttle. The overview</a></li>
                             <li><a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">Starting robotics - Driving scuttle with ROS - Gazebo simulation</a></li>
                             <li><a href="/posts/Robotics-learning-ros">Starting robotics - Learning Robot Operating System (ROS)</a></li>
                             <li><a href="/posts/Starting-robotics-with-scuttle">Starting robotics with the SCUTTLE robot</a></li>
@@ -145,7 +139,6 @@
                             <li><a href="/posts/Calvinverse-an-example-build-infrastructure">Calvinverse - An example build infrastructure</a></li>
                             <li><a href="/posts/On-prem-vs-cloud-build-systems">Software development pipeline - On-prem or in the cloud?</a></li>
                             <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software development pipeline - Considerations for infrastructure improvements</a></li>
-                            <li><a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not">Software development pipeline - In the build system or not</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -162,10 +155,10 @@
                                     <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
+                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
+                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
@@ -177,10 +170,10 @@
                                     <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                    <a role="button" href="/tags/Pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
+                                    <a role="button" href="/tags/Nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
                                 </li>
                         </ul>
                     </div>
@@ -195,6 +188,95 @@
 
             <div id="content">
 
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Robotics-a-bumper-for-scuttle-overview">Starting robotics - Building a bumper for scuttle. The overview</a>
+</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Saturday, August 27, 2022
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/ROS" class="btn btn-default btn-xs tag-no-wrap">ROS</a>
+                        <a id="post-category" role="button" href="/tags/ROS-Noetic" class="btn btn-default btn-xs tag-no-wrap">ROS&nbsp;Noetic</a>
+                        <a id="post-category" role="button" href="/tags/Scuttle" class="btn btn-default btn-xs tag-no-wrap">Scuttle</a>
+    </div>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>In order to allow my SCUTTLE robot to drive around autonomously it needs some sensors so that it
+can <a href="https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping">perceive its surroundings</a>.
+One of the ways in which this is normally achieved is by adding a <a href="https://en.wikipedia.org/wiki/Lidar">LIDAR</a>
+unit. Unfortunately I don't have one of those, and LIDAR units are relatively expensive in New Zealand.
+Additionally I figured I'd learn more about robot sensors if I set up some simple sensors for my
+SCUTTLE robot before getting a LIDAR.</p>
+<figure style="float:left">
+<img alt="CAD model of the SCUTTLE bumper" src="/assets/images/robotics/scuttle/scuttle-bumper-cad-model.png" />
+<figcaption>The CAD model of the SCUTTLE bumper</figcaption>
+</figure>
+<p>So I decided to start with the simplest kind of sensor, the bump sensor. This type of sensor
+consists of one or more <a href="https://en.wikipedia.org/wiki/Limit_switch">limit switches</a> and a bumper
+surface, i.e. some kind of plate that bumps into things. This plate is held in place by springs thereby
+giving it the ability to move while also returning to its original position.
+When the robot bumps into an object with the plate, the springs are compressed and the plate hits
+the limit switches. These switches then signal the robot that it has hit something. At that point the
+robot can stop its motion and back away from the obstacle. As the robot backs away the springs push the
+bumper plate away from the limit switches. The change in switch state then signals to the robot that
+it is no longer in contact with the obstacle and can thus continue on its journey.</p>
+<p>Overall this doesn't sound very complicated so it should be pretty quick and easy to build the
+bump sensor ...</p>
+<p>Several weeks down the line I nearly finished my bump sensors</p>
+<p>The first part of my build was the design of the physical parts that I need to attach to SCUTTLE. I
+build the bumper with simple parts because I don't have access to a workshop or a 3D printer. So
+the bumper is a UHMWPE plate reinforced by some 90 degree aluminium extrusions. This prevents the
+plate from flexing when it contacts an obstacle. The plate is attached to two angle brackets, one on
+the left side and one on the right side. It is attached using four M3 bolts wrapped with springs,
+2 bolts for each side. The idea behind using 2 bolts per side is that this should provide some
+rotational stability while keeping the construction simple. Finally the angle brackets is attached
+to the scuttle frame with two T slot nuts.</p>
+<p>I found that the springs that keep the plate in the extended position have to be quite soft, otherwise
+SCUTTLE won't be able to compress the springs when it hits something at low speed. The first
+set of springs I got from Amazon were too stiff. For the second set of springs I got some ballpoint
+pen springs of Aliexpress which are much less stiff.</p>
+<figure style="float:right">
+<img alt="SCUTTLE with its new bumper" src="/assets/images/robotics/scuttle/scuttle-with-bumper.jpg" />
+<figcaption>SCUTTLE with its new bumper</figcaption>
+</figure>
+<p>This first version of the bumper mechanics works relatively well but for the next version there
+are some things I want to change</p>
+<ul>
+<li>The bolts have full thread on them which sometimes causes the bolts to get hung up on the tread. I
+had some issues finding partially threaded bolts with the right length and diameter.</li>
+<li>The current design allows left to right tilt which is good, but also top to bottom tilt. The latter
+is not so good as it potentially allows SCUTTLE to hit an obstacle without noticing. A better design
+would allow left to right rotation of the bumper but little to no top to bottom rotation. This
+allows the left and right limit switches to be triggered individually when SCUTTLE hits an obstacle
+on the left or right side respectively while ensuring that the limit switches are always triggered
+if the bumper hits something, even if the obstacle is low to the ground.</li>
+<li>The current bumper shape is a flat plate, it would be better if the bumper plate was curved. If the
+curved bumper is given the right radius it would allow SCUTTLE to rotate in place after hitting
+an obstacle without getting stuck. Obviously creating a curved bumper will increase construction
+effort.</li>
+</ul>
+<p>The mechanical design of the bumper is only one part of the task. In order for SCUTTLE to be able
+to respond to hitting an object I need to have have software that can respond to signals from the
+limit switches and the appropriate electronics that transfers the limit switch state to the
+raspberry pi. The electronics and the software that I created for this bumper will be described in
+separate posts.</p>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -556,106 +638,6 @@ picked up a <a href="https://scuttlerobot.org/">SCUTTLE</a> robot kit and starte
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Software-development-pipeline-security">Software development pipeline - Security</a>
-</h2>
-<div id="post-meta">
-    <div class="meta-date">
-Sunday, November 8, 2020
- |             Posted in     </div>
-    <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Build-configuration-as-code" class="btn btn-default btn-xs tag-no-wrap">Build&nbsp;configuration&nbsp;as&nbsp;code</a>
-                        <a id="post-category" role="button" href="/tags/Delivering-software" class="btn btn-default btn-xs tag-no-wrap">Delivering&nbsp;software</a>
-                        <a id="post-category" role="button" href="/tags/DevOps" class="btn btn-default btn-xs tag-no-wrap">DevOps</a>
-                        <a id="post-category" role="button" href="/tags/Security" class="btn btn-default btn-xs tag-no-wrap">Security</a>
-                        <a id="post-category" role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-xs tag-no-wrap">Software&nbsp;development&nbsp;pipeline</a>
-    </div>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>One of the final chapters in the description of the development pipeline deals with security. In
-this case I specifically mean the security of the pipeline and the underlying infrastructure,
-not the security of the applications which are created using the pipeline.</p>
-<p>The first question is why should you care about the security of the pipeline? After all
-developers use the development pipelines via secured networks and their access permissions will be
-set at the source control level. Additionally high trust levels exist between the pipeline
-processes, the infrastructure and the source repository. In general this leads to the
-security of the pipeline being placed lower on the priority list.</p>
-<p>Which issues could you run into if you deem the security of the pipeline less critical? One
-argument comes from
-<a href="https://www.researchgate.net/publication/332834111_Vulnerabilities_in_Continuous_Delivery_Pipelines_A_Case_Study">pen tests</a>
-which show that CI/CD systems are a great way into
-<a href="https://www.blackhat.com/docs/eu-15/materials/eu-15-Mittal-Continuous-Intrusion-Why-CI-Tools-Are-An-Attackers-Best-Friend.pdf">corporate networks</a>.
-Additionally there have been a number of attacks aimed at
-<a href="https://medium.com/&#64;hkparker/analysis-of-a-supply-chain-attack-2bd8fa8286ac">distributing</a> malicious
-code through trusted software packages. These so called
-<a href="https://en.wikipedia.org/wiki/Supply_chain_attack">supply chain attacks</a> try to compromise the user
-by inserting malicious code in third-party dependencies, i.e. the source code supply chain.</p>
-<p>In essence the problem comes down to the fact that the build pipeline and its associated infrastructure
-have access to many different systems and resources which are normally not easily accessible for
-its users. This makes your pipeline a target for malicious actors who could abuse some of the
-following states for their own purposes.</p>
-<ul>
-<li>The development pipeline runs all tasks with the same user account on the executors and thereby
-the same permissions. Obviously the worst case scenario would be running as an administrator.</li>
-<li>Multiple pipeline invocations executed on a single machine, either in parallel or sequential,
-which allows a task in a pipeline to access the workspace of another pipeline. This ability can
-for instance be used to by-pass access controls on source code.</li>
-<li>Downloading packages directly from external package repositories, e.g. NPM or Docker.</li>
-<li>Direct access to the internet, which allows downloading of malicious code and uploading of artefacts
-to undesired locations.</li>
-<li>The development pipeline has the ability to update or overwrite existing artefacts.</li>
-<li>The executors have direct access to different resources that normal pipeline users don't have
-access to. Specifically if the same infrastructure is used to build artefacts and
-to deploy them to the production environment.</li>
-</ul>
-<p>One of the problems with securing the development pipeline is that all the actions mentioned above
-are in one way or another required for the pipeline to function, after all the pipeline needs to be
-able to build and distribute artefacts. The follow up question then becomes can you distinguish between
-normal use and malicious use?</p>
-<p>It turns out that distinguishing that this will be difficult because both forms of actions are
-essentially the same, they both use the development pipeline for its intended purpose. So then in
-order to prevent malicious use put up as many barriers to malicious use as possible, aka
-<a href="https://en.wikipedia.org/wiki/Defense_in_depth_(computing)">defence in depth</a>. The following are a
-number of possible ways to add barriers:</p>
-<ul>
-<li>Grant the minimal possible permissions for the executors, both on the executor and from the executor
-to the external resources. It is better to run the pipeline actions as a local user on the executor,
-rather than using a domain user. Grant permissions to a specific resource to the action that
-interacts with the resource.</li>
-<li>Execute a single pipeline per executor and never reuse the executor.</li>
-<li>Limit network connections to and from executors. In general executors do not need internet access,
-save for a few pre-approved sites, .e.g. an artefact storage. There is also very little reason
-for executors to connect to each other, especially if executors are short lived.</li>
-<li>Pull packages, e.g. NPM or Docker, only from an internal feed. Additions to the internal feed are made
-after the specific package has been reviewed.</li>
-<li>The artefacts created with the pipeline should be tracked so that you know the origin, creation time,
-storage locations and other data that can help identity an exact instance of an artefact. Under
-ideal circumstances you would know exactly which sources and packages were used to create
-the artefact as well.</li>
-<li>Artefacts should be immutable and never be allowed to overwritten.</li>
-<li>Do not use the executors that perform builds for deployments, use a set of executors that only
-have deployment permissions but no permissions to source control etc..</li>
-</ul>
-<p>Beyond these changes there are many other ways to reduce the attack surface as documented in the
-security literature. In the end the goal of this post is more to point out that the security of the
-development pipeline is important, rather than providing ways to make a pipeline more secure. The
-exact solutions for pipeline security depend very heavily on the way the pipeline is constructed and
-what other forms of security validation have been placed around the pipeline.</p>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -686,9 +668,9 @@ what other forms of security validation have been placed around the pipeline.</p
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Wed, 01 Jun 2022 10:48:00 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 27 Aug 2022 00:43:51 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/13b9eb34ed9982659e2d015064caa208ad760404">13b9eb34ed9982659e2d015064caa208ad760404</a> at version 3.7.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/35a3bdf6c1a9fbdd88569188cac65f4da16fd1cd">35a3bdf6c1a9fbdd88569188cac65f4da16fd1cd</a> at version 3.8.0.        </p>
     </div>
 
     <p>

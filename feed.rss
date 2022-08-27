@@ -5,8 +5,80 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2022</copyright>
-		<pubDate>Wed, 01 Jun 2022 10:48:00 GMT</pubDate>
-		<lastBuildDate>Wed, 01 Jun 2022 10:48:00 GMT</lastBuildDate>
+		<pubDate>Sat, 27 Aug 2022 00:43:51 GMT</pubDate>
+		<lastBuildDate>Sat, 27 Aug 2022 00:43:51 GMT</lastBuildDate>
+		<item>
+			<title>Starting robotics - Building a bumper for scuttle. The overview</title>
+			<link>https://www.petrikvandervelde.nl/posts/Robotics-a-bumper-for-scuttle-overview</link>
+			<description>&lt;p&gt;In order to allow my SCUTTLE robot to drive around autonomously it needs some sensors so that it
+can &lt;a href="https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping"&gt;perceive its surroundings&lt;/a&gt;.
+One of the ways in which this is normally achieved is by adding a &lt;a href="https://en.wikipedia.org/wiki/Lidar"&gt;LIDAR&lt;/a&gt;
+unit. Unfortunately I don't have one of those, and LIDAR units are relatively expensive in New Zealand.
+Additionally I figured I'd learn more about robot sensors if I set up some simple sensors for my
+SCUTTLE robot before getting a LIDAR.&lt;/p&gt;</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Robotics-a-bumper-for-scuttle-overview</guid>
+			<pubDate>Sat, 27 Aug 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;In order to allow my SCUTTLE robot to drive around autonomously it needs some sensors so that it
+can &lt;a href="https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping"&gt;perceive its surroundings&lt;/a&gt;.
+One of the ways in which this is normally achieved is by adding a &lt;a href="https://en.wikipedia.org/wiki/Lidar"&gt;LIDAR&lt;/a&gt;
+unit. Unfortunately I don't have one of those, and LIDAR units are relatively expensive in New Zealand.
+Additionally I figured I'd learn more about robot sensors if I set up some simple sensors for my
+SCUTTLE robot before getting a LIDAR.&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+&lt;img alt="CAD model of the SCUTTLE bumper" src="/assets/images/robotics/scuttle/scuttle-bumper-cad-model.png" /&gt;
+&lt;figcaption&gt;The CAD model of the SCUTTLE bumper&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;So I decided to start with the simplest kind of sensor, the bump sensor. This type of sensor
+consists of one or more &lt;a href="https://en.wikipedia.org/wiki/Limit_switch"&gt;limit switches&lt;/a&gt; and a bumper
+surface, i.e. some kind of plate that bumps into things. This plate is held in place by springs thereby
+giving it the ability to move while also returning to its original position.
+When the robot bumps into an object with the plate, the springs are compressed and the plate hits
+the limit switches. These switches then signal the robot that it has hit something. At that point the
+robot can stop its motion and back away from the obstacle. As the robot backs away the springs push the
+bumper plate away from the limit switches. The change in switch state then signals to the robot that
+it is no longer in contact with the obstacle and can thus continue on its journey.&lt;/p&gt;
+&lt;p&gt;Overall this doesn't sound very complicated so it should be pretty quick and easy to build the
+bump sensor ...&lt;/p&gt;
+&lt;p&gt;Several weeks down the line I nearly finished my bump sensors&lt;/p&gt;
+&lt;p&gt;The first part of my build was the design of the physical parts that I need to attach to SCUTTLE. I
+build the bumper with simple parts because I don't have access to a workshop or a 3D printer. So
+the bumper is a UHMWPE plate reinforced by some 90 degree aluminium extrusions. This prevents the
+plate from flexing when it contacts an obstacle. The plate is attached to two angle brackets, one on
+the left side and one on the right side. It is attached using four M3 bolts wrapped with springs,
+2 bolts for each side. The idea behind using 2 bolts per side is that this should provide some
+rotational stability while keeping the construction simple. Finally the angle brackets is attached
+to the scuttle frame with two T slot nuts.&lt;/p&gt;
+&lt;p&gt;I found that the springs that keep the plate in the extended position have to be quite soft, otherwise
+SCUTTLE won't be able to compress the springs when it hits something at low speed. The first
+set of springs I got from Amazon were too stiff. For the second set of springs I got some ballpoint
+pen springs of Aliexpress which are much less stiff.&lt;/p&gt;
+&lt;figure style="float:right"&gt;
+&lt;img alt="SCUTTLE with its new bumper" src="/assets/images/robotics/scuttle/scuttle-with-bumper.jpg" /&gt;
+&lt;figcaption&gt;SCUTTLE with its new bumper&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;This first version of the bumper mechanics works relatively well but for the next version there
+are some things I want to change&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The bolts have full thread on them which sometimes causes the bolts to get hung up on the tread. I
+had some issues finding partially threaded bolts with the right length and diameter.&lt;/li&gt;
+&lt;li&gt;The current design allows left to right tilt which is good, but also top to bottom tilt. The latter
+is not so good as it potentially allows SCUTTLE to hit an obstacle without noticing. A better design
+would allow left to right rotation of the bumper but little to no top to bottom rotation. This
+allows the left and right limit switches to be triggered individually when SCUTTLE hits an obstacle
+on the left or right side respectively while ensuring that the limit switches are always triggered
+if the bumper hits something, even if the obstacle is low to the ground.&lt;/li&gt;
+&lt;li&gt;The current bumper shape is a flat plate, it would be better if the bumper plate was curved. If the
+curved bumper is given the right radius it would allow SCUTTLE to rotate in place after hitting
+an obstacle without getting stuck. Obviously creating a curved bumper will increase construction
+effort.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The mechanical design of the bumper is only one part of the task. In order for SCUTTLE to be able
+to respond to hitting an object I need to have have software that can respond to signals from the
+limit switches and the appropriate electronics that transfers the limit switch state to the
+raspberry pi. The electronics and the software that I created for this bumper will be described in
+separate posts.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Starting robotics - Driving scuttle with ROS - Gazebo simulation</title>
 			<link>https://www.petrikvandervelde.nl/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation</link>
@@ -1872,59 +1944,6 @@ docker to create container resources.&lt;/li&gt;
 a &lt;a href="https://packer.io"&gt;Packer&lt;/a&gt; image by executing packer with the previously created image and
 executing tests during the packer test build.&lt;/li&gt;
 &lt;/ul&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>nBuildKit release - V0.9.2</title>
-			<link>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V092</link>
-			<description>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.2"&gt;0.9.2&lt;/a&gt;
-of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt; has been released. This release fixes
-a number of bugs and adds a few new improvements&lt;/p&gt;</description>
-			<guid>https://www.petrikvandervelde.nl/posts/nBuildKit-release-V092</guid>
-			<pubDate>Sun, 14 May 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.9.2"&gt;0.9.2&lt;/a&gt;
-of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt; has been released. This release fixes
-a number of bugs and adds a few new improvements&lt;/p&gt;
-&lt;p&gt;All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/31?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;Bugs fixed&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/280"&gt;280&lt;/a&gt; - The &lt;code&gt;deploy.pushto.gitbranch&lt;/code&gt;
-script called the &lt;code&gt;GitCurrentBranch&lt;/code&gt; task with a &lt;code&gt;WorkingDirectory&lt;/code&gt; property which did not exist,
-thus causing the pushing to a git branch deployment step to fail.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/281"&gt;281&lt;/a&gt; - The &lt;code&gt;deploy.pushto.gitbranch&lt;/code&gt;
-script did not create the directory into which the repository should be cloned. This caused the
-step to fail.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/286"&gt;286&lt;/a&gt; - The &lt;code&gt;GenerateTargetsFile&lt;/code&gt; custom
-task applied a custom assembly resolver which did not resolve references to the MsBuild assemblies.
-This is a problem for MsBuild 15.0 and higher because from that version onwards the MsBuild assemblies,
-e.g. &lt;code&gt;Microsoft.Build.XX&lt;/code&gt; are no longer located in the GAC and can thus not be found by the standard
-assembly resolver.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/287"&gt;287&lt;/a&gt; - The &lt;code&gt;shared.prepare.copy.files&lt;/code&gt;
-task did not correctly copy the directory hierarchy.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/290"&gt;290&lt;/a&gt; - The &lt;code&gt;build.prepare.generatefiles&lt;/code&gt;
-script only generated the files if they did not exist. This has been changed so that generated
-files are always created and updated.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Improvements&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/254"&gt;254&lt;/a&gt; - All warnings and errors have been
-given a proper error code for easier parsing of errors from the log.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/282"&gt;282&lt;/a&gt; - The Git, Powershell and NuGet
-base tasks have been moved to the Core targets assembly so that they can be used in third party
-custom tasks as well.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/284"&gt;284&lt;/a&gt; - A new task has been added that
-allows extracting files from one or more ZIP archive files.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/285"&gt;285&lt;/a&gt; - Additional conditions have been
-added to all &lt;code&gt;ItemGroup&lt;/code&gt; elements to ensure that these item groups are only loaded when they are
-required. This reduces build times and improves stability.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/288"&gt;288&lt;/a&gt; - A new task has been added that
-allows downloading files from a HTTP URL. If the file in question is an archive file it can
-additionally be unzipped before the final copy takes place.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Additionally the first steps to better documentation have been taken. The &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/blob/master/README.md"&gt;readme&lt;/a&gt;,
-the &lt;a href="https://nbuildkit.github.io/nBuildKit.MsBuild/"&gt;introduction&lt;/a&gt; and the &lt;a href="https://nbuildkit.github.io/nBuildKit.MsBuild/docs/contributing"&gt;contributing&lt;/a&gt;
-documents have been updated.&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>

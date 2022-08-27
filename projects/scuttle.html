@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - Apollo</title>
+        <title>Mind vortex - Scuttle</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,9 +29,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - Apollo" />
+        <meta property="og:title" content="Mind vortex - Scuttle" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/projects/apollo" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/projects/scuttle" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -89,17 +89,10 @@
     <!-- Context.Documents['Pages'] -->
         <!-- 404 Not Found - False - /404 -->
         <!-- About - True - /about -->
-        <!-- Apollo - False - /projects/apollo -->
         <!-- Calvinverse - False - /projects/calvinverse -->
-        <!-- nAdoni - False - /projects/nadoni -->
-        <!-- nAnicitus - False - /projects/nanicitus -->
         <!-- nBuildKit - False - /projects/nbuildkit -->
-        <!-- nRefs - False - /projects/nrefs -->
-        <!-- nTreva - False - /projects/ntreva -->
-        <!-- Nuclei - False - /projects/nuclei -->
-        <!-- Ops-Resource - False - /projects/ops-resource -->
         <!-- Projects - True - /projects -->
-        <!-- Sherlock - False - /projects/sherlock -->
+        <!-- Scuttle - False - /projects/scuttle -->
             <li class="inactive" >
                 <a href="/">Home</a>
             </li>
@@ -142,6 +135,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Robotics-a-bumper-for-scuttle-overview">Starting robotics - Building a bumper for scuttle. The overview</a></li>
                             <li><a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">Starting robotics - Driving scuttle with ROS - Gazebo simulation</a></li>
                             <li><a href="/posts/Robotics-learning-ros">Starting robotics - Learning Robot Operating System (ROS)</a></li>
                             <li><a href="/posts/Starting-robotics-with-scuttle">Starting robotics with the SCUTTLE robot</a></li>
@@ -151,7 +145,6 @@
                             <li><a href="/posts/Calvinverse-an-example-build-infrastructure">Calvinverse - An example build infrastructure</a></li>
                             <li><a href="/posts/On-prem-vs-cloud-build-systems">Software development pipeline - On-prem or in the cloud?</a></li>
                             <li><a href="/posts/Software-development-pipeline-considerations-for-infrastructure-improvements">Software development pipeline - Considerations for infrastructure improvements</a></li>
-                            <li><a href="/posts/Sofware-development-pipeline-In-the-build-system-or-not">Software development pipeline - In the build system or not</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -168,10 +161,10 @@
                                     <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
+                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
+                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
@@ -183,10 +176,10 @@
                                     <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                    <a role="button" href="/tags/Pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
+                                    <a role="button" href="/tags/Nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
                                 </li>
                         </ul>
                     </div>
@@ -201,22 +194,21 @@
 
             <div id="content">
                         <div class="project">
-                            <h2>Apollo</h2>
+                            <h2>Scuttle</h2>
                             <div>
-                                <p><a href="https://github.com/pvandervelde/Apollo">Apollo</a> is the code name for an application that provides engineering and design simulation capabilities, e.g. <a href="https://en.wikipedia.org/wiki/Computational_fluid_dynamics">fluid</a>, <a href="https://en.wikipedia.org/wiki/Solid_mechanics">structural</a> or <a href="https://en.wikipedia.org/wiki/Product_optimization">optimization</a> calculations, for users who aren't highly skilled in the use of modern day simulation tools. The goal for Apollo is to provide the users with a high level abstraction of the simulation so that they can focus on the engineering design while the software handles the underlying simulation details.</p>
-<p>Apollo will not provide any geometry manipulation capabilities from itself, but it will instead by tightly integrated into one or more <a href="https://en.wikipedia.org/wiki/Computer-aided_design">CAD</a> applications so that users can execute simulations directly from their CAD applications. For starters Apollo will only be integrated with <a href="https://www.rhino3d.com/">Rhino 3D</a>.</p>
-<p>To allow users to run large computations the application is capable of distributing the processing over multiple CPU cores and onto other computers on the local network.</p>
+                                <p><a href="https://scuttlerobot.org">SCUTTLE</a> is my robot testing platform.</p>
 
                             </div>
                             <div id="project-linkedposts">
 
-        <h3>Recent posts referencing Apollo</h3>
+        <h3>Recent posts referencing Scuttle</h3>
         <ul>
-                <li><a href="/posts/Regression-testing-gui-applications">GUI testing with TestStack.White</a></li>
-                <li><a href="/posts/Regression-testing-console-applications">Regression testing of a console application</a></li>
+                <li><a href="/posts/Robotics-a-bumper-for-scuttle-overview">Starting robotics - Building a bumper for scuttle. The overview</a></li>
+                <li><a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">Starting robotics - Driving scuttle with ROS - Gazebo simulation</a></li>
+                <li><a href="/posts/Starting-robotics-with-scuttle">Starting robotics with the SCUTTLE robot</a></li>
         </ul>
         <div id="project-linkedposts-more">
-            More posts referencing <a href="/tags/apollo">Apollo</a>
+            More posts referencing <a href="/tags/scuttle">Scuttle</a>
         </div>
 </div>
 
@@ -251,9 +243,9 @@
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Wed, 01 Jun 2022 10:48:04 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 27 Aug 2022 00:43:55 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/13b9eb34ed9982659e2d015064caa208ad760404">13b9eb34ed9982659e2d015064caa208ad760404</a> at version 3.7.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/35a3bdf6c1a9fbdd88569188cac65f4da16fd1cd">35a3bdf6c1a9fbdd88569188cac65f4da16fd1cd</a> at version 3.8.0.        </p>
     </div>
 
     <p>
