@@ -4,8 +4,151 @@
 	<title>Mind vortex</title>
 	<link rel="self" href="https://www.petrikvandervelde.nl/" />
 	<rights>2022</rights>
-	<updated>2022-08-27T00:43:51Z</updated>
+	<updated>2022-09-09T07:16:50Z</updated>
 	<subtitle>Welcome!</subtitle>
+	<entry>
+		<id>https://www.petrikvandervelde.nl/posts/Robotics-a-bumper-for-scuttle-software</id>
+		<title>Starting robotics - Building a bumper for scuttle. The software</title>
+		<link href="https://www.petrikvandervelde.nl/posts/Robotics-a-bumper-for-scuttle-software" />
+		<updated>2022-09-09T00:00:00Z</updated>
+		<content>&lt;p&gt;In my &lt;a href="posts/Robotics-a-bumper-for-scuttle-overview"&gt;previous post&lt;/a&gt; I talked about creating a bump
+sensor for my SCUTTLE robot. After creating the mechanical design I started working on the software.
+There are two parts to the software, translating the state of the micro switches and turning the state
+changes into movement commands for the robot, i.e. if the robot runs into
+an obstacle it should stop and reverse its last movement. I decided to create a
+&lt;a href="https://www.ros.org/"&gt;ROS&lt;/a&gt; node for each of these actions, i.e. one node
+for the movement generation and one to translate the switch states. The reason for
+creating two nodes instead of putting all the code into one node is that this allows me to run the
+movement generation code both in a simulation and on the physical robot. So I gain the ability to
+test more of my code, but I lose a bit of performance because the two nodes communicate using
+messages which is slower than just using method calls.&lt;/p&gt;
+&lt;p&gt;To test the bump sensor code I use &lt;a href="https://gazebosim.org/home"&gt;Gazebo&lt;/a&gt; to simulate how the bump
+sensor would work. Gazebo has the ability to calculate collisions
+and create &lt;a href="http://docs.ros.org/en/api/gazebo_msgs/html/msg/ContactsState.html"&gt;ContactsState&lt;/a&gt;
+messages based on these collision calculations. So I created a third ROS node to translate these
+Gazebo messages to my own &lt;a href="https://github.com/pvandervelde/scuttle_ros_msgs/blob/noetic/msg/BumperEvent.msg"&gt;bumper event messages&lt;/a&gt;.
+With that I can test my obstacle response code in Gazebo which provides a more controlled environment
+than the physical robot does.&lt;/p&gt;
+&lt;p&gt;The first thing to do is to update the robot definition to include the bumper. This is done by adding
+the &lt;a href="http://wiki.ros.org/urdf/XML/link"&gt;links&lt;/a&gt; and &lt;a href="http://wiki.ros.org/urdf/XML/joint"&gt;joints&lt;/a&gt; that
+make up my bumper to an &lt;a href="https://github.com/pvandervelde/scuttle_bumper/blob/master/urdf/bumper.xacro"&gt;URDF file&lt;/a&gt;.
+This URDF file is linked to the main &lt;a href="https://github.com/scuttlerobot/scuttle_description"&gt;model description&lt;/a&gt;
+for SCUTTLE. After that I added the information for the &lt;a href="https://classic.gazebosim.org/tutorials?tut=ros_gzplugins#Bumper"&gt;Gazebo bumper sensor&lt;/a&gt;.
+In the URDF file this looks as follows:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    &amp;lt;gazebo reference=&amp;quot;front_bumper_plate_left_link&amp;quot;&amp;gt;
+        &amp;lt;sensor name=&amp;quot;front_bumper_left&amp;quot; type=&amp;quot;contact&amp;quot;&amp;gt;
+            &amp;lt;selfCollide&amp;gt;true&amp;lt;/selfCollide&amp;gt;
+            &amp;lt;alwaysOn&amp;gt;true&amp;lt;/alwaysOn&amp;gt;
+            &amp;lt;updateRate&amp;gt;15.0&amp;lt;/updateRate&amp;gt;
+            &amp;lt;material&amp;gt;Gazebo/WhiteGlow&amp;lt;/material&amp;gt;
+            &amp;lt;contact&amp;gt;
+                &amp;lt;collision&amp;gt;base_link_fixed_joint_lump__front_bumper_plate_left_cl_collision_3&amp;lt;/collision&amp;gt;
+                &amp;lt;topic&amp;gt;bumper_contact&amp;lt;/topic&amp;gt;
+            &amp;lt;/contact&amp;gt;
+            &amp;lt;plugin name=&amp;quot;gazebo_ros_bumper_controller_front_left&amp;quot; filename=&amp;quot;libgazebo_ros_bumper.so&amp;quot;&amp;gt;
+                &amp;lt;bumperTopicName&amp;gt;scuttle_bumper&amp;lt;/bumperTopicName&amp;gt;
+                &amp;lt;frameName&amp;gt;front_bumper_plate_left_link&amp;lt;/frameName&amp;gt;
+            &amp;lt;/plugin&amp;gt;
+        &amp;lt;/sensor&amp;gt;
+    &amp;lt;/gazebo&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I found that defining a contact sensor for Gazebo requires getting the link ID correct. In order to
+do so you need to follow these steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The bumper contact information needs to be defined inside a &lt;a href="https://classic.gazebosim.org/tutorials?tut=ros_urdf&amp;amp;cat=connect_ros"&gt;&lt;code&gt;gazebo&lt;/code&gt;&lt;/a&gt;
+element. This &lt;code&gt;gazebo&lt;/code&gt; element should have a &lt;code&gt;reference&lt;/code&gt; attribute that points to the link that is
+to be used as the bumper surface.&lt;/li&gt;
+&lt;li&gt;The name for the &lt;code&gt;collision&lt;/code&gt; element needs to be found after translation to the SDF format. Normally
+this is something Gazebo does internally. In this case you'll need to do this manually. If your
+geometry is defined in an &lt;a href="http://wiki.ros.org/xacro"&gt;xacro&lt;/a&gt; file then you first need to translate
+this to URDF using the &lt;code&gt;rosrun xacro xacro --inorder -o model.urdf model.urdf.xacro&lt;/code&gt; command. After
+that you can translate the URDF to SDF with the &lt;code&gt;gz sdf -p scuttle.urdf &amp;gt; scuttle.sdf&lt;/code&gt; command. Once
+you have the SDF file you can search for the
+&lt;a href="https://answers.gazebosim.org/question/21992/what-collision-name-is-supposed-to-be-passed-to-contact-sensor/"&gt;correct element IDs&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In the above example the collision name, &lt;code&gt;base_link_fixed_joint_lump__front_bumper_plate_left_cl_collision_3&lt;/code&gt;,
+is the one you need to extract from the SDF file. Note that it can change if you make changes to
+your xacro / URDF file, so in that case you will need to extract it again.&lt;/p&gt;
+&lt;p&gt;Once you have defined the URDF Gazebo will generate contact messages when the bumper hits an object.
+These contact messages contain information describing where the contact occurred on the geometry mesh,
+so in theory I could have used this information to determine if the contact would trigger the left
+limit switch or the right limit switch or both. However that requires a decent amount of calculations
+which is both work and introduces the potential for errors. So I opted to split the bumper into
+two parts, one for the left side and one for the right side. If anything contacts anywhere on the
+left side I consider that a trigger for the left part of the bumper and similar for the right side.&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+&lt;img alt="SCUTTLE with bumper in RViz" src="/assets/images/robotics/scuttle/scuttle-with-bumper-in-rviz.png" /&gt;
+&lt;figcaption&gt;SCUTTLE with bumper in RViz&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;With the URDF work done I started writing the code for the different ROS nodes. First
+the &lt;a href="https://github.com/pvandervelde/scuttle_bumper/blob/master/src/gazebo_contact_sensor_translator.py"&gt;gazebo translator node&lt;/a&gt;.
+This node subscribes to the &lt;a href="http://docs.ros.org/en/api/gazebo_msgs/html/msg/ContactsState.html"&gt;ContactsState&lt;/a&gt;
+messages that Gazebo sends when the bumper geometry collides with something. These messages are then
+translated to a &lt;a href="https://github.com/pvandervelde/scuttle_ros_msgs/blob/noetic/msg/BumperEvent.msg"&gt;BumperEvent&lt;/a&gt;
+message for further processing.&lt;/p&gt;
+&lt;p&gt;One interesting observation about the Gazebo contact messages are that they exhibit something
+similar to &lt;a href="https://www.pcmag.com/index.php/encyclopedia/term/switch-bounce"&gt;switch bounce&lt;/a&gt;, in other
+words it seems that the contact is intermittent even if the bumper plate is in solid contact with
+the object. I'm guessing that this is caused by the fact that calculating collisions between moving
+surfaces is difficult. In the end it doesn't matter what causes this behaviour though because we
+need to &lt;a href="https://github.com/pvandervelde/scuttle_bumper/blob/master/src/debounce.py"&gt;deal with it&lt;/a&gt; in
+some sensible way.&lt;/p&gt;
+&lt;p&gt;Once the bumper event messages have been generated they are processed by the
+&lt;a href="https://github.com/pvandervelde/scuttle_bumper/blob/master/src/bumper_navigator.py"&gt;second node&lt;/a&gt;.
+This node subscribes to both odometry events and bumper events. Internally it keeps track of the
+motion state of SCUTTLE. On reception of a bumper event the node sends a
+&lt;a href="http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html"&gt;velocity command&lt;/a&gt;
+to stop the robot. Once the robot has stopped it sends commands for it to reverse course far enough
+that it is no longer contact with the obstacle.&lt;/p&gt;
+&lt;p&gt;One thing to note is that while the bumper code is working to reverse course after hitting an obstacle,
+the other parts of ROS, e.g. the navigation stack, are probably still trying to steer the robot in the
+original direction because those parts don't know about the obstacle. After all it is not on the
+navigation map. This results in many different velocity commands being send, which could be very
+confusing for the robot. One design decision was to make the bumper code unaware of other nodes. This
+was done because allowing the bumper code to supress velocity
+commands from other nodes would imply that the bumper code is always the most important publisher
+when it comes to velocity commands. There are cases where this isn't true, e.g. when using
+the bumpers to park SCUTTLE against a specific object like in the case of a docking station.&lt;/p&gt;
+&lt;p&gt;To ensure that a consistent set of velocity commands are sent to the motors I used the
+&lt;a href="http://wiki.ros.org/twist_mux"&gt;twist multiplexer node&lt;/a&gt; which takes in velocity commands from
+many nodes and forwards them using a priority-based scheme. In the current implementation the
+priorities are, from low to high&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Navigation&lt;/li&gt;
+&lt;li&gt;Keyboard&lt;/li&gt;
+&lt;li&gt;Bumper&lt;/li&gt;
+&lt;li&gt;Joypad / Joystick&lt;/li&gt;
+&lt;/ul&gt;
+&lt;iframe
+    style="float:right"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/SddexyGTJ0M"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;p&gt;By using the twist multiplexer mode it is easy for users to change the priority by changing a configuration
+file instead of having to change the bumper code.&lt;/p&gt;
+&lt;p&gt;With that the bumper code is able to make SCUTTLE respond to objects it bumps into. The next step in
+the process of adding bump sensors to SCUTTLE is to assemble the electronic components so that the
+movement of the bumper can be registered and reported to the software components.&lt;/p&gt;
+&lt;p&gt;Finally a addition to the software that needs to be made is the ability to add the obstacles in the
+navigation map so that SCUTTLE can navigate around the newly discovered obstacles.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;In my &lt;a href="posts/Robotics-a-bumper-for-scuttle-overview"&gt;previous post&lt;/a&gt; I talked about creating a bump
+sensor for my SCUTTLE robot. After creating the mechanical design I started working on the software.
+There are two parts to the software, translating the state of the micro switches and turning the state
+changes into movement commands for the robot, i.e. if the robot runs into
+an obstacle it should stop and reverse its last movement. I decided to create a
+&lt;a href="https://www.ros.org/"&gt;ROS&lt;/a&gt; node for each of these actions, i.e. one node
+for the movement generation and one to translate the switch states. The reason for
+creating two nodes instead of putting all the code into one node is that this allows me to run the
+movement generation code both in a simulation and on the physical robot. So I gain the ability to
+test more of my code, but I lose a bit of performance because the two nodes communicate using
+messages which is slower than just using method calls.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://www.petrikvandervelde.nl/posts/Robotics-a-bumper-for-scuttle-overview</id>
 		<title>Starting robotics - Building a bumper for scuttle. The overview</title>
@@ -1919,30 +2062,5 @@ of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/
 have been released. The &lt;code&gt;0.10.0&lt;/code&gt; release is the first release in the stabilization
 cycle. There are still a few major changes but the goal is to start stabilizing nBuildKit
 in preparation for the 1.0.0 release.&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V030</id>
-		<title>Ops-Tools-Build release - V0.3.0</title>
-		<link href="https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V030" />
-		<updated>2017-07-16T00:00:00Z</updated>
-		<content>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.3.0"&gt;0.3.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;
-&lt;p&gt;This release was focussed on providing the capabilities to use the Docker toolset to create new
-containers and to run validation of VM resources generated by &lt;a href="https://packer.io"&gt;Packer&lt;/a&gt;.
-All the work items that have been closed for this release can be found on
-&lt;a href="https://github.com/ops-resource/ops-tools-build/milestone/3?closed=1"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;New functionality&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/33"&gt;33&lt;/a&gt; - Added the ability to
-create ISO files during the test stage.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/24"&gt;24&lt;/a&gt; - Added functions to invoke
-docker to create container resources.&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ops-resource/ops-tools-build/issues/32"&gt;32&lt;/a&gt; - Added functions to validate
-a &lt;a href="https://packer.io"&gt;Packer&lt;/a&gt; image by executing packer with the previously created image and
-executing tests during the packer test build.&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-		<summary>&lt;p&gt;Version &lt;a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.3.0"&gt;0.3.0&lt;/a&gt; of the
-&lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt; toolkit was released.&lt;/p&gt;</summary>
 	</entry>
 </feed>
