@@ -5,8 +5,71 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2022</copyright>
-		<pubDate>Fri, 09 Sep 2022 07:16:50 GMT</pubDate>
-		<lastBuildDate>Fri, 09 Sep 2022 07:16:50 GMT</lastBuildDate>
+		<pubDate>Tue, 01 Nov 2022 07:17:22 GMT</pubDate>
+		<lastBuildDate>Tue, 01 Nov 2022 07:17:22 GMT</lastBuildDate>
+		<item>
+			<title>Starting robotics - Building a bumper for scuttle. The electronics</title>
+			<link>https://www.petrikvandervelde.nl/posts/Robotics-a-bumper-for-scuttle-electronics</link>
+			<description>&lt;p&gt;The final part of building a bumper for SCUTTLE is to assemble the electronics component which translates
+the movement of the bumper into signals which can be processed by the bumper software. In order to do
+this I designed a simple circuit using &lt;a href="https://www.kicad.org/"&gt;KiCad&lt;/a&gt; and advice from one of the
+many robotics forums.&lt;/p&gt;</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Robotics-a-bumper-for-scuttle-electronics</guid>
+			<pubDate>Fri, 21 Oct 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;The final part of building a bumper for SCUTTLE is to assemble the electronics component which translates
+the movement of the bumper into signals which can be processed by the bumper software. In order to do
+this I designed a simple circuit using &lt;a href="https://www.kicad.org/"&gt;KiCad&lt;/a&gt; and advice from one of the
+many robotics forums.&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+&lt;img alt="SCUTTLE bumper electronics schematic" src="/assets/images/robotics/scuttle/scuttle-bumper-kicad.png" /&gt;
+&lt;figcaption&gt;SCUTTLE bumper electronics schematic made in KiCad&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;The circuit contains a microswitch as the trigger. The switch is connected to one of the 3.3V output
+pins on the raspberry PI 4 board on one side and to one of the GPIO pins on the other side. When
+the switch is depressed the circuit closes and the GPIO pin is driven to 3.3V, which is considered
+a high signal. In order to ensure that the voltage on the GPIO pin is 0V when the circuit is not
+closed I added a &lt;a href="https://en.wikipedia.org/wiki/Pull-up_resistor"&gt;pull down&lt;/a&gt; resistor. On the
+raspberry PI it is possible to programmatically add a pull down resistor, however because I'm
+using this as a learning exercise I thought it would be more suitable to include a physical pull down
+resistor in the circuit.&lt;/p&gt;
+&lt;p&gt;The next thing I wanted from the circuit was the ability to see if the circuit was closed or not, so
+that when I'm debugging it is obvious if there is a problem with the power, electronics or software.
+For this purpose I added a yellow LED to the circuit, which lights up when the circuit is closed.
+Adding the LED then adds the requirement to protect it from over current in case that the input pin
+was programmed to be an output pin by mistake. For this purpose I added a resistor next to the input
+pin.&lt;/p&gt;
+&lt;figure style="float:right"&gt;
+&lt;img alt="SCUTTLE bumper electronics boards" src="/assets/images/robotics/scuttle/scuttle-bumper-electronics-boards.jpg" /&gt;
+&lt;figcaption&gt;SCUTTLE bumper electronics boards&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;After testing the circuit on the breadboard the next step was to solder two switch boards and
+a distribution board. Each switch board would have a micro-switch, the LED, the resistors and a
+JST-XH three pin connector for power, ground and signal wires.
+The distribution board would have four JST-XH three pin connectors and one JST-XH six pin connector.
+The four three pin connectors would allow me to have a front bumper and a rear bumper, each
+having a switch board on the left and the right. I used JST-XH connectors instead of the Dupont
+connectors because the JST connectors are directional, thereby removing any potential issues with
+plugging the connector in the wrong way.&lt;/p&gt;
+&lt;p&gt;Part of this journey involved learning how to solder electronics components. I bought a Weller WE 1010
+soldering station for this and future jobs. I managed to do a reasonable job soldering the parts but
+it is obvious that I still have a lot to learn when it comes to soldering.&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+&lt;img alt="SCUTTLE bumper electronics assembled" src="/assets/images/robotics/scuttle/scuttle-bumper-assembled.jpg" /&gt;
+&lt;figcaption&gt;SCUTTLE bumper electronics assembled&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;The last task was to crimp the connectors and connect the boards. Because the raspberry Pi has a
+Dupont header I needed to crimp both Dupont connectors and JST-XH connectors. For the Dupont connectors
+I got an Iwiss SN-025 crimper. It works pretty well for those connectors. However the crimper dies are
+too wide for the JST-XH connectors. So to crimp the JST-XH connectors I had to get a different
+crimper with narrower dies. So for this I got an Engineer PAD-11 crimper. While this is not a
+ratcheting crimper it works really well, at least for the JST-XH connectors.&lt;/p&gt;
+&lt;p&gt;So now that the mechanical setup is done, the software is, mostly, done and the electronics have
+been soldered and connected my bumper works. Sort of. It turns out that there is a
+problems with my SCUTTLE that make the bump response only work partially. It seems that
+there is an issue with the wheel encoders, which causes the software to not know how much one of the
+wheels has rotated. I will discuss fixing the encoders in another post.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Starting robotics - Building a bumper for scuttle. The software</title>
 			<link>https://www.petrikvandervelde.nl/posts/Robotics-a-bumper-for-scuttle-software</link>
@@ -2016,52 +2079,6 @@ how to achieve accuracy for a development pipeline.&lt;/li&gt;
 captures a broader perspective on the ability of the system to handle expected and unexpected
 changes.&lt;/li&gt;
 &lt;/ul&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>nBuildKit release - V0.10.0</title>
-			<link>https://www.petrikvandervelde.nl/posts/nBuildkit-release-V0100</link>
-			<description>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.0"&gt;0.10.0&lt;/a&gt;
-and version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.1"&gt;0.10.1&lt;/a&gt;
-of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt;
-have been released. The &lt;code&gt;0.10.0&lt;/code&gt; release is the first release in the stabilization
-cycle. There are still a few major changes but the goal is to start stabilizing nBuildKit
-in preparation for the 1.0.0 release.&lt;/p&gt;</description>
-			<guid>https://www.petrikvandervelde.nl/posts/nBuildkit-release-V0100</guid>
-			<pubDate>Sun, 16 Jul 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.0"&gt;0.10.0&lt;/a&gt;
-and version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.1"&gt;0.10.1&lt;/a&gt;
-of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt;
-have been released. The &lt;code&gt;0.10.0&lt;/code&gt; release is the first release in the stabilization
-cycle. There are still a few major changes but the goal is to start stabilizing nBuildKit
-in preparation for the 1.0.0 release.&lt;/p&gt;
-&lt;p&gt;The highlights are&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/308"&gt;Renamed&lt;/a&gt; &lt;code&gt;DirTest&lt;/code&gt; to &lt;code&gt;DirTests&lt;/code&gt;.
-This is a &lt;em&gt;breaking&lt;/em&gt; change.&lt;/li&gt;
-&lt;li&gt;Additional &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/248"&gt;meta data&lt;/a&gt; can
-be provided with the build, test and deploy steps to indicate if a step should be inserted
-before or after another step in the sequence. Steps which have no insertion limits, i.e
-those steps that do not have the before or after meta data set, are inserted in document order.
-Steps that do define insertion limits are inserted according to the limits. Note that
-circular limits are not allowed as well as step sequences where there are no steps without
-insertion limits.&lt;/li&gt;
-&lt;li&gt;Deploying artefacts to an &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/303"&gt;HTTP server&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Initial implementation of the &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/296"&gt;ability to verify GPG hash signatures&lt;/a&gt;.
-The current implementation requires that the GPG tooling is allowed through the firewall.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;In addition to the major changes some additional build, test and deploy steps have also been defined:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Addition of properties that indicate &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/304"&gt;which stage the script is currently executing&lt;/a&gt;. The
-new properties are &lt;code&gt;IsBuild&lt;/code&gt;, &lt;code&gt;IsTest&lt;/code&gt; and &lt;code&gt;IsDeploy&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Allowing &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/306"&gt;template variables&lt;/a&gt; in the
-path and &lt;code&gt;destination&lt;/code&gt; of the &lt;code&gt;ArchiveFilesToCopy&lt;/code&gt; item group.&lt;/li&gt;
-&lt;li&gt;Migrated the &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/issues/297"&gt;hash calculation functions&lt;/a&gt;
-from &lt;a href="https://github.com/ops-resource/ops-tools-build"&gt;Ops-Tools-Build&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;All the work items that have been closed for this release can be found on
-GitHub in the milestone list for releases &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/30?closed=1"&gt;0.10.0&lt;/a&gt;
-and &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/milestone/35?closed=1"&gt;0.10.1&lt;/a&gt;.&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>

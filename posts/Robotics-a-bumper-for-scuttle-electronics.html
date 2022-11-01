@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - Ops-Tools-Build release - V0.2.0</title>
+        <title>Mind vortex - Starting robotics - Building a bumper for scuttle. The electronics</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,9 +29,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - Ops-Tools-Build release - V0.2.0" />
+        <meta property="og:title" content="Mind vortex - Starting robotics - Building a bumper for scuttle. The electronics" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Robotics-a-bumper-for-scuttle-electronics" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -202,56 +202,90 @@
 
 
 <h2>
-Ops-Tools-Build release - V0.2.0</h2>
+Starting robotics - Building a bumper for scuttle. The electronics</h2>
 <div id="post-meta">
     <div class="meta-date">
-Sunday, May 14, 2017
+Friday, October 21, 2022
  |             Posted in     </div>
     <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Ops-Resource" class="btn btn-default btn-xs tag-no-wrap">Ops-Resource</a>
-                        <a id="post-category" role="button" href="/tags/Ops-Tools-Build" class="btn btn-default btn-xs tag-no-wrap">Ops-Tools-Build</a>
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/ROS" class="btn btn-default btn-xs tag-no-wrap">ROS</a>
+                        <a id="post-category" role="button" href="/tags/ROS-Noetic" class="btn btn-default btn-xs tag-no-wrap">ROS&nbsp;Noetic</a>
+                        <a id="post-category" role="button" href="/tags/Scuttle" class="btn btn-default btn-xs tag-no-wrap">Scuttle</a>
     </div>
 </div>
 
     </div>
 
     <div id="post-content">
-        <p>Version <a href="https://github.com/ops-resource/ops-tools-build/releases/tag/0.2.0">0.2.0</a> of the
-<a href="https://github.com/ops-resource/ops-tools-build">Ops-Tools-Build</a> toolkit was released.</p>
-<p>This release was focussed on providing the capabilities to use the Chef toolset to create new
-resources. All the work items that have been closed for this release can be found on
-<a href="https://github.com/ops-resource/ops-tools-build/milestone/2?closed=1">GitHub</a>.</p>
-<h3>New functionality</h3>
-<ul>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/5">5</a> - A new function which provides
-the ability to execute <a href="https://github.com/sethvargo/chefspec">ChefSpec</a> tests.</li>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/6">6</a> - A new function which
-invokes the Chef linting tool <a href="https://www.foodcritic.io/">Foodcritic</a> on the selected Chef cookbooks.</li>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/7">7</a> - A new function which invokes the
-Ruby linting tool <a href="https://github.com/bbatsov/rubocop">RuboCop</a> on selected Ruby source files.</li>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/20">20</a> - A new package restore script
-was added to allow restoring Chef cookbooks via <a href="https://github.com/berkshelf/berkshelf">Berkshelf</a>.</li>
-<li><a href="https://github.com/ops-resource/ops-tools-build/issues/21">21</a> - A new switch was added to the
-packer function which allows keeping the resources generated with packer in case the packer
-build fails. This improves the ability to debug issues in the packer build.</li>
-</ul>
+        <p>The final part of building a bumper for SCUTTLE is to assemble the electronics component which translates
+the movement of the bumper into signals which can be processed by the bumper software. In order to do
+this I designed a simple circuit using <a href="https://www.kicad.org/">KiCad</a> and advice from one of the
+many robotics forums.</p>
+<figure style="float:left">
+<img alt="SCUTTLE bumper electronics schematic" src="/assets/images/robotics/scuttle/scuttle-bumper-kicad.png" />
+<figcaption>SCUTTLE bumper electronics schematic made in KiCad</figcaption>
+</figure>
+<p>The circuit contains a microswitch as the trigger. The switch is connected to one of the 3.3V output
+pins on the raspberry PI 4 board on one side and to one of the GPIO pins on the other side. When
+the switch is depressed the circuit closes and the GPIO pin is driven to 3.3V, which is considered
+a high signal. In order to ensure that the voltage on the GPIO pin is 0V when the circuit is not
+closed I added a <a href="https://en.wikipedia.org/wiki/Pull-up_resistor">pull down</a> resistor. On the
+raspberry PI it is possible to programmatically add a pull down resistor, however because I'm
+using this as a learning exercise I thought it would be more suitable to include a physical pull down
+resistor in the circuit.</p>
+<p>The next thing I wanted from the circuit was the ability to see if the circuit was closed or not, so
+that when I'm debugging it is obvious if there is a problem with the power, electronics or software.
+For this purpose I added a yellow LED to the circuit, which lights up when the circuit is closed.
+Adding the LED then adds the requirement to protect it from over current in case that the input pin
+was programmed to be an output pin by mistake. For this purpose I added a resistor next to the input
+pin.</p>
+<figure style="float:right">
+<img alt="SCUTTLE bumper electronics boards" src="/assets/images/robotics/scuttle/scuttle-bumper-electronics-boards.jpg" />
+<figcaption>SCUTTLE bumper electronics boards</figcaption>
+</figure>
+<p>After testing the circuit on the breadboard the next step was to solder two switch boards and
+a distribution board. Each switch board would have a micro-switch, the LED, the resistors and a
+JST-XH three pin connector for power, ground and signal wires.
+The distribution board would have four JST-XH three pin connectors and one JST-XH six pin connector.
+The four three pin connectors would allow me to have a front bumper and a rear bumper, each
+having a switch board on the left and the right. I used JST-XH connectors instead of the Dupont
+connectors because the JST connectors are directional, thereby removing any potential issues with
+plugging the connector in the wrong way.</p>
+<p>Part of this journey involved learning how to solder electronics components. I bought a Weller WE 1010
+soldering station for this and future jobs. I managed to do a reasonable job soldering the parts but
+it is obvious that I still have a lot to learn when it comes to soldering.</p>
+<figure style="float:left">
+<img alt="SCUTTLE bumper electronics assembled" src="/assets/images/robotics/scuttle/scuttle-bumper-assembled.jpg" />
+<figcaption>SCUTTLE bumper electronics assembled</figcaption>
+</figure>
+<p>The last task was to crimp the connectors and connect the boards. Because the raspberry Pi has a
+Dupont header I needed to crimp both Dupont connectors and JST-XH connectors. For the Dupont connectors
+I got an Iwiss SN-025 crimper. It works pretty well for those connectors. However the crimper dies are
+too wide for the JST-XH connectors. So to crimp the JST-XH connectors I had to get a different
+crimper with narrower dies. So for this I got an Engineer PAD-11 crimper. While this is not a
+ratcheting crimper it works really well, at least for the JST-XH connectors.</p>
+<p>So now that the mechanical setup is done, the software is, mostly, done and the electronics have
+been soldered and connected my bumper works. Sort of. It turns out that there is a
+problems with my SCUTTLE that make the bump response only work partially. It seems that
+there is an issue with the wheel encoders, which causes the software to not know how much one of the
+wheels has rotated. I will discuss fixing the encoders in another post.</p>
 
     </div>
 
     <div id="post-footer">
         <div>
     <div class="navlinks">
-                <a href="/posts/nBuildKit-release-V092" title="Previous Post: nBuildKit release - V0.9.2" class="navlinks-prev">« nBuildKit release - V0.9.2</a>
-                <a href="/posts/Ops-Tools-Build-release-V030" title="Next Post: Ops-Tools-Build release - V0.3.0" class="navlinks-next">Ops-Tools-Build release - V0.3.0 »</a>
+                <a href="/posts/Robotics-a-bumper-for-scuttle-software" title="Previous Post: Starting robotics - Building a bumper for scuttle. The software" class="navlinks-prev">« Starting robotics - Building a bumper for scuttle. The software</a>
     </div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Ops-Tools-Build-release-V020';
-    var disqus_title = 'Ops-Tools-Build release - V0.2.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Ops-Tools-Build-release-V020';
+    var disqus_identifier = 'Robotics-a-bumper-for-scuttle-electronics';
+    var disqus_title = 'Starting robotics - Building a bumper for scuttle. The electronics';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Robotics-a-bumper-for-scuttle-electronics';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
@@ -309,7 +343,7 @@ build fails. This improves the ability to debug issues in the packer build.</li>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Tue, 01 Nov 2022 07:17:24 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Tue, 01 Nov 2022 07:17:23 GMT
 
  from commit <a href="https://github.com/pvandervelde/mindvortex/tree/382bf1eaf089fa543994a1f367f9c4d2de22ef93">382bf1eaf089fa543994a1f367f9c4d2de22ef93</a> at version 3.10.0.        </p>
     </div>

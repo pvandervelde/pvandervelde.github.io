@@ -129,6 +129,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Robotics-a-bumper-for-scuttle-electronics">Starting robotics - Building a bumper for scuttle. The electronics</a></li>
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-software">Starting robotics - Building a bumper for scuttle. The software</a></li>
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-overview">Starting robotics - Building a bumper for scuttle. The overview</a></li>
                             <li><a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">Starting robotics - Driving scuttle with ROS - Gazebo simulation</a></li>
@@ -138,7 +139,6 @@
                             <li><a href="/posts/Software-development-pipeline-security">Software development pipeline - Security</a></li>
                             <li><a href="/posts/Software-development-pipeline-infrastructure-dependency-reduction">Software development pipeline - Infrastructure dependency reduction</a></li>
                             <li><a href="/posts/Calvinverse-an-example-build-infrastructure">Calvinverse - An example build infrastructure</a></li>
-                            <li><a href="/posts/On-prem-vs-cloud-build-systems">Software development pipeline - On-prem or in the cloud?</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -152,13 +152,13 @@
                                     <a role="button" href="/tags/nBuildKit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
-                                </li>
-                                <li>
                                     <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
@@ -170,10 +170,10 @@
                                     <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
+                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (7)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (6)</a>
+                                    <a role="button" href="/tags/Pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
                                 </li>
                         </ul>
                     </div>
@@ -188,6 +188,88 @@
 
             <div id="content">
 
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Robotics-a-bumper-for-scuttle-electronics">Starting robotics - Building a bumper for scuttle. The electronics</a>
+</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Friday, October 21, 2022
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/ROS" class="btn btn-default btn-xs tag-no-wrap">ROS</a>
+                        <a id="post-category" role="button" href="/tags/ROS-Noetic" class="btn btn-default btn-xs tag-no-wrap">ROS&nbsp;Noetic</a>
+                        <a id="post-category" role="button" href="/tags/Scuttle" class="btn btn-default btn-xs tag-no-wrap">Scuttle</a>
+    </div>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>The final part of building a bumper for SCUTTLE is to assemble the electronics component which translates
+the movement of the bumper into signals which can be processed by the bumper software. In order to do
+this I designed a simple circuit using <a href="https://www.kicad.org/">KiCad</a> and advice from one of the
+many robotics forums.</p>
+<figure style="float:left">
+<img alt="SCUTTLE bumper electronics schematic" src="/assets/images/robotics/scuttle/scuttle-bumper-kicad.png" />
+<figcaption>SCUTTLE bumper electronics schematic made in KiCad</figcaption>
+</figure>
+<p>The circuit contains a microswitch as the trigger. The switch is connected to one of the 3.3V output
+pins on the raspberry PI 4 board on one side and to one of the GPIO pins on the other side. When
+the switch is depressed the circuit closes and the GPIO pin is driven to 3.3V, which is considered
+a high signal. In order to ensure that the voltage on the GPIO pin is 0V when the circuit is not
+closed I added a <a href="https://en.wikipedia.org/wiki/Pull-up_resistor">pull down</a> resistor. On the
+raspberry PI it is possible to programmatically add a pull down resistor, however because I'm
+using this as a learning exercise I thought it would be more suitable to include a physical pull down
+resistor in the circuit.</p>
+<p>The next thing I wanted from the circuit was the ability to see if the circuit was closed or not, so
+that when I'm debugging it is obvious if there is a problem with the power, electronics or software.
+For this purpose I added a yellow LED to the circuit, which lights up when the circuit is closed.
+Adding the LED then adds the requirement to protect it from over current in case that the input pin
+was programmed to be an output pin by mistake. For this purpose I added a resistor next to the input
+pin.</p>
+<figure style="float:right">
+<img alt="SCUTTLE bumper electronics boards" src="/assets/images/robotics/scuttle/scuttle-bumper-electronics-boards.jpg" />
+<figcaption>SCUTTLE bumper electronics boards</figcaption>
+</figure>
+<p>After testing the circuit on the breadboard the next step was to solder two switch boards and
+a distribution board. Each switch board would have a micro-switch, the LED, the resistors and a
+JST-XH three pin connector for power, ground and signal wires.
+The distribution board would have four JST-XH three pin connectors and one JST-XH six pin connector.
+The four three pin connectors would allow me to have a front bumper and a rear bumper, each
+having a switch board on the left and the right. I used JST-XH connectors instead of the Dupont
+connectors because the JST connectors are directional, thereby removing any potential issues with
+plugging the connector in the wrong way.</p>
+<p>Part of this journey involved learning how to solder electronics components. I bought a Weller WE 1010
+soldering station for this and future jobs. I managed to do a reasonable job soldering the parts but
+it is obvious that I still have a lot to learn when it comes to soldering.</p>
+<figure style="float:left">
+<img alt="SCUTTLE bumper electronics assembled" src="/assets/images/robotics/scuttle/scuttle-bumper-assembled.jpg" />
+<figcaption>SCUTTLE bumper electronics assembled</figcaption>
+</figure>
+<p>The last task was to crimp the connectors and connect the boards. Because the raspberry Pi has a
+Dupont header I needed to crimp both Dupont connectors and JST-XH connectors. For the Dupont connectors
+I got an Iwiss SN-025 crimper. It works pretty well for those connectors. However the crimper dies are
+too wide for the JST-XH connectors. So to crimp the JST-XH connectors I had to get a different
+crimper with narrower dies. So for this I got an Engineer PAD-11 crimper. While this is not a
+ratcheting crimper it works really well, at least for the JST-XH connectors.</p>
+<p>So now that the mechanical setup is done, the software is, mostly, done and the electronics have
+been soldered and connected my bumper works. Sort of. It turns out that there is a
+problems with my SCUTTLE that make the bump response only work partially. It seems that
+there is an issue with the wheel encoders, which causes the software to not know how much one of the
+wheels has rotated. I will discuss fixing the encoders in another post.</p>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -651,91 +733,6 @@ More on this will follow in a future post once I have upgraded my robot to ROS2<
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Starting-robotics-with-scuttle">Starting robotics with the SCUTTLE robot</a>
-</h2>
-<div id="post-meta">
-    <div class="meta-date">
-Friday, March 18, 2022
- |             Posted in     </div>
-    <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
-                        <a id="post-category" role="button" href="/tags/Scuttle" class="btn btn-default btn-xs tag-no-wrap">Scuttle</a>
-    </div>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>As mentioned in my last post I have started tinkering with mobile robots. My current goal is to
-build an outdoor capable <a href="https://en.wikipedia.org/wiki/Autonomous_robot">autonomous mobile robot</a>.
-The first problem I have to solve in order to move towards my goal is that I know a decent amount
-about software, a reasonable amount about structures and mechanics and very little about electronics.
-Oh and I know nothing about the robotics algorithms like how navigation works, the fact that robots
-may have a hard time
-<a href="https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping">figuring out where they are</a>
-and that decision making is hard for robots.</p>
-<p>So in order to not have to learn all the things at the same time I decided it would be sensible to
-start off buying a kit that I could assemble and learn to work with. The basic requirements were</p>
-<ul>
-<li>Something that didn't require me to solder electronics or 3d print parts, because I have neither
-of those tools, yet ...</li>
-<li>Capable of actually carrying a load of some sort. Most robot kits are fun platforms to play with
-but other than driving around they're not actually capable of carrying things. I want my robot to
-be able to carry things for me.</li>
-<li>With accessible hardware and software so that I could modify and extend it.</li>
-<li>Affordable, because money is still finite</li>
-</ul>
-<figure style="float:right">
-<img alt="Scuttle assembled" src="/assets/images/robotics/scuttle/scuttle-assembled.jpg" />
-<figcaption>SCUTTLE robot assembled</figcaption>
-</figure>
-<p>After a little bit of searching I decided to buy the <a href="https://scuttlerobot.org/">SCUTTLE robot</a> kit.
-The SCUTTLE kit is an <a href="https://github.com/scuttlerobot">open source kit</a> for which all the build
-information is available online, from the <a href="https://grabcad.com/library/scuttle-robot-v2-3-1">3D drawings</a>
-to the material BOM. Additionally there is a lot of sample code that makes it easy to get going with
-the robot. There are code samples that allow you to drive the robot with a gamepad or by putting it in
-follow mode where it follows a coloured object. Note that when you pick a coloured object apparently
-orange is the best colour because of the colour difference with the surroundings. In my case initially
-I picked a dark red object in a poorly lit environment with lots of other variations of red around.
-You can probably imagine how well that went ...&hellip; [*]</p>
-<p>Assembly of the SCUTTLE robot is pretty easy, it consists of aluminium T-slot lengths, some 3D
-printed parts and some electronics parts. The T-slot lengths are fastened with angle brackets and
-the 3D printed parts bolt to the T-slot lengths. The kit I bought only required connecting electronic parts
-with connectors, no soldering required. If you build a SCUTTLE from scratch there is some soldering to
-be done.</p>
-<p>Once you have assembled your SCUTTLE you can test the functionality by using the code samples to
-verify the encoders and the motors. Note that it is wise to review your cabling before turning anything
-on because it is possible to connect some of the electronics incorrectly. I ended up breaking my
-Raspberry Pi, quite possibly by connecting the encoders backwards or something similar.</p>
-<figure style="float:left">
-<img alt="Scuttle in RViz" src="/assets/images/robotics/scuttle/scuttle-rviz.png" />
-<figcaption>SCUTTLE in RViz</figcaption>
-</figure>
-<p>After verifying that the motors rotate in the correct direction you can try controlling the
-robot via the gamepad and drive it around the house.</p>
-<p>Currently I'm working to update my SCUTTLE with the <a href="https://www.ros.org/">ROS</a> software. Currently
-I'm testing with ROS noetic but I am looking to eventually switch to using ROS2 as it seems to have
-a more flexible navigation stack. More on that in a future post.</p>
-<p>I'm also planning to add some sensors to my SCUTTLE to make it a bit more autonomous. The first
-plan is to add a bumper that will tell the robot if it has hit something. I have picked up some
-contact switches but am still thinking about the design for the bumper. Later on I want to add
-sonar, <a href="https://en.wikipedia.org/wiki/Time-of-flight_camera">Time of Flight (ToF) sensors</a> and
-potentially cameras as well.</p>
-<p>[*] SCUTTLE drove straight at the red coloured couch instead of following the red object I wanted
-it to follow</p>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -766,9 +763,9 @@ it to follow</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Fri, 09 Sep 2022 07:16:50 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Tue, 01 Nov 2022 07:17:22 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/62fc793f8eacf7a47644801d34c14b43863dc285">62fc793f8eacf7a47644801d34c14b43863dc285</a> at version 3.9.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/382bf1eaf089fa543994a1f367f9c4d2de22ef93">382bf1eaf089fa543994a1f367f9c4d2de22ef93</a> at version 3.10.0.        </p>
     </div>
 
     <p>
