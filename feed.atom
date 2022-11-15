@@ -4,8 +4,74 @@
 	<title>Mind vortex</title>
 	<link rel="self" href="https://www.petrikvandervelde.nl/" />
 	<rights>2022</rights>
-	<updated>2022-11-01T07:17:22Z</updated>
+	<updated>2022-11-15T04:50:59Z</updated>
 	<subtitle>Welcome!</subtitle>
+	<entry>
+		<id>https://www.petrikvandervelde.nl/posts/Robotics-fixing-scuttles-encoder</id>
+		<title>Starting robotics - Fixing the wheel encoders</title>
+		<link href="https://www.petrikvandervelde.nl/posts/Robotics-fixing-scuttles-encoder" />
+		<updated>2022-11-15T00:00:00Z</updated>
+		<content>&lt;p&gt;While testing the &lt;a href="posts/Robotics-a-bumper-for-scuttle-electronics"&gt;bumper&lt;/a&gt; for SCUTTLE I noticed
+that when reversing SCUTTLE would start a turn instead of driving straight backwards due to one
+motor turning faster than the other motor. There are a number of reasons this could be happening,
+for instance the driver code isn't properly commanding the motors, or the encoders are returning
+incorrect data, etc..&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+&lt;img alt="Encoder output for failing encode" src="/assets/images/robotics/scuttle/scuttle-encoder-fail.png" /&gt;
+&lt;figcaption&gt;Encoder output for failing encoder&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;The first thing I did for my investigation was to make sure my encoders provide sensible data. The
+non-ROS SCUTTLE code contains a useful &lt;a href="https://github.com/scuttlerobot/SCUTTLE/blob/ce82a52ad025408a15f23f19c58add1321253783/software/python/basics/L1_encoder.py"&gt;Python script&lt;/a&gt;
+to measure the current value of the wheel encoders in a loop. I ran this code for a few minutes
+while the wheels were stationary. In theory the results of this measurement should be two consistent
+values, one for the left encoder and one for the right encoder. As you can see in the graph
+it turns out that the angle measurement provided by the left encoder was very noisy.&lt;/p&gt;
+&lt;p&gt;While a noisy encoder shouldn't by itself cause the incorrect reversing pattern, it will make it more
+difficult to find the actual cause of the problem. So before I address the bumper reversing behaviour
+I needed to fix the encoder noise. The two main reasons for noisy encoder data that I could think of
+were:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The encoder is broken in some way. SCUTTLE uses the
+&lt;a href="https://nz.mouser.com/ProductDetail/ams-OSRAM/AS5048B-TS_EK_AB?qs=Rt6VE0PE%2FOduJIB%252BRfeBZQ%3D%3D"&gt;AS5048A position sensor&lt;/a&gt;
+which is relatively robust, but can be broken if you send the I2c commands on the wrong pins. Which
+could happen if you say ... put the connector on the wrong way when assembling your SCUTTLE ...&lt;/li&gt;
+&lt;li&gt;The distance between the encoder and the magnet on the motor shaft isn't correct. The specifications
+for the encoder state that the distance between the chip and the magnet on the motor shaft should
+be between 0.5mm and 2.5mm, assuming a magnet of the recommended size and strength is used.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I tried measuring the distance between the encoder and the magnet, but that isn't easy. There is no way
+to get a measuring tool near that space so I had to resort to indirect measurements. I measured the
+left and right brackets. They were about 0.5mm difference in size. That doesn't seem much but it
+would be enough to push the encoder out too far from the magnet.&lt;/p&gt;
+&lt;p&gt;One solution would be to slightly sand the taller bracket so that both brackets are the size height.
+In doing that I would have to be very careful to ensure that I sand the bracket flat, i.e. with
+no change in angle in the face. A second solution is to remove the encoders from their brackets and
+swap the brackets over.&lt;/p&gt;
+&lt;figure style="float:right"&gt;
+&lt;img alt="Encoder output for functioning encoders" src="/assets/images/robotics/scuttle/scuttle-encoder-fixed.png" /&gt;
+&lt;figcaption&gt;Encoder output for functioning encoders&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;As the latter is relatively easy to do that is the first solution I tried. I took the encoders
+of their brackets and attached them to the other bracket. These brackets were put back on SCUTTLE and
+the test script was executed once again. And this time both encoders gave me consistent results. I was
+expecting the other encoder to go bad due to distance, but apparently both encoders are with in the
+distance specification with this new configuration.&lt;/p&gt;
+&lt;p&gt;With the encoder issue fixed I can get back to diagnosing the issue with the bumper reverse action.
+My current suspicion is that the issue is caused by the fact that the the current SCUTTLE driver
+code is written as an &lt;a href="https://en.wikipedia.org/wiki/Open-loop_controller"&gt;open loop&lt;/a&gt;. This means
+that there is no feedback to the motor control software that indicates how fast the wheels are
+actually turning in response to a given motor input. And because even motors of the same type
+are all slightly different, they all react differently to the same motor input. In my case at
+low speeds one of my motors responds earlier than the other motor. In the end this means that
+at low speeds the bumper code thinks scuttle is driving backwards in a straight line while it
+is actually driving around in circles.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;While testing the &lt;a href="posts/Robotics-a-bumper-for-scuttle-electronics"&gt;bumper&lt;/a&gt; for SCUTTLE I noticed
+that when reversing SCUTTLE would start a turn instead of driving straight backwards due to one
+motor turning faster than the other motor. There are a number of reasons this could be happening,
+for instance the driver code isn't properly commanding the motors, or the encoders are returning
+incorrect data, etc..&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://www.petrikvandervelde.nl/posts/Robotics-a-bumper-for-scuttle-electronics</id>
 		<title>Starting robotics - Building a bumper for scuttle. The electronics</title>
@@ -360,6 +426,10 @@ a robot should take at a given location. They don't describe velocity or acceler
 describing the direction can generate paths with abrupt turns that force the robot to slow
 down significantly. Using a trajectory planner, which at least prescribes velocities, makes for a
 smoother experience for robot and cargo.&lt;/p&gt;
+&lt;h4&gt;Edits&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;October 26th 2022: Added the &lt;code&gt;Gazebo&lt;/code&gt; tag.&lt;/li&gt;
+&lt;/ul&gt;
 </content>
 		<summary>&lt;p&gt;After getting familiar with &lt;a href="posts/Robotics-learning-ros"&gt;ROS&lt;/a&gt;, the next step was to get the
 navigation stack working in Gazebo for the SCUTTLE robot. Fortunately, the SCUTTLE developers
@@ -463,6 +533,10 @@ to me&amp;rdquo;.&lt;/p&gt;
 ROS1 end-of-life is 2025, which is only 3 years away, and additionally ROS2 has a more modern stack
 with python 3, better communication security, an improved navigation stack and more active development.
 More on this will follow in a future post once I have upgraded my robot to ROS2&lt;/p&gt;
+&lt;h4&gt;Edits&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;October 26th 2022: Added the &lt;code&gt;Gazebo&lt;/code&gt; tag.&lt;/li&gt;
+&lt;/ul&gt;
 </content>
 		<summary>&lt;p&gt;As part of my &lt;a href="tags/Robotics"&gt;journey into robotics&lt;/a&gt; I have been working on updating my
 &lt;a href="https://www.scuttlerobot.org/"&gt;SCUTTLE robot&lt;/a&gt; to use the
@@ -1980,104 +2054,5 @@ GitHub in the milestone list for the &lt;a href="https://github.com/nbuildkit/nB
 		<summary>&lt;p&gt;Version &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild/releases/tag/0.10.2"&gt;0.10.2&lt;/a&gt;
 of &lt;a href="https://github.com/nbuildkit/nBuildKit.MsBuild"&gt;nBuildKit&lt;/a&gt;
 has been released.&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-introduction</id>
-		<title>Software development pipeline - Design introduction</title>
-		<link href="https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-introduction" />
-		<updated>2017-08-21T00:00:00Z</updated>
-		<content>&lt;p&gt;In order to deliver new or improved software applications within the desired
-time span while maintaining or improving quality modern development moves towards
-&lt;a href="https://techbeacon.com/doing-continuous-delivery-focus-first-reducing-release-cycle-times"&gt;shorter development and delivery&lt;/a&gt;
-cycles. This is often achieved through the use of agile processes and a development
-workflow including &lt;a href="https://en.wikipedia.org/wiki/Continuous_integration"&gt;Continuous Integration&lt;/a&gt;,
-&lt;a href="https://en.wikipedia.org/wiki/Continuous_delivery"&gt;Continuous Delivery&lt;/a&gt;
-or even &lt;a href="https://www.agilealliance.org/glossary/continuous-deployment"&gt;Continuous deployment&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;One of the consequences of this desire to reduce the development cycle time on the
-development process is that more tasks in the development workflow
-have to be automated in order to reduce the time taken for the specific task.
-One way this automation can be achieved is by creating a
-&lt;a href="https://www.informit.com/articles/article.aspx?p=1621865&amp;amp;seqNum=2"&gt;development pipeline&lt;/a&gt; which
-takes the source code and moves it through a set of largely automatic transformations, e.g. compilation,
-testing, packaging and potentially deployment, to obtain a validated, and potentially deployed, application.&lt;/p&gt;
-&lt;p&gt;In order to configure a development pipeline, whether that is on-prem or in the cloud, for
-one or more development teams one will have to understand what the requirements are which
-are placed on the pipeline, which tooling is available to create the pipeline, whether the
-pipeline will be situated on-prem, in the cloud or a combination and
-how the pipeline will be assembled and managed. In this post series some of
-these issues will be discussed starting with the requirements or considerations that need
-to be given to the characteristics or behaviours of the development pipeline.&lt;/p&gt;
-&lt;p&gt;Prior to discussing what the considerations are for selecting tooling and infrastructure
-for a development pipeline, it is important to decide what elements are part of the pipeline
-and which elements are not. For the remainder of this
-post series the development pipeline is considered to consist of:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The scripts that are used during the different parts of the cycle, i.e. the build, test
-and release scripts.&lt;/li&gt;
-&lt;li&gt;The continuous integration system which is used to execute the different scripts.&lt;/li&gt;
-&lt;li&gt;The tools, like the compiler, test frameworks, etc.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Items like version control, package management, issue tracking, system monitoring,
-customer support and others are not included in the discussion. While these systems
-are essential in application development and deployment each of these systems spans
-a large enough area that it warrants a more thorough discussion than can be given in
-this post series.&lt;/p&gt;
-&lt;p&gt;Additionally, the following terms will be used throughout the series:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Input set - A collection of information that is provided to the pipeline to start
-the process of turning these generating the desired artefacts. An input set may consist
-of source code, e.g. in terms of a given commit to the source control system, files or
-documents, configuration values or any other combination of information which is required
-to create, validate and deploy the product artefacts.
-An input set should contain all the information needed to generate and deploy the product
-artefacts and each time a specific input set is provided to the pipeline exactly the
-same artefacts will be produced.&lt;/li&gt;
-&lt;li&gt;Executor - In general the development pipeline will be driven by a continuous integration
-system which itself consists of a controlling unit, which receives the tasks and distributes them,
-and a set of executing units which perform the actual computational tasks. In small systems
-the controlling unit may also perform the computational tasks, however even in this case
-a distinction can be made between the controlling and executing parts.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;In order to start the selection of suitable components for a development pipeline
-it is important to know what the desirable properties of such a system are. The following
-ordered properties are thought to be the most important ones to consider.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="/posts/Software-development-pipeline-Design-accuracy.html"&gt;Accurate&lt;/a&gt;: The pipeline must return the right
-outputs for a specific input, i.e it should report errors to the interested parties if there are any
-and report success and produce the desired artefacts if there are no errors.&lt;/li&gt;
-&lt;li&gt;&lt;a href="/posts/Software-development-pipeline-Design-performance.html"&gt;Performance&lt;/a&gt;: The pipeline must push changes
-through the different stages fast in order to get results back to the interested parties as soon
-as possible.&lt;/li&gt;
-&lt;li&gt;&lt;a href="/posts/Software-development-pipeline-Design-resilience.html"&gt;Resilience&lt;/a&gt;: The pipeline must be able to
-cope with environmental changes, both expected and unexpected.&lt;/li&gt;
-&lt;li&gt;&lt;a href="/posts/Software-development-pipeline-Design-flexibility.html"&gt;Flexibility&lt;/a&gt;: The pipeline must be easy to
-adapt to new products and tools so that it can be used without having to replace large parts each
-time a new product or tool needs to be included.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;There are of course other desirable properties for a development pipeline like ease-of-use,
-maintainability, etc.. It is however considered that the aforementioned properties are the
-most critical ones. The linked posts provide additional reasons why each of these properties
-are important and how a software development pipeline can be designed to satisfy these important
-considerations.&lt;/p&gt;
-&lt;p&gt;Additional posts about this topic can be found via the
-&lt;a href="/tags/software-development-pipeline.html"&gt;Software development pipeline&lt;/a&gt; tag.&lt;/p&gt;
-&lt;h4&gt;Edits&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;August 30th 2017: Replaced the term &lt;code&gt;correctness&lt;/code&gt; with the term &lt;code&gt;accuracy&lt;/code&gt; because that
-is a better description of the combined concepts of consistency and correctness.&lt;/li&gt;
-&lt;li&gt;September 4th 2017: Added the link to the post providing the high level description on
-how to achieve accuracy for a development pipeline.&lt;/li&gt;
-&lt;li&gt;November 5th 2017: Replaced the term &lt;code&gt;robustness&lt;/code&gt; with the term &lt;code&gt;resilience&lt;/code&gt; because it
-captures a broader perspective on the ability of the system to handle expected and unexpected
-changes.&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-		<summary>&lt;p&gt;In order to deliver new or improved software applications within the desired
-time span while maintaining or improving quality modern development moves towards
-&lt;a href="https://techbeacon.com/doing-continuous-delivery-focus-first-reducing-release-cycle-times"&gt;shorter development and delivery&lt;/a&gt;
-cycles. This is often achieved through the use of agile processes and a development
-workflow including &lt;a href="https://en.wikipedia.org/wiki/Continuous_integration"&gt;Continuous Integration&lt;/a&gt;,
-&lt;a href="https://en.wikipedia.org/wiki/Continuous_delivery"&gt;Continuous Delivery&lt;/a&gt;
-or even &lt;a href="https://www.agilealliance.org/glossary/continuous-deployment"&gt;Continuous deployment&lt;/a&gt;.&lt;/p&gt;</summary>
 	</entry>
 </feed>

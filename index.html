@@ -129,6 +129,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Robotics-fixing-scuttles-encoder">Starting robotics - Fixing the wheel encoders</a></li>
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-electronics">Starting robotics - Building a bumper for scuttle. The electronics</a></li>
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-software">Starting robotics - Building a bumper for scuttle. The software</a></li>
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-overview">Starting robotics - Building a bumper for scuttle. The overview</a></li>
@@ -138,7 +139,6 @@
                             <li><a href="/posts/Building-autonomous-mobile-robot-why">Building an autonomous mobile robot - But why?</a></li>
                             <li><a href="/posts/Software-development-pipeline-security">Software development pipeline - Security</a></li>
                             <li><a href="/posts/Software-development-pipeline-infrastructure-dependency-reduction">Software development pipeline - Infrastructure dependency reduction</a></li>
-                            <li><a href="/posts/Calvinverse-an-example-build-infrastructure">Calvinverse - An example build infrastructure</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -155,22 +155,22 @@
                                     <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
-                                </li>
-                                <li>
                                     <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
+                                    <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (7)</a>
+                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (8)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
@@ -188,6 +188,90 @@
 
             <div id="content">
 
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Robotics-fixing-scuttles-encoder">Starting robotics - Fixing the wheel encoders</a>
+</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Tuesday, November 15, 2022
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/Scuttle" class="btn btn-default btn-xs tag-no-wrap">Scuttle</a>
+                        <a id="post-category" role="button" href="/tags/Sensors" class="btn btn-default btn-xs tag-no-wrap">Sensors</a>
+                        <a id="post-category" role="button" href="/tags/Wheel-encoders" class="btn btn-default btn-xs tag-no-wrap">Wheel&nbsp;encoders</a>
+    </div>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>While testing the <a href="posts/Robotics-a-bumper-for-scuttle-electronics">bumper</a> for SCUTTLE I noticed
+that when reversing SCUTTLE would start a turn instead of driving straight backwards due to one
+motor turning faster than the other motor. There are a number of reasons this could be happening,
+for instance the driver code isn't properly commanding the motors, or the encoders are returning
+incorrect data, etc..</p>
+<figure style="float:left">
+<img alt="Encoder output for failing encode" src="/assets/images/robotics/scuttle/scuttle-encoder-fail.png" />
+<figcaption>Encoder output for failing encoder</figcaption>
+</figure>
+<p>The first thing I did for my investigation was to make sure my encoders provide sensible data. The
+non-ROS SCUTTLE code contains a useful <a href="https://github.com/scuttlerobot/SCUTTLE/blob/ce82a52ad025408a15f23f19c58add1321253783/software/python/basics/L1_encoder.py">Python script</a>
+to measure the current value of the wheel encoders in a loop. I ran this code for a few minutes
+while the wheels were stationary. In theory the results of this measurement should be two consistent
+values, one for the left encoder and one for the right encoder. As you can see in the graph
+it turns out that the angle measurement provided by the left encoder was very noisy.</p>
+<p>While a noisy encoder shouldn't by itself cause the incorrect reversing pattern, it will make it more
+difficult to find the actual cause of the problem. So before I address the bumper reversing behaviour
+I needed to fix the encoder noise. The two main reasons for noisy encoder data that I could think of
+were:</p>
+<ul>
+<li>The encoder is broken in some way. SCUTTLE uses the
+<a href="https://nz.mouser.com/ProductDetail/ams-OSRAM/AS5048B-TS_EK_AB?qs=Rt6VE0PE%2FOduJIB%252BRfeBZQ%3D%3D">AS5048A position sensor</a>
+which is relatively robust, but can be broken if you send the I2c commands on the wrong pins. Which
+could happen if you say ... put the connector on the wrong way when assembling your SCUTTLE ...</li>
+<li>The distance between the encoder and the magnet on the motor shaft isn't correct. The specifications
+for the encoder state that the distance between the chip and the magnet on the motor shaft should
+be between 0.5mm and 2.5mm, assuming a magnet of the recommended size and strength is used.</li>
+</ul>
+<p>I tried measuring the distance between the encoder and the magnet, but that isn't easy. There is no way
+to get a measuring tool near that space so I had to resort to indirect measurements. I measured the
+left and right brackets. They were about 0.5mm difference in size. That doesn't seem much but it
+would be enough to push the encoder out too far from the magnet.</p>
+<p>One solution would be to slightly sand the taller bracket so that both brackets are the size height.
+In doing that I would have to be very careful to ensure that I sand the bracket flat, i.e. with
+no change in angle in the face. A second solution is to remove the encoders from their brackets and
+swap the brackets over.</p>
+<figure style="float:right">
+<img alt="Encoder output for functioning encoders" src="/assets/images/robotics/scuttle/scuttle-encoder-fixed.png" />
+<figcaption>Encoder output for functioning encoders</figcaption>
+</figure>
+<p>As the latter is relatively easy to do that is the first solution I tried. I took the encoders
+of their brackets and attached them to the other bracket. These brackets were put back on SCUTTLE and
+the test script was executed once again. And this time both encoders gave me consistent results. I was
+expecting the other encoder to go bad due to distance, but apparently both encoders are with in the
+distance specification with this new configuration.</p>
+<p>With the encoder issue fixed I can get back to diagnosing the issue with the bumper reverse action.
+My current suspicion is that the issue is caused by the fact that the the current SCUTTLE driver
+code is written as an <a href="https://en.wikipedia.org/wiki/Open-loop_controller">open loop</a>. This means
+that there is no feedback to the motor control software that indicates how fast the wheels are
+actually turning in response to a given motor input. And because even motors of the same type
+are all slightly different, they all react differently to the same motor input. In my case at
+low speeds one of my motors responds earlier than the other motor. In the end this means that
+at low speeds the bumper code thinks scuttle is driving backwards in a straight line while it
+is actually driving around in circles.</p>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -531,6 +615,7 @@ separate posts.</p>
 Wednesday, June 1, 2022
  |             Posted in     </div>
     <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Gazebo" class="btn btn-default btn-xs tag-no-wrap">Gazebo</a>
                         <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
                         <a id="post-category" role="button" href="/tags/ROS" class="btn btn-default btn-xs tag-no-wrap">ROS</a>
                         <a id="post-category" role="button" href="/tags/ROS-Noetic" class="btn btn-default btn-xs tag-no-wrap">ROS&nbsp;Noetic</a>
@@ -611,124 +696,10 @@ a robot should take at a given location. They don't describe velocity or acceler
 describing the direction can generate paths with abrupt turns that force the robot to slow
 down significantly. Using a trajectory planner, which at least prescribes velocities, makes for a
 smoother experience for robot and cargo.</p>
-
-                </div>
-            </div>
-        </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Robotics-learning-ros">Starting robotics - Learning Robot Operating System (ROS)</a>
-</h2>
-<div id="post-meta">
-    <div class="meta-date">
-Tuesday, May 3, 2022
- |             Posted in     </div>
-    <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
-                        <a id="post-category" role="button" href="/tags/ROS" class="btn btn-default btn-xs tag-no-wrap">ROS</a>
-                        <a id="post-category" role="button" href="/tags/ROS-Noetic" class="btn btn-default btn-xs tag-no-wrap">ROS&nbsp;Noetic</a>
-    </div>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>As part of my <a href="tags/Robotics">journey into robotics</a> I have been working on updating my
-<a href="https://www.scuttlerobot.org/">SCUTTLE robot</a> to use the
-<a href="http://wiki.ros.org/">Robot Operating System (ROS)</a>. ROS provides a number of different things
-that make robot development much easier. The main items are a middleware layer for communication
-between different parts of the robot, hardware abstractions for different sensors, motors and
-controllers, device drivers and many other libraries and packages.</p>
-<p>The main benefit of using ROS is that it provides a lot of integrations and functionality that you
-can quickly use. On the other hand the drawback that comes with all of this is that the learning curve
-for ROS is very steep. The documentation is pretty good and so are the tutorials, however there are
-a lot of different parts in ROS, which makes for a lot of interesting ways to get confused. So to
-speed up my progress with ROS I decided to do the <a href="https://www.udemy.com/course/ros-essentials/">ROS for beginners I</a>
-and <a href="https://www.udemy.com/course/ros-navigation/">II courses</a> on Udemy. These courses were very helpful
-to reduce the learning curve for ROS and quickly get me familiar with ROS.</p>
-<figure style="float:left">
-<img alt="Scuttle in Gazebo" src="/assets/images/robotics/scuttle/scuttle-in-gazebo.jpg" />
-<figcaption>SCUTTLE robot in Gazebo</figcaption>
-</figure>
-<p>This post won't explain how ROS works, there are
-<a href="https://www.google.com/search?q=getting+started+with+ros&amp;rlz=1C1CHBF_enNZ825NZ825&amp;oq=getting+started+with+ros&amp;aqs=chrome..69i57j69i61.2633j0j7&amp;sourceid=chrome&amp;ie=UTF-8">many, many, many tutorials out on the web</a>
-that will do a far better job than I can. However I do want to share some of the things I learned
-from working with ROS.</p>
-<p>The first thing to note is the operating system on which you want to run ROS. ROS is developed
-to be run on Ubuntu. My home PC runs on the Windows Operating System. ROS 1 wasn't designed to run
-directly on Windows (ROS2 will be able to) but there are several ways to run it. First you can run
-ROS Noetic straight on Windows using <a href="https://robostack.github.io/">Robostack</a>. This uses the Conda
-package manager and provides packages for all operating systems. I found that this works moderately
-well, there are a number of packages missing and occasionally things error out. This approach works
-well for simple learning exercises but may yet not be suitable for large ROS applications.</p>
-<p>A second approach is to <a href="https://ishkapoor.medium.com/how-to-install-ros-noetic-on-wsl2-9bbe6c00b89a">run ROS on WSL2</a>.
-This is able to run the Ubuntu native packages so you can run all parts of ROS and with the help of
-an XServer like <a href="https://sourceforge.net/projects/vcxsrv/">VcXsrv</a> you can even run all the graphical
-tools. One thing to keep in mind if you use WSL is that networking may cause problems if you run
-ROS distributed over more than one computing device, e.g. a laptop and a physical robot. With WSL
-there is no easy way to expose WSL applications to uninitiated network connections, i.e.
-a request started from inside WSL works, but a request started from outside WSL won't be able to
-connect. This is important because ROS nodes need to be able to communicate with each other freely.
-The result will be that the nodes on the WSL side will seem to be connected and functional while the
-other nodes won't be able to send messages to the WSL nodes.</p>
-<p>The final approach to running ROS is to create an <a href="https://gist.github.com/pvandervelde/2282dafc080945ecb7981edb740ed47c">Ubuntu VM</a>
-or physical machine. In this case as long as the machine is reachable over the network for other
-compute devices, it is possible to run ROS distributed over the network. This is the way I currently
-run ROS.</p>
-<figure style="float:right">
-<img alt="Scuttle in RViz" src="/assets/images/robotics/scuttle/scuttle-in-rviz-no-sensors.jpg" />
-<figcaption>SCUTTLE robot in RViz</figcaption>
-</figure>
-<p>Once you have a working ROS installation the next thing you'll find out is that ROS configurations
-can be difficult to get right, especially when you're working with a physical robot where visibility
-of what is going on may not be the best. There are a number of useful tools available to provide
-insights into what is going on with your robot.</p>
-<p>The first tool is <a href="https://gazebosim.org/">Gazebo</a> which provides a simulated environment for
-ROS robots. The simulation is based on a physics engine with good accuracy of real world physics. It
-also provides models for sensors, like LIDAR and cameras, and sensor noise to simulate real-world
-sensor behaviour. Having a simulated environment allows you to repeat behaviours many times in
-the same way in rapid succession. Having a way to easily repeat behaviours and control the environment
-means that you can quickly test and debug specific behaviours, something which can be much more difficult
-with a physical robot.</p>
-<p>The second tool, <a href="http://wiki.ros.org/rviz">RViz</a>, provides visualization of the environment of the
-robot and how the robot perceives that environment. It allows you to visualize what the robot can
-&lsquo;see&rsquo;. RViz works by subscribing to the different message topics that are available. This means
-it works both for simulated robots (using Gazebo) and physical robots.</p>
-<p>The final tool worth discussing is <a href="https://foxglove.dev/">Foxglove studio</a> which also provides
-insight into the data that the robot generates, both from sensors but also in the form of messages
-sent between the different components of the robot. One of the nice features of Foxglove is that
-you can make plots with values provided by messages. For instance you can plot the velocity
-components of a <a href="http://docs.ros.org/en/lunar/api/geometry_msgs/html/msg/Twist.html">Twist message</a>.
-This is useful to compare requested velocities compared to actual achieved velocities.
-Another great feature of Foxglove is that it is able to display the <a href="http://wiki.ros.org/rosout">ROS logs</a>
-and it also allows you to filter and search these logs. Given that ROS logs can quickly become
-large the ability to filter is very useful.</p>
-<figure style="float:left">
-<img alt="Scuttle in RViz with LIDAR overlay" src="/assets/images/robotics/scuttle/scuttle-in-rviz-slam-enabled.jpg" />
-<figcaption>SCUTTLE robot in RViz with LIDAR overlay</figcaption>
-</figure>
-<p>When working with a mobile robot, like I am, getting the robot to navigate a space is often one of
-the first achievable goals. The <a href="http://wiki.ros.org/navigation">navigation stack</a> in ROS provides
-a lot of the basic capabilities to get started with robot navigation in a reasonable time span. Do
-note however that the navigation stack in ROS is fairly large and has a lot of different configuration
-options so it is wise to set some time aside for learning about the different options. I'll talk about
-navigating with SCUTTLE in a future post.</p>
-<p>As mentioned I started learning ROS1 with Udemy. My goal for learning ROS was to use it for
-navigation with my SCUTTLE  robot, more on that in a future post. Once I manage to get navigation
-working for SCUTTLE I plan to start adding different sensors. Finally I want to enable task planning
-for SCUTTLE, e.g. tasks like &ldquo;drive to the living room and collect my coffee cup and bring it back
-to me&rdquo;.</p>
-<p>Another part of my plans is to upgrade to using <a href="https://docs.ros.org/en/galactic/index.html">ROS2</a>.
-ROS1 end-of-life is 2025, which is only 3 years away, and additionally ROS2 has a more modern stack
-with python 3, better communication security, an improved navigation stack and more active development.
-More on this will follow in a future post once I have upgraded my robot to ROS2</p>
+<h4>Edits</h4>
+<ul>
+<li>October 26th 2022: Added the <code>Gazebo</code> tag.</li>
+</ul>
 
                 </div>
             </div>
@@ -763,9 +734,9 @@ More on this will follow in a future post once I have upgraded my robot to ROS2<
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Tue, 01 Nov 2022 07:17:22 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Tue, 15 Nov 2022 04:50:58 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/382bf1eaf089fa543994a1f367f9c4d2de22ef93">382bf1eaf089fa543994a1f367f9c4d2de22ef93</a> at version 3.10.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/b8103472b08adc592099afe7f652a5969a8a3e85">b8103472b08adc592099afe7f652a5969a8a3e85</a> at version 3.11.0.        </p>
     </div>
 
     <p>
