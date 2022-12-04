@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - First time paragliding</title>
+        <title>Mind vortex - Swerve drive - Moving a robot in all directions, mostly</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,9 +29,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - First time paragliding" />
+        <meta property="og:title" content="Mind vortex - Swerve drive - Moving a robot in all directions, mostly" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/First-time-paragliding" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Swerve-drive-introduction" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -202,71 +202,146 @@
 
 
 <h2>
-First time paragliding</h2>
+Swerve drive - Moving a robot in all directions, mostly</h2>
 <div id="post-meta">
     <div class="meta-date">
-Tuesday, September 3, 2013
+Sunday, December 4, 2022
  |             Posted in     </div>
     <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Paragliding" class="btn btn-default btn-xs tag-no-wrap">Paragliding</a>
-                        <a id="post-category" role="button" href="/tags/PG2" class="btn btn-default btn-xs tag-no-wrap">PG2</a>
+                        <a id="post-category" role="button" href="/tags/Omnidirectional" class="btn btn-default btn-xs tag-no-wrap">Omnidirectional</a>
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/Swerve" class="btn btn-default btn-xs tag-no-wrap">Swerve</a>
     </div>
 </div>
 
     </div>
 
     <div id="post-content">
-        <p>A little while ago I signed up for a <a href="http://paraglidingnewzealand.com/information/learning-to-fly">PG2</a>
-paragliding course with <a href="http://wingsandwaves.co.nz">Wings and Waves</a>. Unfortunately I signed up just
-before winter crept in and made it impossible to fly. As we are moving towards spring the weather
-has been getting better and last Sunday the weather was good enough for us (my girlfriend and me) to
-have our first shot at flying a paraglider.</p>
-<p><img align="left" alt="Casey ground handling the old glider" src="/assets/images/paragliding/paraglide_0001.JPG" /></p>
-<p>So on Sunday morning we met up with the Wings and Waves crew and drove over to a nice, if some what
-soggy, hill somewhere around Pukemore, south of the Bombay hills for the first steps of our training.</p>
-<p>The first part consisted of learning how to ground handle a paraglider. Ground handling is the art
-of controlling the paraglider while on the ground. This turns out to be harder than it first looks.
-In the air the pilot will normally be centred underneath the paraglider. On the ground however the
-pilot may not be directly below the paraglider which means the pilot needs to actively move around
-to keep the paraglider above them.</p>
-<p><img align="right" alt="Me doing a forward start with the old glider" src="/assets/images/paragliding/paraglide_0002.JPG" /></p>
-<p>Once we got the hang of the ground handling we started learning forwards starts, or alpine starts.
-With this method of starting you face forward with the glider behind you. Once you have sorted out
-the lines you move forwards until the lines are tensioned and then you run at a constant pace. The
-first glider we used was the really old one we used in ground handling. Given that it was not very
-large it was pretty easy to run with, and running we did, lots of it.</p>
-<p>Once we got a few good runs in with the old glider the instructor found us a more modern paraglider
-to play with. This one was considerably larger and far more interesting. Over the remainder of the
-day we slowly worked our way up the hill, starting from a higher position each time, and being
-rewarded with a little more flight time and a little more height each time.</p>
-<p><img align="left" alt="Casey having a little flight with the newer glider" src="/assets/images/paragliding/paraglide_0003.JPG" /></p>
-<p>In the beginning both my girl friend and me got to use the same glider but it turns out I've got a
-big fat ass and so I had to upgrade to bigger gliders a few more times. Each time being reminded that
-bigger gliders also mean more backwards pull on start and higher flights.</p>
-<p>In all it was a good day flying. I still have a lot of work to do on all parts of my launching and
-flying skills (obviously given that this is the first time), but the one thing I really noticed I
-need to work on is distance estimation and flare timing. I got that wrong a few times and it was
-fortunate that the landing area was soggy because it made for nice, if what splashy, landings even
-if I miscalculated my flare timing.</p>
-<p>All in all a good time was had by all and we are definitely keen for more flying. Hopefully with less
-running and more flying next time.</p>
+        <p>Over the last year I have been using my <a href="https://www.scuttlerobot.org/">SCUTTLE robot</a> as a way of
+learning about robotics and all the related fields like mechanics and electronics. A major part of
+this journey is the desire to design and build an autonomous mobile robot from the ground up.</p>
+<p>My goal is to build an off-road capable robot that can navigate autonomously between different
+locations to execute tasks either by itself or in cooperation with other robots. This is
+quite an inspirational goal that involves quite a few robot different parts, a lot
+of code and many hours of building and testing to achieve.</p>
+<p>The chassis of the robot will have four drive modules. Each module has one wheel attached that will
+both be independently driven, and independently steerable. This configuration is called
+<code>four wheel independent steering</code> or <code>swerve drive</code>. These kind of steering systems are used in
+<a href="https://en.wikipedia.org/wiki/Self-propelled_modular_transporter">heavy transport</a>,
+agriculture machines, <a href="https://en.wikipedia.org/wiki/Curiosity_(rover)">mars rovers</a> and
+<a href="https://www.chiefdelphi.com/t/best-frc-swerve-drive/399865">robot competitions</a>. The advantages of
+a swerve drive system are that:</p>
+<ul>
+<li>It provides a high degree of mobility. In a swerve drive direction of movement and orientation
+are independent so the robot can face forwards while driving sideways. Additionally in a swerve drive
+the <a href="https://en.wikipedia.org/wiki/Instant_centre_of_rotation#:%7E:text=The%20instant%20center%20of%20rotation,a%20particular%20instant%20of%20time.">Instantaneous Center of Rotation (ICR)</a>
+is not fixed to a specific line as it is with <a href="https://en.wikipedia.org/wiki/Ackermann_steering_geometry">Ackermann steering</a>
+or <a href="https://en.wikipedia.org/wiki/Differential_wheeled_robot">differential drive</a>. This flexibility
+allows the swerve drive to combine rotational movements with linear movements in ways that
+other drive systems cannot.</li>
+<li>It has normal size wheels which provide a high carry capacity. While
+<a href="https://en.wikipedia.org/wiki/Omni_wheel">omni-wheels</a> have the similar degree of freedom as a
+swerve drive does, omni-wheels but can often not carry the same load due to the lower carrying
+capacity of the rollers.</li>
+<li>It doesn't rely on wheel slip, as multi-wheel differential drive does. This means that it has
+lower power demands, so more of the motor torque can be used to move the robot forward.</li>
+<li>It has the ability to traverse rough and dirty terrain due to the fact that all wheels are
+driven as well as using normal wheels on each drive module. Omni-wheels and <a href="https://en.wikipedia.org/wiki/Mecanum_wheel">mecanum wheels</a>
+face more issues in these environments due to dust and dirt clogging up the wheels as well as
+having greater difficulty tackling obstacles.</li>
+<li>It is able to keep ground disturbance to a minimum as it is able to steer the robot while minimizing
+sliding movement. Other drive systems, e.g. tracks or multi-axle differential drives, have a bigger
+impact due to the sliding movement required for these systems to turn the robot.</li>
+</ul>
+<p>Of course the swerve drive system isn't a magical system that only has advantages. There are also plenty
+of disadvantages. For instance swerve drive systems:</p>
+<ul>
+<li>Are mechanically complicated. They require multiple motors per unit and multiple units per robot.
+On top of that there are usually a number of mechanical components, gears and bearings, involved
+in getting a working swerve drive.</li>
+<li>Need a complicated control system. Swerve systems are generally
+over-determined, i.e. they have more degrees of freedom in the drive system, 2 per drive module,
+than there are degrees of freedom in the robot, 2 translation directions and a rotation. This
+means that all modules have to be synchronised at all times in order to prevent wheels from being
+dragged along. The available degrees of freedom combined with the synchronisation demand means some
+complicated math is required to make a swerve drive control work.</li>
+<li>Similar to the control side of the drive determining the position and velocity of the robot using
+wheel <a href="https://en.wikipedia.org/wiki/Odometry">odometry</a> requires more complicated math. This is
+due to the fact that the different drive modules don't necessarily agree with each other.</li>
+<li>Have more failure modes than other drive systems due to the fact that there are more moving parts.</li>
+</ul>
+<p>So with all these complications why would I try to build a swerve drive as my second robot and not
+a differential drive robot or something similar. As pointed out previously there are good
+reasons to use a swerve drive in an outdoor environment, i.e. high agility, good load capacity,
+traction from all wheels, low ground impact. However the main reason I want to design and build a
+swerve drive is because it is a challenge. Swerve drives are complicated and designing and building
+one involves solving interesting problems in mechanical engineering, electrical engineering and
+software engineering.</p>
+<p>There is currently no complete design for this robot yet, however there is a short list of design
+decisions that have been made so far.</p>
+<ul>
+<li>It will be a four wheel swerve drive robot. Swerve drives have been built with anything from
+three wheels up, e.g. the Curiosity mars rover has 6 drive modules. The reason to use four modules
+is that it will be symmetrical and still minimize the number of parts necessary.</li>
+<li>The software for the robot will be using <a href="https://docs.ros.org/en/humble/index.html">ROS2 Humble</a>.
+Using ROS should provide me with a base framework and a lot of standard capabilities, like the
+navigation stack, that I won't have to write myself. Additionally ROS has a decent simulation
+environment that will allow me to test my code before putting it on a real robot.</li>
+<li>The hardware will be controlled using <a href="https://control.ros.org/master/index.html">ROS2 controllers</a>.
+This will allow me to abstract the hardware so that I can better test the controller.</li>
+<li>The initial design will be an indoor model and about the same size as my SCUTTLE robot is. This will
+simplify the initial design and allow me to compare with SCUTTLE.</li>
+</ul>
+<p>The parts of the robot that I expect to be complicated and quite possibly show stoppers are the
+software and the mechanical design. For the software the drive controller software, which translates
+the requested velocity commands to motor commands for both the drive and steering motors, will be
+complicated as it needs to make sure that all drive modules are the correct state. This piece of
+software also needs to handle all the error conditions that occur.</p>
+<p>On the mechanical side I need to design the drive module such that it can drive the wheel forwards
+and backwards while allowing &lsquo;infinite&rsquo; steering rotation. This will require a co-axial setup and a
+bit of gearing. The second complicated part of the mechanical design is the inclusion of a suspension
+system. Ideally the motors should be attached to the sprung side of the suspension system so that
+they don't get exposed to excessive vibration. This however will complicate the mechanical design.</p>
+<iframe
+    style="float:left"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/fR47Y7p4mtQ"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+</iframe>
+<p>My plan is to work on the control software first. I can test that software using simulation and so
+figure out if I can even make it work. I have created a simple URDF model that uses
+ROS2 controllers to simulate a four wheel steering platform. This allowed me to learn more about
+ROS2, ROS2 controls and how the interaction of those two with Gazebo works.</p>
+<p>At the moment I'm implementing a prototype for the controller in python so that I can use the model to
+test if my algorithm works before I turn it into a proper ROS2 controller, which will need to be
+written in C++.</p>
+<p>Once I have some kind of controlling software I am aiming to build a single drive module with a drive
+motor, a steering motor and the mechanical assembly that allows a single wheel to be steered and driven.
+I will use this module to work out both the details on the mechanical and software sides of the project.</p>
+<p>Once I have the controller and the drive module working properly I will build a simple robot, similar
+in size to my SCUTTLE robot to further work on swerve drives. It will take me a little while
+to get to that state though. In the mean time I will keep working on my design and documenting my
+journey.</p>
 
     </div>
 
     <div id="post-footer">
         <div>
     <div class="navlinks">
-                <a href="/posts/Why-this-blog-was-created" title="Previous Post: Why this blog was created" class="navlinks-prev">« Why this blog was created</a>
-                <a href="/posts/Sherlock-Release-v0401" title="Next Post: Sherlock release - V0.4.0.1" class="navlinks-next">Sherlock release - V0.4.0.1 »</a>
+                <a href="/posts/Robotics-fixing-scuttles-encoder" title="Previous Post: Starting robotics - Fixing the wheel encoders" class="navlinks-prev">« Starting robotics - Fixing the wheel encoders</a>
     </div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'First-time-paragliding';
-    var disqus_title = 'First time paragliding';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/First-time-paragliding';
+    var disqus_identifier = 'Swerve-drive-introduction';
+    var disqus_title = 'Swerve drive - Moving a robot in all directions, mostly';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Swerve-drive-introduction';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
@@ -324,7 +399,7 @@ running and more flying next time.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 04 Dec 2022 03:15:58 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 04 Dec 2022 03:15:56 GMT
 
  from commit <a href="https://github.com/pvandervelde/mindvortex/tree/f7160d19153ce6bd394bf5aeff7e31c8f9f5c8a9">f7160d19153ce6bd394bf5aeff7e31c8f9f5c8a9</a> at version 3.12.0.        </p>
     </div>

@@ -129,6 +129,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Swerve-drive-introduction">Swerve drive - Moving a robot in all directions, mostly</a></li>
                             <li><a href="/posts/Robotics-fixing-scuttles-encoder">Starting robotics - Fixing the wheel encoders</a></li>
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-electronics">Starting robotics - Building a bumper for scuttle. The electronics</a></li>
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-software">Starting robotics - Building a bumper for scuttle. The software</a></li>
@@ -138,7 +139,6 @@
                             <li><a href="/posts/Starting-robotics-with-scuttle">Starting robotics with the SCUTTLE robot</a></li>
                             <li><a href="/posts/Building-autonomous-mobile-robot-why">Building an autonomous mobile robot - But why?</a></li>
                             <li><a href="/posts/Software-development-pipeline-security">Software development pipeline - Security</a></li>
-                            <li><a href="/posts/Software-development-pipeline-infrastructure-dependency-reduction">Software development pipeline - Infrastructure dependency reduction</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -152,28 +152,28 @@
                                     <a role="button" href="/tags/nBuildKit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
+                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (8)</a>
+                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
+                                    <a role="button" href="/tags/Nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
                                 </li>
                         </ul>
                     </div>
@@ -188,6 +188,144 @@
 
             <div id="content">
 
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Swerve-drive-introduction">Swerve drive - Moving a robot in all directions, mostly</a>
+</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Sunday, December 4, 2022
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Omnidirectional" class="btn btn-default btn-xs tag-no-wrap">Omnidirectional</a>
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/Swerve" class="btn btn-default btn-xs tag-no-wrap">Swerve</a>
+    </div>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>Over the last year I have been using my <a href="https://www.scuttlerobot.org/">SCUTTLE robot</a> as a way of
+learning about robotics and all the related fields like mechanics and electronics. A major part of
+this journey is the desire to design and build an autonomous mobile robot from the ground up.</p>
+<p>My goal is to build an off-road capable robot that can navigate autonomously between different
+locations to execute tasks either by itself or in cooperation with other robots. This is
+quite an inspirational goal that involves quite a few robot different parts, a lot
+of code and many hours of building and testing to achieve.</p>
+<p>The chassis of the robot will have four drive modules. Each module has one wheel attached that will
+both be independently driven, and independently steerable. This configuration is called
+<code>four wheel independent steering</code> or <code>swerve drive</code>. These kind of steering systems are used in
+<a href="https://en.wikipedia.org/wiki/Self-propelled_modular_transporter">heavy transport</a>,
+agriculture machines, <a href="https://en.wikipedia.org/wiki/Curiosity_(rover)">mars rovers</a> and
+<a href="https://www.chiefdelphi.com/t/best-frc-swerve-drive/399865">robot competitions</a>. The advantages of
+a swerve drive system are that:</p>
+<ul>
+<li>It provides a high degree of mobility. In a swerve drive direction of movement and orientation
+are independent so the robot can face forwards while driving sideways. Additionally in a swerve drive
+the <a href="https://en.wikipedia.org/wiki/Instant_centre_of_rotation#:%7E:text=The%20instant%20center%20of%20rotation,a%20particular%20instant%20of%20time.">Instantaneous Center of Rotation (ICR)</a>
+is not fixed to a specific line as it is with <a href="https://en.wikipedia.org/wiki/Ackermann_steering_geometry">Ackermann steering</a>
+or <a href="https://en.wikipedia.org/wiki/Differential_wheeled_robot">differential drive</a>. This flexibility
+allows the swerve drive to combine rotational movements with linear movements in ways that
+other drive systems cannot.</li>
+<li>It has normal size wheels which provide a high carry capacity. While
+<a href="https://en.wikipedia.org/wiki/Omni_wheel">omni-wheels</a> have the similar degree of freedom as a
+swerve drive does, omni-wheels but can often not carry the same load due to the lower carrying
+capacity of the rollers.</li>
+<li>It doesn't rely on wheel slip, as multi-wheel differential drive does. This means that it has
+lower power demands, so more of the motor torque can be used to move the robot forward.</li>
+<li>It has the ability to traverse rough and dirty terrain due to the fact that all wheels are
+driven as well as using normal wheels on each drive module. Omni-wheels and <a href="https://en.wikipedia.org/wiki/Mecanum_wheel">mecanum wheels</a>
+face more issues in these environments due to dust and dirt clogging up the wheels as well as
+having greater difficulty tackling obstacles.</li>
+<li>It is able to keep ground disturbance to a minimum as it is able to steer the robot while minimizing
+sliding movement. Other drive systems, e.g. tracks or multi-axle differential drives, have a bigger
+impact due to the sliding movement required for these systems to turn the robot.</li>
+</ul>
+<p>Of course the swerve drive system isn't a magical system that only has advantages. There are also plenty
+of disadvantages. For instance swerve drive systems:</p>
+<ul>
+<li>Are mechanically complicated. They require multiple motors per unit and multiple units per robot.
+On top of that there are usually a number of mechanical components, gears and bearings, involved
+in getting a working swerve drive.</li>
+<li>Need a complicated control system. Swerve systems are generally
+over-determined, i.e. they have more degrees of freedom in the drive system, 2 per drive module,
+than there are degrees of freedom in the robot, 2 translation directions and a rotation. This
+means that all modules have to be synchronised at all times in order to prevent wheels from being
+dragged along. The available degrees of freedom combined with the synchronisation demand means some
+complicated math is required to make a swerve drive control work.</li>
+<li>Similar to the control side of the drive determining the position and velocity of the robot using
+wheel <a href="https://en.wikipedia.org/wiki/Odometry">odometry</a> requires more complicated math. This is
+due to the fact that the different drive modules don't necessarily agree with each other.</li>
+<li>Have more failure modes than other drive systems due to the fact that there are more moving parts.</li>
+</ul>
+<p>So with all these complications why would I try to build a swerve drive as my second robot and not
+a differential drive robot or something similar. As pointed out previously there are good
+reasons to use a swerve drive in an outdoor environment, i.e. high agility, good load capacity,
+traction from all wheels, low ground impact. However the main reason I want to design and build a
+swerve drive is because it is a challenge. Swerve drives are complicated and designing and building
+one involves solving interesting problems in mechanical engineering, electrical engineering and
+software engineering.</p>
+<p>There is currently no complete design for this robot yet, however there is a short list of design
+decisions that have been made so far.</p>
+<ul>
+<li>It will be a four wheel swerve drive robot. Swerve drives have been built with anything from
+three wheels up, e.g. the Curiosity mars rover has 6 drive modules. The reason to use four modules
+is that it will be symmetrical and still minimize the number of parts necessary.</li>
+<li>The software for the robot will be using <a href="https://docs.ros.org/en/humble/index.html">ROS2 Humble</a>.
+Using ROS should provide me with a base framework and a lot of standard capabilities, like the
+navigation stack, that I won't have to write myself. Additionally ROS has a decent simulation
+environment that will allow me to test my code before putting it on a real robot.</li>
+<li>The hardware will be controlled using <a href="https://control.ros.org/master/index.html">ROS2 controllers</a>.
+This will allow me to abstract the hardware so that I can better test the controller.</li>
+<li>The initial design will be an indoor model and about the same size as my SCUTTLE robot is. This will
+simplify the initial design and allow me to compare with SCUTTLE.</li>
+</ul>
+<p>The parts of the robot that I expect to be complicated and quite possibly show stoppers are the
+software and the mechanical design. For the software the drive controller software, which translates
+the requested velocity commands to motor commands for both the drive and steering motors, will be
+complicated as it needs to make sure that all drive modules are the correct state. This piece of
+software also needs to handle all the error conditions that occur.</p>
+<p>On the mechanical side I need to design the drive module such that it can drive the wheel forwards
+and backwards while allowing &lsquo;infinite&rsquo; steering rotation. This will require a co-axial setup and a
+bit of gearing. The second complicated part of the mechanical design is the inclusion of a suspension
+system. Ideally the motors should be attached to the sprung side of the suspension system so that
+they don't get exposed to excessive vibration. This however will complicate the mechanical design.</p>
+<iframe
+    style="float:left"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/fR47Y7p4mtQ"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen>
+</iframe>
+<p>My plan is to work on the control software first. I can test that software using simulation and so
+figure out if I can even make it work. I have created a simple URDF model that uses
+ROS2 controllers to simulate a four wheel steering platform. This allowed me to learn more about
+ROS2, ROS2 controls and how the interaction of those two with Gazebo works.</p>
+<p>At the moment I'm implementing a prototype for the controller in python so that I can use the model to
+test if my algorithm works before I turn it into a proper ROS2 controller, which will need to be
+written in C++.</p>
+<p>Once I have some kind of controlling software I am aiming to build a single drive module with a drive
+motor, a steering motor and the mechanical assembly that allows a single wheel to be steered and driven.
+I will use this module to work out both the details on the mechanical and software sides of the project.</p>
+<p>Once I have the controller and the drive module working properly I will build a simple robot, similar
+in size to my SCUTTLE robot to further work on swerve drives. It will take me a little while
+to get to that state though. In the mean time I will keep working on my design and documenting my
+journey.</p>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -598,112 +736,6 @@ separate posts.</p>
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">Starting robotics - Driving scuttle with ROS - Gazebo simulation</a>
-</h2>
-<div id="post-meta">
-    <div class="meta-date">
-Wednesday, June 1, 2022
- |             Posted in     </div>
-    <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Gazebo" class="btn btn-default btn-xs tag-no-wrap">Gazebo</a>
-                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
-                        <a id="post-category" role="button" href="/tags/ROS" class="btn btn-default btn-xs tag-no-wrap">ROS</a>
-                        <a id="post-category" role="button" href="/tags/ROS-Noetic" class="btn btn-default btn-xs tag-no-wrap">ROS&nbsp;Noetic</a>
-                        <a id="post-category" role="button" href="/tags/Scuttle" class="btn btn-default btn-xs tag-no-wrap">Scuttle</a>
-    </div>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>After getting familiar with <a href="posts/Robotics-learning-ros">ROS</a>, the next step was to get the
-navigation stack working in Gazebo for the SCUTTLE robot. Fortunately, the SCUTTLE developers
-had already created a number of ROS packages containing the
-<a href="https://github.com/scuttlerobot/scuttle_description">scuttle model</a>,
-<a href="https://github.com/scuttlerobot/scuttle_bringup">the startup scripts</a> and the
-<a href="https://github.com/scuttlerobot/scuttle_driver">driver code</a>. All the bits you need to drive SCUTTLE
-around using ROS.</p>
-<p>The first challenge is to drive the SCUTTLE model around in <a href="https://gazebosim.org/">Gazebo</a>
-using the <a href="http://wiki.ros.org/teleop_twist_keyboard">keyboard</a>.
-This was easily achieved using Gazebo and RViz using WSL2, but it was a bit slow.</p>
-<iframe
-    style="float:right"
-    width="560"
-    height="315"
-    src="https://www.youtube.com/embed/TI9tfzn8yXE"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
-</iframe>
-<p>The next challenge was to make the virtual SCUTTLE drive to a specific point using a custom
-ROS node. While doing the <a href="https://www.udemy.com/course/ros-essentials/">ROS for beginners I</a> course
-I wrote some code to do a move-to-goal for the <a href="http://wiki.ros.org/turtlesim">turtlesim</a> virtual
-robot. The <a href="https://gist.github.com/pvandervelde/35200cce52d416d899c3db600c98a4a5">code</a> was updated
-and then used for the SCUTTLE robot. The result is a robot that moves to a goal, mission accomplished!</p>
-<p>The final challenge, for now at least, is to get the navigation stack to work for SCUTTLE. In order
-to do so a few new packages needed to be created. The packages I created are</p>
-<ul>
-<li><a href="https://github.com/scuttlerobot/scuttle_slam">scuttle_slam</a> - Contains the configurations and
-launch files for running <a href="http://wiki.ros.org/gmapping">gmapping</a> SLAM using the SCUTTLE LIDAR.</li>
-<li><a href="https://github.com/scuttlerobot/scuttle_navigation">scuttle_navigation</a> - Contains the
-configuration for working with the <a href="http://wiki.ros.org/navigation">navigation stack</a>.</li>
-<li><a href="https://github.com/scuttlerobot/scuttle_gazebo">scuttle_gazebo</a> - Contains a number of Gazebo
-worlds for testing our virtual SCUTTLE.</li>
-</ul>
-<p>The <code>scuttle_slam</code> and <code>scuttle_navigation</code> packages are based on the similar packages for
-<a href="https://github.com/ROBOTIS-GIT/turtlebot3">turtlebot3</a> with adjustments so that the configuration
-matches SCUTTLE's performance.</p>
-<p>For navigation in ROS1, you need two different types of path planners and a map for each planner. The
-first type is the global planner, which uses a map to determine the fastest path from the current
-location to the goal location. The second type, called the local planner, navigates the robot to
-the goal by trying to follow the path created by the global planner. The path followed by the local
-planner may deviate from the global path due to previously unknown obstacles and limitations of the
-robot, e.g. the ability to follow a turn. The map for each planner is known as a <a href="http://wiki.ros.org/costmap_2d">costmap</a>
-which indicates which part of the surroundings are occupied by obstacles and which parts can be
-navigated. After configuring the planners and the costmaps, the navigation worked. I could use
-RViz to set a point on the map and the virtual SCUTTLE would navigate to that location automatically.
-Success!</p>
-<figure style="float:left">
-<img alt="Scuttle navigating in RViz" src="/assets/images/robotics/scuttle/scuttle-navigate-in-rviz.png" />
-<figcaption>SCUTTLE robot navigating a room in RViz</figcaption>
-</figure>
-<p>Now, not everything was fine. The <a href="https://answers.ros.org/question/397737/dwa-local-planner-cant-find-a-trajectory-unless-rotate-recovery-runs">first issue</a>
-is some weird behaviour with the <a href="http://wiki.ros.org/dwa_local_planner?distro=noetic">DWA local planner</a>.
-Once the robot is moving the local planner mostly does a good job. However, when starting a path it
-takes a while for the local planner to pick up the global path. In fact, the DWA planner doesn't seem
-to <a href="https://www.youtube.com/watch?v=Nt9XyJHzfas&amp;ab_channel=PatrickvanderVelde">accept the global plan</a>
-until after a <a href="http://wiki.ros.org/rotate_recovery?distro=noetic">rotate recovery</a> has taken place.
-So far, I haven't found a solution to this problem.</p>
-<p>The second issue is that, in some cases, the navigation stack fails to find a path out of a narrow
-hallway or though a narrow door. In general, this happens when exploring a location, e.g. using the
-<a href="http://wiki.ros.org/explore_lite">explore_lite</a> package. It seems that the algorithm
-can't find a turn that will rotate the robot in the available space, even though scuttle is
-able to perform in-place rotations. At the start of a navigation exercise, in-place rotations are
-gladly used. However once the robot is on the move, the algorithm doesn't seem to apply in-place
-rotations anymore.</p>
-<p>Finally, you have to keep in mind that the default planners for ROS are path planners. This means that
-they plan a path from the start to the destination. These paths, however, only describe the direction
-a robot should take at a given location. They don't describe velocity or acceleration. Only
-describing the direction can generate paths with abrupt turns that force the robot to slow
-down significantly. Using a trajectory planner, which at least prescribes velocities, makes for a
-smoother experience for robot and cargo.</p>
-<h4>Edits</h4>
-<ul>
-<li>October 26th 2022: Added the <code>Gazebo</code> tag.</li>
-</ul>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -734,9 +766,9 @@ smoother experience for robot and cargo.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Tue, 15 Nov 2022 04:50:58 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 04 Dec 2022 03:15:55 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/b8103472b08adc592099afe7f652a5969a8a3e85">b8103472b08adc592099afe7f652a5969a8a3e85</a> at version 3.11.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/f7160d19153ce6bd394bf5aeff7e31c8f9f5c8a9">f7160d19153ce6bd394bf5aeff7e31c8f9f5c8a9</a> at version 3.12.0.        </p>
     </div>
 
     <p>
