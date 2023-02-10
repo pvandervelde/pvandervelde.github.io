@@ -1,0 +1,429 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+
+        <title>Mind vortex - Swerve drive - Kinematics simulation</title>
+        <meta name="description" content="Welcome!" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link type="application/rss+xml" rel="alternate" title="Mind vortex" href="/feed.rss" />
+        <link type="application/atom+xml" rel="alternate" title="Mind vortex" href="/feed.atom" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+        <link href="/assets/css/normalize.css" rel="stylesheet" />
+        <link href="/assets/css/h5bp.css" rel="stylesheet">
+        <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+        <link href="/assets/css/override.css" rel="stylesheet" />
+        <link href="/assets/css/github.css" rel="stylesheet" type="text/css">
+
+
+        <meta name="application-name" content="Mind vortex" />
+        <meta name="msapplication-tooltip" content="Mind vortex" />
+        <meta name="msapplication-starturl" content="/" />
+
+        <meta property="og:title" content="Mind vortex - Swerve drive - Kinematics simulation" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Swerve-drive-kinematics-simulation" />
+        <!-- TODO: More social graph meta tags -->
+
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>
+        <script src="/assets/js/highlight.pack.js"></script>
+        <script src="/assets/js/clean-blog.js"></script>
+        <script src="/assets/js/d3.v3.min.js"></script>
+        <script src="/assets/js/trianglify.min.js"></script>
+        <script src="/assets/js/Please-compressed.js"></script>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+                <script src="/assets/js/html5shiv.js"></script>
+                <script src="/assets/js/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Our scripts -->
+<script src="/assets/js/script.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DV643VJGFT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DV643VJGFT');
+</script>
+
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        <div id="header" class="container">
+            <div id="logo">
+                <h1><a href="/">Mind vortex</a></h1>
+            </div>
+            <div id="menu">
+                <ul>
+                            <!-- Pages -->
+        <!-- BlogPosts -->
+        <!-- Tags -->
+        <!-- TagIndex -->
+        <!-- BlogArchive -->
+        <!-- Index -->
+        <!-- RenderTagIndex -->
+        <!-- RenderTags -->
+        <!-- RenderBlogArchive -->
+        <!-- Feed -->
+        <!-- RenderBlogPosts -->
+    <!-- Context.Documents['Pages'] -->
+        <!-- 404 Not Found - False - /404 -->
+        <!-- About - True - /about -->
+        <!-- Calvinverse - False - /projects/calvinverse -->
+        <!-- nBuildKit - False - /projects/nbuildkit -->
+        <!-- Projects - True - /projects -->
+        <!-- Scuttle - False - /projects/scuttle -->
+            <li class="inactive" >
+                <a href="/">Home</a>
+            </li>
+            <li class="inactive" >
+                <a href="/projects">Projects</a>
+            </li>
+            <li class="inactive" >
+                <a href="/posts">Archive</a>
+            </li>
+            <li class="inactive" >
+                <a href="/tags">Tags</a>
+            </li>
+            <li class="inactive" >
+                <a href="/about">About</a>
+            </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div id="page" class="container">
+            <div id="sidebar">
+                <div id="sbox1">
+                    <h2>Patrick van der Velde</h2>
+
+<p>
+    <img src="https://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160" alt="Gravatar for Patrick van der Velde">
+</p>
+<p>
+    Dutch software developer who is living, working and playing in New Zealand.
+    Rock climber and paragliding pilot. Developer of
+    <a href="https://nbuildkit.github.io/nBuildKit.MsBuild/">nBuildKit</a>,
+    <a href="https://github.com/Calvinverse">the Calvinverse resources</a> and other projects.
+</p>
+<p>
+    <a href="/about.html">More ...</a>
+</p>
+
+                </div>
+                <div id="sbox2">
+                    <h2>Recent</h2>
+                    <ul class="list-unstyled">
+                            <li><a href="/posts/Swerve-drive-kinematics-simulation">Swerve drive - Kinematics simulation</a></li>
+                            <li><a href="/posts/Swerve-drive-introduction">Swerve drive - Moving a robot in all directions, mostly</a></li>
+                            <li><a href="/posts/Robotics-fixing-scuttles-encoder">Starting robotics - Fixing the wheel encoders</a></li>
+                            <li><a href="/posts/Robotics-a-bumper-for-scuttle-electronics">Starting robotics - Building a bumper for scuttle. The electronics</a></li>
+                            <li><a href="/posts/Robotics-a-bumper-for-scuttle-software">Starting robotics - Building a bumper for scuttle. The software</a></li>
+                            <li><a href="/posts/Robotics-a-bumper-for-scuttle-overview">Starting robotics - Building a bumper for scuttle. The overview</a></li>
+                            <li><a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">Starting robotics - Driving scuttle with ROS - Gazebo simulation</a></li>
+                            <li><a href="/posts/Robotics-learning-ros">Starting robotics - Learning Robot Operating System (ROS)</a></li>
+                            <li><a href="/posts/Starting-robotics-with-scuttle">Starting robotics with the SCUTTLE robot</a></li>
+                            <li><a href="/posts/Building-autonomous-mobile-robot-why">Building an autonomous mobile robot - But why?</a></li>
+                    </ul>
+                </div>
+                <div id="sbox3">
+                    <h2>Tags</h2>
+                    <div>
+                        <ul class="list-unstyled">
+                                <li>
+                                    <a role="button" href="/tags/Sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nBuildKit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (10)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
+                                </li>
+                        </ul>
+                    </div>
+                    <br />
+                    <ul class="pager">
+                        <li class="next">
+                            <a href="/tags">View All Tags &rarr;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="content">
+
+<div id="post">
+    <div id="post-header">
+        <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+Swerve drive - Kinematics simulation</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Friday, February 10, 2023
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Kinematics" class="btn btn-default btn-xs tag-no-wrap">Kinematics</a>
+                        <a id="post-category" role="button" href="/tags/Omnidirectional" class="btn btn-default btn-xs tag-no-wrap">Omnidirectional</a>
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/Swerve" class="btn btn-default btn-xs tag-no-wrap">Swerve</a>
+    </div>
+</div>
+
+    </div>
+
+    <div id="post-content">
+        <p>As <a href="posts/Swerve-drive-introduction">mentioned</a> I am designing and building four wheel steering
+mobile robot for use in outdoor environments and rough terrain. In that post I mused that both
+the mechanical design and the software would be the most complicated parts of the drive system and
+thus the parts I should focus on first. At the moment I don't have good access to a workshop where I
+can experiment with the mechanical design so for now I'm focussing on the creation of the control
+software. Once I have the controller software working I can then use Gazebo to test the robot
+virtually to ensure that the code will work in the actual robot.</p>
+<p>Unlike a differential drive a four wheel swerve drive has more degrees of freedom than needed, eight
+degrees of freedom (steering angle and wheel velocity for each drive module) for the control versus
+three spatial degrees of freedom (forward, sideways and rotate). This means that a swerve drive is
+an over-determined system, requiring the control system to carefully control the wheel velocities
+and angles so that they agree with each other, otherwise the wheels slip or drag.</p>
+<figure style="float:left">
+  <a href="/assets/images/robotics/swerve/swerve-dof.png" target="_blank">
+    <img alt="Swerve drive degrees of freedom" src="/assets/images/robotics/swerve/swerve-dof.png" />
+  </a>
+  <figcaption>Degrees of freedom for a swerve drive system.</figcaption>
+</figure>
+<p>While doing some research I found many
+<a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=multi+wheel+steering&amp;btnG=">different</a>
+<a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0,5&amp;q=multi+wheel+steering+icr+mobile+robots">scientific</a>
+<a href="https://scholar.google.com/citations?hl=en&amp;user=H10kxZgAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">papers</a>
+describing algorithms for determining the <a href="https://en.wikipedia.org/wiki/Forward_kinematics">forward</a>
+and <a href="https://en.wikipedia.org/wiki/Inverse_kinematics">inverse</a> kinematics of a four wheel steering system.
+There are however very <a href="https://github.com/MarkNaeem/ros_controllers/tree/noetic-devel/swerve_steering_controller">few</a>
+<a href="https://github.com/ros-controls/ros_controllers/pull/441">software</a>
+<a href="https://github.com/james-yoo/swerve_drive">libraries</a> which implement the different control algorithms.</p>
+<p>Most papers and libraries focus on the simpler case of an indoor robot that moves along a flat
+horizontal surface. In this case relatively simple kinematics approaches can be used. Unfortunately
+these algorithms fail when used in 3d uneven terrain. A different
+<a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=H10kxZgAAAAJ&amp;sortby=pubdate&amp;citation_for_view=H10kxZgAAAAJ:Se3iqnhoufwC">approach</a>
+is required for that case. At the moment I too will be focussed on algorithms for driving on
+flat surfaces. At least until I have correctly working control code.</p>
+<p>After reading a number of papers and looking at some of the available code I have come to the
+conclusion that I don't understand what is required for a successful swerve algorithm. There are
+many variables that influence the behaviour making it hard to visualize what goes on as the robot is
+moving around. So I wrote some <a href="https://github.com/pvandervelde/basic-swerve-sim">code</a>
+to simulate what is going on (roughly) in a swerve drive while it is moving and steering. I'm
+going to use this code to answer a number of questions I have about the different control algorithms.</p>
+<p>For instance algorithms often calculate the desired end state and then set the wheel position and
+velocity to those required for that desired state. The question is does this algorithm automatically
+ensure that the intermediate states are synchronised, and if not does that matter? An example of
+this would be a robot moving linearly at 45 degrees and transitioning to an in-place rotation, as pictured
+below. During the transition all drive modules should be synchronised so that the center of rotation
+for the robot matches with the state of the drive modules.</p>
+<figure style="float:right">
+  <a href="/assets/images/robotics/swerve/transition-45-to-rotate.png" target="_blank">
+    <img
+        alt="Transition from 45 degree linear motion to in-place rotation."
+        src="/assets/images/robotics/swerve/transition-45-to-rotate.png"
+        width="525"
+        height="385"/>
+  </a>
+  <figcaption>Transition from 45 degree linear motion to in-place rotation.</figcaption>
+</figure>
+<p>Another example is that many of the code libraries add an optimization that reverses the wheel
+direction in favour of reducing the steering angle. For instance instead of changing the steering
+angle from 0 degrees to 225 degrees with a wheel velocity of 1.0 rad/s, change the angle to 45 degrees
+and reverse the wheel velocity to -1.0 rad/s. Again there are a number of questions about
+this optimization. For instance making a smaller steering angle change reduces the energy used, however
+stopping and reversing the wheel motion also takes energy, so what are the benefits of this optimization,
+if any? And how do the algorithms keep the wheel motions synchronised when performing the reversing
+optimization?</p>
+<p>The following graphs show an example of the simulation output. The motion being simulated is that of
+a robot transiting from moving at a 45 degree straight path to an in-place rotation. The graphs
+display the status of the robot body, position and velocity and the status of the different drive modules,
+the angular orientation and the wheel velocity. The last graph depicts the location of the
+Instantaneous Centre of Rotation (ICR) for different combinations of drive modules. The ICR is the
+point in space around which the robot turns. If the control algorithm is correct then the ICR points
+for different drive module combinations all fall in the same location though out the entire movement
+pattern.</p>
+<figure style="float:middle">
+  <a href="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png" target="_blank">
+    <img
+        alt="45 degree linear track to in-place rotation"
+        src="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png"
+        width="840"
+        height="368"/>
+  </a>
+  <figcaption>Simulation data for a 45 degree linear track that transitions to an in-place rotation.</figcaption>
+</figure>
+<p>Looking at these graphs a couple of observations can be made. The first observation is that the ICR
+paths for the different module combinations don't match each other. This means that the drive modules
+are not synchronised and one or more wheels will be experiencing wheel slip.
+The second observation is that the linear control algorithm causes sharp changes in velocities leading
+to extremely high acceleration demands. It seems unlikely that the motors and the structure would
+be able to cope with these demands.</p>
+<p>From this relatively simple simulation we can see that there are a number of behaviours that the
+control system needs to cope with:</p>
+<ul>
+<li>The state of the drive modules actively needs to be kept in sync at all times, including during
+transitions from one movement state to another. This indicates that dynamic control is required
+and thus poses questions about the update frequency for drive module sensors and control commands.</li>
+<li>The capabilities and behaviour of the motors needs to be taken into account in order to prevent
+impossible movement commands and also to ensure that the drive modules remain synchronised during
+movement commands that require fast state changes from the motors, e.g. to deal with motor
+<a href="https://en.wikipedia.org/wiki/Deadband">deadband</a> or fast accelerations.</li>
+<li>The structural and kinematic limitations need to be considered when giving and processing movement
+commands.</li>
+<li>Linear control behaviour is not ideal as it causes large acceleration demands so a better approach
+is necessary.</li>
+</ul>
+<p>Now that I have some working simulation code what are the next steps? The first stage is to simulate
+some more simple movement trajectories to validate the simulation code. Once I have confidence that
+the code actually simulates real world behaviour I can implement different control algorithms. These
+algorithms can then be compared to see which algorithm behaves the best. Currently I'm thinking to
+implement</p>
+<ul>
+<li>A control algorithm that uses a known movement profile for the robot base. It can then calculate
+the desired drive module state across time to match the robot base movement. The movement profile
+could be linear, polynomial or any other sensible profile.</li>
+<li>A controller that optimizes module turn time by having it turn the shortest amount and reversing
+the wheel velocity if required.</li>
+<li>A low <a href="https://en.wikipedia.org/wiki/Jerk_(physics)">jerk</a> controller that ensures smooth movement
+of the robot body and drive modules.</li>
+</ul>
+<p>In future posts I will provide more details about the different controller and model algorithms.</p>
+
+    </div>
+
+    <div id="post-footer">
+        <div>
+    <div class="navlinks">
+                <a href="/posts/Swerve-drive-introduction" title="Previous Post: Swerve drive - Moving a robot in all directions, mostly" class="navlinks-prev">« Swerve drive - Moving a robot in all directions, mostly</a>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Swerve-drive-kinematics-simulation';
+    var disqus_title = 'Swerve drive - Kinematics simulation';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Swerve-drive-kinematics-simulation';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <footer>
+            <div id="footer" class="container">
+    <div id="fbox1">
+        <h2>Related</h2>
+        <ul>
+            <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
+            <li><a href="https://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="https://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="https://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://profile.codersrank.io/user/pvandervelde">CodersRank</a></li>
+        </ul>
+    </div>
+    <div id="fbox2">
+        <h2 id="copyright">Copyright</h2>
+        <p>Copyright (c) 2023 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
+
+        <h2 id="disclaimer">Disclaimer</h2>
+        <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
+    </div>
+    <div id="fbox3">
+        <h2 id="media">Media</h2>
+        <p><a href="/feed.atom"><img src="/assets/images/feed.png" alt="Atom feed"></a></p>
+    </div>
+</div>
+<div id="copyright" class="container">
+    <div>
+        <p>
+            Generated by <a href="https://wyam.io">Wyam</a> on Fri, 10 Feb 2023 08:58:34 GMT
+
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/06645ecbc726844ee0165409ba6b79a11868cda0">06645ecbc726844ee0165409ba6b79a11868cda0</a> at version 3.13.0.        </p>
+    </div>
+
+    <p>
+        Site design based on the <a href="https://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="https://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+    </p>
+    <p>
+        Feed icon by <a href="https://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="https://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="https://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+    </p>
+</div>
+
+        </footer>
+    </body>
+</html>

@@ -3,9 +3,140 @@
 	<id>https://www.petrikvandervelde.nl/</id>
 	<title>Mind vortex</title>
 	<link rel="self" href="https://www.petrikvandervelde.nl/" />
-	<rights>2022</rights>
-	<updated>2022-12-04T03:15:55Z</updated>
+	<rights>2023</rights>
+	<updated>2023-02-10T08:58:33Z</updated>
 	<subtitle>Welcome!</subtitle>
+	<entry>
+		<id>https://www.petrikvandervelde.nl/posts/Swerve-drive-kinematics-simulation</id>
+		<title>Swerve drive - Kinematics simulation</title>
+		<link href="https://www.petrikvandervelde.nl/posts/Swerve-drive-kinematics-simulation" />
+		<updated>2023-02-10T00:00:00Z</updated>
+		<content>&lt;p&gt;As &lt;a href="posts/Swerve-drive-introduction"&gt;mentioned&lt;/a&gt; I am designing and building four wheel steering
+mobile robot for use in outdoor environments and rough terrain. In that post I mused that both
+the mechanical design and the software would be the most complicated parts of the drive system and
+thus the parts I should focus on first. At the moment I don't have good access to a workshop where I
+can experiment with the mechanical design so for now I'm focussing on the creation of the control
+software. Once I have the controller software working I can then use Gazebo to test the robot
+virtually to ensure that the code will work in the actual robot.&lt;/p&gt;
+&lt;p&gt;Unlike a differential drive a four wheel swerve drive has more degrees of freedom than needed, eight
+degrees of freedom (steering angle and wheel velocity for each drive module) for the control versus
+three spatial degrees of freedom (forward, sideways and rotate). This means that a swerve drive is
+an over-determined system, requiring the control system to carefully control the wheel velocities
+and angles so that they agree with each other, otherwise the wheels slip or drag.&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+  &lt;a href="/assets/images/robotics/swerve/swerve-dof.png" target="_blank"&gt;
+    &lt;img alt="Swerve drive degrees of freedom" src="/assets/images/robotics/swerve/swerve-dof.png" /&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Degrees of freedom for a swerve drive system.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;While doing some research I found many
+&lt;a href="https://scholar.google.com/scholar?hl=en&amp;amp;as_sdt=0%2C5&amp;amp;q=multi+wheel+steering&amp;amp;btnG="&gt;different&lt;/a&gt;
+&lt;a href="https://scholar.google.com/scholar?hl=en&amp;amp;as_sdt=0,5&amp;amp;q=multi+wheel+steering+icr+mobile+robots"&gt;scientific&lt;/a&gt;
+&lt;a href="https://scholar.google.com/citations?hl=en&amp;amp;user=H10kxZgAAAAJ&amp;amp;view_op=list_works&amp;amp;sortby=pubdate"&gt;papers&lt;/a&gt;
+describing algorithms for determining the &lt;a href="https://en.wikipedia.org/wiki/Forward_kinematics"&gt;forward&lt;/a&gt;
+and &lt;a href="https://en.wikipedia.org/wiki/Inverse_kinematics"&gt;inverse&lt;/a&gt; kinematics of a four wheel steering system.
+There are however very &lt;a href="https://github.com/MarkNaeem/ros_controllers/tree/noetic-devel/swerve_steering_controller"&gt;few&lt;/a&gt;
+&lt;a href="https://github.com/ros-controls/ros_controllers/pull/441"&gt;software&lt;/a&gt;
+&lt;a href="https://github.com/james-yoo/swerve_drive"&gt;libraries&lt;/a&gt; which implement the different control algorithms.&lt;/p&gt;
+&lt;p&gt;Most papers and libraries focus on the simpler case of an indoor robot that moves along a flat
+horizontal surface. In this case relatively simple kinematics approaches can be used. Unfortunately
+these algorithms fail when used in 3d uneven terrain. A different
+&lt;a href="https://scholar.google.com/citations?view_op=view_citation&amp;amp;hl=en&amp;amp;user=H10kxZgAAAAJ&amp;amp;sortby=pubdate&amp;amp;citation_for_view=H10kxZgAAAAJ:Se3iqnhoufwC"&gt;approach&lt;/a&gt;
+is required for that case. At the moment I too will be focussed on algorithms for driving on
+flat surfaces. At least until I have correctly working control code.&lt;/p&gt;
+&lt;p&gt;After reading a number of papers and looking at some of the available code I have come to the
+conclusion that I don't understand what is required for a successful swerve algorithm. There are
+many variables that influence the behaviour making it hard to visualize what goes on as the robot is
+moving around. So I wrote some &lt;a href="https://github.com/pvandervelde/basic-swerve-sim"&gt;code&lt;/a&gt;
+to simulate what is going on (roughly) in a swerve drive while it is moving and steering. I'm
+going to use this code to answer a number of questions I have about the different control algorithms.&lt;/p&gt;
+&lt;p&gt;For instance algorithms often calculate the desired end state and then set the wheel position and
+velocity to those required for that desired state. The question is does this algorithm automatically
+ensure that the intermediate states are synchronised, and if not does that matter? An example of
+this would be a robot moving linearly at 45 degrees and transitioning to an in-place rotation, as pictured
+below. During the transition all drive modules should be synchronised so that the center of rotation
+for the robot matches with the state of the drive modules.&lt;/p&gt;
+&lt;figure style="float:right"&gt;
+  &lt;a href="/assets/images/robotics/swerve/transition-45-to-rotate.png" target="_blank"&gt;
+    &lt;img
+        alt="Transition from 45 degree linear motion to in-place rotation."
+        src="/assets/images/robotics/swerve/transition-45-to-rotate.png"
+        width="525"
+        height="385"/&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Transition from 45 degree linear motion to in-place rotation.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Another example is that many of the code libraries add an optimization that reverses the wheel
+direction in favour of reducing the steering angle. For instance instead of changing the steering
+angle from 0 degrees to 225 degrees with a wheel velocity of 1.0 rad/s, change the angle to 45 degrees
+and reverse the wheel velocity to -1.0 rad/s. Again there are a number of questions about
+this optimization. For instance making a smaller steering angle change reduces the energy used, however
+stopping and reversing the wheel motion also takes energy, so what are the benefits of this optimization,
+if any? And how do the algorithms keep the wheel motions synchronised when performing the reversing
+optimization?&lt;/p&gt;
+&lt;p&gt;The following graphs show an example of the simulation output. The motion being simulated is that of
+a robot transiting from moving at a 45 degree straight path to an in-place rotation. The graphs
+display the status of the robot body, position and velocity and the status of the different drive modules,
+the angular orientation and the wheel velocity. The last graph depicts the location of the
+Instantaneous Centre of Rotation (ICR) for different combinations of drive modules. The ICR is the
+point in space around which the robot turns. If the control algorithm is correct then the ICR points
+for different drive module combinations all fall in the same location though out the entire movement
+pattern.&lt;/p&gt;
+&lt;figure style="float:middle"&gt;
+  &lt;a href="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png" target="_blank"&gt;
+    &lt;img
+        alt="45 degree linear track to in-place rotation"
+        src="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png"
+        width="840"
+        height="368"/&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Simulation data for a 45 degree linear track that transitions to an in-place rotation.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Looking at these graphs a couple of observations can be made. The first observation is that the ICR
+paths for the different module combinations don't match each other. This means that the drive modules
+are not synchronised and one or more wheels will be experiencing wheel slip.
+The second observation is that the linear control algorithm causes sharp changes in velocities leading
+to extremely high acceleration demands. It seems unlikely that the motors and the structure would
+be able to cope with these demands.&lt;/p&gt;
+&lt;p&gt;From this relatively simple simulation we can see that there are a number of behaviours that the
+control system needs to cope with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The state of the drive modules actively needs to be kept in sync at all times, including during
+transitions from one movement state to another. This indicates that dynamic control is required
+and thus poses questions about the update frequency for drive module sensors and control commands.&lt;/li&gt;
+&lt;li&gt;The capabilities and behaviour of the motors needs to be taken into account in order to prevent
+impossible movement commands and also to ensure that the drive modules remain synchronised during
+movement commands that require fast state changes from the motors, e.g. to deal with motor
+&lt;a href="https://en.wikipedia.org/wiki/Deadband"&gt;deadband&lt;/a&gt; or fast accelerations.&lt;/li&gt;
+&lt;li&gt;The structural and kinematic limitations need to be considered when giving and processing movement
+commands.&lt;/li&gt;
+&lt;li&gt;Linear control behaviour is not ideal as it causes large acceleration demands so a better approach
+is necessary.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now that I have some working simulation code what are the next steps? The first stage is to simulate
+some more simple movement trajectories to validate the simulation code. Once I have confidence that
+the code actually simulates real world behaviour I can implement different control algorithms. These
+algorithms can then be compared to see which algorithm behaves the best. Currently I'm thinking to
+implement&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A control algorithm that uses a known movement profile for the robot base. It can then calculate
+the desired drive module state across time to match the robot base movement. The movement profile
+could be linear, polynomial or any other sensible profile.&lt;/li&gt;
+&lt;li&gt;A controller that optimizes module turn time by having it turn the shortest amount and reversing
+the wheel velocity if required.&lt;/li&gt;
+&lt;li&gt;A low &lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)"&gt;jerk&lt;/a&gt; controller that ensures smooth movement
+of the robot body and drive modules.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In future posts I will provide more details about the different controller and model algorithms.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;As &lt;a href="posts/Swerve-drive-introduction"&gt;mentioned&lt;/a&gt; I am designing and building four wheel steering
+mobile robot for use in outdoor environments and rough terrain. In that post I mused that both
+the mechanical design and the software would be the most complicated parts of the drive system and
+thus the parts I should focus on first. At the moment I don't have good access to a workshop where I
+can experiment with the mechanical design so for now I'm focussing on the creation of the control
+software. Once I have the controller software working I can then use Gazebo to test the robot
+virtually to ensure that the code will work in the actual robot.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://www.petrikvandervelde.nl/posts/Swerve-drive-introduction</id>
 		<title>Swerve drive - Moving a robot in all directions, mostly</title>
@@ -35,8 +166,8 @@ allows the swerve drive to combine rotational movements with linear movements in
 other drive systems cannot.&lt;/li&gt;
 &lt;li&gt;It has normal size wheels which provide a high carry capacity. While
 &lt;a href="https://en.wikipedia.org/wiki/Omni_wheel"&gt;omni-wheels&lt;/a&gt; have the similar degree of freedom as a
-swerve drive does, omni-wheels but can often not carry the same load due to the lower carrying
-capacity of the rollers.&lt;/li&gt;
+swerve drive does, omni-wheels can often not carry the same load due to the lower carrying
+capacity of the rollers that allow the omni-wheels to move sideways.&lt;/li&gt;
 &lt;li&gt;It doesn't rely on wheel slip, as multi-wheel differential drive does. This means that it has
 lower power demands, so more of the motor torque can be used to move the robot forward.&lt;/li&gt;
 &lt;li&gt;It has the ability to traverse rough and dirty terrain due to the fact that all wheels are
@@ -2044,109 +2175,5 @@ I'm working on is creating a set of virtual machine images for &lt;a href="https
 and &lt;a href="https://github.com/Calvinverse/base.linux"&gt;Linux&lt;/a&gt; which can be used as a base for more complex
 virtual machine based resources, e.g. &lt;a href="https://github.com/Calvinverse/resource.hashi.server"&gt;a consul host&lt;/a&gt;
 or &lt;a href="https://github.com/Calvinverse/resource.container.host.linux"&gt;a docker host&lt;/a&gt;.&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-accuracy</id>
-		<title>Software development pipeline - Design accuracy</title>
-		<link href="https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-accuracy" />
-		<updated>2017-09-04T00:00:00Z</updated>
-		<content>&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Accuracy_and_precision#ISO_definition_.28ISO_5725.29"&gt;ISO&lt;/a&gt; defines
-accuracy as the combination of &lt;a href="https://dictionary.cambridge.org/dictionary/english/correct?q=correctness"&gt;correctness&lt;/a&gt;,
-in agreement with the true facts, and &lt;a href="https://dictionary.cambridge.org/dictionary/english/consistency"&gt;consistency&lt;/a&gt;,
-always behaving or performing in a similar way.&lt;/p&gt;
-&lt;p&gt;The reason to value &lt;em&gt;accuracy&lt;/em&gt; as the number one characteristic of the development pipeline is
-because it is important for the development teams to be able to rely on the outputs of the
-pipeline, whether they are product artefacts, test results or output logs. Without the accuracy
-the development teams will eventually lose their trust in the development pipeline, meaning that
-they will start ignoring the results because the teams assume that a failure is one of the system
-instead of one caused by the input set. Once the development teams lose the trust in the
-pipeline it will take a lot of work to regain their trust.&lt;/p&gt;
-&lt;p&gt;Once we know that having a development pipeline which delivers correct results is important the
-next step is to determine how accuracy can be built into the development pipeline.
-In theory this task is a simple one, all one has to do is to ensure that all the parts that form the
-pipeline behave correctly for all input sets. However as indicated by
-&lt;a href="https://wiki.c2.com/?DifferenceBetweenTheoryAndPractice"&gt;many&lt;/a&gt; -&lt;/p&gt;
-&lt;blockquote class="blockquote"&gt;
-&lt;p&gt;In theory there is no difference between theory and practice. In practice there is&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;which means that practically achieving accuracy is a difficult task due to the
-many, often complex, interactions between the pipeline components. As a reminder
-the &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;components&lt;/a&gt; the
-development pipeline consists of are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The scripts that are used during the different parts of the cycle, i.e. the build, test
-and release scripts.&lt;/li&gt;
-&lt;li&gt;The continuous integration system which is used to execute the different scripts.&lt;/li&gt;
-&lt;li&gt;The tools, like the compiler, test frameworks, etc.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Based on this categorization of the pipeline parts and the previous statement one possible
-way of approaching accuracy for a development pipeline is to first ensure that all the parts
-are individually accurate. As a second stage the changes in accuracy due to interaction between
-the parts can be dealt with.&lt;/p&gt;
-&lt;p&gt;For the scripts, tools and continuous integration system this means that each input returns a
-correct response and does so consistently for each input set. Fortunately most scripts
-and tools do so for the majority of the inputs. In cases where a tool returns an incorrect response
-the standard software development process should be followed by recording an issue, scheduling the
-issue and implementing, testing and deploying a new version of the tool. In this process
-it is important to test thoroughly to ensure that the changes do not negatively impact
-tool accuracy. Additionally it is important to execute both (automated) regression testing against known
-input sets as well as high level (automated) smoke tests of the entire development pipeline
-to validate that the issue has been fixed and no further issues have been introduced.
-In order to minimize disruption to the development teams tests should be conducted outside
-business hours if no test environment is available, i.e. if the production development
-pipeline has to be used for the final tests. It is of course better if a test environment
-is available so that testing can take place during business hours without affecting
-the development teams. As a side note; having a test environment with a copy of the
-development pipeline allows for the development of new features and other changes
-while the production pipeline is in use, thus making it easier and quicker to evolve
-the pipeline and its capabilities.&lt;/p&gt;
-&lt;p&gt;With the approach to development and improvement of the tools taken care of the other area that
-needs to be carefully controlled is the infrastructure on top of which the development pipeline
-executes. For infrastructure the biggest issues are related to outages of different parts of
-the infrastructure, e.g. the network or the different services. In most cases
-failures on the infrastructure level do not directly influence the correctness of the development
-pipeline. It is obviously possible for a failure in the infrastructure to lead
-to an incorrect service being used, e.g. the test package manager instead of the
-production one. However unless other issues are present, i.e. the test package manager
-has packages of the same version but different content, it is unlikely that
-a failure in the infrastructure will allow artefacts to pass the development pipeline
-while they should not. A more likely result is that failures in the infrastructure
-lead to failures in the development pipeline thus affecting the ability of the
-pipeline to deliver the correct results consistently.&lt;/p&gt;
-&lt;p&gt;The types of issues mentioned can mostly be prevented by using the modern approaches
-to IT operations like &lt;a href="https://en.wikipedia.org/wiki/Software_configuration_management"&gt;configuration management&lt;/a&gt;
-and &lt;a href="https://martinfowler.com/bliki/ImmutableServer.html"&gt;immutable servers&lt;/a&gt; to ensure
-that the state of the infrastructure is known, &lt;a href="https://en.wikipedia.org/wiki/System_monitor"&gt;monitoring&lt;/a&gt;
-to ensure that those responsible for operations are notified of issues and
-standard operating procedures and potentially auto-remediation scripts to
-quickly resolve issues that arise.&lt;/p&gt;
-&lt;p&gt;It should be noted that it is not necessary, though extremely helpful, for the infrastructure
-to be robust in order to provide an accurate development pipeline. Tooling can, and
-probably should, be adapted to handle and correct for infrastructure failures as
-much as possible. However as one expects it is much easier to build a development
-pipeline on top of a robust infrastructure.&lt;/p&gt;
-&lt;p&gt;The final part of the discussion on the accuracy of the development pipeline deals
-with the relation between accuracy and the interaction of the tools and infrastructure.
-The main issue with interaction issues is that they are often hard to understand
-due to the, potentially large, number of components involved. Additionally certain
-interaction issues may only occur under specific circumstances like high load or
-specific times of the day / month / year, e.g. daylight savings or on leap days.&lt;/p&gt;
-&lt;p&gt;Because of the complexity it is important when building and maintaining a development pipeline
-to following the normal development process, i.e. using version control,
-(unit) testing, continuous integration, delivery or deployment, work item tracking
-and extensive testing etc. for all changes to the pipeline. This applies to the scripts
-and tools as well as the &lt;a href="https://en.wikipedia.org/wiki/Infrastructure_as_Code"&gt;infrastructure&lt;/a&gt;.
-Additionally it is especially important to execute thorough regression testing for any change to the
-pipeline to ensure that a change to a single part does not negatively influence the
-correctness of the pipeline.&lt;/p&gt;
-&lt;p&gt;Finally in order to ensure that the correctness of the pipeline can be maintained, and improved
-if required, it is sensible to provide monitoring of the pipeline and the underlying infrastructure
-as well as ensuring that all parts of the pipeline are versioned, tools and infrastructure alike,
-and versions of all the parts are tracked for each input set.&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Accuracy_and_precision#ISO_definition_.28ISO_5725.29"&gt;ISO&lt;/a&gt; defines
-accuracy as the combination of &lt;a href="https://dictionary.cambridge.org/dictionary/english/correct?q=correctness"&gt;correctness&lt;/a&gt;,
-in agreement with the true facts, and &lt;a href="https://dictionary.cambridge.org/dictionary/english/consistency"&gt;consistency&lt;/a&gt;,
-always behaving or performing in a similar way.&lt;/p&gt;</summary>
 	</entry>
 </feed>

@@ -129,6 +129,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Swerve-drive-kinematics-simulation">Swerve drive - Kinematics simulation</a></li>
                             <li><a href="/posts/Swerve-drive-introduction">Swerve drive - Moving a robot in all directions, mostly</a></li>
                             <li><a href="/posts/Robotics-fixing-scuttles-encoder">Starting robotics - Fixing the wheel encoders</a></li>
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-electronics">Starting robotics - Building a bumper for scuttle. The electronics</a></li>
@@ -138,7 +139,6 @@
                             <li><a href="/posts/Robotics-learning-ros">Starting robotics - Learning Robot Operating System (ROS)</a></li>
                             <li><a href="/posts/Starting-robotics-with-scuttle">Starting robotics with the SCUTTLE robot</a></li>
                             <li><a href="/posts/Building-autonomous-mobile-robot-why">Building an autonomous mobile robot - But why?</a></li>
-                            <li><a href="/posts/Software-development-pipeline-security">Software development pipeline - Security</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -152,19 +152,19 @@
                                     <a role="button" href="/tags/nBuildKit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
+                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
+                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (10)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
@@ -173,7 +173,7 @@
                                     <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                    <a role="button" href="/tags/Pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
                                 </li>
                         </ul>
                     </div>
@@ -188,6 +188,153 @@
 
             <div id="content">
 
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Swerve-drive-kinematics-simulation">Swerve drive - Kinematics simulation</a>
+</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Friday, February 10, 2023
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Kinematics" class="btn btn-default btn-xs tag-no-wrap">Kinematics</a>
+                        <a id="post-category" role="button" href="/tags/Omnidirectional" class="btn btn-default btn-xs tag-no-wrap">Omnidirectional</a>
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/Swerve" class="btn btn-default btn-xs tag-no-wrap">Swerve</a>
+    </div>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>As <a href="posts/Swerve-drive-introduction">mentioned</a> I am designing and building four wheel steering
+mobile robot for use in outdoor environments and rough terrain. In that post I mused that both
+the mechanical design and the software would be the most complicated parts of the drive system and
+thus the parts I should focus on first. At the moment I don't have good access to a workshop where I
+can experiment with the mechanical design so for now I'm focussing on the creation of the control
+software. Once I have the controller software working I can then use Gazebo to test the robot
+virtually to ensure that the code will work in the actual robot.</p>
+<p>Unlike a differential drive a four wheel swerve drive has more degrees of freedom than needed, eight
+degrees of freedom (steering angle and wheel velocity for each drive module) for the control versus
+three spatial degrees of freedom (forward, sideways and rotate). This means that a swerve drive is
+an over-determined system, requiring the control system to carefully control the wheel velocities
+and angles so that they agree with each other, otherwise the wheels slip or drag.</p>
+<figure style="float:left">
+  <a href="/assets/images/robotics/swerve/swerve-dof.png" target="_blank">
+    <img alt="Swerve drive degrees of freedom" src="/assets/images/robotics/swerve/swerve-dof.png" />
+  </a>
+  <figcaption>Degrees of freedom for a swerve drive system.</figcaption>
+</figure>
+<p>While doing some research I found many
+<a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=multi+wheel+steering&amp;btnG=">different</a>
+<a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0,5&amp;q=multi+wheel+steering+icr+mobile+robots">scientific</a>
+<a href="https://scholar.google.com/citations?hl=en&amp;user=H10kxZgAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">papers</a>
+describing algorithms for determining the <a href="https://en.wikipedia.org/wiki/Forward_kinematics">forward</a>
+and <a href="https://en.wikipedia.org/wiki/Inverse_kinematics">inverse</a> kinematics of a four wheel steering system.
+There are however very <a href="https://github.com/MarkNaeem/ros_controllers/tree/noetic-devel/swerve_steering_controller">few</a>
+<a href="https://github.com/ros-controls/ros_controllers/pull/441">software</a>
+<a href="https://github.com/james-yoo/swerve_drive">libraries</a> which implement the different control algorithms.</p>
+<p>Most papers and libraries focus on the simpler case of an indoor robot that moves along a flat
+horizontal surface. In this case relatively simple kinematics approaches can be used. Unfortunately
+these algorithms fail when used in 3d uneven terrain. A different
+<a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=en&amp;user=H10kxZgAAAAJ&amp;sortby=pubdate&amp;citation_for_view=H10kxZgAAAAJ:Se3iqnhoufwC">approach</a>
+is required for that case. At the moment I too will be focussed on algorithms for driving on
+flat surfaces. At least until I have correctly working control code.</p>
+<p>After reading a number of papers and looking at some of the available code I have come to the
+conclusion that I don't understand what is required for a successful swerve algorithm. There are
+many variables that influence the behaviour making it hard to visualize what goes on as the robot is
+moving around. So I wrote some <a href="https://github.com/pvandervelde/basic-swerve-sim">code</a>
+to simulate what is going on (roughly) in a swerve drive while it is moving and steering. I'm
+going to use this code to answer a number of questions I have about the different control algorithms.</p>
+<p>For instance algorithms often calculate the desired end state and then set the wheel position and
+velocity to those required for that desired state. The question is does this algorithm automatically
+ensure that the intermediate states are synchronised, and if not does that matter? An example of
+this would be a robot moving linearly at 45 degrees and transitioning to an in-place rotation, as pictured
+below. During the transition all drive modules should be synchronised so that the center of rotation
+for the robot matches with the state of the drive modules.</p>
+<figure style="float:right">
+  <a href="/assets/images/robotics/swerve/transition-45-to-rotate.png" target="_blank">
+    <img
+        alt="Transition from 45 degree linear motion to in-place rotation."
+        src="/assets/images/robotics/swerve/transition-45-to-rotate.png"
+        width="525"
+        height="385"/>
+  </a>
+  <figcaption>Transition from 45 degree linear motion to in-place rotation.</figcaption>
+</figure>
+<p>Another example is that many of the code libraries add an optimization that reverses the wheel
+direction in favour of reducing the steering angle. For instance instead of changing the steering
+angle from 0 degrees to 225 degrees with a wheel velocity of 1.0 rad/s, change the angle to 45 degrees
+and reverse the wheel velocity to -1.0 rad/s. Again there are a number of questions about
+this optimization. For instance making a smaller steering angle change reduces the energy used, however
+stopping and reversing the wheel motion also takes energy, so what are the benefits of this optimization,
+if any? And how do the algorithms keep the wheel motions synchronised when performing the reversing
+optimization?</p>
+<p>The following graphs show an example of the simulation output. The motion being simulated is that of
+a robot transiting from moving at a 45 degree straight path to an in-place rotation. The graphs
+display the status of the robot body, position and velocity and the status of the different drive modules,
+the angular orientation and the wheel velocity. The last graph depicts the location of the
+Instantaneous Centre of Rotation (ICR) for different combinations of drive modules. The ICR is the
+point in space around which the robot turns. If the control algorithm is correct then the ICR points
+for different drive module combinations all fall in the same location though out the entire movement
+pattern.</p>
+<figure style="float:middle">
+  <a href="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png" target="_blank">
+    <img
+        alt="45 degree linear track to in-place rotation"
+        src="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png"
+        width="840"
+        height="368"/>
+  </a>
+  <figcaption>Simulation data for a 45 degree linear track that transitions to an in-place rotation.</figcaption>
+</figure>
+<p>Looking at these graphs a couple of observations can be made. The first observation is that the ICR
+paths for the different module combinations don't match each other. This means that the drive modules
+are not synchronised and one or more wheels will be experiencing wheel slip.
+The second observation is that the linear control algorithm causes sharp changes in velocities leading
+to extremely high acceleration demands. It seems unlikely that the motors and the structure would
+be able to cope with these demands.</p>
+<p>From this relatively simple simulation we can see that there are a number of behaviours that the
+control system needs to cope with:</p>
+<ul>
+<li>The state of the drive modules actively needs to be kept in sync at all times, including during
+transitions from one movement state to another. This indicates that dynamic control is required
+and thus poses questions about the update frequency for drive module sensors and control commands.</li>
+<li>The capabilities and behaviour of the motors needs to be taken into account in order to prevent
+impossible movement commands and also to ensure that the drive modules remain synchronised during
+movement commands that require fast state changes from the motors, e.g. to deal with motor
+<a href="https://en.wikipedia.org/wiki/Deadband">deadband</a> or fast accelerations.</li>
+<li>The structural and kinematic limitations need to be considered when giving and processing movement
+commands.</li>
+<li>Linear control behaviour is not ideal as it causes large acceleration demands so a better approach
+is necessary.</li>
+</ul>
+<p>Now that I have some working simulation code what are the next steps? The first stage is to simulate
+some more simple movement trajectories to validate the simulation code. Once I have confidence that
+the code actually simulates real world behaviour I can implement different control algorithms. These
+algorithms can then be compared to see which algorithm behaves the best. Currently I'm thinking to
+implement</p>
+<ul>
+<li>A control algorithm that uses a known movement profile for the robot base. It can then calculate
+the desired drive module state across time to match the robot base movement. The movement profile
+could be linear, polynomial or any other sensible profile.</li>
+<li>A controller that optimizes module turn time by having it turn the shortest amount and reversing
+the wheel velocity if required.</li>
+<li>A low <a href="https://en.wikipedia.org/wiki/Jerk_(physics)">jerk</a> controller that ensures smooth movement
+of the robot body and drive modules.</li>
+</ul>
+<p>In future posts I will provide more details about the different controller and model algorithms.</p>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -237,8 +384,8 @@ allows the swerve drive to combine rotational movements with linear movements in
 other drive systems cannot.</li>
 <li>It has normal size wheels which provide a high carry capacity. While
 <a href="https://en.wikipedia.org/wiki/Omni_wheel">omni-wheels</a> have the similar degree of freedom as a
-swerve drive does, omni-wheels but can often not carry the same load due to the lower carrying
-capacity of the rollers.</li>
+swerve drive does, omni-wheels can often not carry the same load due to the lower carrying
+capacity of the rollers that allow the omni-wheels to move sideways.</li>
 <li>It doesn't rely on wheel slip, as multi-wheel differential drive does. This means that it has
 lower power demands, so more of the motor torque can be used to move the robot forward.</li>
 <li>It has the ability to traverse rough and dirty terrain due to the fact that all wheels are
@@ -647,95 +794,6 @@ navigation map so that SCUTTLE can navigate around the newly discovered obstacle
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Robotics-a-bumper-for-scuttle-overview">Starting robotics - Building a bumper for scuttle. The overview</a>
-</h2>
-<div id="post-meta">
-    <div class="meta-date">
-Saturday, August 27, 2022
- |             Posted in     </div>
-    <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
-                        <a id="post-category" role="button" href="/tags/ROS" class="btn btn-default btn-xs tag-no-wrap">ROS</a>
-                        <a id="post-category" role="button" href="/tags/ROS-Noetic" class="btn btn-default btn-xs tag-no-wrap">ROS&nbsp;Noetic</a>
-                        <a id="post-category" role="button" href="/tags/Scuttle" class="btn btn-default btn-xs tag-no-wrap">Scuttle</a>
-    </div>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>In order to allow my SCUTTLE robot to drive around autonomously it needs some sensors so that it
-can <a href="https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping">perceive its surroundings</a>.
-One of the ways in which this is normally achieved is by adding a <a href="https://en.wikipedia.org/wiki/Lidar">LIDAR</a>
-unit. Unfortunately I don't have one of those, and LIDAR units are relatively expensive in New Zealand.
-Additionally I figured I'd learn more about robot sensors if I set up some simple sensors for my
-SCUTTLE robot before getting a LIDAR.</p>
-<figure style="float:left">
-<img alt="CAD model of the SCUTTLE bumper" src="/assets/images/robotics/scuttle/scuttle-bumper-cad-model.png" />
-<figcaption>The CAD model of the SCUTTLE bumper</figcaption>
-</figure>
-<p>So I decided to start with the simplest kind of sensor, the bump sensor. This type of sensor
-consists of one or more <a href="https://en.wikipedia.org/wiki/Limit_switch">limit switches</a> and a bumper
-surface, i.e. some kind of plate that bumps into things. This plate is held in place by springs thereby
-giving it the ability to move while also returning to its original position.
-When the robot bumps into an object with the plate, the springs are compressed and the plate hits
-the limit switches. These switches then signal the robot that it has hit something. At that point the
-robot can stop its motion and back away from the obstacle. As the robot backs away the springs push the
-bumper plate away from the limit switches. The change in switch state then signals to the robot that
-it is no longer in contact with the obstacle and can thus continue on its journey.</p>
-<p>Overall this doesn't sound very complicated so it should be pretty quick and easy to build the
-bump sensor ...</p>
-<p>Several weeks down the line I nearly finished my bump sensors</p>
-<p>The first part of my build was the design of the physical parts that I need to attach to SCUTTLE. I
-build the bumper with simple parts because I don't have access to a workshop or a 3D printer. So
-the bumper is a UHMWPE plate reinforced by some 90 degree aluminium extrusions. This prevents the
-plate from flexing when it contacts an obstacle. The plate is attached to two angle brackets, one on
-the left side and one on the right side. It is attached using four M3 bolts wrapped with springs,
-2 bolts for each side. The idea behind using 2 bolts per side is that this should provide some
-rotational stability while keeping the construction simple. Finally the angle brackets is attached
-to the scuttle frame with two T slot nuts.</p>
-<p>I found that the springs that keep the plate in the extended position have to be quite soft, otherwise
-SCUTTLE won't be able to compress the springs when it hits something at low speed. The first
-set of springs I got from Amazon were too stiff. For the second set of springs I got some ballpoint
-pen springs of Aliexpress which are much less stiff.</p>
-<figure style="float:right">
-<img alt="SCUTTLE with its new bumper" src="/assets/images/robotics/scuttle/scuttle-with-bumper.jpg" />
-<figcaption>SCUTTLE with its new bumper</figcaption>
-</figure>
-<p>This first version of the bumper mechanics works relatively well but for the next version there
-are some things I want to change</p>
-<ul>
-<li>The bolts have full thread on them which sometimes causes the bolts to get hung up on the tread. I
-had some issues finding partially threaded bolts with the right length and diameter.</li>
-<li>The current design allows left to right tilt which is good, but also top to bottom tilt. The latter
-is not so good as it potentially allows SCUTTLE to hit an obstacle without noticing. A better design
-would allow left to right rotation of the bumper but little to no top to bottom rotation. This
-allows the left and right limit switches to be triggered individually when SCUTTLE hits an obstacle
-on the left or right side respectively while ensuring that the limit switches are always triggered
-if the bumper hits something, even if the obstacle is low to the ground.</li>
-<li>The current bumper shape is a flat plate, it would be better if the bumper plate was curved. If the
-curved bumper is given the right radius it would allow SCUTTLE to rotate in place after hitting
-an obstacle without getting stuck. Obviously creating a curved bumper will increase construction
-effort.</li>
-</ul>
-<p>The mechanical design of the bumper is only one part of the task. In order for SCUTTLE to be able
-to respond to hitting an object I need to have have software that can respond to signals from the
-limit switches and the appropriate electronics that transfers the limit switch state to the
-raspberry pi. The electronics and the software that I created for this bumper will be described in
-separate posts.</p>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -753,7 +811,7 @@ separate posts.</p>
     </div>
     <div id="fbox2">
         <h2 id="copyright">Copyright</h2>
-        <p>Copyright (c) 2022 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
+        <p>Copyright (c) 2023 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
 
         <h2 id="disclaimer">Disclaimer</h2>
         <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
@@ -766,9 +824,9 @@ separate posts.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sun, 04 Dec 2022 03:15:55 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Fri, 10 Feb 2023 08:58:33 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/f7160d19153ce6bd394bf5aeff7e31c8f9f5c8a9">f7160d19153ce6bd394bf5aeff7e31c8f9f5c8a9</a> at version 3.12.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/06645ecbc726844ee0165409ba6b79a11868cda0">06645ecbc726844ee0165409ba6b79a11868cda0</a> at version 3.13.0.        </p>
     </div>
 
     <p>
