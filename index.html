@@ -129,6 +129,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Swerve-drive-kinematics-verification">Swerve drive - Verification of the kinematics solution</a></li>
                             <li><a href="/posts/Swerve-drive-kinematics-simulation">Swerve drive - Kinematics simulation</a></li>
                             <li><a href="/posts/Swerve-drive-introduction">Swerve drive - Moving a robot in all directions, mostly</a></li>
                             <li><a href="/posts/Robotics-fixing-scuttles-encoder">Starting robotics - Fixing the wheel encoders</a></li>
@@ -138,7 +139,6 @@
                             <li><a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">Starting robotics - Driving scuttle with ROS - Gazebo simulation</a></li>
                             <li><a href="/posts/Robotics-learning-ros">Starting robotics - Learning Robot Operating System (ROS)</a></li>
                             <li><a href="/posts/Starting-robotics-with-scuttle">Starting robotics with the SCUTTLE robot</a></li>
-                            <li><a href="/posts/Building-autonomous-mobile-robot-why">Building an autonomous mobile robot - But why?</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -152,16 +152,16 @@
                                     <a role="button" href="/tags/nBuildKit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
+                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
+                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (10)</a>
+                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
@@ -173,7 +173,7 @@
                                     <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Pipeline-design" class="btn btn-default btn-sm"> Pipeline design (6)</a>
+                                    <a role="button" href="/tags/Nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
                                 </li>
                         </ul>
                     </div>
@@ -188,6 +188,153 @@
 
             <div id="content">
 
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Swerve-drive-kinematics-verification">Swerve drive - Verification of the kinematics solution</a>
+</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Thursday, May 4, 2023
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Kinematics" class="btn btn-default btn-xs tag-no-wrap">Kinematics</a>
+                        <a id="post-category" role="button" href="/tags/Omnidirectional" class="btn btn-default btn-xs tag-no-wrap">Omnidirectional</a>
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/Swerve" class="btn btn-default btn-xs tag-no-wrap">Swerve</a>
+    </div>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>As I explained in an <a href="posts/Swerve-drive-kinematics-simulation">earlier post</a> I have written some
+code to simulate the movement of a four wheel swerve drive.</p>
+<figure style="float:left">
+  <a href="/assets/images/robotics/swerve/swerve-dof.png" target="_blank">
+    <img alt="Swerve drive degrees of freedom" src="/assets/images/robotics/swerve/swerve-dof.png" />
+  </a>
+  <figcaption>Degrees of freedom for a swerve drive system.</figcaption>
+</figure>
+<p>Currently I have only implemented a
+<a href="https://www.chiefdelphi.com/t/paper-4-wheel-independent-drive-independent-steering-swerve/107383">simple kinematics based approach</a>.
+This approach is based on the diagram displaying degrees of freedom for the swerve drive as well as
+the coordinate systems for the different parts. The simple kinematics approach makes a number of
+assumptions which greatly simplify the problem space.</p>
+<ul>
+<li>The steering axis of a drive module is vertical and passes through the centre of the wheel, i.e.
+no positional changes occur when the wheel steering angle changes.</li>
+<li>The robot is moving on a flat, horizontal surface, i.e. the contact point between the wheel and
+the ground is always inline with the steering axis of a drive module.</li>
+<li>The robot has no suspension, i.e. the body doesn't move vertically relative to the contact
+point between the wheel and the ground.</li>
+<li>There is no wheel slip.</li>
+<li>There is no wheel lift-off, i.e. the wheels of the robot are always in contact with the ground.</li>
+<li>The motors are infinitely powerful and fast, i.e. there are no limits on the motor performance.</li>
+</ul>
+<p>With diagram and the given assumptions we can derive the equations for the wheel velocity
+and the steering angle of each drive module.</p>
+<pre><code>v_i = v + W x r_i
+
+alpha_i = acos (v_i_x / |v_i|)
+      = asin (v_i_y / |v_i|)
+</code></pre>
+<p>Where</p>
+<ul>
+<li><code>v_i</code> - the wheel velocity of the i-th drive module, i.e. the velocity at which the drive module
+would move forward if there is no wheel slip. The <code>x</code> and <code>y</code> components of this vector are
+named as <code>v_i_x</code> and <code>v_i_y</code>.</li>
+<li><code>v</code> - the linear velocity of the robot.</li>
+<li><code>W</code> - the angular velocity of the robot.</li>
+<li><code>r_i</code> - the position vector of the i-th drive module.</li>
+<li><code>alpha_i</code> - the steering angle of the i-th drive module relative to the robot coordinate system.</li>
+</ul>
+<p>Based on these equations we can determine the forward kinematics, which translates the movement
+of the drive modules to the movement of the robot body, and the inverse kinematics, which translates
+the movement of the robot body to the movement of the drive modules. When doing the calculations for
+a four wheel swerve drive it is important to note that the forward kinematics calculations are
+<a href="https://en.wikipedia.org/wiki/Overdetermined_system">overdetermined</a>, i.e. there are more control
+variables than there are outputs. This means that there are additional control variables that we can
+play with. One obvious one for a swerve drive is that we can control the orientation of the robot body
+independent[*] from the direction of movement of the robot. This also means that the forward kinematics
+calculations are based on the <a href="https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse">pseudoinverse</a>
+approach which computes a best fit, a.k.a. least squares, using the drive module wheel velocities and
+steering angles. In order words the wheel velocities and steering angles are approximations, not exact
+values.</p>
+<p>The transition between states, i.e. from one combination of x-velocity, y-velocity and rotation velocity
+to another combination, is done by assuming that there is linear control for the drive module variables,
+i.e. wheel velocity and steering angle. While linear control trajectories are not the best control
+method it does allow later on only changing the trajectory code to use a more suitable one, for
+instance a <a href="https://en.wikipedia.org/wiki/Jerk_(physics)#In_motion_control">jerk limited</a> profile.</p>
+<p>The code I wrote gives me a graphs like the ones presented in my <a href="posts/Swerve-drive-kinematics-simulation">previous post</a>.
+However before I use this code to test new control algorithms I want to make sure my code is
+actually producing the correct results. The <a href="https://en.wikipedia.org/wiki/Software_verification_and_validation">verification</a>
+is done by running a bunch of simple simulations for which I am able to predict the behaviour using
+some simple maths.</p>
+<p>To verify that my code is correct I a ran a number of sets of simulations. The
+<a href="https://github.com/pvandervelde/basic-swerve-sim/blob/master/verification/linear_module_first/simple_4w_steering/linear_with_single_axis/README.md">first set</a>
+is used to ensure that both the positive and the negative direction behaviour for the main axis directions.
+Any differences in behaviour between the positive and the negative direction point to issues in the
+simulation code. So the simulations that were done for this verification set are:</p>
+<ul>
+<li>Drive the robot in x-direction while facing in the x-direction, one simulation going forward from
+the origin and one simulation going backwards from the origin.</li>
+<li>Drive the robot in the y-direction while facing in the x-direction, one simulation going left from
+the origin and one simulation going right from the origin.</li>
+<li>Drive the robot in a rotation only movement, one simulation going clockwise and one simulation going
+counter-clockwise.</li>
+</ul>
+<p>The <a href="https://github.com/pvandervelde/basic-swerve-sim/blob/master/verification/linear_module_first/simple_4w_steering/rotation_with_single_axis/README.md">second simulation set</a>
+is designed to verify the coordinate calculations related to rotations. The
+simulations that were done for this verification set are:</p>
+<ul>
+<li>Rotate the robot by 90 degrees and then drive it in the robot x-direction, driving forwards
+and backwards.</li>
+<li>Rotate the robot by 90 degrees and then drive it in the robot y-direction, driving left and right.</li>
+</ul>
+<figure style="float:right">
+  <a href="/assets/images/robotics/swerve/swerve_sim_circle.png" target="_blank">
+    <img
+        alt="Drive the robot in a circle."
+        src="/assets/images/robotics/swerve/swerve_sim_circle.png"
+        width="833"
+        height="800"/>
+  </a>
+  <figcaption>Swerve drive position and velocities for driving in a circle.</figcaption>
+</figure>
+<p>The <a href="https://github.com/pvandervelde/basic-swerve-sim/blob/master/verification/linear_module_first/simple_4w_steering/combined/README.md">third set of simulations</a>
+is designed to verify the behaviour during combined movements. The
+simulations that were done for this verification set are:</p>
+<ul>
+<li>Drive the robot on the 30 degree diagonals (30 degrees, 60 degrees, 120 degrees, 150 degrees),
+while facing in the x-direction, one simulation going forwards from the origin and one going
+backwards from the origin.</li>
+<li>Drive the robot in a circle around a centre point outside the robot body.</li>
+</ul>
+<p>While running the verification sets a number of bugs were found and fixed. At the end of the process
+all the validations passed indicating that the simulation code is usable.</p>
+<p>With all of this done it is now time to do some more complicated simulations both for robot behaviour
+that is specific to swerve drive systems and for different control algorithms. More on that in the next
+post.</p>
+<p>&ndash;</p>
+<p>[*] Mostly independent. In reality the motors used in the drive modules will have
+limits on how fast they can be driven, how much torque they can produce and
+how fast they can change from one state to the next. This means that there
+are limitations on movements of the drive modules and thus the robot body. For
+instance if a drive module has a maximum linear velocity of 1.0 m/s it is
+not possible to drive the robot diagonally any faster than this velocity, even
+though we can drive the robot in x-direction at 1.0 m/s and we can drive the
+robot in y-direction at 1.0 m/s. We just can't do both at the same time.</p>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -639,161 +786,6 @@ wheels has rotated. I will discuss fixing the encoders in another post.</p>
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Robotics-a-bumper-for-scuttle-software">Starting robotics - Building a bumper for scuttle. The software</a>
-</h2>
-<div id="post-meta">
-    <div class="meta-date">
-Friday, September 9, 2022
- |             Posted in     </div>
-    <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
-                        <a id="post-category" role="button" href="/tags/ROS" class="btn btn-default btn-xs tag-no-wrap">ROS</a>
-                        <a id="post-category" role="button" href="/tags/ROS-Noetic" class="btn btn-default btn-xs tag-no-wrap">ROS&nbsp;Noetic</a>
-                        <a id="post-category" role="button" href="/tags/Scuttle" class="btn btn-default btn-xs tag-no-wrap">Scuttle</a>
-    </div>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>In my <a href="posts/Robotics-a-bumper-for-scuttle-overview">previous post</a> I talked about creating a bump
-sensor for my SCUTTLE robot. After creating the mechanical design I started working on the software.
-There are two parts to the software, translating the state of the micro switches and turning the state
-changes into movement commands for the robot, i.e. if the robot runs into
-an obstacle it should stop and reverse its last movement. I decided to create a
-<a href="https://www.ros.org/">ROS</a> node for each of these actions, i.e. one node
-for the movement generation and one to translate the switch states. The reason for
-creating two nodes instead of putting all the code into one node is that this allows me to run the
-movement generation code both in a simulation and on the physical robot. So I gain the ability to
-test more of my code, but I lose a bit of performance because the two nodes communicate using
-messages which is slower than just using method calls.</p>
-<p>To test the bump sensor code I use <a href="https://gazebosim.org/home">Gazebo</a> to simulate how the bump
-sensor would work. Gazebo has the ability to calculate collisions
-and create <a href="http://docs.ros.org/en/api/gazebo_msgs/html/msg/ContactsState.html">ContactsState</a>
-messages based on these collision calculations. So I created a third ROS node to translate these
-Gazebo messages to my own <a href="https://github.com/pvandervelde/scuttle_ros_msgs/blob/noetic/msg/BumperEvent.msg">bumper event messages</a>.
-With that I can test my obstacle response code in Gazebo which provides a more controlled environment
-than the physical robot does.</p>
-<p>The first thing to do is to update the robot definition to include the bumper. This is done by adding
-the <a href="http://wiki.ros.org/urdf/XML/link">links</a> and <a href="http://wiki.ros.org/urdf/XML/joint">joints</a> that
-make up my bumper to an <a href="https://github.com/pvandervelde/scuttle_bumper/blob/master/urdf/bumper.xacro">URDF file</a>.
-This URDF file is linked to the main <a href="https://github.com/scuttlerobot/scuttle_description">model description</a>
-for SCUTTLE. After that I added the information for the <a href="https://classic.gazebosim.org/tutorials?tut=ros_gzplugins#Bumper">Gazebo bumper sensor</a>.
-In the URDF file this looks as follows:</p>
-<pre><code>    &lt;gazebo reference=&quot;front_bumper_plate_left_link&quot;&gt;
-        &lt;sensor name=&quot;front_bumper_left&quot; type=&quot;contact&quot;&gt;
-            &lt;selfCollide&gt;true&lt;/selfCollide&gt;
-            &lt;alwaysOn&gt;true&lt;/alwaysOn&gt;
-            &lt;updateRate&gt;15.0&lt;/updateRate&gt;
-            &lt;material&gt;Gazebo/WhiteGlow&lt;/material&gt;
-            &lt;contact&gt;
-                &lt;collision&gt;base_link_fixed_joint_lump__front_bumper_plate_left_cl_collision_3&lt;/collision&gt;
-                &lt;topic&gt;bumper_contact&lt;/topic&gt;
-            &lt;/contact&gt;
-            &lt;plugin name=&quot;gazebo_ros_bumper_controller_front_left&quot; filename=&quot;libgazebo_ros_bumper.so&quot;&gt;
-                &lt;bumperTopicName&gt;scuttle_bumper&lt;/bumperTopicName&gt;
-                &lt;frameName&gt;front_bumper_plate_left_link&lt;/frameName&gt;
-            &lt;/plugin&gt;
-        &lt;/sensor&gt;
-    &lt;/gazebo&gt;
-</code></pre>
-<p>I found that defining a contact sensor for Gazebo requires getting the link ID correct. In order to
-do so you need to follow these steps:</p>
-<ul>
-<li>The bumper contact information needs to be defined inside a <a href="https://classic.gazebosim.org/tutorials?tut=ros_urdf&amp;cat=connect_ros"><code>gazebo</code></a>
-element. This <code>gazebo</code> element should have a <code>reference</code> attribute that points to the link that is
-to be used as the bumper surface.</li>
-<li>The name for the <code>collision</code> element needs to be found after translation to the SDF format. Normally
-this is something Gazebo does internally. In this case you'll need to do this manually. If your
-geometry is defined in an <a href="http://wiki.ros.org/xacro">xacro</a> file then you first need to translate
-this to URDF using the <code>rosrun xacro xacro --inorder -o model.urdf model.urdf.xacro</code> command. After
-that you can translate the URDF to SDF with the <code>gz sdf -p scuttle.urdf &gt; scuttle.sdf</code> command. Once
-you have the SDF file you can search for the
-<a href="https://answers.gazebosim.org/question/21992/what-collision-name-is-supposed-to-be-passed-to-contact-sensor/">correct element IDs</a>.</li>
-</ul>
-<p>In the above example the collision name, <code>base_link_fixed_joint_lump__front_bumper_plate_left_cl_collision_3</code>,
-is the one you need to extract from the SDF file. Note that it can change if you make changes to
-your xacro / URDF file, so in that case you will need to extract it again.</p>
-<p>Once you have defined the URDF Gazebo will generate contact messages when the bumper hits an object.
-These contact messages contain information describing where the contact occurred on the geometry mesh,
-so in theory I could have used this information to determine if the contact would trigger the left
-limit switch or the right limit switch or both. However that requires a decent amount of calculations
-which is both work and introduces the potential for errors. So I opted to split the bumper into
-two parts, one for the left side and one for the right side. If anything contacts anywhere on the
-left side I consider that a trigger for the left part of the bumper and similar for the right side.</p>
-<figure style="float:left">
-<img alt="SCUTTLE with bumper in RViz" src="/assets/images/robotics/scuttle/scuttle-with-bumper-in-rviz.png" />
-<figcaption>SCUTTLE with bumper in RViz</figcaption>
-</figure>
-<p>With the URDF work done I started writing the code for the different ROS nodes. First
-the <a href="https://github.com/pvandervelde/scuttle_bumper/blob/master/src/gazebo_contact_sensor_translator.py">gazebo translator node</a>.
-This node subscribes to the <a href="http://docs.ros.org/en/api/gazebo_msgs/html/msg/ContactsState.html">ContactsState</a>
-messages that Gazebo sends when the bumper geometry collides with something. These messages are then
-translated to a <a href="https://github.com/pvandervelde/scuttle_ros_msgs/blob/noetic/msg/BumperEvent.msg">BumperEvent</a>
-message for further processing.</p>
-<p>One interesting observation about the Gazebo contact messages are that they exhibit something
-similar to <a href="https://www.pcmag.com/index.php/encyclopedia/term/switch-bounce">switch bounce</a>, in other
-words it seems that the contact is intermittent even if the bumper plate is in solid contact with
-the object. I'm guessing that this is caused by the fact that calculating collisions between moving
-surfaces is difficult. In the end it doesn't matter what causes this behaviour though because we
-need to <a href="https://github.com/pvandervelde/scuttle_bumper/blob/master/src/debounce.py">deal with it</a> in
-some sensible way.</p>
-<p>Once the bumper event messages have been generated they are processed by the
-<a href="https://github.com/pvandervelde/scuttle_bumper/blob/master/src/bumper_navigator.py">second node</a>.
-This node subscribes to both odometry events and bumper events. Internally it keeps track of the
-motion state of SCUTTLE. On reception of a bumper event the node sends a
-<a href="http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html">velocity command</a>
-to stop the robot. Once the robot has stopped it sends commands for it to reverse course far enough
-that it is no longer contact with the obstacle.</p>
-<p>One thing to note is that while the bumper code is working to reverse course after hitting an obstacle,
-the other parts of ROS, e.g. the navigation stack, are probably still trying to steer the robot in the
-original direction because those parts don't know about the obstacle. After all it is not on the
-navigation map. This results in many different velocity commands being send, which could be very
-confusing for the robot. One design decision was to make the bumper code unaware of other nodes. This
-was done because allowing the bumper code to supress velocity
-commands from other nodes would imply that the bumper code is always the most important publisher
-when it comes to velocity commands. There are cases where this isn't true, e.g. when using
-the bumpers to park SCUTTLE against a specific object like in the case of a docking station.</p>
-<p>To ensure that a consistent set of velocity commands are sent to the motors I used the
-<a href="http://wiki.ros.org/twist_mux">twist multiplexer node</a> which takes in velocity commands from
-many nodes and forwards them using a priority-based scheme. In the current implementation the
-priorities are, from low to high</p>
-<ul>
-<li>Navigation</li>
-<li>Keyboard</li>
-<li>Bumper</li>
-<li>Joypad / Joystick</li>
-</ul>
-<iframe
-    style="float:right"
-    width="560"
-    height="315"
-    src="https://www.youtube.com/embed/SddexyGTJ0M"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-</iframe>
-<p>By using the twist multiplexer mode it is easy for users to change the priority by changing a configuration
-file instead of having to change the bumper code.</p>
-<p>With that the bumper code is able to make SCUTTLE respond to objects it bumps into. The next step in
-the process of adding bump sensors to SCUTTLE is to assemble the electronic components so that the
-movement of the bumper can be registered and reported to the software components.</p>
-<p>Finally a addition to the software that needs to be made is the ability to add the obstacles in the
-navigation map so that SCUTTLE can navigate around the newly discovered obstacles.</p>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -824,9 +816,9 @@ navigation map so that SCUTTLE can navigate around the newly discovered obstacle
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Fri, 10 Feb 2023 08:58:33 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Thu, 04 May 2023 05:32:03 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/06645ecbc726844ee0165409ba6b79a11868cda0">06645ecbc726844ee0165409ba6b79a11868cda0</a> at version 3.13.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/334593576ef500fae805ab386f8a25086ca0a574">334593576ef500fae805ab386f8a25086ca0a574</a> at version 3.14.0.        </p>
     </div>
 
     <p>

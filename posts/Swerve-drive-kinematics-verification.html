@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - Nuclei release - V0.7.1.0</title>
+        <title>Mind vortex - Swerve drive - Verification of the kinematics solution</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,9 +29,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - Nuclei release - V0.7.1.0" />
+        <meta property="og:title" content="Mind vortex - Swerve drive - Verification of the kinematics solution" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Nuclei-Release-V0710" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Swerve-drive-kinematics-verification" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -202,39 +202,155 @@
 
 
 <h2>
-Nuclei release - V0.7.1.0</h2>
+Swerve drive - Verification of the kinematics solution</h2>
 <div id="post-meta">
     <div class="meta-date">
-Saturday, December 21, 2013
+Thursday, May 4, 2023
  |             Posted in     </div>
     <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Nuclei" class="btn btn-default btn-xs tag-no-wrap">Nuclei</a>
+                        <a id="post-category" role="button" href="/tags/Kinematics" class="btn btn-default btn-xs tag-no-wrap">Kinematics</a>
+                        <a id="post-category" role="button" href="/tags/Omnidirectional" class="btn btn-default btn-xs tag-no-wrap">Omnidirectional</a>
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/Swerve" class="btn btn-default btn-xs tag-no-wrap">Swerve</a>
     </div>
 </div>
 
     </div>
 
     <div id="post-content">
-        <p>Version <a href="https://github.com/pvandervelde/Nuclei/releases/tag/V0.7.1.0">V0.7.1.0</a> of the
-<a href="/projects/nuclei.html">Nuclei</a> library has been released. This release fixes issue
-<a href="https://github.com/pvandervelde/Nuclei/issues/9">#9</a>.</p>
+        <p>As I explained in an <a href="posts/Swerve-drive-kinematics-simulation">earlier post</a> I have written some
+code to simulate the movement of a four wheel swerve drive.</p>
+<figure style="float:left">
+  <a href="/assets/images/robotics/swerve/swerve-dof.png" target="_blank">
+    <img alt="Swerve drive degrees of freedom" src="/assets/images/robotics/swerve/swerve-dof.png" />
+  </a>
+  <figcaption>Degrees of freedom for a swerve drive system.</figcaption>
+</figure>
+<p>Currently I have only implemented a
+<a href="https://www.chiefdelphi.com/t/paper-4-wheel-independent-drive-independent-steering-swerve/107383">simple kinematics based approach</a>.
+This approach is based on the diagram displaying degrees of freedom for the swerve drive as well as
+the coordinate systems for the different parts. The simple kinematics approach makes a number of
+assumptions which greatly simplify the problem space.</p>
+<ul>
+<li>The steering axis of a drive module is vertical and passes through the centre of the wheel, i.e.
+no positional changes occur when the wheel steering angle changes.</li>
+<li>The robot is moving on a flat, horizontal surface, i.e. the contact point between the wheel and
+the ground is always inline with the steering axis of a drive module.</li>
+<li>The robot has no suspension, i.e. the body doesn't move vertically relative to the contact
+point between the wheel and the ground.</li>
+<li>There is no wheel slip.</li>
+<li>There is no wheel lift-off, i.e. the wheels of the robot are always in contact with the ground.</li>
+<li>The motors are infinitely powerful and fast, i.e. there are no limits on the motor performance.</li>
+</ul>
+<p>With diagram and the given assumptions we can derive the equations for the wheel velocity
+and the steering angle of each drive module.</p>
+<pre><code>v_i = v + W x r_i
+
+alpha_i = acos (v_i_x / |v_i|)
+      = asin (v_i_y / |v_i|)
+</code></pre>
+<p>Where</p>
+<ul>
+<li><code>v_i</code> - the wheel velocity of the i-th drive module, i.e. the velocity at which the drive module
+would move forward if there is no wheel slip. The <code>x</code> and <code>y</code> components of this vector are
+named as <code>v_i_x</code> and <code>v_i_y</code>.</li>
+<li><code>v</code> - the linear velocity of the robot.</li>
+<li><code>W</code> - the angular velocity of the robot.</li>
+<li><code>r_i</code> - the position vector of the i-th drive module.</li>
+<li><code>alpha_i</code> - the steering angle of the i-th drive module relative to the robot coordinate system.</li>
+</ul>
+<p>Based on these equations we can determine the forward kinematics, which translates the movement
+of the drive modules to the movement of the robot body, and the inverse kinematics, which translates
+the movement of the robot body to the movement of the drive modules. When doing the calculations for
+a four wheel swerve drive it is important to note that the forward kinematics calculations are
+<a href="https://en.wikipedia.org/wiki/Overdetermined_system">overdetermined</a>, i.e. there are more control
+variables than there are outputs. This means that there are additional control variables that we can
+play with. One obvious one for a swerve drive is that we can control the orientation of the robot body
+independent[*] from the direction of movement of the robot. This also means that the forward kinematics
+calculations are based on the <a href="https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse">pseudoinverse</a>
+approach which computes a best fit, a.k.a. least squares, using the drive module wheel velocities and
+steering angles. In order words the wheel velocities and steering angles are approximations, not exact
+values.</p>
+<p>The transition between states, i.e. from one combination of x-velocity, y-velocity and rotation velocity
+to another combination, is done by assuming that there is linear control for the drive module variables,
+i.e. wheel velocity and steering angle. While linear control trajectories are not the best control
+method it does allow later on only changing the trajectory code to use a more suitable one, for
+instance a <a href="https://en.wikipedia.org/wiki/Jerk_(physics)#In_motion_control">jerk limited</a> profile.</p>
+<p>The code I wrote gives me a graphs like the ones presented in my <a href="posts/Swerve-drive-kinematics-simulation">previous post</a>.
+However before I use this code to test new control algorithms I want to make sure my code is
+actually producing the correct results. The <a href="https://en.wikipedia.org/wiki/Software_verification_and_validation">verification</a>
+is done by running a bunch of simple simulations for which I am able to predict the behaviour using
+some simple maths.</p>
+<p>To verify that my code is correct I a ran a number of sets of simulations. The
+<a href="https://github.com/pvandervelde/basic-swerve-sim/blob/master/verification/linear_module_first/simple_4w_steering/linear_with_single_axis/README.md">first set</a>
+is used to ensure that both the positive and the negative direction behaviour for the main axis directions.
+Any differences in behaviour between the positive and the negative direction point to issues in the
+simulation code. So the simulations that were done for this verification set are:</p>
+<ul>
+<li>Drive the robot in x-direction while facing in the x-direction, one simulation going forward from
+the origin and one simulation going backwards from the origin.</li>
+<li>Drive the robot in the y-direction while facing in the x-direction, one simulation going left from
+the origin and one simulation going right from the origin.</li>
+<li>Drive the robot in a rotation only movement, one simulation going clockwise and one simulation going
+counter-clockwise.</li>
+</ul>
+<p>The <a href="https://github.com/pvandervelde/basic-swerve-sim/blob/master/verification/linear_module_first/simple_4w_steering/rotation_with_single_axis/README.md">second simulation set</a>
+is designed to verify the coordinate calculations related to rotations. The
+simulations that were done for this verification set are:</p>
+<ul>
+<li>Rotate the robot by 90 degrees and then drive it in the robot x-direction, driving forwards
+and backwards.</li>
+<li>Rotate the robot by 90 degrees and then drive it in the robot y-direction, driving left and right.</li>
+</ul>
+<figure style="float:right">
+  <a href="/assets/images/robotics/swerve/swerve_sim_circle.png" target="_blank">
+    <img
+        alt="Drive the robot in a circle."
+        src="/assets/images/robotics/swerve/swerve_sim_circle.png"
+        width="833"
+        height="800"/>
+  </a>
+  <figcaption>Swerve drive position and velocities for driving in a circle.</figcaption>
+</figure>
+<p>The <a href="https://github.com/pvandervelde/basic-swerve-sim/blob/master/verification/linear_module_first/simple_4w_steering/combined/README.md">third set of simulations</a>
+is designed to verify the behaviour during combined movements. The
+simulations that were done for this verification set are:</p>
+<ul>
+<li>Drive the robot on the 30 degree diagonals (30 degrees, 60 degrees, 120 degrees, 150 degrees),
+while facing in the x-direction, one simulation going forwards from the origin and one going
+backwards from the origin.</li>
+<li>Drive the robot in a circle around a centre point outside the robot body.</li>
+</ul>
+<p>While running the verification sets a number of bugs were found and fixed. At the end of the process
+all the validations passed indicating that the simulation code is usable.</p>
+<p>With all of this done it is now time to do some more complicated simulations both for robot behaviour
+that is specific to swerve drive systems and for different control algorithms. More on that in the next
+post.</p>
+<p>&ndash;</p>
+<p>[*] Mostly independent. In reality the motors used in the drive modules will have
+limits on how fast they can be driven, how much torque they can produce and
+how fast they can change from one state to the next. This means that there
+are limitations on movements of the drive modules and thus the robot body. For
+instance if a drive module has a maximum linear velocity of 1.0 m/s it is
+not possible to drive the robot diagonally any faster than this velocity, even
+though we can drive the robot in x-direction at 1.0 m/s and we can drive the
+robot in y-direction at 1.0 m/s. We just can't do both at the same time.</p>
 
     </div>
 
     <div id="post-footer">
         <div>
     <div class="navlinks">
-                <a href="/posts/Setting-up-Sherlock-virtualmachines" title="Previous Post: Sherlock configuration - Virtual machines" class="navlinks-prev">« Sherlock configuration - Virtual machines</a>
-                <a href="/posts/nAnicitus-Release-V0140" title="Next Post: nAnicitus release - V0.1.4.0" class="navlinks-next">nAnicitus release - V0.1.4.0 »</a>
+                <a href="/posts/Swerve-drive-kinematics-simulation" title="Previous Post: Swerve drive - Kinematics simulation" class="navlinks-prev">« Swerve drive - Kinematics simulation</a>
     </div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Nuclei-Release-V0710';
-    var disqus_title = 'Nuclei release - V0.7.1.0';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Nuclei-Release-V0710';
+    var disqus_identifier = 'Swerve-drive-kinematics-verification';
+    var disqus_title = 'Swerve drive - Verification of the kinematics solution';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Swerve-drive-kinematics-verification';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
@@ -292,7 +408,7 @@ Saturday, December 21, 2013
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Thu, 04 May 2023 05:32:05 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Thu, 04 May 2023 05:32:04 GMT
 
  from commit <a href="https://github.com/pvandervelde/mindvortex/tree/334593576ef500fae805ab386f8a25086ca0a574">334593576ef500fae805ab386f8a25086ca0a574</a> at version 3.14.0.        </p>
     </div>
