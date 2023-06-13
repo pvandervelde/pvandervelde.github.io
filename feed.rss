@@ -5,8 +5,127 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2023</copyright>
-		<pubDate>Thu, 04 May 2023 05:32:03 GMT</pubDate>
-		<lastBuildDate>Thu, 04 May 2023 05:32:03 GMT</lastBuildDate>
+		<pubDate>Tue, 13 Jun 2023 09:53:37 GMT</pubDate>
+		<lastBuildDate>Tue, 13 Jun 2023 09:53:37 GMT</lastBuildDate>
+		<item>
+			<title>Swerve drive - Better movement by controlling the body motions</title>
+			<link>https://www.petrikvandervelde.nl/posts/Swerve-drive-body-focussed-control</link>
+			<description>&lt;p&gt;In my &lt;a href="posts/Swerve-drive-kinematics-simulation"&gt;first attempt&lt;/a&gt; to model a swerve drive I controlled
+the movement of the robot by directly providing commands to the individual drive modules, i.e. by
+controlling the steering angle and the wheel velocity of each of the four drive modules. Additionally
+I assumed that the transition from one state (steering angle, wheel velocity) to another state would
+follow a linear profile. An example of this can be seen in the graphs below. The bottom left graph shows
+the linear change in steering angle for the four drive modules. It should be noted that a linear
+profile isn't very realistic as this requires the motors to be capable of instant changes in velocity
+and acceleration. However making this assumption keeps the calculations simple. At a later stage I
+will be encoding different movement profiles amongst which a low
+&lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)"&gt;jerk&lt;/a&gt; profile for smooth movements.&lt;/p&gt;</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Swerve-drive-body-focussed-control</guid>
+			<pubDate>Fri, 09 Jun 2023 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;In my &lt;a href="posts/Swerve-drive-kinematics-simulation"&gt;first attempt&lt;/a&gt; to model a swerve drive I controlled
+the movement of the robot by directly providing commands to the individual drive modules, i.e. by
+controlling the steering angle and the wheel velocity of each of the four drive modules. Additionally
+I assumed that the transition from one state (steering angle, wheel velocity) to another state would
+follow a linear profile. An example of this can be seen in the graphs below. The bottom left graph shows
+the linear change in steering angle for the four drive modules. It should be noted that a linear
+profile isn't very realistic as this requires the motors to be capable of instant changes in velocity
+and acceleration. However making this assumption keeps the calculations simple. At a later stage I
+will be encoding different movement profiles amongst which a low
+&lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)"&gt;jerk&lt;/a&gt; profile for smooth movements.&lt;/p&gt;
+&lt;figure style="float:middle"&gt;
+  &lt;a href="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png" target="_blank"&gt;
+    &lt;img
+        alt="45 degree linear track to in-place rotation with a module-first control algorithm"
+        src="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png"
+        width="840"
+        height="368"/&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;
+    Simulation data for a 45 degree linear track that transitions to an in-place rotation with a
+    module-first control algorithm.
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;The benefit of controlling the robot by directly controlling the drive modules is that the control
+algorithm is very simple and all movement patterns are possible. For instance it is possible to make
+all the wheels change steering angle without moving the robot body, something which is not possible
+with indirect control methods.&lt;/p&gt;
+&lt;p&gt;However there are also a number of drawbacks. The main one is that
+for a swerve drive to be efficient the motions of the different drive modules need to be synchronized.
+That means that all the drive modules needs to be controlled so that none of the wheels slip along
+the surface. For simple linear or rotational movements of the robot body this is easy to achieve but
+for complicated movements this is much more difficult. An example is shown in image above which
+describes the behaviour of the robot as it moves linearly at a 45 degree angle and then transitions
+to an in-place rotation around the robot centre axis. The bottom right graph shows the
+&lt;a href="https://en.wikipedia.org/wiki/Instant_centre_of_rotation"&gt;instantaneous centre of rotation&lt;/a&gt; calculated
+for different combinations of two wheels. In a synchronised motion all wheels should point to the same
+instantaneous centre of rotation at any given moment. If the ICR's for the different wheel pairs are
+in different locations then one or more of the wheels is out of sync and likely slipping along
+the ground. The graph clearly shows that in this case the drive modules are not synchronized thus
+causing wheel slip.&lt;/p&gt;
+&lt;p&gt;One way to improve the synchronization between the drive modules is apply the movement control at
+an indirect level, for instance on the robot body, and then to work out from there what the drive modules
+should be doing at any that given point in time along the transition trajectory.&lt;/p&gt;
+&lt;p&gt;As with the previous approach I will use a
+&lt;a href="https://github.com/pvandervelde/basic-swerve-sim/blob/103b321c471ced6c8865680d1e550ab4f5893526/swerve_controller/profile.py#L47"&gt;linear profile&lt;/a&gt;
+to determine the transitions between different body states. Then the transition for the
+&lt;a href="https://github.com/pvandervelde/basic-swerve-sim/blob/103b321c471ced6c8865680d1e550ab4f5893526/swerve_controller/trajectory.py#L42"&gt;body velocities (x-velocity, y-velocity, and rotational velocity)&lt;/a&gt;
+can be determined from the start state to the end state. Once it is known what
+the body motion looks like I can calculate the
+&lt;a href="https://github.com/pvandervelde/basic-swerve-sim/blob/103b321c471ced6c8865680d1e550ab4f5893526/swerve_controller/multi_wheel_steering_controller.py#L100"&gt;states for the drive modules&lt;/a&gt;
+from the body state for all given states in the transition profile.&lt;/p&gt;
+&lt;figure style="float:middle"&gt;
+  &lt;a href="/assets/images/robotics/swerve/serve_sim_module_flip_steering_angle.png" target="_blank"&gt;
+    &lt;img
+        alt="Drive module steering angle flip"
+        src="/assets/images/robotics/swerve/serve_sim_module_flip_steering_angle.png"
+        width="840"
+        height="368"/&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;
+    Drive module steering angle flip.
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;One issue with this approach is that every body state can be achieved by two different module states,
+one with the wheel moving &amp;lsquo;forward&amp;rsquo; and one with the wheel moving 'backward'. Initially the simulation
+was hard-coded to always select the &amp;lsquo;forward&amp;rsquo; moving state. However this leads to situations where
+the steering angle is flipped 180 degrees very rapidly. This is shown in the figure where the yellow
+line switches from 45 degrees (or 0.78 radians) to 225 degrees (or 3.9 radians) in two time steps, or
+0.02 seconds. In real life this change in steering angle would likely not be possible because the
+steering angle motor would not be capable of delivering the enormous velocities and accelerations
+necessary to achieve this change.&lt;/p&gt;
+&lt;p&gt;To resolve this issue the simulation calculated the difference in rotation and velocity between the
+current point in time and the previous point in time along the transition trajectory, for both the
+forward and backward motions. Then &lt;a href="https://github.com/pvandervelde/basic-swerve-sim/blob/103b321c471ced6c8865680d1e550ab4f5893526/swerve_controller/multi_wheel_steering_controller.py#L140"&gt;general rule&lt;/a&gt;
+is to pick the smallest change in both rotation and velocity of the drive module. If that isn't
+possible then we pick the one with the smallest rotation difference for no real reason other than we
+have to pick something. In future work a more thorough algorithm will be implemented.&lt;/p&gt;
+&lt;p&gt;With all that code in place the simulation delivers a much smoother result for the transition from
+a 45 degree linear motion into a in-place rotation. The ICR trajectory for all the wheel pairs is
+following a single path indicating that all the drive modules are all synchronised during the
+movement transition.&lt;/p&gt;
+&lt;figure style="float:middle"&gt;
+  &lt;a href="/assets/images/robotics/swerve/swerve_sim_body_first_45_linear_to_inplace_rotation.png" target="_blank"&gt;
+    &lt;img
+        alt="45 degree linear track to in-place rotation with a body first control algorithm"
+        src="/assets/images/robotics/swerve/swerve_sim_body_first_45_linear_to_inplace_rotation.png"
+        width="840"
+        height="368"/&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;
+    Simulation data for a 45 degree linear track that transitions to an in-place rotation with a
+    body-first control algorithm.
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;The body oriented control approach ensures synchronisation of the drive modules while allowing
+nearly all the different motions a swerve drive can make. The only motions not possible are those
+that involve drive module steering angle changes only.&lt;/p&gt;
+&lt;p&gt;The next improvement will be to replace the linear interpolation between the start state and the
+desired end state with a control approach that will provide
+&lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)#In_motion_control"&gt;smooth transitions&lt;/a&gt; for velocity and
+accelerations. This will make the motions of the robot less jerky and thus less likely to damage
+parts while also providing a smoother ride for the payload.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Swerve drive - Verification of the kinematics solution</title>
 			<link>https://www.petrikvandervelde.nl/posts/Swerve-drive-kinematics-verification</link>
@@ -1858,107 +1977,6 @@ a resilient development pipeline and depending on the demands placed on the pipe
 work will be consumed by improving the current state and learning from failures. In order to ensure
 that this effort is not a wasted effort it is definitely worth applying iterative improvement approaches
 and only continuing the improvement process if there is actual demand for improvements.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Software development pipeline - Design performance</title>
-			<link>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-performance</link>
-			<description>&lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;second property&lt;/a&gt; to consider is
-&lt;em&gt;performance&lt;/em&gt;, which in this case means that the pipeline should provide feedback on the quality of
-the current input set as soon as possible in order to reduce the length of the feedback cycle. As is
-&lt;a href="https://www.richard-banks.org/2013/04/why-short-feedback-cycle-is-good-thing.html"&gt;known&lt;/a&gt;
-&lt;a href="https://www.ambysoft.com/essays/whyAgileWorksFeedback.html"&gt;having&lt;/a&gt; a short
-&lt;a href="https://continuousdelivery.com/2012/08/why-software-development-methodologies-suck/"&gt;feedback&lt;/a&gt;
-cycle makes it easier for the development teams to make improvements and fix issues.&lt;/p&gt;</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-performance</guid>
-			<pubDate>Sun, 05 Nov 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;second property&lt;/a&gt; to consider is
-&lt;em&gt;performance&lt;/em&gt;, which in this case means that the pipeline should provide feedback on the quality of
-the current input set as soon as possible in order to reduce the length of the feedback cycle. As is
-&lt;a href="https://www.richard-banks.org/2013/04/why-short-feedback-cycle-is-good-thing.html"&gt;known&lt;/a&gt;
-&lt;a href="https://www.ambysoft.com/essays/whyAgileWorksFeedback.html"&gt;having&lt;/a&gt; a short
-&lt;a href="https://continuousdelivery.com/2012/08/why-software-development-methodologies-suck/"&gt;feedback&lt;/a&gt;
-cycle makes it easier for the development teams to make improvements and fix issues.&lt;/p&gt;
-&lt;p&gt;There are two main components to development pipeline performance:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;How quickly can one specific input set be processed completely by the pipeline. In other words
-how much time does it take to push a single input set through the pipeline from the initial change
-to the delivery of the final artefacts. This depends on the number of steps in the development
-pipeline and how quickly each step can be executed.&lt;/li&gt;
-&lt;li&gt;How quickly can a large set of input sets be processed. The maximum number of executors will most
-likely be limited to some maximum value. The pipeline is limited in the number of simultaneous
-input sets it can process by the number of available executors. How quickly the pipeline can
-process large number of input sets depends both on the time necessary to process a single input set
-and the relation between the total number of input sets and the number of executors&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Optimizing the combination of these two components will lead to a development pipeline which is
-designed for maximum throughput for the development team. One important note to make is that a high
-performing pipeline will not not necessarily be the most resource efficient pipeline. For instance
-the development pipeline may only be fully loaded a few times a week. From a resource perspective
-the pipeline components are more than capable of dealing with the load, in fact the components may
-even be oversized. However because one of the main goals of the pipeline is to deliver fast feedback
-to the development teams the actual sizing of the pipeline and its components depends more on the
-way the pipeline will be loaded over time, e.g. will the jobs come as a constant stream or in
-blocks, will the jobs be small or large or will it be a mixture of both. In some cases the loading
-pattern can be accurately predicted while in other cases it is completely unpredictable.
-In general the pattern will depend on the workflow followed by the development team and the geographical
-distribution of the team. For instance when the team follows the Scrum methodology it is
-likely, though not necessary, that there will be more builds in the middle of the sprint than at the
-start or end. On the other hand when using the Kanban methodology the load on the system should be
-fairly consistent. Additionally geographical distribution of the development team influences the
-times that the pipeline will be loaded. If all of the team is in a single geographical location then
-higher loads can be expected during the day while lighter loads are be expected during the evening
-and night. However if the team is distributed across the globe it is more likely that the loading will
-be more consistent across the day due to the fact that the different locations have &amp;lsquo;office hours&amp;rsquo; at
-different times in the day, as seen from the perspective of the different servers which are part of
-the development pipeline. Taking these issues into account when sizing the capacity of the development
-pipeline may lead to increasing the capacity of the pipeline because the the current peak loading
-during working hours results in wait times which are too large.&lt;/p&gt;
-&lt;p&gt;With this high level information it is possible to start improving the performance of the development
-pipeline. This obviously leads to the question: &amp;ldquo;What practical steps can we take&amp;rdquo;. As per normal when
-dealing with performance improvements it is hard to provide solutions because these depend
-on the specific situation. It is however possible to provide some more general advise.&lt;/p&gt;
-&lt;p&gt;The very first step to take when dealing with performance is always to measure everything. In the case
-of the development pipeline it will be useful to gather metrics constantly and to automatically process
-these metrics into several key performance indicators, e.g. the number of input sets per time span, which
-describes the loading pattern, the waiting times for each input set before it is processed and the
-time taken to process each input set. These key performance indicators can then be used to keep
-track of performance improvements as changes are made to the pipeline.&lt;/p&gt;
-&lt;p&gt;One important issue to keep in mind with regards to performance is that unlike with accuracy performance
-may change over time even if there are no &lt;em&gt;changes&lt;/em&gt; to the system because the performance of the
-underlying infrastructure might change, for instance when disks fill up, the network load changes or
-the hardware ages. This means it will be important to track performance trends over longer periods of
-time to average out the influences of temporary infrastructure changes, e.g. network loading.&lt;/p&gt;
-&lt;p&gt;With all that out of the way some of the standard steps that can be taken are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Each pipeline stage should only perform the necessary steps to achieve the desired goal. This for
-instance means that partial builds are better than full rebuilds, from a performance perspective.&lt;/li&gt;
-&lt;li&gt;Only gather data that will be used during the current stage. Gathering data that is not required
-wastes time, thus smaller input sets are quicker to process.&lt;/li&gt;
-&lt;li&gt;When pulling data locality matters. Pulling data off the local disk is faster than pulling it off
-the network, pulling data off the local network is faster than pulling it from the WAN or the internet.
-Additionally data that is not local should be cached so that it only needs to be retrieved once.&lt;/li&gt;
-&lt;li&gt;Ensure that pipeline stages run on suitable &amp;lsquo;hardware&amp;rsquo;, either physical or virtual. Ideally the
-stage is executed on hardware that is optimized for the performance demands of the step, e.g.
-execute I/O bound steps on hardware that has fast I/O etc.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;In addition to these improvements it will be important to review and improve the ability of the
-pipeline to execute many input sets in parallel.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Ensure that the pipeline applications which deal with the distribution of input sets are efficient
-at this task. It's not very useful to start processing an input set only to find out that there
-are no executors which can process this given input set (I'm looking at you TFS2013).&lt;/li&gt;
-&lt;li&gt;Splitting a single stage into multiple parallel stages will improve throughput for a single input
-set. However it might decrease overall throughput due to the fact that a single input set requires
-the use of multiple executors. Note that splitting a single stage into many parallel stages might
-lead to reductions in performance due to the overhead of transitioning between stages.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The mentioned improvements form a start for improving the performance of the pipeline. Depending on
-the specific characteristics of a given pipeline other improvements and design choices may be valid.&lt;/p&gt;
-&lt;p&gt;Finally it must be mentioned that some performance improvements will have negative influences on the
-other &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;properties&lt;/a&gt;. For instance using partial
-builds may influence accuracy. In the end a trade-off will need to be made when it comes to changes
-that influence multiple properties.&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>

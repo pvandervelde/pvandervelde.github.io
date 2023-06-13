@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - Blog</title>
+        <title>Mind vortex - Swerve drive - Better movement by controlling the body motions</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,9 +29,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - Blog" />
+        <meta property="og:title" content="Mind vortex - Swerve drive - Better movement by controlling the body motions" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/tags/Blog" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Swerve-drive-body-focussed-control" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -82,6 +82,9 @@
         <!-- Index -->
         <!-- RenderTagIndex -->
         <!-- RenderTags -->
+        <!-- RenderBlogArchive -->
+        <!-- Feed -->
+        <!-- RenderBlogPosts -->
     <!-- Context.Documents['Pages'] -->
         <!-- 404 Not Found - False - /404 -->
         <!-- About - True - /about -->
@@ -190,53 +193,176 @@
 
             <div id="content">
 
-<div id="posts">
-    <h3 id="post-tags-header">Posts tagged with: Blog</h3>
-    
-        <div class="post-list">
-            <a href="/posts/Blog-publishing-with-AppVeyor">
-                <h3 class="post-title">Blog publishing with AppVeyor</h3>
-            </a>
-            <p class="post-meta">Posted on Monday, January 16, 2017</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Updating-blog-to-wyam">
-                <h3 class="post-title">Exit Docpad, enter Wyam</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, January 11, 2017</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Adding-pagination-with-DocPad">
-                <h3 class="post-title">Adding pagination with DocPad</h3>
-            </a>
-            <p class="post-meta">Posted on Saturday, July 26, 2014</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Blog-archives-by-DocPad">
-                <h3 class="post-title">Blog archives by DocPad</h3>
-            </a>
-            <p class="post-meta">Posted on Thursday, July 24, 2014</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Improvements-to-the-site">
-                <h3 class="post-title">Improvements to the site</h3>
-            </a>
-            <p class="post-meta">Posted on Friday, May 23, 2014</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/How-this-blog-was-created">
-                <h3 class="post-title">How this blog was created</h3>
-            </a>
-            <p class="post-meta">Posted on Wednesday, September 25, 2013</p>      
-        </div>   
-        <div class="post-list">
-            <a href="/posts/Why-this-blog-was-created">
-                <h3 class="post-title">Why this blog was created</h3>
-            </a>
-            <p class="post-meta">Posted on Friday, August 30, 2013</p>      
-        </div>   
+<div id="post">
+    <div id="post-header">
+        <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
 
+
+<h2>
+Swerve drive - Better movement by controlling the body motions</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Friday, June 9, 2023
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Kinematics" class="btn btn-default btn-xs tag-no-wrap">Kinematics</a>
+                        <a id="post-category" role="button" href="/tags/Omnidirectional" class="btn btn-default btn-xs tag-no-wrap">Omnidirectional</a>
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/Swerve" class="btn btn-default btn-xs tag-no-wrap">Swerve</a>
+    </div>
 </div>
+
+    </div>
+
+    <div id="post-content">
+        <p>In my <a href="posts/Swerve-drive-kinematics-simulation">first attempt</a> to model a swerve drive I controlled
+the movement of the robot by directly providing commands to the individual drive modules, i.e. by
+controlling the steering angle and the wheel velocity of each of the four drive modules. Additionally
+I assumed that the transition from one state (steering angle, wheel velocity) to another state would
+follow a linear profile. An example of this can be seen in the graphs below. The bottom left graph shows
+the linear change in steering angle for the four drive modules. It should be noted that a linear
+profile isn't very realistic as this requires the motors to be capable of instant changes in velocity
+and acceleration. However making this assumption keeps the calculations simple. At a later stage I
+will be encoding different movement profiles amongst which a low
+<a href="https://en.wikipedia.org/wiki/Jerk_(physics)">jerk</a> profile for smooth movements.</p>
+<figure style="float:middle">
+  <a href="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png" target="_blank">
+    <img
+        alt="45 degree linear track to in-place rotation with a module-first control algorithm"
+        src="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png"
+        width="840"
+        height="368"/>
+  </a>
+  <figcaption>
+    Simulation data for a 45 degree linear track that transitions to an in-place rotation with a
+    module-first control algorithm.
+  </figcaption>
+</figure>
+<p>The benefit of controlling the robot by directly controlling the drive modules is that the control
+algorithm is very simple and all movement patterns are possible. For instance it is possible to make
+all the wheels change steering angle without moving the robot body, something which is not possible
+with indirect control methods.</p>
+<p>However there are also a number of drawbacks. The main one is that
+for a swerve drive to be efficient the motions of the different drive modules need to be synchronized.
+That means that all the drive modules needs to be controlled so that none of the wheels slip along
+the surface. For simple linear or rotational movements of the robot body this is easy to achieve but
+for complicated movements this is much more difficult. An example is shown in image above which
+describes the behaviour of the robot as it moves linearly at a 45 degree angle and then transitions
+to an in-place rotation around the robot centre axis. The bottom right graph shows the
+<a href="https://en.wikipedia.org/wiki/Instant_centre_of_rotation">instantaneous centre of rotation</a> calculated
+for different combinations of two wheels. In a synchronised motion all wheels should point to the same
+instantaneous centre of rotation at any given moment. If the ICR's for the different wheel pairs are
+in different locations then one or more of the wheels is out of sync and likely slipping along
+the ground. The graph clearly shows that in this case the drive modules are not synchronized thus
+causing wheel slip.</p>
+<p>One way to improve the synchronization between the drive modules is apply the movement control at
+an indirect level, for instance on the robot body, and then to work out from there what the drive modules
+should be doing at any that given point in time along the transition trajectory.</p>
+<p>As with the previous approach I will use a
+<a href="https://github.com/pvandervelde/basic-swerve-sim/blob/103b321c471ced6c8865680d1e550ab4f5893526/swerve_controller/profile.py#L47">linear profile</a>
+to determine the transitions between different body states. Then the transition for the
+<a href="https://github.com/pvandervelde/basic-swerve-sim/blob/103b321c471ced6c8865680d1e550ab4f5893526/swerve_controller/trajectory.py#L42">body velocities (x-velocity, y-velocity, and rotational velocity)</a>
+can be determined from the start state to the end state. Once it is known what
+the body motion looks like I can calculate the
+<a href="https://github.com/pvandervelde/basic-swerve-sim/blob/103b321c471ced6c8865680d1e550ab4f5893526/swerve_controller/multi_wheel_steering_controller.py#L100">states for the drive modules</a>
+from the body state for all given states in the transition profile.</p>
+<figure style="float:middle">
+  <a href="/assets/images/robotics/swerve/serve_sim_module_flip_steering_angle.png" target="_blank">
+    <img
+        alt="Drive module steering angle flip"
+        src="/assets/images/robotics/swerve/serve_sim_module_flip_steering_angle.png"
+        width="840"
+        height="368"/>
+  </a>
+  <figcaption>
+    Drive module steering angle flip.
+  </figcaption>
+</figure>
+<p>One issue with this approach is that every body state can be achieved by two different module states,
+one with the wheel moving &lsquo;forward&rsquo; and one with the wheel moving 'backward'. Initially the simulation
+was hard-coded to always select the &lsquo;forward&rsquo; moving state. However this leads to situations where
+the steering angle is flipped 180 degrees very rapidly. This is shown in the figure where the yellow
+line switches from 45 degrees (or 0.78 radians) to 225 degrees (or 3.9 radians) in two time steps, or
+0.02 seconds. In real life this change in steering angle would likely not be possible because the
+steering angle motor would not be capable of delivering the enormous velocities and accelerations
+necessary to achieve this change.</p>
+<p>To resolve this issue the simulation calculated the difference in rotation and velocity between the
+current point in time and the previous point in time along the transition trajectory, for both the
+forward and backward motions. Then <a href="https://github.com/pvandervelde/basic-swerve-sim/blob/103b321c471ced6c8865680d1e550ab4f5893526/swerve_controller/multi_wheel_steering_controller.py#L140">general rule</a>
+is to pick the smallest change in both rotation and velocity of the drive module. If that isn't
+possible then we pick the one with the smallest rotation difference for no real reason other than we
+have to pick something. In future work a more thorough algorithm will be implemented.</p>
+<p>With all that code in place the simulation delivers a much smoother result for the transition from
+a 45 degree linear motion into a in-place rotation. The ICR trajectory for all the wheel pairs is
+following a single path indicating that all the drive modules are all synchronised during the
+movement transition.</p>
+<figure style="float:middle">
+  <a href="/assets/images/robotics/swerve/swerve_sim_body_first_45_linear_to_inplace_rotation.png" target="_blank">
+    <img
+        alt="45 degree linear track to in-place rotation with a body first control algorithm"
+        src="/assets/images/robotics/swerve/swerve_sim_body_first_45_linear_to_inplace_rotation.png"
+        width="840"
+        height="368"/>
+  </a>
+  <figcaption>
+    Simulation data for a 45 degree linear track that transitions to an in-place rotation with a
+    body-first control algorithm.
+  </figcaption>
+</figure>
+<p>The body oriented control approach ensures synchronisation of the drive modules while allowing
+nearly all the different motions a swerve drive can make. The only motions not possible are those
+that involve drive module steering angle changes only.</p>
+<p>The next improvement will be to replace the linear interpolation between the start state and the
+desired end state with a control approach that will provide
+<a href="https://en.wikipedia.org/wiki/Jerk_(physics)#In_motion_control">smooth transitions</a> for velocity and
+accelerations. This will make the motions of the robot less jerky and thus less likely to damage
+parts while also providing a smoother ride for the payload.</p>
+
+    </div>
+
+    <div id="post-footer">
+        <div>
+    <div class="navlinks">
+                <a href="/posts/Swerve-drive-kinematics-verification" title="Previous Post: Swerve drive - Verification of the kinematics solution" class="navlinks-prev">« Swerve drive - Verification of the kinematics solution</a>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Swerve-drive-body-focussed-control';
+    var disqus_title = 'Swerve drive - Better movement by controlling the body motions';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Swerve-drive-body-focussed-control';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+</div>
+
+
+
+
+
+
+
             </div>
         </div>
 

@@ -129,6 +129,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Swerve-drive-body-focussed-control">Swerve drive - Better movement by controlling the body motions</a></li>
                             <li><a href="/posts/Swerve-drive-kinematics-verification">Swerve drive - Verification of the kinematics solution</a></li>
                             <li><a href="/posts/Swerve-drive-kinematics-simulation">Swerve drive - Kinematics simulation</a></li>
                             <li><a href="/posts/Swerve-drive-introduction">Swerve drive - Moving a robot in all directions, mostly</a></li>
@@ -138,7 +139,6 @@
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-overview">Starting robotics - Building a bumper for scuttle. The overview</a></li>
                             <li><a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">Starting robotics - Driving scuttle with ROS - Gazebo simulation</a></li>
                             <li><a href="/posts/Robotics-learning-ros">Starting robotics - Learning Robot Operating System (ROS)</a></li>
-                            <li><a href="/posts/Starting-robotics-with-scuttle">Starting robotics with the SCUTTLE robot</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -149,25 +149,25 @@
                                     <a role="button" href="/tags/Sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
                                 </li>
                                 <li>
+                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (12)</a>
+                                </li>
+                                <li>
                                     <a role="button" href="/tags/nBuildKit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
                                 </li>
                                 <li>
+                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
+                                </li>
+                                <li>
                                     <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                    <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                    <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
@@ -188,6 +188,138 @@
 
             <div id="content">
 
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Swerve-drive-body-focussed-control">Swerve drive - Better movement by controlling the body motions</a>
+</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Friday, June 9, 2023
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Kinematics" class="btn btn-default btn-xs tag-no-wrap">Kinematics</a>
+                        <a id="post-category" role="button" href="/tags/Omnidirectional" class="btn btn-default btn-xs tag-no-wrap">Omnidirectional</a>
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/Swerve" class="btn btn-default btn-xs tag-no-wrap">Swerve</a>
+    </div>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>In my <a href="posts/Swerve-drive-kinematics-simulation">first attempt</a> to model a swerve drive I controlled
+the movement of the robot by directly providing commands to the individual drive modules, i.e. by
+controlling the steering angle and the wheel velocity of each of the four drive modules. Additionally
+I assumed that the transition from one state (steering angle, wheel velocity) to another state would
+follow a linear profile. An example of this can be seen in the graphs below. The bottom left graph shows
+the linear change in steering angle for the four drive modules. It should be noted that a linear
+profile isn't very realistic as this requires the motors to be capable of instant changes in velocity
+and acceleration. However making this assumption keeps the calculations simple. At a later stage I
+will be encoding different movement profiles amongst which a low
+<a href="https://en.wikipedia.org/wiki/Jerk_(physics)">jerk</a> profile for smooth movements.</p>
+<figure style="float:middle">
+  <a href="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png" target="_blank">
+    <img
+        alt="45 degree linear track to in-place rotation with a module-first control algorithm"
+        src="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png"
+        width="840"
+        height="368"/>
+  </a>
+  <figcaption>
+    Simulation data for a 45 degree linear track that transitions to an in-place rotation with a
+    module-first control algorithm.
+  </figcaption>
+</figure>
+<p>The benefit of controlling the robot by directly controlling the drive modules is that the control
+algorithm is very simple and all movement patterns are possible. For instance it is possible to make
+all the wheels change steering angle without moving the robot body, something which is not possible
+with indirect control methods.</p>
+<p>However there are also a number of drawbacks. The main one is that
+for a swerve drive to be efficient the motions of the different drive modules need to be synchronized.
+That means that all the drive modules needs to be controlled so that none of the wheels slip along
+the surface. For simple linear or rotational movements of the robot body this is easy to achieve but
+for complicated movements this is much more difficult. An example is shown in image above which
+describes the behaviour of the robot as it moves linearly at a 45 degree angle and then transitions
+to an in-place rotation around the robot centre axis. The bottom right graph shows the
+<a href="https://en.wikipedia.org/wiki/Instant_centre_of_rotation">instantaneous centre of rotation</a> calculated
+for different combinations of two wheels. In a synchronised motion all wheels should point to the same
+instantaneous centre of rotation at any given moment. If the ICR's for the different wheel pairs are
+in different locations then one or more of the wheels is out of sync and likely slipping along
+the ground. The graph clearly shows that in this case the drive modules are not synchronized thus
+causing wheel slip.</p>
+<p>One way to improve the synchronization between the drive modules is apply the movement control at
+an indirect level, for instance on the robot body, and then to work out from there what the drive modules
+should be doing at any that given point in time along the transition trajectory.</p>
+<p>As with the previous approach I will use a
+<a href="https://github.com/pvandervelde/basic-swerve-sim/blob/103b321c471ced6c8865680d1e550ab4f5893526/swerve_controller/profile.py#L47">linear profile</a>
+to determine the transitions between different body states. Then the transition for the
+<a href="https://github.com/pvandervelde/basic-swerve-sim/blob/103b321c471ced6c8865680d1e550ab4f5893526/swerve_controller/trajectory.py#L42">body velocities (x-velocity, y-velocity, and rotational velocity)</a>
+can be determined from the start state to the end state. Once it is known what
+the body motion looks like I can calculate the
+<a href="https://github.com/pvandervelde/basic-swerve-sim/blob/103b321c471ced6c8865680d1e550ab4f5893526/swerve_controller/multi_wheel_steering_controller.py#L100">states for the drive modules</a>
+from the body state for all given states in the transition profile.</p>
+<figure style="float:middle">
+  <a href="/assets/images/robotics/swerve/serve_sim_module_flip_steering_angle.png" target="_blank">
+    <img
+        alt="Drive module steering angle flip"
+        src="/assets/images/robotics/swerve/serve_sim_module_flip_steering_angle.png"
+        width="840"
+        height="368"/>
+  </a>
+  <figcaption>
+    Drive module steering angle flip.
+  </figcaption>
+</figure>
+<p>One issue with this approach is that every body state can be achieved by two different module states,
+one with the wheel moving &lsquo;forward&rsquo; and one with the wheel moving 'backward'. Initially the simulation
+was hard-coded to always select the &lsquo;forward&rsquo; moving state. However this leads to situations where
+the steering angle is flipped 180 degrees very rapidly. This is shown in the figure where the yellow
+line switches from 45 degrees (or 0.78 radians) to 225 degrees (or 3.9 radians) in two time steps, or
+0.02 seconds. In real life this change in steering angle would likely not be possible because the
+steering angle motor would not be capable of delivering the enormous velocities and accelerations
+necessary to achieve this change.</p>
+<p>To resolve this issue the simulation calculated the difference in rotation and velocity between the
+current point in time and the previous point in time along the transition trajectory, for both the
+forward and backward motions. Then <a href="https://github.com/pvandervelde/basic-swerve-sim/blob/103b321c471ced6c8865680d1e550ab4f5893526/swerve_controller/multi_wheel_steering_controller.py#L140">general rule</a>
+is to pick the smallest change in both rotation and velocity of the drive module. If that isn't
+possible then we pick the one with the smallest rotation difference for no real reason other than we
+have to pick something. In future work a more thorough algorithm will be implemented.</p>
+<p>With all that code in place the simulation delivers a much smoother result for the transition from
+a 45 degree linear motion into a in-place rotation. The ICR trajectory for all the wheel pairs is
+following a single path indicating that all the drive modules are all synchronised during the
+movement transition.</p>
+<figure style="float:middle">
+  <a href="/assets/images/robotics/swerve/swerve_sim_body_first_45_linear_to_inplace_rotation.png" target="_blank">
+    <img
+        alt="45 degree linear track to in-place rotation with a body first control algorithm"
+        src="/assets/images/robotics/swerve/swerve_sim_body_first_45_linear_to_inplace_rotation.png"
+        width="840"
+        height="368"/>
+  </a>
+  <figcaption>
+    Simulation data for a 45 degree linear track that transitions to an in-place rotation with a
+    body-first control algorithm.
+  </figcaption>
+</figure>
+<p>The body oriented control approach ensures synchronisation of the drive modules while allowing
+nearly all the different motions a swerve drive can make. The only motions not possible are those
+that involve drive module steering angle changes only.</p>
+<p>The next improvement will be to replace the linear interpolation between the start state and the
+desired end state with a control approach that will provide
+<a href="https://en.wikipedia.org/wiki/Jerk_(physics)#In_motion_control">smooth transitions</a> for velocity and
+accelerations. This will make the motions of the robot less jerky and thus less likely to damage
+parts while also providing a smoother ride for the payload.</p>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -704,88 +836,6 @@ is actually driving around in circles.</p>
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Robotics-a-bumper-for-scuttle-electronics">Starting robotics - Building a bumper for scuttle. The electronics</a>
-</h2>
-<div id="post-meta">
-    <div class="meta-date">
-Friday, October 21, 2022
- |             Posted in     </div>
-    <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
-                        <a id="post-category" role="button" href="/tags/ROS" class="btn btn-default btn-xs tag-no-wrap">ROS</a>
-                        <a id="post-category" role="button" href="/tags/ROS-Noetic" class="btn btn-default btn-xs tag-no-wrap">ROS&nbsp;Noetic</a>
-                        <a id="post-category" role="button" href="/tags/Scuttle" class="btn btn-default btn-xs tag-no-wrap">Scuttle</a>
-    </div>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>The final part of building a bumper for SCUTTLE is to assemble the electronics component which translates
-the movement of the bumper into signals which can be processed by the bumper software. In order to do
-this I designed a simple circuit using <a href="https://www.kicad.org/">KiCad</a> and advice from one of the
-many robotics forums.</p>
-<figure style="float:left">
-<img alt="SCUTTLE bumper electronics schematic" src="/assets/images/robotics/scuttle/scuttle-bumper-kicad.png" />
-<figcaption>SCUTTLE bumper electronics schematic made in KiCad</figcaption>
-</figure>
-<p>The circuit contains a microswitch as the trigger. The switch is connected to one of the 3.3V output
-pins on the raspberry PI 4 board on one side and to one of the GPIO pins on the other side. When
-the switch is depressed the circuit closes and the GPIO pin is driven to 3.3V, which is considered
-a high signal. In order to ensure that the voltage on the GPIO pin is 0V when the circuit is not
-closed I added a <a href="https://en.wikipedia.org/wiki/Pull-up_resistor">pull down</a> resistor. On the
-raspberry PI it is possible to programmatically add a pull down resistor, however because I'm
-using this as a learning exercise I thought it would be more suitable to include a physical pull down
-resistor in the circuit.</p>
-<p>The next thing I wanted from the circuit was the ability to see if the circuit was closed or not, so
-that when I'm debugging it is obvious if there is a problem with the power, electronics or software.
-For this purpose I added a yellow LED to the circuit, which lights up when the circuit is closed.
-Adding the LED then adds the requirement to protect it from over current in case that the input pin
-was programmed to be an output pin by mistake. For this purpose I added a resistor next to the input
-pin.</p>
-<figure style="float:right">
-<img alt="SCUTTLE bumper electronics boards" src="/assets/images/robotics/scuttle/scuttle-bumper-electronics-boards.jpg" />
-<figcaption>SCUTTLE bumper electronics boards</figcaption>
-</figure>
-<p>After testing the circuit on the breadboard the next step was to solder two switch boards and
-a distribution board. Each switch board would have a micro-switch, the LED, the resistors and a
-JST-XH three pin connector for power, ground and signal wires.
-The distribution board would have four JST-XH three pin connectors and one JST-XH six pin connector.
-The four three pin connectors would allow me to have a front bumper and a rear bumper, each
-having a switch board on the left and the right. I used JST-XH connectors instead of the Dupont
-connectors because the JST connectors are directional, thereby removing any potential issues with
-plugging the connector in the wrong way.</p>
-<p>Part of this journey involved learning how to solder electronics components. I bought a Weller WE 1010
-soldering station for this and future jobs. I managed to do a reasonable job soldering the parts but
-it is obvious that I still have a lot to learn when it comes to soldering.</p>
-<figure style="float:left">
-<img alt="SCUTTLE bumper electronics assembled" src="/assets/images/robotics/scuttle/scuttle-bumper-assembled.jpg" />
-<figcaption>SCUTTLE bumper electronics assembled</figcaption>
-</figure>
-<p>The last task was to crimp the connectors and connect the boards. Because the raspberry Pi has a
-Dupont header I needed to crimp both Dupont connectors and JST-XH connectors. For the Dupont connectors
-I got an Iwiss SN-025 crimper. It works pretty well for those connectors. However the crimper dies are
-too wide for the JST-XH connectors. So to crimp the JST-XH connectors I had to get a different
-crimper with narrower dies. So for this I got an Engineer PAD-11 crimper. While this is not a
-ratcheting crimper it works really well, at least for the JST-XH connectors.</p>
-<p>So now that the mechanical setup is done, the software is, mostly, done and the electronics have
-been soldered and connected my bumper works. Sort of. It turns out that there is a
-problems with my SCUTTLE that make the bump response only work partially. It seems that
-there is an issue with the wheel encoders, which causes the software to not know how much one of the
-wheels has rotated. I will discuss fixing the encoders in another post.</p>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -816,9 +866,9 @@ wheels has rotated. I will discuss fixing the encoders in another post.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Thu, 04 May 2023 05:32:03 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Tue, 13 Jun 2023 09:53:36 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/334593576ef500fae805ab386f8a25086ca0a574">334593576ef500fae805ab386f8a25086ca0a574</a> at version 3.14.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/f3cb1aa41aedc4af8733090ce5e7dc4eb2808ea4">f3cb1aa41aedc4af8733090ce5e7dc4eb2808ea4</a> at version 3.15.0.        </p>
     </div>
 
     <p>
