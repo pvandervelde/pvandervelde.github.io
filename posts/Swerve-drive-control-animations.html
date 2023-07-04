@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - nBuildKit</title>
+        <title>Mind vortex - Swerve drive - Movement animations</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,9 +29,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - nBuildKit" />
+        <meta property="og:title" content="Mind vortex - Swerve drive - Movement animations" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/projects/nbuildkit" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Swerve-drive-control-animations" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -85,13 +85,11 @@
         <!-- RenderBlogArchive -->
         <!-- Feed -->
         <!-- RenderBlogPosts -->
-        <!-- RenderPages -->
     <!-- Context.Documents['Pages'] -->
         <!-- 404 Not Found - False - /404 -->
         <!-- About - True - /about -->
-        <!-- Calvinverse - False - /projects/calvinverse -->
-        <!-- nBuildKit - False - /projects/nbuildkit -->
         <!-- Projects - True - /projects -->
+        <!-- Robotics - False - /projects/robotics -->
         <!-- Scuttle - False - /projects/scuttle -->
             <li class="inactive" >
                 <a href="/">Home</a>
@@ -135,6 +133,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Swerve-drive-control-animations">Swerve drive - Movement animations</a></li>
                             <li><a href="/posts/Swerve-drive-body-focussed-control">Swerve drive - Better movement by controlling the body motions</a></li>
                             <li><a href="/posts/Swerve-drive-kinematics-verification">Swerve drive - Verification of the kinematics solution</a></li>
                             <li><a href="/posts/Swerve-drive-kinematics-simulation">Swerve drive - Kinematics simulation</a></li>
@@ -144,7 +143,6 @@
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-software">Starting robotics - Building a bumper for scuttle. The software</a></li>
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-overview">Starting robotics - Building a bumper for scuttle. The overview</a></li>
                             <li><a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">Starting robotics - Driving scuttle with ROS - Gazebo simulation</a></li>
-                            <li><a href="/posts/Robotics-learning-ros">Starting robotics - Learning Robot Operating System (ROS)</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -155,31 +153,31 @@
                                     <a role="button" href="/tags/Sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (12)</a>
+                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (13)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/nBuildKit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
+                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
                                 </li>
                                 <li>
+                                    <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                </li>
+                                <li>
                                     <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                    <a role="button" href="/tags/Scuttle" class="btn btn-default btn-sm"> Scuttle (6)</a>
                                 </li>
                         </ul>
                     </div>
@@ -193,31 +191,132 @@
             </div>
 
             <div id="content">
-                        <div class="project">
-                            <h2>nBuildKit</h2>
-                            <div>
-                                <p><a href="https://github.com/nbuildkit">nBuildKit</a>  is a collection of tools and scripts that provide an easy way to set-up a complete build and deployment for a (.NET) project.</p>
-<ul>
-<li><a href="https://github.com/nbuildkit/nBuildKit.MsBuild">nBuildKit.MsBuild</a> - Provides MsBuild scripts and tasks to configure a build using the MsBuild engine.</li>
-</ul>
 
-                            </div>
-                            <div id="project-linkedposts">
+<div id="post">
+    <div id="post-header">
+        <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
 
-        <h3>Recent posts referencing nBuildKit</h3>
-        <ul>
-                <li><a href="/posts/nBuildkit-Release-V0102">nBuildKit release - V0.10.2</a></li>
-                <li><a href="/posts/nBuildkit-release-V0100">nBuildKit release - V0.10.0</a></li>
-                <li><a href="/posts/nBuildKit-release-V092">nBuildKit release - V0.9.2</a></li>
-                <li><a href="/posts/nBuildKit-release-V091">nBuildKit release - V0.9.1</a></li>
-                <li><a href="/posts/nBuildKit-release-V090">nBuildKit release - V0.9.0</a></li>
-        </ul>
-        <div id="project-linkedposts-more">
-            More posts referencing <a href="/tags/nbuildkit">nBuildKit</a>
-        </div>
+
+<h2>
+Swerve drive - Movement animations</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Tuesday, July 4, 2023
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Kinematics" class="btn btn-default btn-xs tag-no-wrap">Kinematics</a>
+                        <a id="post-category" role="button" href="/tags/Omnidirectional" class="btn btn-default btn-xs tag-no-wrap">Omnidirectional</a>
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/Swerve" class="btn btn-default btn-xs tag-no-wrap">Swerve</a>
+    </div>
 </div>
 
-                        </div>
+    </div>
+
+    <div id="post-content">
+        <p>In my last two posts I talked about different control methods for a swerve drive robot. One method
+controls the movement of drive modules directly. The other method controls the movement of
+the body and derives the desired state for the drive modules from that.</p>
+<figure style="float:middle">
+  <a href="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png" target="_blank">
+    <img
+        alt="45 degree linear track to in-place rotation"
+        src="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png"
+        width="840"
+        height="368"/>
+  </a>
+  <figcaption>Simulation data for a 45 degree linear track that transitions to an in-place rotation.</figcaption>
+</figure>
+<p>To see the difference between these control methods my simulation code created all kinds of interesting
+plots like the ones above. However I was still having trouble visualizing what was actually happening,
+especially in the case of the movement of the Instantaneous Centre of Rotation (ICR), i.e. the
+rotation point for the robot at a given point in time. The lower left graph shows the paths the
+ICR for different combinations of drive modules. While it looks pretty it does not make a lot of
+sense to me.</p>
+<iframe
+    style="float:left"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/LlyopmLMlZY"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
+<p>So to address that issue I updated the simulation code to produce some animations that display the
+position of the robot and the wheels as well as a number of plots for the state of the robot body
+and the drive modules. The following animation shows how the robot behaves when using the
+<a href="posts/Swerve-drive-kinematics-simulation">direct module controller</a>. As you can see in the video different
+pairs of wheels have different rotation points, signified by the red dots. As the movement progresses
+these rotation points have quite a large range of motion. This indicates that the wheels are not
+synchronized and most likely some of the wheels are slipping.</p>
+<p>I created another animation for the same situation but with the
+<a href="posts/Swerve-drive-body-focussed-control">body oriented controller</a>. In this case the rotation points
+are all in a single location leading me to conclude that all the wheels are synchronized and little
+to no wheel slip is occurring.</p>
+<iframe
+    style="float:right"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/U6Z_meFKNrI"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
+<p>One other interesting thing you can see in the video is that the acceleration and
+<a href="https://en.wikipedia.org/wiki/Jerk_(physics)">jerk</a> values change very abruptly. In real life this
+would lead to significant loads on the robot and its drive system. In the simulation this behaviour
+is due to the fact that linear profile that is being used to transition from one state to another.
+As mentioned before the next improvement will be to replace this linear interpolation with a control
+approach that will provide <a href="https://en.wikipedia.org/wiki/Jerk_(physics)#In_motion_control">smooth transitions</a>
+for velocity and accelerations.</p>
+
+    </div>
+
+    <div id="post-footer">
+        <div>
+    <div class="navlinks">
+                <a href="/posts/Swerve-drive-body-focussed-control" title="Previous Post: Swerve drive - Better movement by controlling the body motions" class="navlinks-prev">« Swerve drive - Better movement by controlling the body motions</a>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Swerve-drive-control-animations';
+    var disqus_title = 'Swerve drive - Movement animations';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Swerve-drive-control-animations';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+</div>
+
+
+
+
+
+
+
             </div>
         </div>
 
@@ -248,9 +347,9 @@
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Tue, 13 Jun 2023 09:53:42 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Tue, 04 Jul 2023 07:41:16 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/f3cb1aa41aedc4af8733090ce5e7dc4eb2808ea4">f3cb1aa41aedc4af8733090ce5e7dc4eb2808ea4</a> at version 3.15.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/55209da17204c70cd1b66b22b4b7eea7f4d6946a">55209da17204c70cd1b66b22b4b7eea7f4d6946a</a> at version 3.16.0.        </p>
     </div>
 
     <p>

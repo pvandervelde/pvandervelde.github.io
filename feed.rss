@@ -5,8 +5,75 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2023</copyright>
-		<pubDate>Tue, 13 Jun 2023 09:53:37 GMT</pubDate>
-		<lastBuildDate>Tue, 13 Jun 2023 09:53:37 GMT</lastBuildDate>
+		<pubDate>Tue, 04 Jul 2023 07:41:15 GMT</pubDate>
+		<lastBuildDate>Tue, 04 Jul 2023 07:41:15 GMT</lastBuildDate>
+		<item>
+			<title>Swerve drive - Movement animations</title>
+			<link>https://www.petrikvandervelde.nl/posts/Swerve-drive-control-animations</link>
+			<description>&lt;p&gt;In my last two posts I talked about different control methods for a swerve drive robot. One method
+controls the movement of drive modules directly. The other method controls the movement of
+the body and derives the desired state for the drive modules from that.&lt;/p&gt;</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Swerve-drive-control-animations</guid>
+			<pubDate>Tue, 04 Jul 2023 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;In my last two posts I talked about different control methods for a swerve drive robot. One method
+controls the movement of drive modules directly. The other method controls the movement of
+the body and derives the desired state for the drive modules from that.&lt;/p&gt;
+&lt;figure style="float:middle"&gt;
+  &lt;a href="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png" target="_blank"&gt;
+    &lt;img
+        alt="45 degree linear track to in-place rotation"
+        src="/assets/images/robotics/swerve/swerve_sim_45_linear_to_inplace_rotation.png"
+        width="840"
+        height="368"/&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Simulation data for a 45 degree linear track that transitions to an in-place rotation.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;To see the difference between these control methods my simulation code created all kinds of interesting
+plots like the ones above. However I was still having trouble visualizing what was actually happening,
+especially in the case of the movement of the Instantaneous Centre of Rotation (ICR), i.e. the
+rotation point for the robot at a given point in time. The lower left graph shows the paths the
+ICR for different combinations of drive modules. While it looks pretty it does not make a lot of
+sense to me.&lt;/p&gt;
+&lt;iframe
+    style="float:left"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/LlyopmLMlZY"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;p&gt;So to address that issue I updated the simulation code to produce some animations that display the
+position of the robot and the wheels as well as a number of plots for the state of the robot body
+and the drive modules. The following animation shows how the robot behaves when using the
+&lt;a href="posts/Swerve-drive-kinematics-simulation"&gt;direct module controller&lt;/a&gt;. As you can see in the video different
+pairs of wheels have different rotation points, signified by the red dots. As the movement progresses
+these rotation points have quite a large range of motion. This indicates that the wheels are not
+synchronized and most likely some of the wheels are slipping.&lt;/p&gt;
+&lt;p&gt;I created another animation for the same situation but with the
+&lt;a href="posts/Swerve-drive-body-focussed-control"&gt;body oriented controller&lt;/a&gt;. In this case the rotation points
+are all in a single location leading me to conclude that all the wheels are synchronized and little
+to no wheel slip is occurring.&lt;/p&gt;
+&lt;iframe
+    style="float:right"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/U6Z_meFKNrI"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;p&gt;One other interesting thing you can see in the video is that the acceleration and
+&lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)"&gt;jerk&lt;/a&gt; values change very abruptly. In real life this
+would lead to significant loads on the robot and its drive system. In the simulation this behaviour
+is due to the fact that linear profile that is being used to transition from one state to another.
+As mentioned before the next improvement will be to replace this linear interpolation with a control
+approach that will provide &lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)#In_motion_control"&gt;smooth transitions&lt;/a&gt;
+for velocity and accelerations.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Swerve drive - Better movement by controlling the body motions</title>
 			<link>https://www.petrikvandervelde.nl/posts/Swerve-drive-body-focussed-control</link>
@@ -64,7 +131,7 @@ the ground. The graph clearly shows that in this case the drive modules are not 
 causing wheel slip.&lt;/p&gt;
 &lt;p&gt;One way to improve the synchronization between the drive modules is apply the movement control at
 an indirect level, for instance on the robot body, and then to work out from there what the drive modules
-should be doing at any that given point in time along the transition trajectory.&lt;/p&gt;
+should be doing at any that given point in time along the transition profile.&lt;/p&gt;
 &lt;p&gt;As with the previous approach I will use a
 &lt;a href="https://github.com/pvandervelde/basic-swerve-sim/blob/103b321c471ced6c8865680d1e550ab4f5893526/swerve_controller/profile.py#L47"&gt;linear profile&lt;/a&gt;
 to determine the transitions between different body states. Then the transition for the
@@ -94,13 +161,13 @@ line switches from 45 degrees (or 0.78 radians) to 225 degrees (or 3.9 radians) 
 steering angle motor would not be capable of delivering the enormous velocities and accelerations
 necessary to achieve this change.&lt;/p&gt;
 &lt;p&gt;To resolve this issue the simulation calculated the difference in rotation and velocity between the
-current point in time and the previous point in time along the transition trajectory, for both the
+current point in time and the previous point in time along the transition profile, for both the
 forward and backward motions. Then &lt;a href="https://github.com/pvandervelde/basic-swerve-sim/blob/103b321c471ced6c8865680d1e550ab4f5893526/swerve_controller/multi_wheel_steering_controller.py#L140"&gt;general rule&lt;/a&gt;
 is to pick the smallest change in both rotation and velocity of the drive module. If that isn't
 possible then we pick the one with the smallest rotation difference for no real reason other than we
 have to pick something. In future work a more thorough algorithm will be implemented.&lt;/p&gt;
 &lt;p&gt;With all that code in place the simulation delivers a much smoother result for the transition from
-a 45 degree linear motion into a in-place rotation. The ICR trajectory for all the wheel pairs is
+a 45 degree linear motion into a in-place rotation. The ICR path for all the wheel pairs is
 following a single path indicating that all the drive modules are all synchronised during the
 movement transition.&lt;/p&gt;
 &lt;figure style="float:middle"&gt;
@@ -124,6 +191,13 @@ desired end state with a control approach that will provide
 &lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)#In_motion_control"&gt;smooth transitions&lt;/a&gt; for velocity and
 accelerations. This will make the motions of the robot less jerky and thus less likely to damage
 parts while also providing a smoother ride for the payload.&lt;/p&gt;
+&lt;h4&gt;Edits&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;July 4th 2023: Changed the term &lt;code&gt;control trajectory&lt;/code&gt; to &lt;code&gt;control profile&lt;/code&gt; because the term
+&lt;code&gt;trajectory&lt;/code&gt; is generally reserved for path planning situations.&lt;/li&gt;
+&lt;li&gt;July 4th 2023: Changed the term &lt;code&gt;ICR trajectory&lt;/code&gt; to &lt;code&gt;ICR path&lt;/code&gt; because the the ICR does not
+follow a trajectory, it follows a path.&lt;/li&gt;
+&lt;/ul&gt;
 </content:encoded>
 		</item>
 		<item>
@@ -188,8 +262,8 @@ steering angles. In order words the wheel velocities and steering angles are app
 values.&lt;/p&gt;
 &lt;p&gt;The transition between states, i.e. from one combination of x-velocity, y-velocity and rotation velocity
 to another combination, is done by assuming that there is linear control for the drive module variables,
-i.e. wheel velocity and steering angle. While linear control trajectories are not the best control
-method it does allow later on only changing the trajectory code to use a more suitable one, for
+i.e. wheel velocity and steering angle. While linear control profiles are not the best control
+method it does allow later on only changing the profile code to use a more suitable one, for
 instance a &lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)#In_motion_control"&gt;jerk limited&lt;/a&gt; profile.&lt;/p&gt;
 &lt;p&gt;The code I wrote gives me a graphs like the ones presented in my &lt;a href="posts/Swerve-drive-kinematics-simulation"&gt;previous post&lt;/a&gt;.
 However before I use this code to test new control algorithms I want to make sure my code is
@@ -250,6 +324,11 @@ instance if a drive module has a maximum linear velocity of 1.0 m/s it is
 not possible to drive the robot diagonally any faster than this velocity, even
 though we can drive the robot in x-direction at 1.0 m/s and we can drive the
 robot in y-direction at 1.0 m/s. We just can't do both at the same time.&lt;/p&gt;
+&lt;h4&gt;Edits&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;July 4th 2023: Changed the term &lt;code&gt;control trajectory&lt;/code&gt; to &lt;code&gt;control profile&lt;/code&gt; because the term
+&lt;code&gt;trajectory&lt;/code&gt; is generally reserved for path planning situations.&lt;/li&gt;
+&lt;/ul&gt;
 </content:encoded>
 		</item>
 		<item>
@@ -1862,121 +1941,6 @@ to wait until another post.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;December 3rd 2018: Fixed a typo in the post title&lt;/li&gt;
 &lt;/ul&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Software development pipeline - Design resilience</title>
-			<link>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-resilience</link>
-			<description>&lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;third property&lt;/a&gt; to consider is
-&lt;em&gt;resilience&lt;/em&gt;, which in this case means that the pipeline should be able to cope with
-expected and unexpected changes to the environment it executes in and uses.&lt;/p&gt;</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-resilience</guid>
-			<pubDate>Tue, 19 Dec 2017 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;third property&lt;/a&gt; to consider is
-&lt;em&gt;resilience&lt;/em&gt;, which in this case means that the pipeline should be able to cope with
-expected and unexpected changes to the environment it executes in and uses.&lt;/p&gt;
-&lt;p&gt;David Woods defines &lt;a href="https://www.researchgate.net/publication/276139783_Four_concepts_for_resilience_and_the_implications_for_the_future_of_resilience_engineering"&gt;four different types of &amp;lsquo;resilience&amp;rsquo;&lt;/a&gt; in a paper in the journal of reliability engineering and system safety. One of the different types
-is the generally well known form of robustness, i.e. the ability to absorb perturbations or disturbances.
-In order to be robust for given disturbances one has to know in advance where the disturbances will
-come from, e.g. in the case of a development pipeline it might be expected that pipeline stages will
-fail and will pollute or damage parts or all of the executor it was running on. Robustness in this
-case would be defined as the ability of the pipeline to handle this damage, for instance by repairing
-or replacing the executor. The other definitions for resilience are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Rebound, the ability to recover from trauma: In order to achieve this capacity ahead of time is
-required, i.e. in order to recover from a disturbance one needs to be able to deploy capabilities
-and capacity that was available in excess before the issues occurred.&lt;/li&gt;
-&lt;li&gt;Graceful extensibility, the ability to extend adaptive capacity in the face of surprise. This is
-the ability to stretch resources and capabilities in the face of surprises.&lt;/li&gt;
-&lt;li&gt;Sustained adaptability, which is the ability to adapt and grow new capabilities in the face of
-unexpected issues. In general this definition applies more to systems / layered networks where
-the loss of sub-systems can be compensated.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Which ever definition of resilience is used in general the goal is to be able to recover from
-unexpected changes and return back to the normal state, ideally with minimal intervention. An interesting
-side note is that returning back to normal after major trauma can be deceiving because the &amp;lsquo;normal&amp;rsquo; as
-experienced before the trauma will be different from the 'normal' experienced after the trauma due
-to the lessons learned from the trauma and permanent changed caused by the trauma.&lt;/p&gt;
-&lt;p&gt;Additionally it is not just the unexpected or traumatic changes that are interesting in the case of a
-development pipeline but also the expected ones, e.g. upgrades, maintenance etc., because in general
-it is important for the pipeline to continue functioning while those changes are happening.&lt;/p&gt;
-&lt;p&gt;For a development pipeline resilience can be approached on different levels. For instance the
-pipeline should be resilient against:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Changes in the environment which range from small changes, e.g. additional tools being deployed,
-to big changes, e.g. migration of many of the services, and from expected, i.e. maintenance or
-planned upgrades, to unexpected&lt;/li&gt;
-&lt;li&gt;Changes in the inputs and the results of processing those inputs which may range from build and test
-errors to issues with executors&lt;/li&gt;
-&lt;li&gt;Invalid or incorrect configurations.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Once it is known what resilience actually means and what type of situations the pipeline is expected
-to be able to handle the next question is how the pipeline can handle these situations, both in
-terms of what the expected responses are and in terms of how the pipeline should be designed.&lt;/p&gt;
-&lt;p&gt;There are a myriad of simple steps that can be taken to provide a base level of resilience. None
-of these simple steps will guard against major trauma but they will be able to either prevent or
-smooth out many of the smaller issues that would otherwise cause the development team to lose faith
-in the pipeline outputs. Some examples of simple steps that can be taken to improve resilience in
-a development pipeline are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;For each pipeline step ensure that it is executed in a clean &amp;lsquo;workspace&amp;rsquo;, i.e. a directory or drive,
-that will only ever be used by that specific single step. This workspace should be 'private' to the
-specific pipeline step and no other processes should be allowed to execute in this workspace. This
-prevents issues with unexpected changes to the file system. There are still cases where &amp;lsquo;unexpected&amp;rsquo;
-changes to the file system can occur, for instance when running parallel executions within the same
-pipeline step in the same workspace. This type of behaviour should therefore be avoided as much as
-possible&lt;/li&gt;
-&lt;li&gt;Do not depend on global, i.e. machine, container or network, state. Global state has a tendency
-to change in random ways at random times.&lt;/li&gt;
-&lt;li&gt;Avoid using source which are external to the pipeline infrastructure because these are prone to
-unexpected random changes. If a build step requires data from an external source then the external
-source should be mirrored and mirrors should be carefully controlled for their content. This should
-prevent issues with external packages and inputs changing or disappearing, e.g.&lt;a href="https://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/"&gt;leftpad&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;If external sources are suitably mirrored inside the pipeline infrastructure then it is possible
-to remove the caches for these external sources on the executors. By pulling data in fresh from the
-local data store cache pollution issues can be prevented&lt;/li&gt;
-&lt;li&gt;Ensure that each resource is appropriately secured against undesirable access. This is especially
-true for the executor resources. It is important to note that pipeline steps are essentially random
-scripts from an unknown source, even if the scripts are pulled from internal sources, because the
-scripts will not be security verified before being used. This means that the pipeline scripts should
-not be allowed to to make any changes or to obtain secrets that they shouldn't have access to.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;As mentioned the aforementioned steps form a decent base for improving resilience and they are
-fairly easy to implement, hence they make a good first stage in the improvement of the resilience
-of the development pipeline. Once these steps have been implemented more complex steps can be taken
-to further improve the state of the development pipeline. These additional steps can be divided into
-items that help prevent issues, items that test and verify the current state, items that aid in
-recovery and finally items, like logging and metrics, that help during post-mortems of failure cases.&lt;/p&gt;
-&lt;p&gt;One way prevention of trauma / outages can partially be improved is by ensuring that all parts of the
-development pipeline are able to handle different error states which can be achieved by building in
-extensive error handling capabilities, both for known cases, e.g. service offline, and general error
-handling for unexpected cases. For the tooling / script side of the pipeline this means for instance
-adding error handling structures nearly everywhere and providing the ability to retry actions.
-For the infrastructure side of the pipeline this could mean providing highly available services and
-ensuring that service delivery gracefully degrades if it can no longer be provided at the required
-standard.&lt;/p&gt;
-&lt;p&gt;Even if every possible precaution is taken it is not possible to prevent all modes of failure. Unexpected
-failures will always occur no matter what the capabilities of the development pipeline are. This means
-that some of the way to improve resilience is to provide capabilities to recover from failures and to
-recognise that unexpected conditions exist and to notify the users and administrators of this situation.
-It should be noted that providing these capabilities may be much harder to implement due to the
-flexible nature of the issues that are being solved for these cases.&lt;/p&gt;
-&lt;p&gt;By exposing the system continuously to semi-controlled unexpected conditions it is possible to
-provide early and controlled feedback to the operators and administrators regarding the resilience
-of the development pipeline. One example of this is the
-&lt;a href="https://github.com/Netflix/SimianArmy/wiki/Chaos-Monkey"&gt;chaos monkey approach&lt;/a&gt; which tests the
-resilience of a system by randomly taking down parts of the system. In a well designed system this
-should result in a response of the system in order to restore the now missing capabilities.&lt;/p&gt;
-&lt;p&gt;The actual handling of unexpected conditions requires that the system has some capability to instigate
-recovery which can for instance consist of having fall-back options for the different sub-systems,
-providing automatic remediation services which monitor the system state and apply different standard
-recovery techniques like restarting failing services or machines or creating new resources to replace
-missing ones.&lt;/p&gt;
-&lt;p&gt;From the high level descriptions given above it is hopefully clear that it will not be easy to create
-a resilient development pipeline and depending on the demands placed on the pipeline many hours of
-work will be consumed by improving the current state and learning from failures. In order to ensure
-that this effort is not a wasted effort it is definitely worth applying iterative improvement approaches
-and only continuing the improvement process if there is actual demand for improvements.&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>
