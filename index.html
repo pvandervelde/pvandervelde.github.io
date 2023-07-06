@@ -145,22 +145,22 @@
                     <div>
                         <ul class="list-unstyled">
                                 <li>
-                                    <a role="button" href="/tags/Sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
+                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (13)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (13)</a>
+                                    <a role="button" href="/tags/Sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/nBuildKit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
+                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
+                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
@@ -172,7 +172,7 @@
                                     <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Scuttle" class="btn btn-default btn-sm"> Scuttle (6)</a>
+                                    <a role="button" href="/tags/Nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
                                 </li>
                         </ul>
                     </div>
@@ -242,17 +242,24 @@ sense to me.</p>
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen>
 </iframe>
-<p>So to address that issue I updated the simulation code to produce some animations that display the
-position of the robot and the wheels as well as a number of plots for the state of the robot body
-and the drive modules. The following animation shows how the robot behaves when using the
+<p>So to address that issue I updated the simulation code to produce some <a href="https://github.com/pvandervelde/basic-swerve-sim/blob/a83c0d8ce4cc3096548be51244ec0a40d2a7db8f/sim_output/animate.py">animations</a>
+that display the position of the robot and the wheels as well as a number of plots for the state of
+the robot body and the drive modules. To create the animations I used the
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.FuncAnimation.html#matplotlib.animation.FuncAnimation">FuncAnimation class</a>
+that is available in matplotlib. The animations can then either be turned into an HTML page with
+animation controls using the <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.HTMLWriter.html">HTMLWriter</a>,
+or into MP4 video files using the <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.FFMpegWriter.html">FFMpegWriter</a>.
+In order to get reasonable performance when using the animation functions in matplotlib it is important
+to update the plots instead of drawing new ones. This can be done using the <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D.set_data">set_data</a>
+function, for instance for updating the position of the <a href="https://github.com/pvandervelde/basic-swerve-sim/blob/a83c0d8ce4cc3096548be51244ec0a40d2a7db8f/sim_output/animate.py#L784">robot body</a>.
+It is good to keep in mind that even with this performance improvement the creation of the animations
+isn't very fast for our robot simulation because a large number of image frames need to be made. For
+the 6 second movement in the animation anywhere between 150 and 600 frames need to be created.</p>
+<p>The animation above shows how the robot behaves when using the
 <a href="posts/Swerve-drive-kinematics-simulation">direct module controller</a>. As you can see in the video different
 pairs of wheels have different rotation points, signified by the red dots. As the movement progresses
 these rotation points have quite a large range of motion. This indicates that the wheels are not
 synchronized and most likely some of the wheels are slipping.</p>
-<p>I created another animation for the same situation but with the
-<a href="posts/Swerve-drive-body-focussed-control">body oriented controller</a>. In this case the rotation points
-are all in a single location leading me to conclude that all the wheels are synchronized and little
-to no wheel slip is occurring.</p>
 <iframe
     style="float:right"
     width="560"
@@ -263,6 +270,10 @@ to no wheel slip is occurring.</p>
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen>
 </iframe>
+<p>I created another animation for the same situation but with the
+<a href="posts/Swerve-drive-body-focussed-control">body oriented controller</a>. In this case the rotation points
+are all in a single location leading me to conclude that all the wheels are synchronized and little
+to no wheel slip is occurring.</p>
 <p>One other interesting thing you can see in the video is that the acceleration and
 <a href="https://en.wikipedia.org/wiki/Jerk_(physics)">jerk</a> values change very abruptly. In real life this
 would lead to significant loads on the robot and its drive system. In the simulation this behaviour
@@ -270,6 +281,10 @@ is due to the fact that linear profile that is being used to transition from one
 As mentioned before the next improvement will be to replace this linear interpolation with a control
 approach that will provide <a href="https://en.wikipedia.org/wiki/Jerk_(physics)#In_motion_control">smooth transitions</a>
 for velocity and accelerations.</p>
+<h4>Edits</h4>
+<ul>
+<li>July 6th 2023: Added a section discussing the use of the matplotlib animation functions.</li>
+</ul>
 
                 </div>
             </div>
@@ -880,9 +895,9 @@ journey.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Tue, 04 Jul 2023 07:41:15 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Thu, 06 Jul 2023 11:06:41 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/55209da17204c70cd1b66b22b4b7eea7f4d6946a">55209da17204c70cd1b66b22b4b7eea7f4d6946a</a> at version 3.16.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/a2b130ee5509ab6a6593a4aadb7cada1f5fa30c1">a2b130ee5509ab6a6593a4aadb7cada1f5fa30c1</a> at version 3.16.1.        </p>
     </div>
 
     <p>

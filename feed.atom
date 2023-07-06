@@ -4,7 +4,7 @@
 	<title>Mind vortex</title>
 	<link rel="self" href="https://www.petrikvandervelde.nl/" />
 	<rights>2023</rights>
-	<updated>2023-07-04T07:41:15Z</updated>
+	<updated>2023-07-06T11:06:42Z</updated>
 	<subtitle>Welcome!</subtitle>
 	<entry>
 		<id>https://www.petrikvandervelde.nl/posts/Swerve-drive-control-animations</id>
@@ -40,17 +40,24 @@ sense to me.&lt;/p&gt;
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen&gt;
 &lt;/iframe&gt;
-&lt;p&gt;So to address that issue I updated the simulation code to produce some animations that display the
-position of the robot and the wheels as well as a number of plots for the state of the robot body
-and the drive modules. The following animation shows how the robot behaves when using the
+&lt;p&gt;So to address that issue I updated the simulation code to produce some &lt;a href="https://github.com/pvandervelde/basic-swerve-sim/blob/a83c0d8ce4cc3096548be51244ec0a40d2a7db8f/sim_output/animate.py"&gt;animations&lt;/a&gt;
+that display the position of the robot and the wheels as well as a number of plots for the state of
+the robot body and the drive modules. To create the animations I used the
+&lt;a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.FuncAnimation.html#matplotlib.animation.FuncAnimation"&gt;FuncAnimation class&lt;/a&gt;
+that is available in matplotlib. The animations can then either be turned into an HTML page with
+animation controls using the &lt;a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.HTMLWriter.html"&gt;HTMLWriter&lt;/a&gt;,
+or into MP4 video files using the &lt;a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.FFMpegWriter.html"&gt;FFMpegWriter&lt;/a&gt;.
+In order to get reasonable performance when using the animation functions in matplotlib it is important
+to update the plots instead of drawing new ones. This can be done using the &lt;a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D.set_data"&gt;set_data&lt;/a&gt;
+function, for instance for updating the position of the &lt;a href="https://github.com/pvandervelde/basic-swerve-sim/blob/a83c0d8ce4cc3096548be51244ec0a40d2a7db8f/sim_output/animate.py#L784"&gt;robot body&lt;/a&gt;.
+It is good to keep in mind that even with this performance improvement the creation of the animations
+isn't very fast for our robot simulation because a large number of image frames need to be made. For
+the 6 second movement in the animation anywhere between 150 and 600 frames need to be created.&lt;/p&gt;
+&lt;p&gt;The animation above shows how the robot behaves when using the
 &lt;a href="posts/Swerve-drive-kinematics-simulation"&gt;direct module controller&lt;/a&gt;. As you can see in the video different
 pairs of wheels have different rotation points, signified by the red dots. As the movement progresses
 these rotation points have quite a large range of motion. This indicates that the wheels are not
 synchronized and most likely some of the wheels are slipping.&lt;/p&gt;
-&lt;p&gt;I created another animation for the same situation but with the
-&lt;a href="posts/Swerve-drive-body-focussed-control"&gt;body oriented controller&lt;/a&gt;. In this case the rotation points
-are all in a single location leading me to conclude that all the wheels are synchronized and little
-to no wheel slip is occurring.&lt;/p&gt;
 &lt;iframe
     style="float:right"
     width="560"
@@ -61,6 +68,10 @@ to no wheel slip is occurring.&lt;/p&gt;
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen&gt;
 &lt;/iframe&gt;
+&lt;p&gt;I created another animation for the same situation but with the
+&lt;a href="posts/Swerve-drive-body-focussed-control"&gt;body oriented controller&lt;/a&gt;. In this case the rotation points
+are all in a single location leading me to conclude that all the wheels are synchronized and little
+to no wheel slip is occurring.&lt;/p&gt;
 &lt;p&gt;One other interesting thing you can see in the video is that the acceleration and
 &lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)"&gt;jerk&lt;/a&gt; values change very abruptly. In real life this
 would lead to significant loads on the robot and its drive system. In the simulation this behaviour
@@ -68,6 +79,10 @@ is due to the fact that linear profile that is being used to transition from one
 As mentioned before the next improvement will be to replace this linear interpolation with a control
 approach that will provide &lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)#In_motion_control"&gt;smooth transitions&lt;/a&gt;
 for velocity and accelerations.&lt;/p&gt;
+&lt;h4&gt;Edits&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;July 6th 2023: Added a section discussing the use of the matplotlib animation functions.&lt;/li&gt;
+&lt;/ul&gt;
 </content>
 		<summary>&lt;p&gt;In my last two posts I talked about different control methods for a swerve drive robot. One method
 controls the movement of drive modules directly. The other method controls the movement of
