@@ -9,7 +9,7 @@ body {
     padding: 0px;
     background: #080808 url(/assets/images/main-bg.png) repeat;
     font-family: 'Roboto', 'Open Sans', sans-serif;
-    font-size: 15px;
+    font-size: 0.94em;
     color: #2B2B2B;
 }
 
@@ -306,6 +306,24 @@ iframe {
 #post-content {
     padding-top: 40px;
     padding-bottom: 10px;
+}
+
+#post-content la-tex.block {
+    font-size: 1.2em;
+    margin-left: 2em;
+}
+
+#post-content mtable {
+    background-color: yellow;
+}
+
+#post-content mtr {
+    background-color: red;
+}
+
+#post-content mtd {
+    padding: 0em;
+    text-align: left !important;
 }
 
 #post-footer {

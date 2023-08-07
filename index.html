@@ -24,6 +24,9 @@
         <link href="/assets/css/override.css" rel="stylesheet" />
         <link href="/assets/css/github.css" rel="stylesheet" type="text/css">
 
+        <script src="https://fred-wang.github.io/TeXZilla/TeXZilla-min.js"></script>
+        <script src="https://fred-wang.github.io/TeXZilla/examples/customElement.js"></script>
+        <link href="https://fred-wang.github.io/MathFonts/Asana/mathfonts.css" rel="stylesheet" />
 
         <meta name="application-name" content="Mind vortex" />
         <meta name="msapplication-tooltip" content="Mind vortex" />
@@ -128,6 +131,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Swerve-motion-profiles">Swerve drive - Motion profiles</a></li>
                             <li><a href="/posts/Swerve-drive-control-animations">Swerve drive - Movement animations</a></li>
                             <li><a href="/posts/Swerve-drive-body-focussed-control">Swerve drive - Better movement by controlling the body motions</a></li>
                             <li><a href="/posts/Swerve-drive-kinematics-verification">Swerve drive - Verification of the kinematics solution</a></li>
@@ -137,7 +141,6 @@
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-electronics">Starting robotics - Building a bumper for scuttle. The electronics</a></li>
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-software">Starting robotics - Building a bumper for scuttle. The software</a></li>
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-overview">Starting robotics - Building a bumper for scuttle. The overview</a></li>
-                            <li><a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">Starting robotics - Driving scuttle with ROS - Gazebo simulation</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -145,7 +148,7 @@
                     <div>
                         <ul class="list-unstyled">
                                 <li>
-                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (13)</a>
+                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (14)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
@@ -154,13 +157,13 @@
                                     <a role="button" href="/tags/nBuildKit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
+                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
+                                </li>
+                                <li>
                                     <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
-                                </li>
-                                <li>
-                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
@@ -172,7 +175,7 @@
                                     <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Nuclei" class="btn btn-default btn-sm"> Nuclei (6)</a>
+                                    <a role="button" href="/tags/Scuttle" class="btn btn-default btn-sm"> Scuttle (6)</a>
                                 </li>
                         </ul>
                     </div>
@@ -187,6 +190,330 @@
 
             <div id="content">
 
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Swerve-motion-profiles">Swerve drive - Motion profiles</a>
+</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Monday, July 24, 2023
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Kinematics" class="btn btn-default btn-xs tag-no-wrap">Kinematics</a>
+                        <a id="post-category" role="button" href="/tags/Omnidirectional" class="btn btn-default btn-xs tag-no-wrap">Omnidirectional</a>
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/Swerve" class="btn btn-default btn-xs tag-no-wrap">Swerve</a>
+    </div>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>In the last few posts I have described the simulations I did of a robot with a swerve drive. In
+other words a robot with four wheels each of which is independently driven and steered. I did
+simulations for the case where we specified movement commands <a href="https://youtu.be/LlyopmLMlZY">directly for the drive modules</a>
+and one for the case where we specified movement commands for <a href="https://youtu.be/U6Z_meFKNrI">the robot body</a>
+which were then translated in the appropriate movements for the drive modules.
+One of the things you can see in both simulations is that the motions is quite &lsquo;jerky&rsquo;, i.e. with
+sudden changes of velocity or acceleration. In real life this kind of change would be noticed by
+humans as shocks which are <a href="https://en.wikipedia.org/wiki/Jerk_(physics)#Physiological_effects_and_human_perception">uncomfortable and can potentially cause injury</a>.
+For the equipment, i.e. the robot parts, a jerky motion adds load which can cause failures. So for
+both humans and equipment it is sensible to keep the 'jerkiness' as low as possible.</p>
+<p>In order to achieve this we first need to understand what jerk actually is. Once we understand it
+we can figure out ways to control it. Jerk is defined as the change of acceleration
+with time, i.e the first time derivative of acceleration. So jerk vector as a function of time,
+<la-tex>\vec{{j}}(t)</la-tex> can be defined as:</p>
+<p>
+  <la-tex class="block">
+    \vec{j}(t) = \frac{d\vec{a}(t)}{dt} = \frac{d^{2}\vec{v}(t)}{dt^{2}} = \frac{d^{3}\vec{r}(t))}{dt^{3}}
+  </la-tex>
+</p>
+<p>Where</p>
+<ul>
+<li><la-tex>t</la-tex> is time.</li>
+<li><la-tex>\frac{{d}}{{dt}}</la-tex>, <la-tex>\frac{{d}}{{dt^{2}}}</la-tex>, <la-tex>\frac{{d}}{{dt^{3}}}</la-tex>
+are the <a href="https://en.wikipedia.org/wiki/Time_derivative">first</a>, <a href="https://en.wikipedia.org/wiki/Second_derivative">second</a>
+and <a href="https://en.wikipedia.org/wiki/Third_derivative">third</a> time derivatives.</li>
+<li><la-tex>\vec{{a}}</la-tex> is the acceleration vector.</li>
+<li><la-tex>\vec{{v}}</la-tex> is the velocity vector.</li>
+<li><la-tex>\vec{{r}}</la-tex> is the position vector.</li>
+</ul>
+<p>From these equations we can for instance deduce that a linearly increasing acceleration is caused by
+a constant jerk value. And a constant jerk value leads to a quadratic behaviour in the velocity. A
+more interesting deduction is that an acceleration that changes from a linear increase to a constant
+value means that there must be a discontinuous change in jerk. After all a linear increasing acceleration
+is caused by a constant positive jerk, and a constant acceleration is achieved by a zero jerk. Where
+these two acceleration profiles meet there must be a jump in jerk.</p>
+<p>With that you can probably imagine what happens if the velocity has a change from a linearly increasing
+value to a constant value. The acceleration drops from a positive constant value to zero. And the
+jerk value displays spikes when the acceleration changes. For the linear motion profile this behaviour
+is amplified as shown in the plot below. The change in position requires a constant value for velocity
+which requires significant acceleration and jerk spikes at the start and end of the motion profile.</p>
+<figure style="float:left">
+  <a href="/assets/images/robotics/control/position_velocity_acceleration_and_jerk_for_linear_motion_profile.png" target="_blank">
+    <img
+        alt="Position, velocity, acceleration and jerk curves for the linear motion profile"
+        src="/assets/images/robotics/control/position_velocity_acceleration_and_jerk_for_linear_motion_profile.png"
+        width="800"/>
+  </a>
+  <figcaption>Position, velocity, acceleration and jerk curves for the linear motion profile.</figcaption>
+</figure>
+<p>So in order to move a robot, or robot part, from one location to another in a way that the jerk
+values stay manageable we need to control the velocity and acceleration across time. This is normally
+done using a motion profile which describes how the velocity and acceleration change over time in
+order to arrive at the new state at the desired point in time. Two of the most well
+known motion profiles are the trapezoidal profile and the s-curve profile.</p>
+<h3>The trapezoidal motion profile</h3>
+<p>The trapezoidal motion profile consist of three distinct phases. During the first phase a constant
+positive acceleration is applied. This leads to a linearly increasing velocity until the maximum
+velocity is achieved. During the second phase no acceleration is applied, keeping the velocity constant.
+Finally in the third phase a constant negative acceleration is applied, leading to a decreasing
+velocity until the velocity becomes zero.</p>
+<figure style="float:left">
+  <a href="/assets/images/robotics/control/position_velocity_acceleration_and_jerk_for_trapezoidal_motion_profile.png" target="_blank">
+    <img
+        alt="Position, velocity, acceleration and jerk curves for the trapezoidal motion profile"
+        src="/assets/images/robotics/control/position_velocity_acceleration_and_jerk_for_trapezoidal_motion_profile.png"
+        width="800"/>
+  </a>
+  <figcaption>Position, velocity, acceleration and jerk curves for the trapezoidal motion profile.</figcaption>
+</figure>
+<p>The equations for the different phases are as follows</p>
+<p>The acceleration, velocity and position in each phase of the trapezoidal motion profile can be
+described with the standard <a href="https://en.wikipedia.org/wiki/Equations_of_motion">equations of motion</a>.</p>
+<p>
+  <la-tex class="block">
+    v_n(t) = v_{n-1} + a_{n-1} t
+  </la-tex>
+</p>
+<p>
+  <la-tex class="block">
+    r_n(t) = r_{n-1} + v_{n-1} t + \frac{1}{2} a_{n-1} t^2
+  </la-tex>
+</p>
+<p>Where</p>
+<ul>
+<li><la-tex>t</la-tex> is the amount of time spend in the current phase.</li>
+<li><la-tex>n</la-tex> is the current phase</li>
+</ul>
+<p>For my calculations I assumed that the acceleration phase and the deceleration phase take the same
+amount of time, thus they have the same acceleration magnitude but different signs. With this the
+differences for each phase are:</p>
+<ol>
+<li><la-tex>a(t) = a_{{max}}</la-tex></li>
+<li><la-tex>a(t) = 0</la-tex></li>
+<li><la-tex>a(t) = -a_{{max}}</la-tex></li>
+</ol>
+<h4>My implementation</h4>
+<p>To simplify my implementation of the trapezoidal motion profile I assumed that the different stages
+of the profile all take the same amount of time, i.e. one third of the total time. In real life this
+may not be true because the amounts of time spend in the different stages depend on the maximum
+reachable acceleration and velocity as well as the minimum and maximum time in which the profile
+needs to be achieved. Making this assumption simplifies the initial implementation. At a later stage
+I will come back and implement more realistic profile behaviour.</p>
+<p>Additionally my motion profile code assumes that the motion profile is stored for a relative
+timespan of 1 unit. If I want a different timespan I can just multiply by the desired
+timespan to get the final result. For this case we can now determine what the
+maximum velocity is that we need in order to travel the desired distance.</p>
+<p>
+  <la-tex class="block">
+    r = 0.5 * v * t_{accelerate} + v * t_{constant} + 0.5 * v * t_{decelerate}
+  </la-tex>
+</p>
+<p>Where</p>
+<ul>
+<li><la-tex>t_{{accelerate}}</la-tex> is the total time during which there is a positive acceleration,
+which is one third of the total time.</li>
+<li><la-tex>t_{{constant}}</la-tex> is the time during which there is a constant velocity, which is
+also one third of the total time.</li>
+<li><la-tex>t_{{decelerate}}</la-tex> is the time during which there is a negative acceleration, which
+again is one third of the total time.</li>
+</ul>
+<p>Simplifying leads to</p>
+<p>
+  <la-tex class="block">
+    r = \frac{2}{3} v t \Longrightarrow v = \frac{3}{2} \frac{s}{t}
+  </la-tex>
+</p>
+<p>Using this maximum velocity and the equations for the different phases I implemented a
+<a href="](https://github.com/pvandervelde/basic-swerve-sim/blob/b3cc1c7d5b4502d502493abfcb0c10cca3f5cf59/swerve_controller/profile.py#L449)">trapezoidal motion profile</a>.
+The results from running this motion profile are displayed in the plots above. These plots show that
+the trapezoidal has no large spikes in the acceleration profile when compared to the linear motion profile.
+additionally the jerk spikes for the trapezoidal motion profile are significantly smaller than the
+ones generated by the linear motion profile. So we can conclude that the trapezoidal motion profile
+is a better motion profile than the linear profile. However there are still spikes in the jerk values
+that would be detrimental for both humans and machinery. So it would be worth finding a better
+motion profile. That motion profile is the s-curve motion profile discussed in the next section.</p>
+<h3>The s-curve motion profile</h3>
+<p>Where the trapezoidal motion profile consisted of three different phases, the s-curve motion profile
+has seven distinct phases:</p>
+<ol>
+<li>The ramp up phase where a constant positive jerk is applied. Which leads to a linearly
+increasing acceleration and a velocity ramping up from zero following a second order curve.</li>
+<li>The constant acceleration phase where the jerk is zero. In this phase the velocity is
+increasing linearly.</li>
+<li>The first ramp down phase where a constant negative jerk is applied. This leads
+to a linearly decreasing acceleration until zero acceleration is achieved. The velocity is still
+increasing, following a slowing second order curve to a constant velocity value.</li>
+<li>The constant velocity phase where the jerk and acceleration are both zero.</li>
+<li>The first part of the deceleration phase where a constant negative jerk is applied.
+Again this leads to a linearly decreasing acceleration, and a velocity decreasing following
+a second order curve.</li>
+<li>In this phase the acceleration is kept constant and the velocity decreases linearly.</li>
+<li>The final phase where a constant positive jerk is applied with the goal to linearly increase the
+acceleration until zero acceleration is reached. The velocity will keep decreasing following a
+second order curve, until it too reaches zero.</li>
+</ol>
+<figure style="float:left">
+  <a href="/assets/images/robotics/control/position_velocity_acceleration_and_jerk_for_scurve_motion_profile.png" target="_blank">
+    <img
+        alt="Position, velocity, acceleration and jerk curves for the s-curve motion profile"
+        src="/assets/images/robotics/control/position_velocity_acceleration_and_jerk_for_scurve_motion_profile.png"
+        width="800"/>
+  </a>
+  <figcaption>Position, velocity, acceleration and jerk curves for the s-curve motion profile.</figcaption>
+</figure>
+<p>As with the trapezoidal motion profile, the acceleration, velocity and position in each phase of the
+s-curve motion profile can be described with the standard equations of motion. The difference is
+that the acceleration is a linear function, which introduces a jerk value to the equations.</p>
+<p>
+  <la-tex class="block">
+    a_n(t) = a_{n-1} + j_n t
+  </la-tex>
+</p>
+<p>
+  <la-tex class="block">
+    v_n(t) = v_{n-1} + a_{n-1} t + \frac{1}{2} j_n t^2
+  </la-tex>
+</p>
+<p>
+  <la-tex class="block">
+    r_n(t) = r_{n-1} + v_{n-1} t + \frac{1}{2} a_{n-1} t^2 + \frac{1}{6} j_n t^3
+  </la-tex>
+</p>
+<p>Where</p>
+<ul>
+<li><la-tex>t</la-tex> is the amount of time spend in the current phase.</li>
+<li><la-tex>n</la-tex> is the current phase</li>
+</ul>
+<p>As with the trapezoidal motion profile I assumed that the acceleration and deceleration phases
+span the same amount of time. Again this means the acceleration and deceleration have magnitude but
+different signs. The differences for each phase are:</p>
+<ol>
+<li><la-tex>j(t) = j_{{max}}</la-tex></li>
+<li><la-tex>j(t) = 0</la-tex></li>
+<li><la-tex>j(t) = -j_{{max}}</la-tex></li>
+<li><la-tex>j(t) = 0</la-tex>, <la-tex>a(t) = 0</la-tex></li>
+<li><la-tex>j(t) = -j_{{max}}</la-tex></li>
+<li><la-tex>j(t) = 0</la-tex></li>
+<li><la-tex>j(t) = j_{{max}}</la-tex></li>
+</ol>
+<h4>My implementation</h4>
+<p>To simplify my implementation of the s-curve motion profile I assumed that all stages, except stage 4,
+all take the same amount of time, i.e. one eight of the total time. I assumed that stage 4 would take
+one quarter of the time. Like with the trapezoidal profile making this assumption simplifies the
+initial implementation. At a later stage I will come back and implement more realistic profile behaviour.</p>
+<p>Additionally my motion profile code assumes that the motion profile is stored for a relative
+timespan of 1 unit. If I want a different timespan I can just multiply by the desired
+timespan to get the final result. For this case we can now determine what the
+maximum velocity is that we need in order to travel the desired distance.</p>
+<p>Using the equations above I implemented a
+<a href="](https://github.com/pvandervelde/basic-swerve-sim/blob/b3cc1c7d5b4502d502493abfcb0c10cca3f5cf59/swerve_controller/profile.py#L600)">s-curve motion profile</a>.
+The results from running this motion profile are displayed in the plots above. These plots show that
+the s-curve removes the spikes in the jerk profile when compared to the trapezoidal motion profile.
+This indicates that the s-curve motion profile achieves the goal we previously set, to minimize
+the jerky motion.</p>
+<p>For some applications it is important to provide even smoother motions. In this case the motion
+profiles may need to take into account the values of the
+<a href="https://en.wikipedia.org/wiki/Fourth,_fifth,_and_sixth_derivatives_of_position">fourth, fifth or even sixth order time derivatives of position</a>,
+snap, crackle and pop. At the moment I have not implemented these higher order motion profiles.</p>
+<h3>Use in the swerve simulation</h3>
+<p>Having these motion profiles is great, however by themselves they are of little use. So I added them
+to my swerve drive simulation to see what the differences were between the different motion profiles.</p>
+<p>Before we look at the new results it is worth looking at the simulations using the linear
+motion profile. I made one for <a href="https://youtu.be/LlyopmLMlZY">module control</a> and one for
+<a href="https://youtu.be/U6Z_meFKNrI">body control</a>. In these simulations you can see that with the linear
+motion profile the jerk spikes are quite large, especially in the case of the module control
+simulation. The body control approach performs a little better with respect to the maximum levels
+of jerk, however the values are still far too high.</p>
+<p>The simulations for <a href="https://youtu.be/wUb6K0o4oW8">module control</a> and
+<a href="https://youtu.be/Jyp3w_zgAlI">body control</a> using the trapezoidal profile show a
+significant decrease in the maximum value of the acceleration and jerk values, in some cases by a
+factor 15. As expected from the previous discussion there are still some spikes, especially for the
+steering angles. The changes for the module control case are more drastic than for the
+body control case, probably due to the fact that the values were very high for the combination
+of the module control with a linear motion profile. Interestingly the acceleration and jerk
+maximum values are lower for the module control approach than they are for the body control
+approach. This is most likely due to the fact that in order to keep the drive modules synchronised
+relatively high steering velocities are required. For instance, the module control approach using the
+trapezoidal motion profile sees a maximum steering velocity of about 1.8 radians per second. Compare
+this to the the body control approach with the trapezoidal motion profile which sees a maximum
+steering velocity of about 3.8 radians per second.</p>
+<iframe
+    style="float:none"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/PxMFjGLH0xY"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
+<p>When we look at the simulations using the s-curve motion profile we can see that the maximum
+acceleration and jerk values actually increase when compared to the trapezoidal motion profile, except
+for the values of the steering angle jerk when using the module control approach. It seems likely that
+these increases are due to the fact that the motion is executed over the same time span, but some of
+the time is used for a more smooth acceleration and deceleration. This means that there is less
+time available to travel the desired &lsquo;distance&rsquo; which then requires higher maximum velocities and
+maximum accelerations. The s-curve motion profile does smooth out the movement profiles which would
+lead to a much smoother ride.</p>
+<iframe
+    style="float:none"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/B3CUdHifQCQ"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
+<h4>What is next</h4>
+<p>So now that we have a swerve drive simulation that can use both module based control and body
+based control as well as have different motion profiles, what is next? There are a few improvements
+that can be made to the simulation code to further made to the simulation and a path of progression.</p>
+<p>The first improvement lies in the fact that none of the motion profiles, linear, trapezoidal and
+s-curve, are aware of motor limits. This means that they will happily command velocity, acceleration
+and jerk values that a real life motor would not be able to deliver. In order to make the simulation
+better I would need to add some kind of limits on the maximum reachable values. This would be
+especially interesting when using body oriented control. Because the high velocities and accelerations
+are needed to keep the drive modules synchronised. If one of the drive modules is not able to reach
+the desired velocity or acceleration then the other modules will have to slow down before they
+reach their limits. To control the drive modules in such a way that all of the modules stay within
+their motor limits while also keeping them synchronised requires some fancy math. At the moment
+I'm going through a number of published papers to see what different algorithms are out there.</p>
+<p>The second improvement that is on my mind is to implement some form of path tracking, i.e. the
+ability to follow a given path. This would give the simulation the ability to better show the
+behaviour of a real life robot. In most cases when a robot is navigating an area the path planning
+code will constantly be sending movement instructions to ensure that the robot follows the originally
+planned path. This means that motion profiles need to be updated constantly, which will be a challenge
+for the simulation code. Additionally having path tracking in the simulation would allow me to
+experiment with different algorithms for path tracking and trajectory tracking, i.e. the ability to
+follow a path and prescribe the velocity at every point on the path. And theoretically with a
+swerve drive it should even be possible for the robot to follow a trajectory while controlling
+the orientation of the robot body.</p>
+<p>Finally the path of progression is to take the controller code that I have written for this
+simulation and use it with my <a href="posts/Swerve-drive-introduction">ROS2 based swerve robot</a>.</p>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -727,144 +1054,6 @@ of the robot body and drive modules.</li>
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Swerve-drive-introduction">Swerve drive - Moving a robot in all directions, mostly</a>
-</h2>
-<div id="post-meta">
-    <div class="meta-date">
-Sunday, December 4, 2022
- |             Posted in     </div>
-    <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Omnidirectional" class="btn btn-default btn-xs tag-no-wrap">Omnidirectional</a>
-                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
-                        <a id="post-category" role="button" href="/tags/Swerve" class="btn btn-default btn-xs tag-no-wrap">Swerve</a>
-    </div>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>Over the last year I have been using my <a href="https://www.scuttlerobot.org/">SCUTTLE robot</a> as a way of
-learning about robotics and all the related fields like mechanics and electronics. A major part of
-this journey is the desire to design and build an autonomous mobile robot from the ground up.</p>
-<p>My goal is to build an off-road capable robot that can navigate autonomously between different
-locations to execute tasks either by itself or in cooperation with other robots. This is
-quite an inspirational goal that involves quite a few robot different parts, a lot
-of code and many hours of building and testing to achieve.</p>
-<p>The chassis of the robot will have four drive modules. Each module has one wheel attached that will
-both be independently driven, and independently steerable. This configuration is called
-<code>four wheel independent steering</code> or <code>swerve drive</code>. These kind of steering systems are used in
-<a href="https://en.wikipedia.org/wiki/Self-propelled_modular_transporter">heavy transport</a>,
-agriculture machines, <a href="https://en.wikipedia.org/wiki/Curiosity_(rover)">mars rovers</a> and
-<a href="https://www.chiefdelphi.com/t/best-frc-swerve-drive/399865">robot competitions</a>. The advantages of
-a swerve drive system are that:</p>
-<ul>
-<li>It provides a high degree of mobility. In a swerve drive direction of movement and orientation
-are independent so the robot can face forwards while driving sideways. Additionally in a swerve drive
-the <a href="https://en.wikipedia.org/wiki/Instant_centre_of_rotation#:%7E:text=The%20instant%20center%20of%20rotation,a%20particular%20instant%20of%20time.">Instantaneous Center of Rotation (ICR)</a>
-is not fixed to a specific line as it is with <a href="https://en.wikipedia.org/wiki/Ackermann_steering_geometry">Ackermann steering</a>
-or <a href="https://en.wikipedia.org/wiki/Differential_wheeled_robot">differential drive</a>. This flexibility
-allows the swerve drive to combine rotational movements with linear movements in ways that
-other drive systems cannot.</li>
-<li>It has normal size wheels which provide a high carry capacity. While
-<a href="https://en.wikipedia.org/wiki/Omni_wheel">omni-wheels</a> have the similar degree of freedom as a
-swerve drive does, omni-wheels can often not carry the same load due to the lower carrying
-capacity of the rollers that allow the omni-wheels to move sideways.</li>
-<li>It doesn't rely on wheel slip, as multi-wheel differential drive does. This means that it has
-lower power demands, so more of the motor torque can be used to move the robot forward.</li>
-<li>It has the ability to traverse rough and dirty terrain due to the fact that all wheels are
-driven as well as using normal wheels on each drive module. Omni-wheels and <a href="https://en.wikipedia.org/wiki/Mecanum_wheel">mecanum wheels</a>
-face more issues in these environments due to dust and dirt clogging up the wheels as well as
-having greater difficulty tackling obstacles.</li>
-<li>It is able to keep ground disturbance to a minimum as it is able to steer the robot while minimizing
-sliding movement. Other drive systems, e.g. tracks or multi-axle differential drives, have a bigger
-impact due to the sliding movement required for these systems to turn the robot.</li>
-</ul>
-<p>Of course the swerve drive system isn't a magical system that only has advantages. There are also plenty
-of disadvantages. For instance swerve drive systems:</p>
-<ul>
-<li>Are mechanically complicated. They require multiple motors per unit and multiple units per robot.
-On top of that there are usually a number of mechanical components, gears and bearings, involved
-in getting a working swerve drive.</li>
-<li>Need a complicated control system. Swerve systems are generally
-over-determined, i.e. they have more degrees of freedom in the drive system, 2 per drive module,
-than there are degrees of freedom in the robot, 2 translation directions and a rotation. This
-means that all modules have to be synchronised at all times in order to prevent wheels from being
-dragged along. The available degrees of freedom combined with the synchronisation demand means some
-complicated math is required to make a swerve drive control work.</li>
-<li>Similar to the control side of the drive determining the position and velocity of the robot using
-wheel <a href="https://en.wikipedia.org/wiki/Odometry">odometry</a> requires more complicated math. This is
-due to the fact that the different drive modules don't necessarily agree with each other.</li>
-<li>Have more failure modes than other drive systems due to the fact that there are more moving parts.</li>
-</ul>
-<p>So with all these complications why would I try to build a swerve drive as my second robot and not
-a differential drive robot or something similar. As pointed out previously there are good
-reasons to use a swerve drive in an outdoor environment, i.e. high agility, good load capacity,
-traction from all wheels, low ground impact. However the main reason I want to design and build a
-swerve drive is because it is a challenge. Swerve drives are complicated and designing and building
-one involves solving interesting problems in mechanical engineering, electrical engineering and
-software engineering.</p>
-<p>There is currently no complete design for this robot yet, however there is a short list of design
-decisions that have been made so far.</p>
-<ul>
-<li>It will be a four wheel swerve drive robot. Swerve drives have been built with anything from
-three wheels up, e.g. the Curiosity mars rover has 6 drive modules. The reason to use four modules
-is that it will be symmetrical and still minimize the number of parts necessary.</li>
-<li>The software for the robot will be using <a href="https://docs.ros.org/en/humble/index.html">ROS2 Humble</a>.
-Using ROS should provide me with a base framework and a lot of standard capabilities, like the
-navigation stack, that I won't have to write myself. Additionally ROS has a decent simulation
-environment that will allow me to test my code before putting it on a real robot.</li>
-<li>The hardware will be controlled using <a href="https://control.ros.org/master/index.html">ROS2 controllers</a>.
-This will allow me to abstract the hardware so that I can better test the controller.</li>
-<li>The initial design will be an indoor model and about the same size as my SCUTTLE robot is. This will
-simplify the initial design and allow me to compare with SCUTTLE.</li>
-</ul>
-<p>The parts of the robot that I expect to be complicated and quite possibly show stoppers are the
-software and the mechanical design. For the software the drive controller software, which translates
-the requested velocity commands to motor commands for both the drive and steering motors, will be
-complicated as it needs to make sure that all drive modules are the correct state. This piece of
-software also needs to handle all the error conditions that occur.</p>
-<p>On the mechanical side I need to design the drive module such that it can drive the wheel forwards
-and backwards while allowing &lsquo;infinite&rsquo; steering rotation. This will require a co-axial setup and a
-bit of gearing. The second complicated part of the mechanical design is the inclusion of a suspension
-system. Ideally the motors should be attached to the sprung side of the suspension system so that
-they don't get exposed to excessive vibration. This however will complicate the mechanical design.</p>
-<iframe
-    style="float:left"
-    width="560"
-    height="315"
-    src="https://www.youtube.com/embed/fR47Y7p4mtQ"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-</iframe>
-<p>My plan is to work on the control software first. I can test that software using simulation and so
-figure out if I can even make it work. I have created a simple URDF model that uses
-ROS2 controllers to simulate a four wheel steering platform. This allowed me to learn more about
-ROS2, ROS2 controls and how the interaction of those two with Gazebo works.</p>
-<p>At the moment I'm implementing a prototype for the controller in python so that I can use the model to
-test if my algorithm works before I turn it into a proper ROS2 controller, which will need to be
-written in C++.</p>
-<p>Once I have some kind of controlling software I am aiming to build a single drive module with a drive
-motor, a steering motor and the mechanical assembly that allows a single wheel to be steered and driven.
-I will use this module to work out both the details on the mechanical and software sides of the project.</p>
-<p>Once I have the controller and the drive module working properly I will build a simple robot, similar
-in size to my SCUTTLE robot to further work on swerve drives. It will take me a little while
-to get to that state though. In the mean time I will keep working on my design and documenting my
-journey.</p>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -895,9 +1084,9 @@ journey.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Thu, 06 Jul 2023 11:06:41 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Mon, 07 Aug 2023 10:38:21 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/a2b130ee5509ab6a6593a4aadb7cada1f5fa30c1">a2b130ee5509ab6a6593a4aadb7cada1f5fa30c1</a> at version 3.16.1.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/3e56b8499331171dd74ffff5dfeae36321512bdf">3e56b8499331171dd74ffff5dfeae36321512bdf</a> at version 3.17.0.        </p>
     </div>
 
     <p>

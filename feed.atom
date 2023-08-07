@@ -4,8 +4,319 @@
 	<title>Mind vortex</title>
 	<link rel="self" href="https://www.petrikvandervelde.nl/" />
 	<rights>2023</rights>
-	<updated>2023-07-06T11:06:42Z</updated>
+	<updated>2023-08-07T10:38:22Z</updated>
 	<subtitle>Welcome!</subtitle>
+	<entry>
+		<id>https://www.petrikvandervelde.nl/posts/Swerve-motion-profiles</id>
+		<title>Swerve drive - Motion profiles</title>
+		<link href="https://www.petrikvandervelde.nl/posts/Swerve-motion-profiles" />
+		<updated>2023-07-24T00:00:00Z</updated>
+		<content>&lt;p&gt;In the last few posts I have described the simulations I did of a robot with a swerve drive. In
+other words a robot with four wheels each of which is independently driven and steered. I did
+simulations for the case where we specified movement commands &lt;a href="https://youtu.be/LlyopmLMlZY"&gt;directly for the drive modules&lt;/a&gt;
+and one for the case where we specified movement commands for &lt;a href="https://youtu.be/U6Z_meFKNrI"&gt;the robot body&lt;/a&gt;
+which were then translated in the appropriate movements for the drive modules.
+One of the things you can see in both simulations is that the motions is quite &amp;lsquo;jerky&amp;rsquo;, i.e. with
+sudden changes of velocity or acceleration. In real life this kind of change would be noticed by
+humans as shocks which are &lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)#Physiological_effects_and_human_perception"&gt;uncomfortable and can potentially cause injury&lt;/a&gt;.
+For the equipment, i.e. the robot parts, a jerky motion adds load which can cause failures. So for
+both humans and equipment it is sensible to keep the 'jerkiness' as low as possible.&lt;/p&gt;
+&lt;p&gt;In order to achieve this we first need to understand what jerk actually is. Once we understand it
+we can figure out ways to control it. Jerk is defined as the change of acceleration
+with time, i.e the first time derivative of acceleration. So jerk vector as a function of time,
+&lt;la-tex&gt;\vec{{j}}(t)&lt;/la-tex&gt; can be defined as:&lt;/p&gt;
+&lt;p&gt;
+  &lt;la-tex class="block"&gt;
+    \vec{j}(t) = \frac{d\vec{a}(t)}{dt} = \frac{d^{2}\vec{v}(t)}{dt^{2}} = \frac{d^{3}\vec{r}(t))}{dt^{3}}
+  &lt;/la-tex&gt;
+&lt;/p&gt;
+&lt;p&gt;Where&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;la-tex&gt;t&lt;/la-tex&gt; is time.&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;\frac{{d}}{{dt}}&lt;/la-tex&gt;, &lt;la-tex&gt;\frac{{d}}{{dt^{2}}}&lt;/la-tex&gt;, &lt;la-tex&gt;\frac{{d}}{{dt^{3}}}&lt;/la-tex&gt;
+are the &lt;a href="https://en.wikipedia.org/wiki/Time_derivative"&gt;first&lt;/a&gt;, &lt;a href="https://en.wikipedia.org/wiki/Second_derivative"&gt;second&lt;/a&gt;
+and &lt;a href="https://en.wikipedia.org/wiki/Third_derivative"&gt;third&lt;/a&gt; time derivatives.&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;\vec{{a}}&lt;/la-tex&gt; is the acceleration vector.&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;\vec{{v}}&lt;/la-tex&gt; is the velocity vector.&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;\vec{{r}}&lt;/la-tex&gt; is the position vector.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;From these equations we can for instance deduce that a linearly increasing acceleration is caused by
+a constant jerk value. And a constant jerk value leads to a quadratic behaviour in the velocity. A
+more interesting deduction is that an acceleration that changes from a linear increase to a constant
+value means that there must be a discontinuous change in jerk. After all a linear increasing acceleration
+is caused by a constant positive jerk, and a constant acceleration is achieved by a zero jerk. Where
+these two acceleration profiles meet there must be a jump in jerk.&lt;/p&gt;
+&lt;p&gt;With that you can probably imagine what happens if the velocity has a change from a linearly increasing
+value to a constant value. The acceleration drops from a positive constant value to zero. And the
+jerk value displays spikes when the acceleration changes. For the linear motion profile this behaviour
+is amplified as shown in the plot below. The change in position requires a constant value for velocity
+which requires significant acceleration and jerk spikes at the start and end of the motion profile.&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+  &lt;a href="/assets/images/robotics/control/position_velocity_acceleration_and_jerk_for_linear_motion_profile.png" target="_blank"&gt;
+    &lt;img
+        alt="Position, velocity, acceleration and jerk curves for the linear motion profile"
+        src="/assets/images/robotics/control/position_velocity_acceleration_and_jerk_for_linear_motion_profile.png"
+        width="800"/&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Position, velocity, acceleration and jerk curves for the linear motion profile.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;So in order to move a robot, or robot part, from one location to another in a way that the jerk
+values stay manageable we need to control the velocity and acceleration across time. This is normally
+done using a motion profile which describes how the velocity and acceleration change over time in
+order to arrive at the new state at the desired point in time. Two of the most well
+known motion profiles are the trapezoidal profile and the s-curve profile.&lt;/p&gt;
+&lt;h3&gt;The trapezoidal motion profile&lt;/h3&gt;
+&lt;p&gt;The trapezoidal motion profile consist of three distinct phases. During the first phase a constant
+positive acceleration is applied. This leads to a linearly increasing velocity until the maximum
+velocity is achieved. During the second phase no acceleration is applied, keeping the velocity constant.
+Finally in the third phase a constant negative acceleration is applied, leading to a decreasing
+velocity until the velocity becomes zero.&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+  &lt;a href="/assets/images/robotics/control/position_velocity_acceleration_and_jerk_for_trapezoidal_motion_profile.png" target="_blank"&gt;
+    &lt;img
+        alt="Position, velocity, acceleration and jerk curves for the trapezoidal motion profile"
+        src="/assets/images/robotics/control/position_velocity_acceleration_and_jerk_for_trapezoidal_motion_profile.png"
+        width="800"/&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Position, velocity, acceleration and jerk curves for the trapezoidal motion profile.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;The equations for the different phases are as follows&lt;/p&gt;
+&lt;p&gt;The acceleration, velocity and position in each phase of the trapezoidal motion profile can be
+described with the standard &lt;a href="https://en.wikipedia.org/wiki/Equations_of_motion"&gt;equations of motion&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;
+  &lt;la-tex class="block"&gt;
+    v_n(t) = v_{n-1} + a_{n-1} t
+  &lt;/la-tex&gt;
+&lt;/p&gt;
+&lt;p&gt;
+  &lt;la-tex class="block"&gt;
+    r_n(t) = r_{n-1} + v_{n-1} t + \frac{1}{2} a_{n-1} t^2
+  &lt;/la-tex&gt;
+&lt;/p&gt;
+&lt;p&gt;Where&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;la-tex&gt;t&lt;/la-tex&gt; is the amount of time spend in the current phase.&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;n&lt;/la-tex&gt; is the current phase&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For my calculations I assumed that the acceleration phase and the deceleration phase take the same
+amount of time, thus they have the same acceleration magnitude but different signs. With this the
+differences for each phase are:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;la-tex&gt;a(t) = a_{{max}}&lt;/la-tex&gt;&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;a(t) = 0&lt;/la-tex&gt;&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;a(t) = -a_{{max}}&lt;/la-tex&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;My implementation&lt;/h4&gt;
+&lt;p&gt;To simplify my implementation of the trapezoidal motion profile I assumed that the different stages
+of the profile all take the same amount of time, i.e. one third of the total time. In real life this
+may not be true because the amounts of time spend in the different stages depend on the maximum
+reachable acceleration and velocity as well as the minimum and maximum time in which the profile
+needs to be achieved. Making this assumption simplifies the initial implementation. At a later stage
+I will come back and implement more realistic profile behaviour.&lt;/p&gt;
+&lt;p&gt;Additionally my motion profile code assumes that the motion profile is stored for a relative
+timespan of 1 unit. If I want a different timespan I can just multiply by the desired
+timespan to get the final result. For this case we can now determine what the
+maximum velocity is that we need in order to travel the desired distance.&lt;/p&gt;
+&lt;p&gt;
+  &lt;la-tex class="block"&gt;
+    r = 0.5 * v * t_{accelerate} + v * t_{constant} + 0.5 * v * t_{decelerate}
+  &lt;/la-tex&gt;
+&lt;/p&gt;
+&lt;p&gt;Where&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;la-tex&gt;t_{{accelerate}}&lt;/la-tex&gt; is the total time during which there is a positive acceleration,
+which is one third of the total time.&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;t_{{constant}}&lt;/la-tex&gt; is the time during which there is a constant velocity, which is
+also one third of the total time.&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;t_{{decelerate}}&lt;/la-tex&gt; is the time during which there is a negative acceleration, which
+again is one third of the total time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Simplifying leads to&lt;/p&gt;
+&lt;p&gt;
+  &lt;la-tex class="block"&gt;
+    r = \frac{2}{3} v t \Longrightarrow v = \frac{3}{2} \frac{s}{t}
+  &lt;/la-tex&gt;
+&lt;/p&gt;
+&lt;p&gt;Using this maximum velocity and the equations for the different phases I implemented a
+&lt;a href="](https://github.com/pvandervelde/basic-swerve-sim/blob/b3cc1c7d5b4502d502493abfcb0c10cca3f5cf59/swerve_controller/profile.py#L449)"&gt;trapezoidal motion profile&lt;/a&gt;.
+The results from running this motion profile are displayed in the plots above. These plots show that
+the trapezoidal has no large spikes in the acceleration profile when compared to the linear motion profile.
+additionally the jerk spikes for the trapezoidal motion profile are significantly smaller than the
+ones generated by the linear motion profile. So we can conclude that the trapezoidal motion profile
+is a better motion profile than the linear profile. However there are still spikes in the jerk values
+that would be detrimental for both humans and machinery. So it would be worth finding a better
+motion profile. That motion profile is the s-curve motion profile discussed in the next section.&lt;/p&gt;
+&lt;h3&gt;The s-curve motion profile&lt;/h3&gt;
+&lt;p&gt;Where the trapezoidal motion profile consisted of three different phases, the s-curve motion profile
+has seven distinct phases:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The ramp up phase where a constant positive jerk is applied. Which leads to a linearly
+increasing acceleration and a velocity ramping up from zero following a second order curve.&lt;/li&gt;
+&lt;li&gt;The constant acceleration phase where the jerk is zero. In this phase the velocity is
+increasing linearly.&lt;/li&gt;
+&lt;li&gt;The first ramp down phase where a constant negative jerk is applied. This leads
+to a linearly decreasing acceleration until zero acceleration is achieved. The velocity is still
+increasing, following a slowing second order curve to a constant velocity value.&lt;/li&gt;
+&lt;li&gt;The constant velocity phase where the jerk and acceleration are both zero.&lt;/li&gt;
+&lt;li&gt;The first part of the deceleration phase where a constant negative jerk is applied.
+Again this leads to a linearly decreasing acceleration, and a velocity decreasing following
+a second order curve.&lt;/li&gt;
+&lt;li&gt;In this phase the acceleration is kept constant and the velocity decreases linearly.&lt;/li&gt;
+&lt;li&gt;The final phase where a constant positive jerk is applied with the goal to linearly increase the
+acceleration until zero acceleration is reached. The velocity will keep decreasing following a
+second order curve, until it too reaches zero.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure style="float:left"&gt;
+  &lt;a href="/assets/images/robotics/control/position_velocity_acceleration_and_jerk_for_scurve_motion_profile.png" target="_blank"&gt;
+    &lt;img
+        alt="Position, velocity, acceleration and jerk curves for the s-curve motion profile"
+        src="/assets/images/robotics/control/position_velocity_acceleration_and_jerk_for_scurve_motion_profile.png"
+        width="800"/&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Position, velocity, acceleration and jerk curves for the s-curve motion profile.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;As with the trapezoidal motion profile, the acceleration, velocity and position in each phase of the
+s-curve motion profile can be described with the standard equations of motion. The difference is
+that the acceleration is a linear function, which introduces a jerk value to the equations.&lt;/p&gt;
+&lt;p&gt;
+  &lt;la-tex class="block"&gt;
+    a_n(t) = a_{n-1} + j_n t
+  &lt;/la-tex&gt;
+&lt;/p&gt;
+&lt;p&gt;
+  &lt;la-tex class="block"&gt;
+    v_n(t) = v_{n-1} + a_{n-1} t + \frac{1}{2} j_n t^2
+  &lt;/la-tex&gt;
+&lt;/p&gt;
+&lt;p&gt;
+  &lt;la-tex class="block"&gt;
+    r_n(t) = r_{n-1} + v_{n-1} t + \frac{1}{2} a_{n-1} t^2 + \frac{1}{6} j_n t^3
+  &lt;/la-tex&gt;
+&lt;/p&gt;
+&lt;p&gt;Where&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;la-tex&gt;t&lt;/la-tex&gt; is the amount of time spend in the current phase.&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;n&lt;/la-tex&gt; is the current phase&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As with the trapezoidal motion profile I assumed that the acceleration and deceleration phases
+span the same amount of time. Again this means the acceleration and deceleration have magnitude but
+different signs. The differences for each phase are:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;la-tex&gt;j(t) = j_{{max}}&lt;/la-tex&gt;&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;j(t) = 0&lt;/la-tex&gt;&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;j(t) = -j_{{max}}&lt;/la-tex&gt;&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;j(t) = 0&lt;/la-tex&gt;, &lt;la-tex&gt;a(t) = 0&lt;/la-tex&gt;&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;j(t) = -j_{{max}}&lt;/la-tex&gt;&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;j(t) = 0&lt;/la-tex&gt;&lt;/li&gt;
+&lt;li&gt;&lt;la-tex&gt;j(t) = j_{{max}}&lt;/la-tex&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;My implementation&lt;/h4&gt;
+&lt;p&gt;To simplify my implementation of the s-curve motion profile I assumed that all stages, except stage 4,
+all take the same amount of time, i.e. one eight of the total time. I assumed that stage 4 would take
+one quarter of the time. Like with the trapezoidal profile making this assumption simplifies the
+initial implementation. At a later stage I will come back and implement more realistic profile behaviour.&lt;/p&gt;
+&lt;p&gt;Additionally my motion profile code assumes that the motion profile is stored for a relative
+timespan of 1 unit. If I want a different timespan I can just multiply by the desired
+timespan to get the final result. For this case we can now determine what the
+maximum velocity is that we need in order to travel the desired distance.&lt;/p&gt;
+&lt;p&gt;Using the equations above I implemented a
+&lt;a href="](https://github.com/pvandervelde/basic-swerve-sim/blob/b3cc1c7d5b4502d502493abfcb0c10cca3f5cf59/swerve_controller/profile.py#L600)"&gt;s-curve motion profile&lt;/a&gt;.
+The results from running this motion profile are displayed in the plots above. These plots show that
+the s-curve removes the spikes in the jerk profile when compared to the trapezoidal motion profile.
+This indicates that the s-curve motion profile achieves the goal we previously set, to minimize
+the jerky motion.&lt;/p&gt;
+&lt;p&gt;For some applications it is important to provide even smoother motions. In this case the motion
+profiles may need to take into account the values of the
+&lt;a href="https://en.wikipedia.org/wiki/Fourth,_fifth,_and_sixth_derivatives_of_position"&gt;fourth, fifth or even sixth order time derivatives of position&lt;/a&gt;,
+snap, crackle and pop. At the moment I have not implemented these higher order motion profiles.&lt;/p&gt;
+&lt;h3&gt;Use in the swerve simulation&lt;/h3&gt;
+&lt;p&gt;Having these motion profiles is great, however by themselves they are of little use. So I added them
+to my swerve drive simulation to see what the differences were between the different motion profiles.&lt;/p&gt;
+&lt;p&gt;Before we look at the new results it is worth looking at the simulations using the linear
+motion profile. I made one for &lt;a href="https://youtu.be/LlyopmLMlZY"&gt;module control&lt;/a&gt; and one for
+&lt;a href="https://youtu.be/U6Z_meFKNrI"&gt;body control&lt;/a&gt;. In these simulations you can see that with the linear
+motion profile the jerk spikes are quite large, especially in the case of the module control
+simulation. The body control approach performs a little better with respect to the maximum levels
+of jerk, however the values are still far too high.&lt;/p&gt;
+&lt;p&gt;The simulations for &lt;a href="https://youtu.be/wUb6K0o4oW8"&gt;module control&lt;/a&gt; and
+&lt;a href="https://youtu.be/Jyp3w_zgAlI"&gt;body control&lt;/a&gt; using the trapezoidal profile show a
+significant decrease in the maximum value of the acceleration and jerk values, in some cases by a
+factor 15. As expected from the previous discussion there are still some spikes, especially for the
+steering angles. The changes for the module control case are more drastic than for the
+body control case, probably due to the fact that the values were very high for the combination
+of the module control with a linear motion profile. Interestingly the acceleration and jerk
+maximum values are lower for the module control approach than they are for the body control
+approach. This is most likely due to the fact that in order to keep the drive modules synchronised
+relatively high steering velocities are required. For instance, the module control approach using the
+trapezoidal motion profile sees a maximum steering velocity of about 1.8 radians per second. Compare
+this to the the body control approach with the trapezoidal motion profile which sees a maximum
+steering velocity of about 3.8 radians per second.&lt;/p&gt;
+&lt;iframe
+    style="float:none"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/PxMFjGLH0xY"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;p&gt;When we look at the simulations using the s-curve motion profile we can see that the maximum
+acceleration and jerk values actually increase when compared to the trapezoidal motion profile, except
+for the values of the steering angle jerk when using the module control approach. It seems likely that
+these increases are due to the fact that the motion is executed over the same time span, but some of
+the time is used for a more smooth acceleration and deceleration. This means that there is less
+time available to travel the desired &amp;lsquo;distance&amp;rsquo; which then requires higher maximum velocities and
+maximum accelerations. The s-curve motion profile does smooth out the movement profiles which would
+lead to a much smoother ride.&lt;/p&gt;
+&lt;iframe
+    style="float:none"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/B3CUdHifQCQ"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;h4&gt;What is next&lt;/h4&gt;
+&lt;p&gt;So now that we have a swerve drive simulation that can use both module based control and body
+based control as well as have different motion profiles, what is next? There are a few improvements
+that can be made to the simulation code to further made to the simulation and a path of progression.&lt;/p&gt;
+&lt;p&gt;The first improvement lies in the fact that none of the motion profiles, linear, trapezoidal and
+s-curve, are aware of motor limits. This means that they will happily command velocity, acceleration
+and jerk values that a real life motor would not be able to deliver. In order to make the simulation
+better I would need to add some kind of limits on the maximum reachable values. This would be
+especially interesting when using body oriented control. Because the high velocities and accelerations
+are needed to keep the drive modules synchronised. If one of the drive modules is not able to reach
+the desired velocity or acceleration then the other modules will have to slow down before they
+reach their limits. To control the drive modules in such a way that all of the modules stay within
+their motor limits while also keeping them synchronised requires some fancy math. At the moment
+I'm going through a number of published papers to see what different algorithms are out there.&lt;/p&gt;
+&lt;p&gt;The second improvement that is on my mind is to implement some form of path tracking, i.e. the
+ability to follow a given path. This would give the simulation the ability to better show the
+behaviour of a real life robot. In most cases when a robot is navigating an area the path planning
+code will constantly be sending movement instructions to ensure that the robot follows the originally
+planned path. This means that motion profiles need to be updated constantly, which will be a challenge
+for the simulation code. Additionally having path tracking in the simulation would allow me to
+experiment with different algorithms for path tracking and trajectory tracking, i.e. the ability to
+follow a path and prescribe the velocity at every point on the path. And theoretically with a
+swerve drive it should even be possible for the robot to follow a trajectory while controlling
+the orientation of the robot body.&lt;/p&gt;
+&lt;p&gt;Finally the path of progression is to take the controller code that I have written for this
+simulation and use it with my &lt;a href="posts/Swerve-drive-introduction"&gt;ROS2 based swerve robot&lt;/a&gt;.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;In the last few posts I have described the simulations I did of a robot with a swerve drive. In
+other words a robot with four wheels each of which is independently driven and steered. I did
+simulations for the case where we specified movement commands &lt;a href="https://youtu.be/LlyopmLMlZY"&gt;directly for the drive modules&lt;/a&gt;
+and one for the case where we specified movement commands for &lt;a href="https://youtu.be/U6Z_meFKNrI"&gt;the robot body&lt;/a&gt;
+which were then translated in the appropriate movements for the drive modules.
+One of the things you can see in both simulations is that the motions is quite ‘jerky’, i.e. with
+sudden changes of velocity or acceleration. In real life this kind of change would be noticed by
+humans as shocks which are &lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)#Physiological_effects_and_human_perception"&gt;uncomfortable and can potentially cause injury&lt;/a&gt;.
+For the equipment, i.e. the robot parts, a jerky motion adds load which can cause failures. So for
+both humans and equipment it is sensible to keep the 'jerkiness' as low as possible.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://www.petrikvandervelde.nl/posts/Swerve-drive-control-animations</id>
 		<title>Swerve drive - Movement animations</title>
@@ -1861,100 +2172,5 @@ build pipeline the development team get benefits like being able to execute part
 release and deployment processes in parallel, being able to restart the process part way through
 in case of environmental issues, and vastly improved feedback cycles which improve the velocity
 at which features can be delivered to the customer.&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-flexibility</id>
-		<title>Software development pipeline - Design flexibility</title>
-		<link href="https://www.petrikvandervelde.nl/posts/Software-development-pipeline-Design-flexibility" />
-		<updated>2018-10-31T00:00:00Z</updated>
-		<content>&lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;fourth property&lt;/a&gt; to consider is
-&lt;em&gt;flexibility&lt;/em&gt;, i.e. the ability of the pipeline to be able to be modified or adapted without
-requiring large changes to be made to the underlying pipeline code and services.&lt;/p&gt;
-&lt;p&gt;A pipeline should be flexible because the products being build, tested and deployed with that
-pipeline may require different workflows or processes in order for them to complete all the
-stages in the pipeline. For example building and packaging a library will require a different
-approach then building, testing and deploying a cloud service.
-Additionally the different stages in the pipeline will require different approaches, e.g. build steps
-will in general be executed by a build system returning the results in a synchronous way, however
-test steps might run on a different machine from the process that controls the test steps so those
-results might come back via an asynchronous route.
-Finally flexibility in the pipeline also improves resilience since in case of a disruption
-an adaptable or flexible pipeline will allow restoring services through alternate means.&lt;/p&gt;
-&lt;p&gt;Making a flexible pipeline is achieved in the same way flexibility is achieved in other software
-products, by using modular parts, standard inputs and outputs and carefully considered design. Some
-of the appropriate options are for instance:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Split the pipeline into stages that take standard inputs and deliver standard outputs. There might
-be many different types of inputs and outputs but they should be known and easily shared between
-processes and applications. There can be one or more stages, e.g. build, test and deploy, which
-are dependent on each other only through their inputs and outputs. This allows adding more stages
-if required.&lt;/li&gt;
-&lt;li&gt;Allow steps or stages in the pipeline to be started through a response to a standard notification.
-That allows each step to determine what information it needs to start execution. Additional
-information can be downloaded from the appropriate sources upon receiving a notification. This
-approach allows notifications to be generic while steps can still acquire the information they
-need to execute. Additionally having pipeline steps respond to notifications means that it is
-very easy to add new steps in the process because a new executor only has to be instantiated
-and connected to the message source, e.g. a distributed queue.&lt;/li&gt;
-&lt;li&gt;If a stage consists of multiple, dependent steps, then it should be easy to add and remove
-steps based on the requirements. In these cases it would generally be preferred that a stage like
-this executes one or more scripts as they are easier to extend than services. As with the stages steps
-should ideally use well-known inputs and produce well-known outputs.&lt;/li&gt;
-&lt;li&gt;Inputs for stages and steps are for instance
-&lt;ul&gt;
-&lt;li&gt;Source information, e.g. a commit ID&lt;/li&gt;
-&lt;li&gt;Artefacts, e.g. packages installers, zip files etc.&lt;/li&gt;
-&lt;li&gt;Meta data, additional information attached to a given output or input, e.g. build or test results&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Outputs generated by stages and steps are for instance&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Flexibility of the workflow is can further be improved by making sure that the artefacts
-generated in the pipeline are not created, tested and deployed in a single monolithic process even
-if the end result should be a single artefact. In many cases artefacts can be assembled from smaller
-components. Using this approach improves the workflow for the development teams because smaller
-components can be created much quicker and in general assembly of a larger piece from components
-is quicker and more flexible than regeneration of the entire piece from scratch. In many cases only
-a few components will be recreated which both saves time and allows much of the process to be executed
-in parallel.&lt;/p&gt;
-&lt;p&gt;The exact implementation of the pipeline determines how flexible and easy to extend it will be.
-Given that the use and implementation of the pipeline vary quite a lot it is hard to provide
-detailed implementation details, however some standard suggestions are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Keep the build part of the pipeline described in the scripts given that scripts are, in general,
-easier to adapt. By pulling the scripts from a package, e.g. a NuGet or NPM package, it is
-quick and easy to update to a later version of these scripts. An additional benefit of
-keeping the process in the scripts is that developers can execute the individual steps of the pipeline
-from their local machines. That allows them to ensure builds / tests work before pushing to the
-pipeline and provides a means of building things if the pipeline is not available.&lt;/li&gt;
-&lt;li&gt;Any part of the process that cannot be done by a script, e.g. test systems, items that need services, e.g.
-certificate signing, which require that the certificates are present on the current machine, something
-which might not be possible to do on every machine etc., should have a service that is available to both
-the pipeline and the developers executing the scripts locally. For any services that should only
-be provided to the build server, e.g. signing, the scripts should allow skipping the steps that
-need the service.&lt;/li&gt;
-&lt;li&gt;For stages that execute scripts, e.g. the build stage, jobs can be automatically generated
-from information stored in source control. This makes it easy to update the actions executed by these
-stages without requiring developers to perform the configuration manually.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;As a final note one should consider how the pipeline will be described. It is easier to reason about
-a pipeline if the entire description of that pipeline is stored in a single file, ideally in source
-control. However as the pipeline evolves and more steps and stages are executed in parallel it will
-become increasingly difficult to capture the entire pipeline in a single file. While harder to
-reason about it is in the end simpler and more flexible to let the pipeline layout, as in the stages,
-steps and orders of these items, be determined by the executors that are available and listening for
-notifications. That way it's easy to change the layout of the pipeline.&lt;/p&gt;
-&lt;p&gt;And with that we have come to the end of this journey into the guiding principles of designing
-a build and release pipeline. There are of course many additions that can be made with regards to
-the general design process and even more additions for specific use cases. Those however will have
-to wait until another post.&lt;/p&gt;
-&lt;h4&gt;Edits&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;December 3rd 2018: Fixed a typo in the post title&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-		<summary>&lt;p&gt;The &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;fourth property&lt;/a&gt; to consider is
-&lt;em&gt;flexibility&lt;/em&gt;, i.e. the ability of the pipeline to be able to be modified or adapted without
-requiring large changes to be made to the underlying pipeline code and services.&lt;/p&gt;</summary>
 	</entry>
 </feed>
