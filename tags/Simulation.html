@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - Building an autonomous mobile robot - But why?</title>
+        <title>Mind vortex - Simulation</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -32,9 +32,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - Building an autonomous mobile robot - But why?" />
+        <meta property="og:title" content="Mind vortex - Simulation" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Building-autonomous-mobile-robot-why" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/tags/Simulation" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -85,9 +85,6 @@
         <!-- Index -->
         <!-- RenderTagIndex -->
         <!-- RenderTags -->
-        <!-- RenderBlogArchive -->
-        <!-- Feed -->
-        <!-- RenderBlogPosts -->
     <!-- Context.Documents['Pages'] -->
         <!-- 404 Not Found - False - /404 -->
         <!-- About - True - /about -->
@@ -196,102 +193,17 @@
 
             <div id="content">
 
-<div id="post">
-    <div id="post-header">
-        <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
+<div id="posts">
+    <h3 id="post-tags-header">Posts tagged with: Simulation</h3>
+    
+        <div class="post-list">
+            <a href="/posts/Robotics-making-urdf-models">
+                <h3 class="post-title">Robotics - Making URDF models</h3>
+            </a>
+            <p class="post-meta">Posted on Saturday, December 23, 2023</p>      
+        </div>   
 
-
-<h2>
-Building an autonomous mobile robot - But why?</h2>
-<div id="post-meta">
-    <div class="meta-date">
-Monday, March 7, 2022
- |             Posted in     </div>
-    <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
-    </div>
 </div>
-
-    </div>
-
-    <div id="post-content">
-        <p>Over the last decade I have been developing software of all kinds. I have coded both for work and
-for my own learning and entertainment. The majority of the coding I did over that period was code
-that lived only in the virtual world. Things from from numerical simulations to building software
-infrastructure.</p>
-<p>While I have always greatly enjoyed writing code and learning new skills I have found myself being
-less and less interested in writing more code that only lives in a virtual world. It feels like
-there is no purpose for this code, like something is missing.</p>
-<p>The main thing I feel is missing is interaction with the physical world. The ability to see the
-effects of the code when it is executed, to see things move and react to the world. While in
-university I studied <a href="https://www.tudelft.nl/en/ae">Aerospace engineering</a> and
-<a href="https://www.auckland.ac.nz/en/engineering.html">Mechanical engineering</a>. Two disciplines heavily
-involved with real world physics. The fact that a design lives in the physical world adds all kinds
-of additional constraints and behaviours. Some of which the result of interesting physical
-behaviour and others the result of the continuous and analogue nature of the physical world.
-All of this makes the engineering problems more interesting and challenging.</p>
-<p>One of the ways I have been incorporating making physical things is by working with timber. I've
-build several bits of furniture and generally greatly enjoy working with wood. However working with
-wood misses the technological side that I do also enjoy.</p>
-<p>A domain that combines both the physical and virtual worlds with large amounts of technology that
-recently caught my eye is the world of robotics. As robotics is a combination of many different
-fields there is a lot to discover and learn about. Even for the design of a simple robot you will
-have to deal with fields like structural mechanics, electronics, software, perception, machine
-intelligence etc.. As a bonus thanks to the availability of relatively cheap electronics and
-structural components it is possible to build an interesting robot yourself.</p>
-<p>My current goal is to build an <a href="https://en.wikipedia.org/wiki/Autonomous_robot">autonomous mobile robot</a>
-that is capable of navigating outdoor spaces while carrying some kind of cargo from
-one location to another. Before I get to designing and building a robot from the ground
-up there are a lot of things to learn. In order to speed up the learning process I
-picked up a <a href="https://scuttlerobot.org/">SCUTTLE</a> robot kit and started learning about
-<a href="https://www.ros.org/">ROS</a>. More on that will follow in a future post.</p>
-
-    </div>
-
-    <div id="post-footer">
-        <div>
-    <div class="navlinks">
-                <a href="/posts/Software-development-pipeline-security" title="Previous Post: Software development pipeline - Security" class="navlinks-prev">« Software development pipeline - Security</a>
-                <a href="/posts/Starting-robotics-with-scuttle" title="Next Post: Starting robotics with the SCUTTLE robot" class="navlinks-next">Starting robotics with the SCUTTLE robot »</a>
-    </div>
-</div>
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Building-autonomous-mobile-robot-why';
-    var disqus_title = 'Building an autonomous mobile robot - But why?';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Building-autonomous-mobile-robot-why';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-    </div>
-</div>
-
-
-
-
-
-
-
             </div>
         </div>
 
@@ -322,7 +234,7 @@ picked up a <a href="https://scuttlerobot.org/">SCUTTLE</a> robot kit and starte
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 23 Dec 2023 09:30:15 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 23 Dec 2023 09:30:13 GMT
 
  from commit <a href="https://github.com/pvandervelde/mindvortex/tree/ce6daaeae617a86dc984dce31aacb03b29d3974a">ce6daaeae617a86dc984dce31aacb03b29d3974a</a> at version 3.18.0.        </p>
     </div>

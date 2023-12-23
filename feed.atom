@@ -4,8 +4,287 @@
 	<title>Mind vortex</title>
 	<link rel="self" href="https://www.petrikvandervelde.nl/" />
 	<rights>2023</rights>
-	<updated>2023-12-19T08:42:00Z</updated>
+	<updated>2023-12-23T09:30:13Z</updated>
 	<subtitle>Welcome!</subtitle>
+	<entry>
+		<id>https://www.petrikvandervelde.nl/posts/Robotics-making-urdf-models</id>
+		<title>Robotics - Making URDF models</title>
+		<link href="https://www.petrikvandervelde.nl/posts/Robotics-making-urdf-models" />
+		<updated>2023-12-23T00:00:00Z</updated>
+		<content>&lt;p&gt;In a &lt;a href="posts/Robotics-driving-scuttle-with-ros-gazebo-simulation"&gt;previous post&lt;/a&gt; I talked about simulating
+the &lt;a href="https://scuttlerobot.org"&gt;SCUTTLE robot&lt;/a&gt; using ROS and Gazebo.  I used Gazebo to
+simulate the SCUTTLE robot so that I could learn more about ROS without needing to involve a real
+robot with all the setup and complications that come with that. Additionally when I was designing the
+&lt;a href="posts/Robotics-a-bumper-for-scuttle-overview"&gt;bump sensor&lt;/a&gt; for SCUTTLE using the simulation allowed
+me to reduce the feedback time compared to testing the design on a physical robot. This speeds up
+the design iteration process and allowed me to quickly and verify the design and the code. In the end
+you always need to do the final testing on a real robot, but by using simulation you can quickly
+iterate to a solution that will most likely work without major issues.&lt;/p&gt;
+&lt;p&gt;In order to progress my &lt;a href="posts/Swerve-drive-introduction"&gt;swerve drive robot&lt;/a&gt; I wanted to verify that
+the control algorithms that I had developed would work for an actual robot. Ideally before spending
+money on the hardware. So I decided to use Gazebo to run some simulations that would enable me to
+verify the control algorithm.&lt;/p&gt;
+&lt;p&gt;The first step in using Gazebo is to create a model of the robot and its surrounding environment.
+Gazebo natively uses the &lt;a href="http://sdformat.org/"&gt;SDF&lt;/a&gt; format to define both the robot and the
+environment. However if you want ROS nodes to be able to understand the geometry definition of your
+robot you need to use the &lt;a href="http://wiki.ros.org/urdf"&gt;URDF&lt;/a&gt; format. This is important for instance
+if you want to make use of the &lt;a href="https://docs.ros.org/en/humble/Concepts/Intermediate/About-Tf2.html"&gt;tf2&lt;/a&gt;
+library to transform between different coordinate frames then your ROS nodes will have to have the
+&lt;a href="https://github.com/ros/robot_state_publisher/tree/humble"&gt;geometry of the robot&lt;/a&gt; available.&lt;/p&gt;
+&lt;p&gt;There are different ways to create an URDF model. One way is to draw the robot in a CAD program
+and then use a plugin to export the model to an URDF file. This is a relatively quick approach, it
+takes time to create the robot in the CAD program but then the export is very quick. The drawback
+of this method is that the resulting URDF file is not very clean which makes it harder to edit
+later on. Additionally the CAD software will use meshes for both the visual geometry and the collision
+geometry. As discussed below this can lead to issues with the collision detection.
+Another way is to create the URDF manually. This approach is slower than the CAD export approach,
+however it results in a much more minimal and clean URDF file. This makes editing the file at a
+later stage a lot easier. Additionally manually creating the URDF file give you a better understanding
+of the URDF format and how it works. In the end the model for my swerve drive robot is very simple,
+consisting of a body, four wheels, the steering and drive controllers and the sensors. So I decided
+to create the URDF file manually. The images below show the resulting model in RViz. The model consists
+of the robot body in orange, the four drive modules in blue and black, and the lidar unit in red.&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+  &lt;a href="/assets/images/robotics/swerve/rviz_zinger_side_view.png" target="_blank"&gt;
+    &lt;img
+        alt="The Zinger swerve robot as seen from the side in RViz."
+        src="/assets/images/robotics/swerve/rviz_zinger_side_view.png"
+        width="375"
+        height="186"/&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;
+    The Zinger swerve robot as seen from the side in RViz.
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure style="float:right"&gt;
+  &lt;a href="/assets/images/robotics/swerve/rviz_zinger_front_top_view.png" target="_blank"&gt;
+    &lt;img
+        alt="The Zinger swerve robot as seen from the front and top in RViz."
+        src="/assets/images/robotics/swerve/rviz_zinger_front_top_view.png"
+        width="375"
+        height="260"/&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;
+    The Zinger swerve robot as seen from the front and top in RViz.
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;The URDF model describes the different parts of the robot relative to each other. The robot parts
+consist of the physical parts of the robot, the sensors and the actuators. The physical parts, e.g.
+the wheels or the body, are described using &lt;a href="https://wiki.ros.org/urdf/XML/link"&gt;links&lt;/a&gt;. The links
+are connected to each other using &lt;a href="https://wiki.ros.org/urdf/XML/joint"&gt;joints&lt;/a&gt;. Joints allow the
+links to move relative to each other. Joints can be fixed, e.g. when two structural parts are statically
+connected to each other, or they can be movable. If a joint is movable then be one of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A revolute joint, which allows the two links to rotate relative to each other around a single axis.&lt;/li&gt;
+&lt;li&gt;A continuous joint, which is similar to a revolute joint but allows the joint to rotate continuously
+without any limits.&lt;/li&gt;
+&lt;li&gt;A prismatic joint, which allows the two links to move relative to each other along a single axis.&lt;/li&gt;
+&lt;li&gt;A floating joint, which allows the two links to move relative to each other in 6 degrees of freedom.&lt;/li&gt;
+&lt;li&gt;A planar joint, which allows the two links to move relative to each other in 3 degrees of freedom
+in a plane.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In the URDF file each link defines the visual geometry, the collision geometry and the inertial
+properties for that link. The visual and collision geometry can be defined either by a primitive
+(box, cylinder or sphere) or a triangle mesh. It is recommended to use simple primitives for the
+collision geometry since these make the collision calculations faster and more stable. If you use a
+triangle mesh for the collision geometry then you can get issues with the collision detection. This
+can lead to the robot moving around when it shouldn't. For instance when the wheel of the robot is
+modelled as a triangle mesh then the collision calculation between the wheel and the ground may not
+be numerically stable which leads to undesired movement of the robot. The current version of the SCUTTLE
+URDF has this problem as is shown in the video below. In a future post I'll describe how to fix this.&lt;/p&gt;
+&lt;iframe
+    style="float:left"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/kyMvlBAQGoE"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;p&gt;Using meshes for the visual geometry is fine as this geometry is only used for the visual
+representation of the robot. Note that the meshes should be relatively simple as well since Gazebo
+will have to render the meshes in real time which is expensive if the mesh consists of a large number
+of vertices and triangles.&lt;/p&gt;
+&lt;p&gt;I normally start by defining a link that represents the &lt;a href="https://www.ros.org/reps/rep-0120.html#base-footprint"&gt;footprint&lt;/a&gt;
+of the robot on the ground, called &lt;code&gt;base_footprint&lt;/code&gt;. This link doesn't define any geometry, it is
+only used to define the origin of the robot. When navigation is configured it will be referencing
+this footprint link. The next link that is defined is the &lt;code&gt;base_link&lt;/code&gt;. This link is generally defined
+to be the &amp;lsquo;middle&amp;rsquo; of the robot frame and it forms the parent for all the other robot parts.&lt;/p&gt;
+&lt;p&gt;The next step is to define the rest of the links and joints. For the swerve drive robot I have four
+drive modules, each consisting of a wheel and a steering motor. The wheel is connected to the steering
+motor using a continuous joint. The steering motor is connected to the base link using another continuous
+joint. Because the four modules are all the same I use the &lt;a href="http://wiki.ros.org/xacro"&gt;xacro&lt;/a&gt; format.
+This allows me to define &lt;a href="https://github.com/pvandervelde/zinger_description/blob/bb24b884f8bcc62c9c2e8f12bac431f4b62dea6f/urdf/macros.xacro"&gt;a single module as a template&lt;/a&gt;
+and then use that template to create the four modules. The benefit of this is that it makes the URDF
+file easier to edit and a lot smaller and easier to read.&lt;/p&gt;
+&lt;p&gt;To add sensors you need to add two pieces of information, the information about the sensor body and,
+if you are using gazebo, the information about the sensors behaviour. The former consist of the
+visual and collision geometry of the sensor. The latter consists of the sensor plugin that is used
+to simulate the sensor. For the swerve drive robot I have two sensors, a lidar and an IMU. The
+lidar is used to provide a point cloud for the different &lt;a href="https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping"&gt;SLAM&lt;/a&gt;
+algorithms which allow the robot to determine where it is and what the environment looks like. The
+&lt;a href="https://github.com/pvandervelde/zinger_description/blob/bb24b884f8bcc62c9c2e8f12bac431f4b62dea6f/urdf/gazebo.xacro#L90"&gt;Gazebo configuration&lt;/a&gt;
+is based on the use of a &lt;a href="https://www.slamtec.com/en/Lidar/A1"&gt;rplidar&lt;/a&gt; sensor. The IMU is experimental
+and currently not used in any of the control algorithms. The
+&lt;a href="https://github.com/pvandervelde/zinger_description/blob/bb24b884f8bcc62c9c2e8f12bac431f4b62dea6f/urdf/gazebo.xacro#L26"&gt;Gazebo configuration&lt;/a&gt;
+is based on a generic IMU.&lt;/p&gt;
+&lt;p&gt;The last part of the URDF file is the definition of the &lt;a href="https://ros-controls.github.io/control.ros.org/"&gt;ROS2 control&lt;/a&gt;
+interface. This interface allows you to control the different joints of the robot using ROS2 topics.
+The ROS2 control configuration consists of the &lt;a href="https://github.com/pvandervelde/zinger_description/blob/bb24b884f8bcc62c9c2e8f12bac431f4b62dea6f/urdf/base.xacro#L205"&gt;general configuration&lt;/a&gt;
+and the configuration specific to &lt;a href="https://github.com/pvandervelde/zinger_description/blob/bb24b884f8bcc62c9c2e8f12bac431f4b62dea6f/urdf/gazebo.xacro#L148"&gt;Gazebo&lt;/a&gt;.
+It should be noted that the Gazebo specific configuration depends on linking to the correct control
+plugin for Gazebo. In my case, using &lt;a href="https://docs.ros.org/en/humble/"&gt;ROS2 Humble&lt;/a&gt;,
+and &lt;a href="https://gazebosim.org/docs/fortress/install"&gt;Gazebo Ignition Fortress&lt;/a&gt;, I need to use the
+&lt;code&gt;ign_ros2_control-system&lt;/code&gt; plugin with the &lt;code&gt;ign_ros2_control::IgnitionROS2ControlPlugin&lt;/code&gt; entrypoint.
+For other versions of ROS2 and Gazebo you may need to use a different plugin.&lt;/p&gt;
+&lt;p&gt;When you are using this information to create your URDF model there are a number of issues that you may
+run into. The main ones I ran in to are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ROS2 control documentation is lacking in that it doesn't necessarily exist for the combination of
+your version of ROS and Gazebo. That means you need to look at the source code to figure out the
+names of the plugins and which controllers are available. For instance ROS2 control defines a
+&lt;a href="https://control.ros.org/humble/doc/ros2_controllers/joint_trajectory_controller/doc/userdoc.html"&gt;joint trajectory controller&lt;/a&gt;.
+This controller should be able to work with a velocity trajectory, i.e. a trajectory that defines
+changes in velocity. However the current implementation of the controller doesn't support this. Additionally
+the Gazebo plugin doesn't support all the controller types that are available in ROS2 control. To
+find out which controllers actually work in Gazebo you need to search the source code of the Gazebo
+control plugin.&lt;/li&gt;
+&lt;li&gt;In order to run ROS2 control you need to load the &lt;a href="https://control.ros.org/humble/doc/ros2_control/controller_manager/doc/userdoc.html"&gt;controller manager&lt;/a&gt;.
+This component manages the lifecyle of the controllers. However when running in Gazebo you shouldn't
+to load the controller manager as Gazebo loads one for you. If you do load the controller manager
+then you will get an error message that the controller manager is already loaded. Also note that in
+order to optionally load the controller when using the Python launch files you need to use the
+&lt;a href="https://github.com/pvandervelde/zinger_description/blob/bb24b884f8bcc62c9c2e8f12bac431f4b62dea6f/launch/controllers.launch.py#L52"&gt;unless&lt;/a&gt;
+construct, not the Python &lt;code&gt;if .. then&lt;/code&gt; approach. The latter doesn't work due to the delayed
+evaluation of the launch file.&lt;/li&gt;
+&lt;li&gt;The start up order of the ROS2 control controllers relative to other ROS nodes is important. When
+the controllers start they will try to get the joint and link descriptions from the
+&lt;a href="https://github.com/ros/robot_state_publisher/tree/humble"&gt;&lt;code&gt;robot state publisher&lt;/code&gt;&lt;/a&gt;. This won't
+be running until after the simulation starts. So you need to &lt;a href="https://github.com/pvandervelde/zinger_description/blob/bb24b884f8bcc62c9c2e8f12bac431f4b62dea6f/launch/controllers.launch.py#L72"&gt;delay&lt;/a&gt;
+the start of the controllers until after the robot is loaded in Gazebo and the state publisher node
+is running.&lt;/li&gt;
+&lt;li&gt;Unlike with ROS1 if you want your ROS2 nodes to get information from Gazebo, e.g. the simulation
+time or the current position or velocity of a joint, then you need to set up a
+&lt;a href="https://github.com/pvandervelde/zinger_ignition/blob/5e71f841d1db557c3e62ff38291701ddc31a0d73/launch/ignition_bridge.launch.py#L19"&gt;ROS bridge&lt;/a&gt;.
+This is because Gazebo no longer connects to the ROS2 messaging system automatically. For my simulation
+I bridged the following topics:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/clock&lt;/code&gt; - The simulation time. This was bridged unidirectionally from Gazebo to ROS2 into the
+&lt;code&gt;/clock&lt;/code&gt; topic.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/cmd_vel&lt;/code&gt; - The velocity commands for the robot. This was bridged bidirectionally between Gazebo
+and ROS2.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/model/&amp;lt;ROBOT_NAME&amp;gt;/pose&lt;/code&gt; and &lt;code&gt;/model/&amp;lt;ROBOT_NAME&amp;gt;/pose_static&lt;/code&gt; - The position of the robot
+in the simulation as seen by the simulation. This was bridged unidirectionally from Gazebo to
+ROS2 into the &lt;code&gt;/ground_truth_pose&lt;/code&gt; and &lt;code&gt;/ground_truth_pose_static&lt;/code&gt; topics.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/model/&amp;lt;ROBOT_NAME&amp;gt;/tf&lt;/code&gt; - The transformation between the different coordinate frames of the
+robot as seen by the simulation. This was bridged unidirectionally from Gazebo to ROS2 into the
+&lt;code&gt;/model/&amp;lt;ROBOT_NAME&amp;gt;/tf&lt;/code&gt; topic.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/&amp;lt;LIDAR_NAME&amp;gt;/scan&lt;/code&gt; and &lt;code&gt;/&amp;lt;LIDAR_NAME&amp;gt;/scan/points&lt;/code&gt; - The point cloud from the lidar sensor.
+These were bridged unidirectionally from Gazebo to ROS2 into the &lt;code&gt;/scan&lt;/code&gt; and &lt;code&gt;/scan/points&lt;/code&gt; topics.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/world/&amp;lt;WORLD_NAME&amp;gt;/model/&amp;lt;MODEL_NAME&amp;gt;/link/&amp;lt;IMU_SENSOR_LINK_NAME&amp;gt;/sensor/&amp;lt;IMU_NAME&amp;gt;/imu&lt;/code&gt; - The
+IMU data. This was bridged unidirectionally from Gazebo to ROS2 into the &lt;code&gt;/imu&lt;/code&gt; topic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Finally one issue  that applies specifically to ROS2 Humble and Gazebo Ignition has to do with the
+fact that Gazebo Ignition was renamed back to Gazebo. This means that some of the plugins have been
+renamed as well. So the information you find on the internet about the correct name of the plugin
+may be out of date.&lt;/p&gt;
+&lt;p&gt;Once you have the URDF you need to get Gazebo to load it. This is done in two parts. First you need
+to load the &lt;code&gt;robot state publisher&lt;/code&gt; and provide it with the robot description (URDF). The code below
+provides an example on how to achieve this.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;def generate_launch_description():
+    is_simulation = LaunchConfiguration(&amp;quot;use_sim_time&amp;quot;)
+    use_fake_hardware = LaunchConfiguration(&amp;quot;use_fake_hardware&amp;quot;)
+    fake_sensor_commands = LaunchConfiguration(&amp;quot;fake_sensor_commands&amp;quot;)
+
+    robot_description_content = Command(
+        [
+            PathJoinSubstitution([FindExecutable(name=&amp;quot;xacro&amp;quot;)]),
+            &amp;quot; &amp;quot;,
+            PathJoinSubstitution([get_package_share_directory('zinger_description'), &amp;quot;urdf&amp;quot;, 'base.xacro']),
+            &amp;quot; &amp;quot;,
+            &amp;quot;is_simulation:=&amp;quot;,
+            is_simulation,
+             &amp;quot; &amp;quot;,
+            &amp;quot;use_fake_hardware:=&amp;quot;,
+            use_fake_hardware,
+            &amp;quot; &amp;quot;,
+            &amp;quot;fake_sensor_commands:=&amp;quot;,
+            fake_sensor_commands,
+        ]
+    )
+    robot_description = {&amp;quot;robot_description&amp;quot;: ParameterValue(robot_description_content, value_type=str)}
+
+    # Takes the joint positions from the 'joint_state' topic and updates the position of the robot with tf2.
+    robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='robot_state_publisher',
+        output='screen',
+        parameters=[
+            {'use_sim_time': LaunchConfiguration('use_sim_time')},
+            robot_description,
+        ],
+    )
+
+    ld = LaunchDescription(ARGUMENTS)
+    ld.add_action(robot_state_publisher)
+    return ld
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then you need to spawn the robot in Gazebo. Assuming you're using Gazebo Ignition then you can use
+the &lt;code&gt;ros_ign_gazebo&lt;/code&gt; package with the command line as shown below.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;
+    def generate_launch_description():
+        spawn_robot = Node(
+            package='ros_ign_gazebo',
+            executable='create',
+            arguments=[
+                '-name', LaunchConfiguration('robot_name'),
+                '-x', x,
+                '-y', y,
+                '-z', z,
+                '-Y', yaw,
+                '-topic', '/robot_description'],
+            output='screen')
+
+        ld = LaunchDescription(ARGUMENTS)
+        ld.add_action(spawn_robot)
+
+        return ld
+&lt;/code&gt;&lt;/pre&gt;
+&lt;iframe
+    style="float:right"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/fR47Y7p4mtQ"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;p&gt;Once you have set this all up you should be able to run Gazebo and see your robot in the simulation.
+At this point you can then control the robot using the ROS2 control interface by sending the
+appropriate messages. For an example you can look at the &lt;a href="https://github.com/pvandervelde/zinger_controller_test_nodes"&gt;test control library&lt;/a&gt;
+for the swerve robot. That should allow you to get the robot moving as shown in the video. In the video
+two different control commands are given. One controls the motion of the steering actuators and makes
+the wheels steer from left to right and back again on a timed loop. The other controls the motion of
+the wheels, driving them forwards and then backwards, also on a timed loop. Obviously this is not
+a good way to control the robot, but it does allow you to verify that you have correctly configured
+all the parts of your robot for use in Gazebo.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;In a &lt;a href="posts/Robotics-driving-scuttle-with-ros-gazebo-simulation"&gt;previous post&lt;/a&gt; I talked about simulating
+the &lt;a href="https://scuttlerobot.org"&gt;SCUTTLE robot&lt;/a&gt; using ROS and Gazebo.  I used Gazebo to
+simulate the SCUTTLE robot so that I could learn more about ROS without needing to involve a real
+robot with all the setup and complications that come with that. Additionally when I was designing the
+&lt;a href="posts/Robotics-a-bumper-for-scuttle-overview"&gt;bump sensor&lt;/a&gt; for SCUTTLE using the simulation allowed
+me to reduce the feedback time compared to testing the design on a physical robot. This speeds up
+the design iteration process and allowed me to quickly and verify the design and the code. In the end
+you always need to do the final testing on a real robot, but by using simulation you can quickly
+iterate to a solution that will most likely work without major issues.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>https://www.petrikvandervelde.nl/posts/Swerve-motion-profiles</id>
 		<title>Swerve drive - Motion profiles</title>
@@ -2032,145 +2311,5 @@ infrastructure because without it the development team will be more limited in t
 perform their tasks. Note that at no stage should any specific tool, including the pipeline, be the
 single point of failure. More on how to reduce the dependency on CI systems and the pipeline will
 follow in another post.&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>https://www.petrikvandervelde.nl/posts/Sofware-development-pipeline-In-the-build-system-or-not</id>
-		<title>Software development pipeline - In the build system or not</title>
-		<link href="https://www.petrikvandervelde.nl/posts/Sofware-development-pipeline-In-the-build-system-or-not" />
-		<updated>2018-12-03T00:00:00Z</updated>
-		<content>&lt;p&gt;Over the last few years the use of build pipelines has been gaining traction backed by the ever growing
-use of Continuous Integration (CI) and Continuous Delivery and Deployment (CD) processes. By using a
-build pipeline the development team get benefits like being able to execute parts of the build, test,
-release and deployment processes in parallel, being able to restart the process part way through
-in case of environmental issues, and vastly improved feedback cycles which improve the velocity
-at which features can be delivered to the customer.&lt;/p&gt;
-&lt;p&gt;Most modern build systems have the ability to create a build pipelines in one form or another, e.g.
-&lt;a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/get-started/what-is-azure-pipelines?toc=/azure/devops/pipelines/toc.json&amp;amp;bc=/azure/devops/boards/pipelines/breadcrumb/toc.json&amp;amp;view=vsts"&gt;VSTS / Azure Devops builds&lt;/a&gt;,
-&lt;a href="https://jenkins.io/solutions/pipeline/"&gt;Jenkins pipeline&lt;/a&gt;,
-&lt;a href="https://docs.gitlab.com/ee/ci/pipelines.html"&gt;GitLab&lt;/a&gt;, &lt;a href="https://bitbucket.org/product/features/pipelines"&gt;BitBucket&lt;/a&gt;
-and &lt;a href="https://confluence.jetbrains.com/display/TCD18/Build+Chain"&gt;TeamCity&lt;/a&gt;. With these capabilities
-built into the build system it is easy for developers to quickly create a new pipeline from scratch.
-While this is quick and easy often the pipeline for a product is created by the development team
-without considering if this is the best way to achieve their goal, which is to deliver their product
-faster with higher quality. Before using the built-in pipeline capability in the build system the second
-question a development team should ask is when should one use this ability and when should one not
-use this ability? Obviously the first question is, do we need a pipeline at all, which is a question
-for another post.&lt;/p&gt;
-&lt;p&gt;The advantages of creating a pipeline in your build system are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;It is easy to quickly create pipelines. Either the is a click and point UI of some form or the
-pipeline is defined by a, relatively, simple configuration file. This means that a development
-team can configure a new build pipeline quickly when one is desired.&lt;/li&gt;
-&lt;li&gt;Pipelines created in a build system can often use multiple build executors or have a job move
-from one executor to another if different capabilities are required for a new step, for instance
-if different steps in the pipeline need different operating systems to be executed.&lt;/li&gt;
-&lt;li&gt;In many cases, but not all, the build system provides a way for humans to interact with a running
-pipeline, for instance to approve the continuation of the pipeline in case of deployments or
-to mark a manual test phase as passed or failed.&lt;/li&gt;
-&lt;li&gt;If the configuration of the pipeline is stored in a file it can generally be stored in a source
-control system, thus providing all the benefits of using a source control system. In these cases
-the build system can generally update the build configurations in response to a commit / push
-notification from the version control system. Thus ensuring that the active build configuration
-is always up to date.&lt;/li&gt;
-&lt;li&gt;The development team has nearly complete control over the build configuration which ensures that
-it is easy for the development teams to have a pipeline that suits their needs.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Based on the advantages of having a pipeline in the build system it seems pretty straight forward to
-say that having the pipeline in the build system is a good thing. However as with all things there
-are also drawbacks to having the pipeline in the build system.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Having the pipeline in the build system makes some assumptions that may not be correct in certain
-cases.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The first assumption is that the build system is the centre of all the work being done
-because the pipeline is controlled by the build system, thus requiring that all actions feed back
-into said build system. This however shouldn't be a given, after all why would the build system
-be the core system and not the source control system or the issue tracker. In reality all systems
-are required to deliver high quality software. This means in most cases that none of these systems
-have enough knowledge by themselves to make decisions about the complete state of the pipeline.
-By making the assumption that the build system is at the core of the pipeline the result will
-be that the knowledge of the pipeline work flow will end up being encoded in the build configurations
-and the build scripts. For simple pipelines this is a sensible thing to do but as the pipeline
-gets more complex this approach will be sub-optimal at best and more likely detrimental due to
-the complexity of providing all users with the overview of how the pipeline functions.&lt;/li&gt;
-&lt;li&gt;The second, but potentially more important, assumption is that the item the development teams
-care most about is &amp;lsquo;build&amp;rsquo; or 'build job'. This however is not the case most of the time because
-a &amp;lsquo;build&amp;rsquo; is just a way to create or alter an artefact, i.e. the package, container, installer
-etc.. It is artefacts that people care about most because artefacts are the carrying vehicle
-for the features and bug fixes that the customer cares about. From this perspective it makes
-sense to track the artefacts instead of builds because the artefact flows through the entire pipeline
-while builds are only part of the pipeline.&lt;/li&gt;
-&lt;li&gt;A third assumption is that every task can somehow be run through the build system, but this is
-not always the case and even when it is possible it is not necessarily sensible. For instance
-builds and deploys are fundamentally different things, one should be repeatable (builds) and
-can just be stopped on failure and restarted if necessary and the other is often not exactly
-repeatable (because artefacts can only be moved from a location once etc.) and should often
-not just be stopped (but rolled-back or not &amp;lsquo;committed&amp;rsquo;). Another example is long running tests
-for which the results may be fed back into the build system if required but that doesn't
-necessarily make sense.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;If the build system is the the centre of the pipeline then that means that the build system has to
-start storing persistent data about the state of the pipeline with all the issues that come with this
-kind of data, for instance:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The data stored in the pipeline is valuable to the development team both at the current time and
-in the future when the development team needs to determine where an artefact comes from. This means
-that the data potentially needs to be kept safe for much longer than build information is
-normally kept. In order to achieve this the standard data protection rules apply for instance
-access controls and backups.&lt;/li&gt;
-&lt;li&gt;The information about the pipeline needs to be easily accessible and changeable both by the build
-system and by systems external to the build system. It should be possible to add additional
-information, e.g. the versions / names of artefacts created by a build. The status of the artefact
-as it progresses through the pipeline etc.. All this information is important either during the
-pipeline process or after the artefacts have been delivered to the customer. Often build
-systems don't have this capability, they store just enough information that they can do what
-they need to do, and in general they are not database systems (and if they are it is recommended
-that you don't tinker with them and in general it is made difficult to append or add information).&lt;/li&gt;
-&lt;li&gt;Build systems work much better if they are immutable, i.e. created from standard components (e.g.
-controller and agents) with automatically generated build jobs (more about the reasons both of
-these will follow in future posts). This allows a build system to be expanded or replaced really
-easily (&lt;a href="https://medium.com/&amp;#64;Joachim8675309/devops-concepts-pets-vs-cattle-2380b5aab313"&gt;cattle not pets&lt;/a&gt;
-even for build systems). That is much harder if the build system is the core of your pipeline
-and stores all the data for it.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Having the pipeline in the build system in general provides more control for the development teams,
-which is a great benefit, but less control for the administrators. Because the pipeline provides the
-development teams with all the abilities there is, in general, less ability for the admins to guide
-things in the right direction or to block developers from doing things that they shouldn't be doing
-or have access to. While this may seem to be a benefit for the developers, no more annoying admins
-getting in the way, it is in fact a drawback because this behaviour means that the developers take
-on the responsibility to administer some or all of the underlying build system. Examples of the
-change of control are for instance in the Jenkins pipeline it is possible for developers to use
-all the credentials that Jenkins has access to. However this might not be desirable for high power
-credentials or credentials for highly restricted resources. An other example is that the selection
-of the build executor is done in the pipeline configuration, however in some cases it may make sense
-to limit access to executors, after all having a build that can migrate from node to node makes
-sense in some cases but it's not free. Further the ease with which parallel steps can be created will
-lead to many parallel jobs. This might be great for one pipeline but isn't necessarily the best for
-the overall system. In some cases serializing the steps for a single pipeline can lead to greater
-overall throughput if there are many different jobs for many different teams.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Based on all the advantages and disadvantages that are listed here it may be difficult to decide whether
-or not a development team should use the pipeline in their build system or not. In general it will be
-sensible to use the pipeline capabilities that are build into your build system in cases where you either
-have a fairly simple pipeline that is easy to reason about or where no external systems need to interact
-with the data in the pipeline.&lt;/p&gt;
-&lt;p&gt;Once the pipeline gets more complicated, external systems need access to the metadata describing the
-pipeline or the pipeline gets stages that are incompatible with being executed by a build system it
-will be time to migrate to a different approach to the build and deployment pipeline. In this case
-it is worth it to develop some custom software that tracks artefacts through the pipeline. This makes
-it possible to treat the pipeline system as the critical infrastructure that it is, with the appropriate
-separation of data and business rule processing, data security and controlled access to the data for
-external systems.&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;Over the last few years the use of build pipelines has been gaining traction backed by the ever growing
-use of Continuous Integration (CI) and Continuous Delivery and Deployment (CD) processes. By using a
-build pipeline the development team get benefits like being able to execute parts of the build, test,
-release and deployment processes in parallel, being able to restart the process part way through
-in case of environmental issues, and vastly improved feedback cycles which improve the velocity
-at which features can be delivered to the customer.&lt;/p&gt;</summary>
 	</entry>
 </feed>

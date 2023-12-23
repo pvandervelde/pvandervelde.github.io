@@ -1,0 +1,579 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+
+        <title>Mind vortex - Robotics - Making URDF models</title>
+        <meta name="description" content="Welcome!" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link type="application/rss+xml" rel="alternate" title="Mind vortex" href="/feed.rss" />
+        <link type="application/atom+xml" rel="alternate" title="Mind vortex" href="/feed.atom" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+        <link href="/assets/css/normalize.css" rel="stylesheet" />
+        <link href="/assets/css/h5bp.css" rel="stylesheet">
+        <link href="/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+        <link href="/assets/css/override.css" rel="stylesheet" />
+        <link href="/assets/css/github.css" rel="stylesheet" type="text/css">
+
+        <script src="https://fred-wang.github.io/TeXZilla/TeXZilla-min.js"></script>
+        <script src="https://fred-wang.github.io/TeXZilla/examples/customElement.js"></script>
+        <link href="https://fred-wang.github.io/MathFonts/Asana/mathfonts.css" rel="stylesheet" />
+
+        <meta name="application-name" content="Mind vortex" />
+        <meta name="msapplication-tooltip" content="Mind vortex" />
+        <meta name="msapplication-starturl" content="/" />
+
+        <meta property="og:title" content="Mind vortex - Robotics - Making URDF models" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Robotics-making-urdf-models" />
+        <!-- TODO: More social graph meta tags -->
+
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>
+        <script src="/assets/js/highlight.pack.js"></script>
+        <script src="/assets/js/clean-blog.js"></script>
+        <script src="/assets/js/d3.v3.min.js"></script>
+        <script src="/assets/js/trianglify.min.js"></script>
+        <script src="/assets/js/Please-compressed.js"></script>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+                <script src="/assets/js/html5shiv.js"></script>
+                <script src="/assets/js/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Our scripts -->
+<script src="/assets/js/script.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DV643VJGFT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DV643VJGFT');
+</script>
+
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        <div id="header" class="container">
+            <div id="logo">
+                <h1><a href="/">Mind vortex</a></h1>
+            </div>
+            <div id="menu">
+                <ul>
+                            <!-- Pages -->
+        <!-- BlogPosts -->
+        <!-- Tags -->
+        <!-- TagIndex -->
+        <!-- BlogArchive -->
+        <!-- Index -->
+        <!-- RenderTagIndex -->
+        <!-- RenderTags -->
+        <!-- RenderBlogArchive -->
+        <!-- Feed -->
+        <!-- RenderBlogPosts -->
+    <!-- Context.Documents['Pages'] -->
+        <!-- 404 Not Found - False - /404 -->
+        <!-- About - True - /about -->
+        <!-- Projects - True - /projects -->
+        <!-- Robotics - False - /projects/robotics -->
+        <!-- Scuttle - False - /projects/scuttle -->
+            <li class="inactive" >
+                <a href="/">Home</a>
+            </li>
+            <li class="inactive" >
+                <a href="/projects">Projects</a>
+            </li>
+            <li class="inactive" >
+                <a href="/posts">Archive</a>
+            </li>
+            <li class="inactive" >
+                <a href="/tags">Tags</a>
+            </li>
+            <li class="inactive" >
+                <a href="/about">About</a>
+            </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div id="page" class="container">
+            <div id="sidebar">
+                <div id="sbox1">
+                    <h2>Patrick van der Velde</h2>
+
+<p>
+    <img src="https://www.gravatar.com/avatar/9bc8b3ff385cd14f2b12138c97729df2?s=160"
+        alt="Gravatar for Patrick van der Velde">
+</p>
+<p>
+    Dutch software developer who is living, working and playing in New Zealand.
+    Rock climber and wood worker. Developer of the
+    <a href="https://github.com/pvandervelde?tab=repositories&q=zinger">Zinger robot</a>
+    and other projects.
+</p>
+<p>
+    <a href="/about.html">More ...</a>
+</p>
+
+                </div>
+                <div id="sbox2">
+                    <h2>Recent</h2>
+                    <ul class="list-unstyled">
+                            <li><a href="/posts/Robotics-making-urdf-models">Robotics - Making URDF models</a></li>
+                            <li><a href="/posts/Swerve-motion-profiles">Swerve drive - Motion profiles</a></li>
+                            <li><a href="/posts/Swerve-drive-control-animations">Swerve drive - Movement animations</a></li>
+                            <li><a href="/posts/Swerve-drive-body-focussed-control">Swerve drive - Better movement by controlling the body motions</a></li>
+                            <li><a href="/posts/Swerve-drive-kinematics-verification">Swerve drive - Verification of the kinematics solution</a></li>
+                            <li><a href="/posts/Swerve-drive-kinematics-simulation">Swerve drive - Kinematics simulation</a></li>
+                            <li><a href="/posts/Swerve-drive-introduction">Swerve drive - Moving a robot in all directions, mostly</a></li>
+                            <li><a href="/posts/Robotics-fixing-scuttles-encoder">Starting robotics - Fixing the wheel encoders</a></li>
+                            <li><a href="/posts/Robotics-a-bumper-for-scuttle-electronics">Starting robotics - Building a bumper for scuttle. The electronics</a></li>
+                            <li><a href="/posts/Robotics-a-bumper-for-scuttle-software">Starting robotics - Building a bumper for scuttle. The software</a></li>
+                    </ul>
+                </div>
+                <div id="sbox3">
+                    <h2>Tags</h2>
+                    <div>
+                        <ul class="list-unstyled">
+                                <li>
+                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (15)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/nBuildKit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Scuttle" class="btn btn-default btn-sm"> Scuttle (6)</a>
+                                </li>
+                        </ul>
+                    </div>
+                    <br />
+                    <ul class="pager">
+                        <li class="next">
+                            <a href="/tags">View All Tags &rarr;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="content">
+
+<div id="post">
+    <div id="post-header">
+        <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+Robotics - Making URDF models</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Saturday, December 23, 2023
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Gazebo" class="btn btn-default btn-xs tag-no-wrap">Gazebo</a>
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/ROS" class="btn btn-default btn-xs tag-no-wrap">ROS</a>
+                        <a id="post-category" role="button" href="/tags/ROS2" class="btn btn-default btn-xs tag-no-wrap">ROS2</a>
+                        <a id="post-category" role="button" href="/tags/Simulation" class="btn btn-default btn-xs tag-no-wrap">Simulation</a>
+    </div>
+</div>
+
+    </div>
+
+    <div id="post-content">
+        <p>In a <a href="posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">previous post</a> I talked about simulating
+the <a href="https://scuttlerobot.org">SCUTTLE robot</a> using ROS and Gazebo.  I used Gazebo to
+simulate the SCUTTLE robot so that I could learn more about ROS without needing to involve a real
+robot with all the setup and complications that come with that. Additionally when I was designing the
+<a href="posts/Robotics-a-bumper-for-scuttle-overview">bump sensor</a> for SCUTTLE using the simulation allowed
+me to reduce the feedback time compared to testing the design on a physical robot. This speeds up
+the design iteration process and allowed me to quickly and verify the design and the code. In the end
+you always need to do the final testing on a real robot, but by using simulation you can quickly
+iterate to a solution that will most likely work without major issues.</p>
+<p>In order to progress my <a href="posts/Swerve-drive-introduction">swerve drive robot</a> I wanted to verify that
+the control algorithms that I had developed would work for an actual robot. Ideally before spending
+money on the hardware. So I decided to use Gazebo to run some simulations that would enable me to
+verify the control algorithm.</p>
+<p>The first step in using Gazebo is to create a model of the robot and its surrounding environment.
+Gazebo natively uses the <a href="http://sdformat.org/">SDF</a> format to define both the robot and the
+environment. However if you want ROS nodes to be able to understand the geometry definition of your
+robot you need to use the <a href="http://wiki.ros.org/urdf">URDF</a> format. This is important for instance
+if you want to make use of the <a href="https://docs.ros.org/en/humble/Concepts/Intermediate/About-Tf2.html">tf2</a>
+library to transform between different coordinate frames then your ROS nodes will have to have the
+<a href="https://github.com/ros/robot_state_publisher/tree/humble">geometry of the robot</a> available.</p>
+<p>There are different ways to create an URDF model. One way is to draw the robot in a CAD program
+and then use a plugin to export the model to an URDF file. This is a relatively quick approach, it
+takes time to create the robot in the CAD program but then the export is very quick. The drawback
+of this method is that the resulting URDF file is not very clean which makes it harder to edit
+later on. Additionally the CAD software will use meshes for both the visual geometry and the collision
+geometry. As discussed below this can lead to issues with the collision detection.
+Another way is to create the URDF manually. This approach is slower than the CAD export approach,
+however it results in a much more minimal and clean URDF file. This makes editing the file at a
+later stage a lot easier. Additionally manually creating the URDF file give you a better understanding
+of the URDF format and how it works. In the end the model for my swerve drive robot is very simple,
+consisting of a body, four wheels, the steering and drive controllers and the sensors. So I decided
+to create the URDF file manually. The images below show the resulting model in RViz. The model consists
+of the robot body in orange, the four drive modules in blue and black, and the lidar unit in red.</p>
+<figure style="float:left">
+  <a href="/assets/images/robotics/swerve/rviz_zinger_side_view.png" target="_blank">
+    <img
+        alt="The Zinger swerve robot as seen from the side in RViz."
+        src="/assets/images/robotics/swerve/rviz_zinger_side_view.png"
+        width="375"
+        height="186"/>
+  </a>
+  <figcaption>
+    The Zinger swerve robot as seen from the side in RViz.
+  </figcaption>
+</figure>
+<figure style="float:right">
+  <a href="/assets/images/robotics/swerve/rviz_zinger_front_top_view.png" target="_blank">
+    <img
+        alt="The Zinger swerve robot as seen from the front and top in RViz."
+        src="/assets/images/robotics/swerve/rviz_zinger_front_top_view.png"
+        width="375"
+        height="260"/>
+  </a>
+  <figcaption>
+    The Zinger swerve robot as seen from the front and top in RViz.
+  </figcaption>
+</figure>
+<p>The URDF model describes the different parts of the robot relative to each other. The robot parts
+consist of the physical parts of the robot, the sensors and the actuators. The physical parts, e.g.
+the wheels or the body, are described using <a href="https://wiki.ros.org/urdf/XML/link">links</a>. The links
+are connected to each other using <a href="https://wiki.ros.org/urdf/XML/joint">joints</a>. Joints allow the
+links to move relative to each other. Joints can be fixed, e.g. when two structural parts are statically
+connected to each other, or they can be movable. If a joint is movable then be one of:</p>
+<ul>
+<li>A revolute joint, which allows the two links to rotate relative to each other around a single axis.</li>
+<li>A continuous joint, which is similar to a revolute joint but allows the joint to rotate continuously
+without any limits.</li>
+<li>A prismatic joint, which allows the two links to move relative to each other along a single axis.</li>
+<li>A floating joint, which allows the two links to move relative to each other in 6 degrees of freedom.</li>
+<li>A planar joint, which allows the two links to move relative to each other in 3 degrees of freedom
+in a plane.</li>
+</ul>
+<p>In the URDF file each link defines the visual geometry, the collision geometry and the inertial
+properties for that link. The visual and collision geometry can be defined either by a primitive
+(box, cylinder or sphere) or a triangle mesh. It is recommended to use simple primitives for the
+collision geometry since these make the collision calculations faster and more stable. If you use a
+triangle mesh for the collision geometry then you can get issues with the collision detection. This
+can lead to the robot moving around when it shouldn't. For instance when the wheel of the robot is
+modelled as a triangle mesh then the collision calculation between the wheel and the ground may not
+be numerically stable which leads to undesired movement of the robot. The current version of the SCUTTLE
+URDF has this problem as is shown in the video below. In a future post I'll describe how to fix this.</p>
+<iframe
+    style="float:left"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/kyMvlBAQGoE"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
+<p>Using meshes for the visual geometry is fine as this geometry is only used for the visual
+representation of the robot. Note that the meshes should be relatively simple as well since Gazebo
+will have to render the meshes in real time which is expensive if the mesh consists of a large number
+of vertices and triangles.</p>
+<p>I normally start by defining a link that represents the <a href="https://www.ros.org/reps/rep-0120.html#base-footprint">footprint</a>
+of the robot on the ground, called <code>base_footprint</code>. This link doesn't define any geometry, it is
+only used to define the origin of the robot. When navigation is configured it will be referencing
+this footprint link. The next link that is defined is the <code>base_link</code>. This link is generally defined
+to be the &lsquo;middle&rsquo; of the robot frame and it forms the parent for all the other robot parts.</p>
+<p>The next step is to define the rest of the links and joints. For the swerve drive robot I have four
+drive modules, each consisting of a wheel and a steering motor. The wheel is connected to the steering
+motor using a continuous joint. The steering motor is connected to the base link using another continuous
+joint. Because the four modules are all the same I use the <a href="http://wiki.ros.org/xacro">xacro</a> format.
+This allows me to define <a href="https://github.com/pvandervelde/zinger_description/blob/bb24b884f8bcc62c9c2e8f12bac431f4b62dea6f/urdf/macros.xacro">a single module as a template</a>
+and then use that template to create the four modules. The benefit of this is that it makes the URDF
+file easier to edit and a lot smaller and easier to read.</p>
+<p>To add sensors you need to add two pieces of information, the information about the sensor body and,
+if you are using gazebo, the information about the sensors behaviour. The former consist of the
+visual and collision geometry of the sensor. The latter consists of the sensor plugin that is used
+to simulate the sensor. For the swerve drive robot I have two sensors, a lidar and an IMU. The
+lidar is used to provide a point cloud for the different <a href="https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping">SLAM</a>
+algorithms which allow the robot to determine where it is and what the environment looks like. The
+<a href="https://github.com/pvandervelde/zinger_description/blob/bb24b884f8bcc62c9c2e8f12bac431f4b62dea6f/urdf/gazebo.xacro#L90">Gazebo configuration</a>
+is based on the use of a <a href="https://www.slamtec.com/en/Lidar/A1">rplidar</a> sensor. The IMU is experimental
+and currently not used in any of the control algorithms. The
+<a href="https://github.com/pvandervelde/zinger_description/blob/bb24b884f8bcc62c9c2e8f12bac431f4b62dea6f/urdf/gazebo.xacro#L26">Gazebo configuration</a>
+is based on a generic IMU.</p>
+<p>The last part of the URDF file is the definition of the <a href="https://ros-controls.github.io/control.ros.org/">ROS2 control</a>
+interface. This interface allows you to control the different joints of the robot using ROS2 topics.
+The ROS2 control configuration consists of the <a href="https://github.com/pvandervelde/zinger_description/blob/bb24b884f8bcc62c9c2e8f12bac431f4b62dea6f/urdf/base.xacro#L205">general configuration</a>
+and the configuration specific to <a href="https://github.com/pvandervelde/zinger_description/blob/bb24b884f8bcc62c9c2e8f12bac431f4b62dea6f/urdf/gazebo.xacro#L148">Gazebo</a>.
+It should be noted that the Gazebo specific configuration depends on linking to the correct control
+plugin for Gazebo. In my case, using <a href="https://docs.ros.org/en/humble/">ROS2 Humble</a>,
+and <a href="https://gazebosim.org/docs/fortress/install">Gazebo Ignition Fortress</a>, I need to use the
+<code>ign_ros2_control-system</code> plugin with the <code>ign_ros2_control::IgnitionROS2ControlPlugin</code> entrypoint.
+For other versions of ROS2 and Gazebo you may need to use a different plugin.</p>
+<p>When you are using this information to create your URDF model there are a number of issues that you may
+run into. The main ones I ran in to are:</p>
+<ul>
+<li>ROS2 control documentation is lacking in that it doesn't necessarily exist for the combination of
+your version of ROS and Gazebo. That means you need to look at the source code to figure out the
+names of the plugins and which controllers are available. For instance ROS2 control defines a
+<a href="https://control.ros.org/humble/doc/ros2_controllers/joint_trajectory_controller/doc/userdoc.html">joint trajectory controller</a>.
+This controller should be able to work with a velocity trajectory, i.e. a trajectory that defines
+changes in velocity. However the current implementation of the controller doesn't support this. Additionally
+the Gazebo plugin doesn't support all the controller types that are available in ROS2 control. To
+find out which controllers actually work in Gazebo you need to search the source code of the Gazebo
+control plugin.</li>
+<li>In order to run ROS2 control you need to load the <a href="https://control.ros.org/humble/doc/ros2_control/controller_manager/doc/userdoc.html">controller manager</a>.
+This component manages the lifecyle of the controllers. However when running in Gazebo you shouldn't
+to load the controller manager as Gazebo loads one for you. If you do load the controller manager
+then you will get an error message that the controller manager is already loaded. Also note that in
+order to optionally load the controller when using the Python launch files you need to use the
+<a href="https://github.com/pvandervelde/zinger_description/blob/bb24b884f8bcc62c9c2e8f12bac431f4b62dea6f/launch/controllers.launch.py#L52">unless</a>
+construct, not the Python <code>if .. then</code> approach. The latter doesn't work due to the delayed
+evaluation of the launch file.</li>
+<li>The start up order of the ROS2 control controllers relative to other ROS nodes is important. When
+the controllers start they will try to get the joint and link descriptions from the
+<a href="https://github.com/ros/robot_state_publisher/tree/humble"><code>robot state publisher</code></a>. This won't
+be running until after the simulation starts. So you need to <a href="https://github.com/pvandervelde/zinger_description/blob/bb24b884f8bcc62c9c2e8f12bac431f4b62dea6f/launch/controllers.launch.py#L72">delay</a>
+the start of the controllers until after the robot is loaded in Gazebo and the state publisher node
+is running.</li>
+<li>Unlike with ROS1 if you want your ROS2 nodes to get information from Gazebo, e.g. the simulation
+time or the current position or velocity of a joint, then you need to set up a
+<a href="https://github.com/pvandervelde/zinger_ignition/blob/5e71f841d1db557c3e62ff38291701ddc31a0d73/launch/ignition_bridge.launch.py#L19">ROS bridge</a>.
+This is because Gazebo no longer connects to the ROS2 messaging system automatically. For my simulation
+I bridged the following topics:
+<ul>
+<li><code>/clock</code> - The simulation time. This was bridged unidirectionally from Gazebo to ROS2 into the
+<code>/clock</code> topic.</li>
+<li><code>/cmd_vel</code> - The velocity commands for the robot. This was bridged bidirectionally between Gazebo
+and ROS2.</li>
+<li><code>/model/&lt;ROBOT_NAME&gt;/pose</code> and <code>/model/&lt;ROBOT_NAME&gt;/pose_static</code> - The position of the robot
+in the simulation as seen by the simulation. This was bridged unidirectionally from Gazebo to
+ROS2 into the <code>/ground_truth_pose</code> and <code>/ground_truth_pose_static</code> topics.</li>
+<li><code>/model/&lt;ROBOT_NAME&gt;/tf</code> - The transformation between the different coordinate frames of the
+robot as seen by the simulation. This was bridged unidirectionally from Gazebo to ROS2 into the
+<code>/model/&lt;ROBOT_NAME&gt;/tf</code> topic.</li>
+<li><code>/&lt;LIDAR_NAME&gt;/scan</code> and <code>/&lt;LIDAR_NAME&gt;/scan/points</code> - The point cloud from the lidar sensor.
+These were bridged unidirectionally from Gazebo to ROS2 into the <code>/scan</code> and <code>/scan/points</code> topics.</li>
+<li><code>/world/&lt;WORLD_NAME&gt;/model/&lt;MODEL_NAME&gt;/link/&lt;IMU_SENSOR_LINK_NAME&gt;/sensor/&lt;IMU_NAME&gt;/imu</code> - The
+IMU data. This was bridged unidirectionally from Gazebo to ROS2 into the <code>/imu</code> topic.</li>
+</ul>
+</li>
+</ul>
+<p>Finally one issue  that applies specifically to ROS2 Humble and Gazebo Ignition has to do with the
+fact that Gazebo Ignition was renamed back to Gazebo. This means that some of the plugins have been
+renamed as well. So the information you find on the internet about the correct name of the plugin
+may be out of date.</p>
+<p>Once you have the URDF you need to get Gazebo to load it. This is done in two parts. First you need
+to load the <code>robot state publisher</code> and provide it with the robot description (URDF). The code below
+provides an example on how to achieve this.</p>
+<pre><code class="language-python">def generate_launch_description():
+    is_simulation = LaunchConfiguration(&quot;use_sim_time&quot;)
+    use_fake_hardware = LaunchConfiguration(&quot;use_fake_hardware&quot;)
+    fake_sensor_commands = LaunchConfiguration(&quot;fake_sensor_commands&quot;)
+
+    robot_description_content = Command(
+        [
+            PathJoinSubstitution([FindExecutable(name=&quot;xacro&quot;)]),
+            &quot; &quot;,
+            PathJoinSubstitution([get_package_share_directory('zinger_description'), &quot;urdf&quot;, 'base.xacro']),
+            &quot; &quot;,
+            &quot;is_simulation:=&quot;,
+            is_simulation,
+             &quot; &quot;,
+            &quot;use_fake_hardware:=&quot;,
+            use_fake_hardware,
+            &quot; &quot;,
+            &quot;fake_sensor_commands:=&quot;,
+            fake_sensor_commands,
+        ]
+    )
+    robot_description = {&quot;robot_description&quot;: ParameterValue(robot_description_content, value_type=str)}
+
+    # Takes the joint positions from the 'joint_state' topic and updates the position of the robot with tf2.
+    robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='robot_state_publisher',
+        output='screen',
+        parameters=[
+            {'use_sim_time': LaunchConfiguration('use_sim_time')},
+            robot_description,
+        ],
+    )
+
+    ld = LaunchDescription(ARGUMENTS)
+    ld.add_action(robot_state_publisher)
+    return ld
+
+</code></pre>
+<p>Then you need to spawn the robot in Gazebo. Assuming you're using Gazebo Ignition then you can use
+the <code>ros_ign_gazebo</code> package with the command line as shown below.</p>
+<pre><code class="language-python">
+    def generate_launch_description():
+        spawn_robot = Node(
+            package='ros_ign_gazebo',
+            executable='create',
+            arguments=[
+                '-name', LaunchConfiguration('robot_name'),
+                '-x', x,
+                '-y', y,
+                '-z', z,
+                '-Y', yaw,
+                '-topic', '/robot_description'],
+            output='screen')
+
+        ld = LaunchDescription(ARGUMENTS)
+        ld.add_action(spawn_robot)
+
+        return ld
+</code></pre>
+<iframe
+    style="float:right"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/fR47Y7p4mtQ"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
+<p>Once you have set this all up you should be able to run Gazebo and see your robot in the simulation.
+At this point you can then control the robot using the ROS2 control interface by sending the
+appropriate messages. For an example you can look at the <a href="https://github.com/pvandervelde/zinger_controller_test_nodes">test control library</a>
+for the swerve robot. That should allow you to get the robot moving as shown in the video. In the video
+two different control commands are given. One controls the motion of the steering actuators and makes
+the wheels steer from left to right and back again on a timed loop. The other controls the motion of
+the wheels, driving them forwards and then backwards, also on a timed loop. Obviously this is not
+a good way to control the robot, but it does allow you to verify that you have correctly configured
+all the parts of your robot for use in Gazebo.</p>
+
+    </div>
+
+    <div id="post-footer">
+        <div>
+    <div class="navlinks">
+                <a href="/posts/Swerve-motion-profiles" title="Previous Post: Swerve drive - Motion profiles" class="navlinks-prev">« Swerve drive - Motion profiles</a>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
+    var disqus_identifier = 'Robotics-making-urdf-models';
+    var disqus_title = 'Robotics - Making URDF models';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Robotics-making-urdf-models';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <footer>
+            <div id="footer" class="container">
+    <div id="fbox1">
+        <h2>Related</h2>
+        <ul>
+            <li><a href="https://github.com/pvandervelde"><i class="fa fa-github"></i> GitHub</a></li>
+            <li><a href="https://www.linkedin.com/profile/view?id=33950311"><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+            <li><a href="https://stackoverflow.com/users/539846/petrik"><i class="fa fa-stack-overflow"></i> StackOverflow</a></li>
+            <li><a href="https://careers.stackoverflow.com/pvandervelde"><i class="fa fa-stack-overflow"></i> StackOverflow Careers</a></li>
+            <li><a href="https://profile.codersrank.io/user/pvandervelde">CodersRank</a></li>
+        </ul>
+    </div>
+    <div id="fbox2">
+        <h2 id="copyright">Copyright</h2>
+        <p>Copyright (c) 2023 <a href="/">Petrik van der Velde</a>. All rights reserved.</p>
+
+        <h2 id="disclaimer">Disclaimer</h2>
+        <p>The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</p>
+    </div>
+    <div id="fbox3">
+        <h2 id="media">Media</h2>
+        <p><a href="/feed.atom"><img src="/assets/images/feed.png" alt="Atom feed"></a></p>
+    </div>
+</div>
+<div id="copyright" class="container">
+    <div>
+        <p>
+            Generated by <a href="https://wyam.io">Wyam</a> on Sat, 23 Dec 2023 09:30:14 GMT
+
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/ce6daaeae617a86dc984dce31aacb03b29d3974a">ce6daaeae617a86dc984dce31aacb03b29d3974a</a> at version 3.18.0.        </p>
+    </div>
+
+    <p>
+        Site design based on the <a href="https://www.freecsstemplates.org/previews/opentools/">Open Tools</a> design
+        by <a href="https://www.freecsstemplates.org">FreeCSSTemplates.org</a>.
+    </p>
+    <p>
+        Feed icon by <a href="https://www.icojam.com/">Icojam</a> and Favicon by
+        <a href="https://www.flaticon.com/free-icon/twister-sky-wind_12318" title="Yannick">Yannick</a>
+        from <a href="https://www.flaticon.com" title="Flaticon">www.flaticon.com</a>
+    </p>
+</div>
+
+        </footer>
+    </body>
+</html>
