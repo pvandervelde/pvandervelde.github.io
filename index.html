@@ -134,6 +134,7 @@
                 <div id="sbox2">
                     <h2>Recent</h2>
                     <ul class="list-unstyled">
+                            <li><a href="/posts/Swerve-drive-ros2-nav">Swerve drive - Using Nav2</a></li>
                             <li><a href="/posts/Robotics-making-urdf-models">Robotics - Making URDF models</a></li>
                             <li><a href="/posts/Swerve-motion-profiles">Swerve drive - Motion profiles</a></li>
                             <li><a href="/posts/Swerve-drive-control-animations">Swerve drive - Movement animations</a></li>
@@ -143,7 +144,6 @@
                             <li><a href="/posts/Swerve-drive-introduction">Swerve drive - Moving a robot in all directions, mostly</a></li>
                             <li><a href="/posts/Robotics-fixing-scuttles-encoder">Starting robotics - Fixing the wheel encoders</a></li>
                             <li><a href="/posts/Robotics-a-bumper-for-scuttle-electronics">Starting robotics - Building a bumper for scuttle. The electronics</a></li>
-                            <li><a href="/posts/Robotics-a-bumper-for-scuttle-software">Starting robotics - Building a bumper for scuttle. The software</a></li>
                     </ul>
                 </div>
                 <div id="sbox3">
@@ -151,7 +151,7 @@
                     <div>
                         <ul class="list-unstyled">
                                 <li>
-                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (15)</a>
+                                    <a role="button" href="/tags/Robotics" class="btn btn-default btn-sm"> Robotics (16)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Sherlock" class="btn btn-default btn-sm"> Sherlock (13)</a>
@@ -160,25 +160,25 @@
                                     <a role="button" href="/tags/nBuildKit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
+                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
+                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
-                                </li>
-                                <li>
                                     <a role="button" href="/tags/Paragliding" class="btn btn-default btn-sm"> Paragliding (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Zinger" class="btn btn-default btn-sm"> Zinger (7)</a>
+                                    <a role="button" href="/tags/PG2" class="btn btn-default btn-sm"> PG2 (9)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
+                                    <a role="button" href="/tags/Zinger" class="btn btn-default btn-sm"> Zinger (8)</a>
+                                </li>
+                                <li>
+                                    <a role="button" href="/tags/Omnidirectional" class="btn btn-default btn-sm"> Omnidirectional (7)</a>
                                 </li>
                         </ul>
                     </div>
@@ -193,6 +193,145 @@
 
             <div id="content">
 
+        <div id="post-spacer">
+            <div id="post">
+                <div id="post-header">
+                    <!--
+    Model is: Tuple<IDocument, IDocument>.
+    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
+-->
+
+
+<h2>
+            <a href="/posts/Swerve-drive-ros2-nav">Swerve drive - Using Nav2</a>
+</h2>
+<div id="post-meta">
+    <div class="meta-date">
+Wednesday, January 17, 2024
+ |             Posted in     </div>
+    <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Nav2" class="btn btn-default btn-xs tag-no-wrap">Nav2</a>
+                        <a id="post-category" role="button" href="/tags/Omnidirectional" class="btn btn-default btn-xs tag-no-wrap">Omnidirectional</a>
+                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
+                        <a id="post-category" role="button" href="/tags/ROS2" class="btn btn-default btn-xs tag-no-wrap">ROS2</a>
+                        <a id="post-category" role="button" href="/tags/Swerve" class="btn btn-default btn-xs tag-no-wrap">Swerve</a>
+                        <a id="post-category" role="button" href="/tags/Zinger" class="btn btn-default btn-xs tag-no-wrap">Zinger</a>
+    </div>
+</div>
+
+                </div>
+                <div id="post-content">
+                    <p>The <a href="posts/Swerve-drive-introduction">goals for the development of my swerve drive robot</a> were to
+develop an off-road capable robot that can navigate autonomously between different locations to
+execute tasks either by itself or in cooperation with other robots. So far I have implemented the
+first version of the <a href="posts/Swerve-drive-body-focussed-control">steering and drive controller</a>,
+added <a href="posts/Swerve-motion-profiles">motion profiles</a> for smoother changes in velocity and acceleration,
+and I have created the <a href="posts/Robotics-making-urdf-models">URDF files</a> that allow me to simulate the
+robot in Gazebo. The next part is to add the ability to navigate the robot, autonomously,
+to a goal location.</p>
+<p>So how does the navigation in general work? The first step is to figure out where the robot is, or
+at least what is around the robot. Using the robot sensors, e.g. a lidar, we can see what the direct
+environment looks like, e.g. the robot is in a room of a building. If we have a map of the larger
+environment, e.g. the building, then using a <a href="https://github.com/ros-planning/navigation2/tree/main/nav2_amcl">location algorithm</a>
+we can figure out where in the building we are. Assuming there are enough features in the
+room to make it obvious which room we are in. If we don't have a map of the environment then we can
+use a <a href="https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping">SLAM</a> algorithm to create
+a map while the robot is moving. Having a map makes planning more reliable, because we can plan a
+path that takes into account the surroundings. However it is not strictly necessary, we can also
+plan a path without a map, but then it is possible that the planner will plan a path that is not
+possible to follow, e.g. because there is a wall in the way. Of course if there are dynamic obstacles,
+e.g. if a door is closed, then the map might not be accurate and we might still not be able to get
+to the goal.</p>
+<p>Once the robot knows where it is and it has a goal location, it can plan a path from the current
+location to the goal location. This is generally done by a <a href="https://navigation.ros.org/concepts/index.html#planners">global planner or planner for short</a>.
+There are many different algorithms for path planning each with their own advantages and disadvantages.
+Most planners only plan a path, consisting of a number of waypoints, from the current location to
+the goal location. More advanced planners can also provide velocity information along the path,
+turning the path into a trajectory for the robot to follow. Once a path, or trajectory, is created
+the robot can follow this path to reach the goal. For this a <a href="https://navigation.ros.org/concepts/index.html#controllers">local planner or controller</a>
+is used. The controller works to make the robot follow the path while making progress towards
+the goal and avoiding obstacles. Again there are a number of different algorithms, each with it own
+constraints.</p>
+<p>Note that robot navigation is a very complex topic that is very actively being researched. A result
+of this is that there are many ways in which navigation can fail or not work as expected. For example
+some of the issues I have seen are:</p>
+<ul>
+<li>The planner is unable to find a path to the goal. This can happen when there is no actual way to
+get to the goal, e.g. the robot is in a room with a closed door with the goal outside the room.
+Or when the path would pass through a section that is too narrow for the robot to fit through.</li>
+<li>The controller is unable to follow path created by the planner, most likely because the path is not
+kinematically possible for the robot. For example the path might require the robot to turn in place
+when it is using an Ackerman steering system. Or the path requires the robot to pass through a
+narrow space that the controller deems to narrow.</li>
+<li>The robot gets stuck in a corner or hallway. It considers the hallway too narrow to fit
+through safely or has no way to perform the directional changes it wants to make. Sometimes this is
+caused by the robot being too wide. However most of the cases I have seen it in is caused by the
+planner configuration.</li>
+<li>The robot is slow to respond to movement commands, leading to ever larger commanded steering and velocities.
+This was mostly an issue with the DWB controller, the MPPI controller seems to be more responsive.
+However there is definitely an issue with the swerve controller code that I need to investigate.</li>
+<li>The VM I was running the simulation on wasn't quick enough to run the simulation close to real time.
+So at some point I need to switch to running on a desktop.</li>
+</ul>
+<p>And these are only the ones I have seen. There are many more ways in which the navigation can fail.
+So it pays to stay up to date with the latest developments and to ensure that you have good ways
+to test and debug your robot and the navigation stack.</p>
+<p>Now that we know roughly what is needed for successful navigation let's have a look at what is
+needed for the swerve drive robot. The first thing we need is a way to figure out where we are. Because
+I don't have a map of the environment I am using an online SLAM approach, which creates the map
+as the robot moves around the area. The <a href="https://github.com/SteveMacenski/slam_toolbox">slam_toolbox</a>
+package makes this easy. The  <a href="https://github.com/pvandervelde/zinger_nav/blob/master/config/slam.yaml">configuration</a>
+for the robot is mostly the default configuration, except for the changes required to match the URDF
+model.</p>
+<p>For the navigation I am using the <a href="https://navigation.ros.org/">Nav2</a> package. From that package I
+selected the <a href="https://github.com/ros-planning/navigation2/tree/main/nav2_smac_planner">SMAC lattice</a>
+for the planner and the <a href="https://github.com/ros-planning/navigation2/tree/main/nav2_mppi_controller">MPPI</a>
+controller. These two were selected because they both support omnidirectional movement for non-circular,
+arbitrary shaped robots. The omnidirectional movement is required because the swerve drive robot
+can move in all directions and it would be a waste not to use that capability. The non-circular robot
+comes from the fact that the robot is rectangular and could pass through narrow passages in one
+orientation but not the other. Originally I tried the
+<a href="https://github.com/ros-planning/navigation2/tree/main/nav2_dwb_controller">DWB controller</a>
+and the <a href="https://github.com/ros-planning/navigation2/tree/main/nav2_navfn_planner">navfn planner</a>.
+Both are said to support omnidirectional movement. But when applied the DWB planner didn't really
+use the omnidirectional capabilities. Additionally it gets stuck for certain movements for unknown
+reasons. Once I changed to using the SMAC planner and the MPPI controller the robot was successfully
+able to navigate around the environment.
+Again the <a href="https://github.com/pvandervelde/zinger_nav/blob/master/config/nav2.yaml">configuration</a>
+is mostly the default configuration except that I have updated some of the values to match the robot's
+capabilities.</p>
+<iframe
+    style="float:none"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/U2IOLwuCvrQ"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
+<p>With all that set I got the robot to navigate to a goal. The video shows the robot starting the navigation
+from one room to another. As it moves at the <a href="https://youtu.be/U2IOLwuCvrQ?t=15">15 second</a> mark it
+starts sideways translating while rotating to get around the corner in order to get through the door
+of the room. It continues its journey mostly traversing sideways, occasionally rotating into the
+direction it is moving. At the <a href="https://youtu.be/U2IOLwuCvrQ?t=52">52 second</a>
+mark it reaches the goal location and rotates into the orientation it was commanded to
+end up in. Note that the planner inserted a turn, stop and back-up segment to get to the right
+orientation but the local planner opted to perform an in-place rotation at the end.</p>
+<p>While there was a bit of tuning required to get the SLAM and navigation stacks to work, in the
+end it worked well. Obviously this is only one test case so once I have a dedicated PC to run
+the simulation I am going to do a lot more testing.</p>
+<p>One of the things that is currently not implemented is limits on the steering and drive velocities.
+This means that currently the robot can move at any speed and turn at any rate. This is not
+realistic and will in the real world lead to the motors in the robot being overloaded. So the
+next step is to add the limits to the controller. The main issue with this is the need to keep the
+drive modules synchronised. So when one of the modules exceeds its velocity limits the other modules
+have to be slowed down as well so that we don't lose synchronisation between the modules. More on this
+in one of my next posts.</p>
+
+                </div>
+            </div>
+        </div>
         <div id="post-spacer">
             <div id="post">
                 <div id="post-header">
@@ -1056,159 +1195,6 @@ follow a trajectory, it follows a path.</li>
                 </div>
             </div>
         </div>
-        <div id="post-spacer">
-            <div id="post">
-                <div id="post-header">
-                    <!--
-    Model is: Tuple<IDocument, IDocument>.
-    The first one is the current document that is being rendered, the second one is the one for which the post header should be rendered.
--->
-
-
-<h2>
-            <a href="/posts/Swerve-drive-kinematics-verification">Swerve drive - Verification of the kinematics solution</a>
-</h2>
-<div id="post-meta">
-    <div class="meta-date">
-Thursday, May 4, 2023
- |             Posted in     </div>
-    <div class="meta-tags">
-                        <a id="post-category" role="button" href="/tags/Kinematics" class="btn btn-default btn-xs tag-no-wrap">Kinematics</a>
-                        <a id="post-category" role="button" href="/tags/Omnidirectional" class="btn btn-default btn-xs tag-no-wrap">Omnidirectional</a>
-                        <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
-                        <a id="post-category" role="button" href="/tags/Swerve" class="btn btn-default btn-xs tag-no-wrap">Swerve</a>
-                        <a id="post-category" role="button" href="/tags/Zinger" class="btn btn-default btn-xs tag-no-wrap">Zinger</a>
-    </div>
-</div>
-
-                </div>
-                <div id="post-content">
-                    <p>As I explained in an <a href="posts/Swerve-drive-kinematics-simulation">earlier post</a> I have written some
-code to simulate the movement of a four wheel swerve drive.</p>
-<figure style="float:left">
-  <a href="/assets/images/robotics/swerve/swerve-dof.png" target="_blank">
-    <img alt="Swerve drive degrees of freedom" src="/assets/images/robotics/swerve/swerve-dof.png" />
-  </a>
-  <figcaption>Degrees of freedom for a swerve drive system.</figcaption>
-</figure>
-<p>Currently I have only implemented a
-<a href="https://www.chiefdelphi.com/t/paper-4-wheel-independent-drive-independent-steering-swerve/107383">simple kinematics based approach</a>.
-This approach is based on the diagram displaying degrees of freedom for the swerve drive as well as
-the coordinate systems for the different parts. The simple kinematics approach makes a number of
-assumptions which greatly simplify the problem space.</p>
-<ul>
-<li>The steering axis of a drive module is vertical and passes through the centre of the wheel, i.e.
-no positional changes occur when the wheel steering angle changes.</li>
-<li>The robot is moving on a flat, horizontal surface, i.e. the contact point between the wheel and
-the ground is always inline with the steering axis of a drive module.</li>
-<li>The robot has no suspension, i.e. the body doesn't move vertically relative to the contact
-point between the wheel and the ground.</li>
-<li>There is no wheel slip.</li>
-<li>There is no wheel lift-off, i.e. the wheels of the robot are always in contact with the ground.</li>
-<li>The motors are infinitely powerful and fast, i.e. there are no limits on the motor performance.</li>
-</ul>
-<p>With diagram and the given assumptions we can derive the equations for the wheel velocity
-and the steering angle of each drive module.</p>
-<pre><code>v_i = v + W x r_i
-
-alpha_i = acos (v_i_x / |v_i|)
-      = asin (v_i_y / |v_i|)
-</code></pre>
-<p>Where</p>
-<ul>
-<li><code>v_i</code> - the wheel velocity of the i-th drive module, i.e. the velocity at which the drive module
-would move forward if there is no wheel slip. The <code>x</code> and <code>y</code> components of this vector are
-named as <code>v_i_x</code> and <code>v_i_y</code>.</li>
-<li><code>v</code> - the linear velocity of the robot.</li>
-<li><code>W</code> - the angular velocity of the robot.</li>
-<li><code>r_i</code> - the position vector of the i-th drive module.</li>
-<li><code>alpha_i</code> - the steering angle of the i-th drive module relative to the robot coordinate system.</li>
-</ul>
-<p>Based on these equations we can determine the forward kinematics, which translates the movement
-of the drive modules to the movement of the robot body, and the inverse kinematics, which translates
-the movement of the robot body to the movement of the drive modules. When doing the calculations for
-a four wheel swerve drive it is important to note that the forward kinematics calculations are
-<a href="https://en.wikipedia.org/wiki/Overdetermined_system">overdetermined</a>, i.e. there are more control
-variables than there are outputs. This means that there are additional control variables that we can
-play with. One obvious one for a swerve drive is that we can control the orientation of the robot body
-independent[*] from the direction of movement of the robot. This also means that the forward kinematics
-calculations are based on the <a href="https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse">pseudoinverse</a>
-approach which computes a best fit, a.k.a. least squares, using the drive module wheel velocities and
-steering angles. In order words the wheel velocities and steering angles are approximations, not exact
-values.</p>
-<p>The transition between states, i.e. from one combination of x-velocity, y-velocity and rotation velocity
-to another combination, is done by assuming that there is linear control for the drive module variables,
-i.e. wheel velocity and steering angle. While linear control profiles are not the best control
-method it does allow later on only changing the profile code to use a more suitable one, for
-instance a <a href="https://en.wikipedia.org/wiki/Jerk_(physics)#In_motion_control">jerk limited</a> profile.</p>
-<p>The code I wrote gives me a graphs like the ones presented in my <a href="posts/Swerve-drive-kinematics-simulation">previous post</a>.
-However before I use this code to test new control algorithms I want to make sure my code is
-actually producing the correct results. The <a href="https://en.wikipedia.org/wiki/Software_verification_and_validation">verification</a>
-is done by running a bunch of simple simulations for which I am able to predict the behaviour using
-some simple maths.</p>
-<p>To verify that my code is correct I a ran a number of sets of simulations. The
-<a href="https://github.com/pvandervelde/basic-swerve-sim/blob/master/verification/linear_module_first/simple_4w_steering/linear_with_single_axis/README.md">first set</a>
-is used to ensure that both the positive and the negative direction behaviour for the main axis directions.
-Any differences in behaviour between the positive and the negative direction point to issues in the
-simulation code. So the simulations that were done for this verification set are:</p>
-<ul>
-<li>Drive the robot in x-direction while facing in the x-direction, one simulation going forward from
-the origin and one simulation going backwards from the origin.</li>
-<li>Drive the robot in the y-direction while facing in the x-direction, one simulation going left from
-the origin and one simulation going right from the origin.</li>
-<li>Drive the robot in a rotation only movement, one simulation going clockwise and one simulation going
-counter-clockwise.</li>
-</ul>
-<p>The <a href="https://github.com/pvandervelde/basic-swerve-sim/blob/master/verification/linear_module_first/simple_4w_steering/rotation_with_single_axis/README.md">second simulation set</a>
-is designed to verify the coordinate calculations related to rotations. The
-simulations that were done for this verification set are:</p>
-<ul>
-<li>Rotate the robot by 90 degrees and then drive it in the robot x-direction, driving forwards
-and backwards.</li>
-<li>Rotate the robot by 90 degrees and then drive it in the robot y-direction, driving left and right.</li>
-</ul>
-<figure style="float:right">
-  <a href="/assets/images/robotics/swerve/swerve_sim_circle.png" target="_blank">
-    <img
-        alt="Drive the robot in a circle."
-        src="/assets/images/robotics/swerve/swerve_sim_circle.png"
-        width="833"
-        height="800"/>
-  </a>
-  <figcaption>Swerve drive position and velocities for driving in a circle.</figcaption>
-</figure>
-<p>The <a href="https://github.com/pvandervelde/basic-swerve-sim/blob/master/verification/linear_module_first/simple_4w_steering/combined/README.md">third set of simulations</a>
-is designed to verify the behaviour during combined movements. The
-simulations that were done for this verification set are:</p>
-<ul>
-<li>Drive the robot on the 30 degree diagonals (30 degrees, 60 degrees, 120 degrees, 150 degrees),
-while facing in the x-direction, one simulation going forwards from the origin and one going
-backwards from the origin.</li>
-<li>Drive the robot in a circle around a centre point outside the robot body.</li>
-</ul>
-<p>While running the verification sets a number of bugs were found and fixed. At the end of the process
-all the validations passed indicating that the simulation code is usable.</p>
-<p>With all of this done it is now time to do some more complicated simulations both for robot behaviour
-that is specific to swerve drive systems and for different control algorithms. More on that in the next
-post.</p>
-<p>&ndash;</p>
-<p>[*] Mostly independent. In reality the motors used in the drive modules will have
-limits on how fast they can be driven, how much torque they can produce and
-how fast they can change from one state to the next. This means that there
-are limitations on movements of the drive modules and thus the robot body. For
-instance if a drive module has a maximum linear velocity of 1.0 m/s it is
-not possible to drive the robot diagonally any faster than this velocity, even
-though we can drive the robot in x-direction at 1.0 m/s and we can drive the
-robot in y-direction at 1.0 m/s. We just can't do both at the same time.</p>
-<h4>Edits</h4>
-<ul>
-<li>July 4th 2023: Changed the term <code>control trajectory</code> to <code>control profile</code> because the term
-<code>trajectory</code> is generally reserved for path planning situations.</li>
-</ul>
-
-                </div>
-            </div>
-        </div>
             </div>
         </div>
 
@@ -1239,9 +1225,9 @@ robot in y-direction at 1.0 m/s. We just can't do both at the same time.</p>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Tue, 16 Jan 2024 03:08:48 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Wed, 17 Jan 2024 10:03:52 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/ec6bf08dcdd12489e8f93da6a36c3ec16c2670a9">ec6bf08dcdd12489e8f93da6a36c3ec16c2670a9</a> at version 3.18.1.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/05dbee417d0231bfe88d46f743816596cab3224a">05dbee417d0231bfe88d46f743816596cab3224a</a> at version 3.19.0.        </p>
     </div>
 
     <p>

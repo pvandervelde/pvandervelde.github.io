@@ -5,8 +5,130 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2024</copyright>
-		<pubDate>Tue, 16 Jan 2024 03:08:48 GMT</pubDate>
-		<lastBuildDate>Tue, 16 Jan 2024 03:08:48 GMT</lastBuildDate>
+		<pubDate>Wed, 17 Jan 2024 10:03:53 GMT</pubDate>
+		<lastBuildDate>Wed, 17 Jan 2024 10:03:53 GMT</lastBuildDate>
+		<item>
+			<title>Swerve drive - Using Nav2</title>
+			<link>https://www.petrikvandervelde.nl/posts/Swerve-drive-ros2-nav</link>
+			<description>&lt;p&gt;The &lt;a href="posts/Swerve-drive-introduction"&gt;goals for the development of my swerve drive robot&lt;/a&gt; were to
+develop an off-road capable robot that can navigate autonomously between different locations to
+execute tasks either by itself or in cooperation with other robots. So far I have implemented the
+first version of the &lt;a href="posts/Swerve-drive-body-focussed-control"&gt;steering and drive controller&lt;/a&gt;,
+added &lt;a href="posts/Swerve-motion-profiles"&gt;motion profiles&lt;/a&gt; for smoother changes in velocity and acceleration,
+and I have created the &lt;a href="posts/Robotics-making-urdf-models"&gt;URDF files&lt;/a&gt; that allow me to simulate the
+robot in Gazebo. The next part is to add the ability to navigate the robot, autonomously,
+to a goal location.&lt;/p&gt;</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Swerve-drive-ros2-nav</guid>
+			<pubDate>Wed, 17 Jan 2024 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;The &lt;a href="posts/Swerve-drive-introduction"&gt;goals for the development of my swerve drive robot&lt;/a&gt; were to
+develop an off-road capable robot that can navigate autonomously between different locations to
+execute tasks either by itself or in cooperation with other robots. So far I have implemented the
+first version of the &lt;a href="posts/Swerve-drive-body-focussed-control"&gt;steering and drive controller&lt;/a&gt;,
+added &lt;a href="posts/Swerve-motion-profiles"&gt;motion profiles&lt;/a&gt; for smoother changes in velocity and acceleration,
+and I have created the &lt;a href="posts/Robotics-making-urdf-models"&gt;URDF files&lt;/a&gt; that allow me to simulate the
+robot in Gazebo. The next part is to add the ability to navigate the robot, autonomously,
+to a goal location.&lt;/p&gt;
+&lt;p&gt;So how does the navigation in general work? The first step is to figure out where the robot is, or
+at least what is around the robot. Using the robot sensors, e.g. a lidar, we can see what the direct
+environment looks like, e.g. the robot is in a room of a building. If we have a map of the larger
+environment, e.g. the building, then using a &lt;a href="https://github.com/ros-planning/navigation2/tree/main/nav2_amcl"&gt;location algorithm&lt;/a&gt;
+we can figure out where in the building we are. Assuming there are enough features in the
+room to make it obvious which room we are in. If we don't have a map of the environment then we can
+use a &lt;a href="https://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping"&gt;SLAM&lt;/a&gt; algorithm to create
+a map while the robot is moving. Having a map makes planning more reliable, because we can plan a
+path that takes into account the surroundings. However it is not strictly necessary, we can also
+plan a path without a map, but then it is possible that the planner will plan a path that is not
+possible to follow, e.g. because there is a wall in the way. Of course if there are dynamic obstacles,
+e.g. if a door is closed, then the map might not be accurate and we might still not be able to get
+to the goal.&lt;/p&gt;
+&lt;p&gt;Once the robot knows where it is and it has a goal location, it can plan a path from the current
+location to the goal location. This is generally done by a &lt;a href="https://navigation.ros.org/concepts/index.html#planners"&gt;global planner or planner for short&lt;/a&gt;.
+There are many different algorithms for path planning each with their own advantages and disadvantages.
+Most planners only plan a path, consisting of a number of waypoints, from the current location to
+the goal location. More advanced planners can also provide velocity information along the path,
+turning the path into a trajectory for the robot to follow. Once a path, or trajectory, is created
+the robot can follow this path to reach the goal. For this a &lt;a href="https://navigation.ros.org/concepts/index.html#controllers"&gt;local planner or controller&lt;/a&gt;
+is used. The controller works to make the robot follow the path while making progress towards
+the goal and avoiding obstacles. Again there are a number of different algorithms, each with it own
+constraints.&lt;/p&gt;
+&lt;p&gt;Note that robot navigation is a very complex topic that is very actively being researched. A result
+of this is that there are many ways in which navigation can fail or not work as expected. For example
+some of the issues I have seen are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The planner is unable to find a path to the goal. This can happen when there is no actual way to
+get to the goal, e.g. the robot is in a room with a closed door with the goal outside the room.
+Or when the path would pass through a section that is too narrow for the robot to fit through.&lt;/li&gt;
+&lt;li&gt;The controller is unable to follow path created by the planner, most likely because the path is not
+kinematically possible for the robot. For example the path might require the robot to turn in place
+when it is using an Ackerman steering system. Or the path requires the robot to pass through a
+narrow space that the controller deems to narrow.&lt;/li&gt;
+&lt;li&gt;The robot gets stuck in a corner or hallway. It considers the hallway too narrow to fit
+through safely or has no way to perform the directional changes it wants to make. Sometimes this is
+caused by the robot being too wide. However most of the cases I have seen it in is caused by the
+planner configuration.&lt;/li&gt;
+&lt;li&gt;The robot is slow to respond to movement commands, leading to ever larger commanded steering and velocities.
+This was mostly an issue with the DWB controller, the MPPI controller seems to be more responsive.
+However there is definitely an issue with the swerve controller code that I need to investigate.&lt;/li&gt;
+&lt;li&gt;The VM I was running the simulation on wasn't quick enough to run the simulation close to real time.
+So at some point I need to switch to running on a desktop.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And these are only the ones I have seen. There are many more ways in which the navigation can fail.
+So it pays to stay up to date with the latest developments and to ensure that you have good ways
+to test and debug your robot and the navigation stack.&lt;/p&gt;
+&lt;p&gt;Now that we know roughly what is needed for successful navigation let's have a look at what is
+needed for the swerve drive robot. The first thing we need is a way to figure out where we are. Because
+I don't have a map of the environment I am using an online SLAM approach, which creates the map
+as the robot moves around the area. The &lt;a href="https://github.com/SteveMacenski/slam_toolbox"&gt;slam_toolbox&lt;/a&gt;
+package makes this easy. The  &lt;a href="https://github.com/pvandervelde/zinger_nav/blob/master/config/slam.yaml"&gt;configuration&lt;/a&gt;
+for the robot is mostly the default configuration, except for the changes required to match the URDF
+model.&lt;/p&gt;
+&lt;p&gt;For the navigation I am using the &lt;a href="https://navigation.ros.org/"&gt;Nav2&lt;/a&gt; package. From that package I
+selected the &lt;a href="https://github.com/ros-planning/navigation2/tree/main/nav2_smac_planner"&gt;SMAC lattice&lt;/a&gt;
+for the planner and the &lt;a href="https://github.com/ros-planning/navigation2/tree/main/nav2_mppi_controller"&gt;MPPI&lt;/a&gt;
+controller. These two were selected because they both support omnidirectional movement for non-circular,
+arbitrary shaped robots. The omnidirectional movement is required because the swerve drive robot
+can move in all directions and it would be a waste not to use that capability. The non-circular robot
+comes from the fact that the robot is rectangular and could pass through narrow passages in one
+orientation but not the other. Originally I tried the
+&lt;a href="https://github.com/ros-planning/navigation2/tree/main/nav2_dwb_controller"&gt;DWB controller&lt;/a&gt;
+and the &lt;a href="https://github.com/ros-planning/navigation2/tree/main/nav2_navfn_planner"&gt;navfn planner&lt;/a&gt;.
+Both are said to support omnidirectional movement. But when applied the DWB planner didn't really
+use the omnidirectional capabilities. Additionally it gets stuck for certain movements for unknown
+reasons. Once I changed to using the SMAC planner and the MPPI controller the robot was successfully
+able to navigate around the environment.
+Again the &lt;a href="https://github.com/pvandervelde/zinger_nav/blob/master/config/nav2.yaml"&gt;configuration&lt;/a&gt;
+is mostly the default configuration except that I have updated some of the values to match the robot's
+capabilities.&lt;/p&gt;
+&lt;iframe
+    style="float:none"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/U2IOLwuCvrQ"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;p&gt;With all that set I got the robot to navigate to a goal. The video shows the robot starting the navigation
+from one room to another. As it moves at the &lt;a href="https://youtu.be/U2IOLwuCvrQ?t=15"&gt;15 second&lt;/a&gt; mark it
+starts sideways translating while rotating to get around the corner in order to get through the door
+of the room. It continues its journey mostly traversing sideways, occasionally rotating into the
+direction it is moving. At the &lt;a href="https://youtu.be/U2IOLwuCvrQ?t=52"&gt;52 second&lt;/a&gt;
+mark it reaches the goal location and rotates into the orientation it was commanded to
+end up in. Note that the planner inserted a turn, stop and back-up segment to get to the right
+orientation but the local planner opted to perform an in-place rotation at the end.&lt;/p&gt;
+&lt;p&gt;While there was a bit of tuning required to get the SLAM and navigation stacks to work, in the
+end it worked well. Obviously this is only one test case so once I have a dedicated PC to run
+the simulation I am going to do a lot more testing.&lt;/p&gt;
+&lt;p&gt;One of the things that is currently not implemented is limits on the steering and drive velocities.
+This means that currently the robot can move at any speed and turn at any rate. This is not
+realistic and will in the real world lead to the motors in the robot being overloaded. So the
+next step is to add the limits to the controller. The main issue with this is the need to keep the
+drive modules synchronised. So when one of the modules exceeds its velocity limits the other modules
+have to be slowed down as well so that we don't lose synchronisation between the modules. More on this
+in one of my next posts.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Robotics - Making URDF models</title>
 			<link>https://www.petrikvandervelde.nl/posts/Robotics-making-urdf-models</link>
@@ -2173,144 +2295,6 @@ very strongly on the situation the company is in. It is even possible that as ti
 the best type of system may change from on-prem to cloud or visa versa. Both systems have their
 own advantages and disadvantages. In the end all that matters is that a system that fits the
 development process is selected, independent of what the different vendors say is the best thing.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Software development pipeline - Considerations for infrastructure improvements</title>
-			<link>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-considerations-for-infrastructure-improvements</link>
-			<description>&lt;p&gt;In one of the post from a &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;while ago&lt;/a&gt; we
-discussed what a software development pipeline is and what the &lt;a href="/posts/Software-development-pipeline-Design-accuracy.html"&gt;most&lt;/a&gt;
-&lt;a href="/posts/Software-development-pipeline-Design-performance.html"&gt;important&lt;/a&gt;
-&lt;a href="/posts/Software-development-pipeline-Design-resilience.html"&gt;characteristics&lt;/a&gt;
-&lt;a href="/posts/Software-development-pipeline-Design-flexibility.html"&gt;are&lt;/a&gt;. Given that the pipeline is used
-during the large majority of the development, test and release process it is fair to say that for
-a software company the build and deployment pipeline infrastructure should be considered critical
-infrastructure because without it the development team will be more limited in their ability to
-perform their tasks. Note that at no stage should any specific tool, including the pipeline, be the
-single point of failure. More on how to reduce the dependency on CI systems and the pipeline will
-follow in another post.&lt;/p&gt;</description>
-			<guid>https://www.petrikvandervelde.nl/posts/Software-development-pipeline-considerations-for-infrastructure-improvements</guid>
-			<pubDate>Sun, 27 Jan 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;In one of the post from a &lt;a href="/posts/Software-development-pipeline-Design-introduction.html"&gt;while ago&lt;/a&gt; we
-discussed what a software development pipeline is and what the &lt;a href="/posts/Software-development-pipeline-Design-accuracy.html"&gt;most&lt;/a&gt;
-&lt;a href="/posts/Software-development-pipeline-Design-performance.html"&gt;important&lt;/a&gt;
-&lt;a href="/posts/Software-development-pipeline-Design-resilience.html"&gt;characteristics&lt;/a&gt;
-&lt;a href="/posts/Software-development-pipeline-Design-flexibility.html"&gt;are&lt;/a&gt;. Given that the pipeline is used
-during the large majority of the development, test and release process it is fair to say that for
-a software company the build and deployment pipeline infrastructure should be considered critical
-infrastructure because without it the development team will be more limited in their ability to
-perform their tasks. Note that at no stage should any specific tool, including the pipeline, be the
-single point of failure. More on how to reduce the dependency on CI systems and the pipeline will
-follow in another post.&lt;/p&gt;
-&lt;p&gt;Just like any other piece of infrastructure the development pipeline will need to be updated
-and improved on a regular basis, either to fix bugs, patch security issues or to add new features
-that will make the development team more productive. Because the pipeline falls in the critical
-infrastructure category it is important to keep disturbances to a minimum while performing these
-changes. There are two main parts to providing (nearly) continuous service while still providing
-improvements and updates. The first is to ensure that the changes are tracked and tested properly,
-the second is to deploy the exact changes that were tested to the production system in a way that no
-or minimal interruptions occur. A sensible approach to the first part is to follow a solid software
-development process so that the changes are controlled, verified and monitored which can be achieved
-by creating infrastructure resources completely from information stored in source control, i.e. using
-&lt;a href="https://en.wikipedia.org/wiki/Infrastructure_as_code"&gt;infrastructure-as-code&lt;/a&gt;, making the resources
-as &lt;a href="https://thenewstack.io/a-brief-look-at-immutable-infrastructure-and-why-it-is-such-a-quest/"&gt;immutable&lt;/a&gt;
-as &lt;a href="https://twitter.com/jezhumble/status/970334897544900609"&gt;possible&lt;/a&gt; and performing automated tests
-on these resources after deploying them in a test environment using the same deployment process that
-will be used to deploy the resources to the production environment.&lt;/p&gt;
-&lt;p&gt;Using this approach should allow the creation of resources that are thoroughly tested and can be
-deployed in a sensible fashion. It should be noted that no amount of automated testing will
-guarantee that the new resources are free of any issues so it will always be important use deployment
-techniques that allow for example &lt;a href="https://martinfowler.com/bliki/BlueGreenDeployment.html"&gt;quick roll-back&lt;/a&gt;
-or &lt;a href="https://martinfowler.com/bliki/CanaryRelease.html"&gt;staged roll-outs&lt;/a&gt;. Additionally deployed
-resources should be carefully monitored so that issues will be discovered quickly.&lt;/p&gt;
-&lt;p&gt;To achieve the goal of being able to deploy updates and improvements to the development
-infrastructure the following steps can be taken&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Using infrastructure-as-code to create new resource images each time a resource needs to be updated.
-Trying to create resources by hand will drastically reduce the ease at which they can be build and
-be made consistently. Resources that are deployed into an environment should never be changed. If
-bugs need to be fixed or new features need to be added then a new version of the resource image
-should be created, tested and deployed. That way changes can be tested before deployment and
-the configuration of the deployed resources will be known.&lt;/li&gt;
-&lt;li&gt;Resources should be placed on virtual machines or in (Docker) containers. Both technologies provide
-an easy way to create one or more instances of the resource which is required in order to test or
-scale a service. The general idea is to have one resource per VM / container instance. One resource
-may contain multiple services or daemons but it always serves a single goal. Note that in some cases
-people will state that you should only use containers and not VMs but there are still cases where
-a VM works better, e.g. in some cases executing software builds works better in a VM or running
-a service that stores large quantities of data. Additionally if all or a large part of the
-infrastructure is running on VMs then using VMs might make more sense. In all cases the correct
-approach, container or VMs, is the one that makes sense for the environment the resources will
-be deployed into.&lt;/li&gt;
-&lt;li&gt;Some way of getting configurations into the resource. Some configurations can be hard-coded into
-the resource, if they are never expected to be changed. The draw-back of encoding a configuration
-into a resource is that this configuration cannot be changed if the resource is used in different
-environments, e.g. a test environment and a production environment. Configurations which are
-different between environments should not be encoded in the resource since that may prevent the
-resource from being deployed in a test environment for testing. Provisioning a resource requires
-that you can apply all the environment specific information to a resource which is a difficult
-problem to solve especially for the initial set of configurations, e.g. the configurations which
-determine where to get the remaining configurations. Several options are:
-&lt;ul&gt;
-&lt;li&gt;For VMs you can use DVD / ISO files that are linked on first start-up of the resource.&lt;/li&gt;
-&lt;li&gt;Systems like &lt;a href="https://github.com/hashicorp/consul-template"&gt;consul-template&lt;/a&gt; can generate
-configurations from a distributed key-value store.&lt;/li&gt;
-&lt;li&gt;Resources can be pull their own configurations from a shared store.&lt;/li&gt;
-&lt;li&gt;For containers often environment variables are used. These might be sufficient but note that they
-are not secure, both inside the container and outside the container.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Configurations that should be provided when a resource is provisioned should be stored
-in source control, just like the resource code is, in order to be able to automate the verification
-and delivery of the configuration values.
-&lt;ul&gt;
-&lt;li&gt;The infrastructure should have it's own shared storage for configurations so that the &amp;lsquo;build&amp;rsquo;
-process can push to the shared storage and configurations are distributed from there. That ensures
-that the build process doesn't need to know where to deliver exactly (which can change as the
-infrastructure changes). One option is to use SQL / no-SQL type storage (e.g. Elasticsearch),
-another option is to use a system like &lt;a href="https://consul.io"&gt;consul&lt;/a&gt; which has a distributed key-value
-store&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Automatic testing of a resource once it is deployed into an environment. For the very least the
-smoke tests should be run automatically when the resource is deployed to a test environment.&lt;/li&gt;
-&lt;li&gt;Automatic deployments when a new resource becomes available or approved for an environment, for
-the very least to the test environment but ideally to all environments. Using the same deployment
-system for all environments is highly recommended because this allows testing the deployment
-process as well as the resource.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;A general workflow for the creation of a new resource or to update a resource could be&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Update the code for the resource. This code can consist of Docker files, &lt;a href="https://www.chef.io/"&gt;Chef&lt;/a&gt;
-or &lt;a href="https://puppet.com/"&gt;Puppet&lt;/a&gt;, scripts etc.. The most important thing is that the files are
-stored in source control and a sensible source control strategy is used.&lt;/li&gt;
-&lt;li&gt;Once the changes are made a new resource can be created from the code.
-&lt;ul&gt;
-&lt;li&gt;It is sensible to validate the sources using one or more suitable linters. Especially for infrastructure
-resources it is sensible to validate the sources before trying to create the resource because it
-potentially takes a long time to build a resource. Any errors that can be found sooner in the
-process will reduce the cycle time.&lt;/li&gt;
-&lt;li&gt;Execute unit tests, e.g. &lt;a href="https://docs.chef.io/chefspec.html"&gt;ChefSpec&lt;/a&gt;, against the sources.
-Again, building a resource can take a long time so validation before trying to create the resource
-will reduce the cycle time.&lt;/li&gt;
-&lt;li&gt;Actually create the new resource. For Docker containers this can be done from a
-&lt;a href="https://docs.docker.com/engine/reference/builder/"&gt;docker file&lt;/a&gt;. For a VM this can be done with
-&lt;a href="https://packer.io"&gt;Packer&lt;/a&gt;. Building a VM will take longer than building a docker container in
-most cases. Note that building resources will in general take longer than building applications
-it is sensible to use the build / deployment pipeline to build the resources that make up the
-build / deployment pipeline. By using the pipeline it is possible to create the artefacts for
-the services and then use these artefacts to create the resource.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Deploy the resource to a (small) test environment and execute the tests against the newly created
-resource.&lt;/li&gt;
-&lt;li&gt;Once the tests have passed the newly made image can be &amp;lsquo;promoted&amp;rsquo;, i.e. approved for use in the
-production environment.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Using the approaches mentioned above it is possible to improve the development pipeline without
-causing unnecessary disturbances for the development team.&lt;/p&gt;
-&lt;p&gt;Edit: Changed the title from &lt;code&gt;software delivery pipeline&lt;/code&gt; to &lt;code&gt;software development pipeline&lt;/code&gt; to match
-the other posts.&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>
