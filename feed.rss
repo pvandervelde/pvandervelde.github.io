@@ -5,27 +5,27 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2024</copyright>
-		<pubDate>Wed, 17 Jan 2024 10:03:53 GMT</pubDate>
-		<lastBuildDate>Wed, 17 Jan 2024 10:03:53 GMT</lastBuildDate>
+		<pubDate>Tue, 23 Jan 2024 06:30:47 GMT</pubDate>
+		<lastBuildDate>Tue, 23 Jan 2024 06:30:47 GMT</lastBuildDate>
 		<item>
 			<title>Swerve drive - Using Nav2</title>
 			<link>https://www.petrikvandervelde.nl/posts/Swerve-drive-ros2-nav</link>
-			<description>&lt;p&gt;The &lt;a href="posts/Swerve-drive-introduction"&gt;goals for the development of my swerve drive robot&lt;/a&gt; were to
+			<description>&lt;p&gt;The &lt;a href="/posts/Swerve-drive-introduction"&gt;goals for the development of my swerve drive robot&lt;/a&gt; were to
 develop an off-road capable robot that can navigate autonomously between different locations to
 execute tasks either by itself or in cooperation with other robots. So far I have implemented the
-first version of the &lt;a href="posts/Swerve-drive-body-focussed-control"&gt;steering and drive controller&lt;/a&gt;,
-added &lt;a href="posts/Swerve-motion-profiles"&gt;motion profiles&lt;/a&gt; for smoother changes in velocity and acceleration,
-and I have created the &lt;a href="posts/Robotics-making-urdf-models"&gt;URDF files&lt;/a&gt; that allow me to simulate the
+first version of the &lt;a href="/posts/Swerve-drive-body-focussed-control"&gt;steering and drive controller&lt;/a&gt;,
+added &lt;a href="/posts/Swerve-motion-profiles"&gt;motion profiles&lt;/a&gt; for smoother changes in velocity and acceleration,
+and I have created the &lt;a href="/posts/Robotics-making-urdf-models"&gt;URDF files&lt;/a&gt; that allow me to simulate the
 robot in Gazebo. The next part is to add the ability to navigate the robot, autonomously,
 to a goal location.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Swerve-drive-ros2-nav</guid>
 			<pubDate>Wed, 17 Jan 2024 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;The &lt;a href="posts/Swerve-drive-introduction"&gt;goals for the development of my swerve drive robot&lt;/a&gt; were to
+			<content:encoded>&lt;p&gt;The &lt;a href="/posts/Swerve-drive-introduction"&gt;goals for the development of my swerve drive robot&lt;/a&gt; were to
 develop an off-road capable robot that can navigate autonomously between different locations to
 execute tasks either by itself or in cooperation with other robots. So far I have implemented the
-first version of the &lt;a href="posts/Swerve-drive-body-focussed-control"&gt;steering and drive controller&lt;/a&gt;,
-added &lt;a href="posts/Swerve-motion-profiles"&gt;motion profiles&lt;/a&gt; for smoother changes in velocity and acceleration,
-and I have created the &lt;a href="posts/Robotics-making-urdf-models"&gt;URDF files&lt;/a&gt; that allow me to simulate the
+first version of the &lt;a href="/posts/Swerve-drive-body-focussed-control"&gt;steering and drive controller&lt;/a&gt;,
+added &lt;a href="/posts/Swerve-motion-profiles"&gt;motion profiles&lt;/a&gt; for smoother changes in velocity and acceleration,
+and I have created the &lt;a href="/posts/Robotics-making-urdf-models"&gt;URDF files&lt;/a&gt; that allow me to simulate the
 robot in Gazebo. The next part is to add the ability to navigate the robot, autonomously,
 to a goal location.&lt;/p&gt;
 &lt;p&gt;So how does the navigation in general work? The first step is to figure out where the robot is, or
@@ -132,27 +132,27 @@ in one of my next posts.&lt;/p&gt;
 		<item>
 			<title>Robotics - Making URDF models</title>
 			<link>https://www.petrikvandervelde.nl/posts/Robotics-making-urdf-models</link>
-			<description>&lt;p&gt;In a &lt;a href="posts/Robotics-driving-scuttle-with-ros-gazebo-simulation"&gt;previous post&lt;/a&gt; I talked about simulating
+			<description>&lt;p&gt;In a &lt;a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation"&gt;previous post&lt;/a&gt; I talked about simulating
 the &lt;a href="https://scuttlerobot.org"&gt;SCUTTLE robot&lt;/a&gt; using ROS and Gazebo.  I used Gazebo to
 simulate the SCUTTLE robot so that I could learn more about ROS without needing to involve a real
 robot with all the setup and complications that come with that. Additionally when I was designing the
-&lt;a href="posts/Robotics-a-bumper-for-scuttle-overview"&gt;bump sensor&lt;/a&gt; for SCUTTLE using the simulation allowed
+&lt;a href="/posts/Robotics-a-bumper-for-scuttle-overview"&gt;bump sensor&lt;/a&gt; for SCUTTLE using the simulation allowed
 me to reduce the feedback time compared to testing the design on a physical robot. This speeds up
 the design iteration process and allowed me to quickly and verify the design and the code. In the end
 you always need to do the final testing on a real robot, but by using simulation you can quickly
 iterate to a solution that will most likely work without major issues.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Robotics-making-urdf-models</guid>
 			<pubDate>Sat, 23 Dec 2023 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;In a &lt;a href="posts/Robotics-driving-scuttle-with-ros-gazebo-simulation"&gt;previous post&lt;/a&gt; I talked about simulating
+			<content:encoded>&lt;p&gt;In a &lt;a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation"&gt;previous post&lt;/a&gt; I talked about simulating
 the &lt;a href="https://scuttlerobot.org"&gt;SCUTTLE robot&lt;/a&gt; using ROS and Gazebo.  I used Gazebo to
 simulate the SCUTTLE robot so that I could learn more about ROS without needing to involve a real
 robot with all the setup and complications that come with that. Additionally when I was designing the
-&lt;a href="posts/Robotics-a-bumper-for-scuttle-overview"&gt;bump sensor&lt;/a&gt; for SCUTTLE using the simulation allowed
+&lt;a href="/posts/Robotics-a-bumper-for-scuttle-overview"&gt;bump sensor&lt;/a&gt; for SCUTTLE using the simulation allowed
 me to reduce the feedback time compared to testing the design on a physical robot. This speeds up
 the design iteration process and allowed me to quickly and verify the design and the code. In the end
 you always need to do the final testing on a real robot, but by using simulation you can quickly
 iterate to a solution that will most likely work without major issues.&lt;/p&gt;
-&lt;p&gt;In order to progress my &lt;a href="posts/Swerve-drive-introduction"&gt;swerve drive robot&lt;/a&gt; I wanted to verify that
+&lt;p&gt;In order to progress my &lt;a href="/posts/Swerve-drive-introduction"&gt;swerve drive robot&lt;/a&gt; I wanted to verify that
 the control algorithms that I had developed would work for an actual robot. Ideally before spending
 money on the hardware. So I decided to use Gazebo to run some simulations that would enable me to
 verify the control algorithm.&lt;/p&gt;
@@ -716,7 +716,7 @@ follow a path and prescribe the velocity at every point on the path. And theoret
 swerve drive it should even be possible for the robot to follow a trajectory while controlling
 the orientation of the robot body.&lt;/p&gt;
 &lt;p&gt;Finally the path of progression is to take the controller code that I have written for this
-simulation and use it with my &lt;a href="posts/Swerve-drive-introduction"&gt;ROS2 based swerve robot&lt;/a&gt;.&lt;/p&gt;
+simulation and use it with my &lt;a href="/posts/Swerve-drive-introduction"&gt;ROS2 based swerve robot&lt;/a&gt;.&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
@@ -770,7 +770,7 @@ It is good to keep in mind that even with this performance improvement the creat
 isn't very fast for our robot simulation because a large number of image frames need to be made. For
 the 6 second movement in the animation anywhere between 150 and 600 frames need to be created.&lt;/p&gt;
 &lt;p&gt;The animation above shows how the robot behaves when using the
-&lt;a href="posts/Swerve-drive-kinematics-simulation"&gt;direct module controller&lt;/a&gt;. As you can see in the video different
+&lt;a href="/posts/Swerve-drive-kinematics-simulation"&gt;direct module controller&lt;/a&gt;. As you can see in the video different
 pairs of wheels have different rotation points, signified by the red dots. As the movement progresses
 these rotation points have quite a large range of motion. This indicates that the wheels are not
 synchronized and most likely some of the wheels are slipping.&lt;/p&gt;
@@ -785,7 +785,7 @@ synchronized and most likely some of the wheels are slipping.&lt;/p&gt;
     allowfullscreen&gt;
 &lt;/iframe&gt;
 &lt;p&gt;I created another animation for the same situation but with the
-&lt;a href="posts/Swerve-drive-body-focussed-control"&gt;body oriented controller&lt;/a&gt;. In this case the rotation points
+&lt;a href="/posts/Swerve-drive-body-focussed-control"&gt;body oriented controller&lt;/a&gt;. In this case the rotation points
 are all in a single location leading me to conclude that all the wheels are synchronized and little
 to no wheel slip is occurring.&lt;/p&gt;
 &lt;p&gt;One other interesting thing you can see in the video is that the acceleration and
@@ -804,7 +804,7 @@ for velocity and accelerations.&lt;/p&gt;
 		<item>
 			<title>Swerve drive - Better movement by controlling the body motions</title>
 			<link>https://www.petrikvandervelde.nl/posts/Swerve-drive-body-focussed-control</link>
-			<description>&lt;p&gt;In my &lt;a href="posts/Swerve-drive-kinematics-simulation"&gt;first attempt&lt;/a&gt; to model a swerve drive I controlled
+			<description>&lt;p&gt;In my &lt;a href="/posts/Swerve-drive-kinematics-simulation"&gt;first attempt&lt;/a&gt; to model a swerve drive I controlled
 the movement of the robot by directly providing commands to the individual drive modules, i.e. by
 controlling the steering angle and the wheel velocity of each of the four drive modules. Additionally
 I assumed that the transition from one state (steering angle, wheel velocity) to another state would
@@ -816,7 +816,7 @@ will be encoding different movement profiles amongst which a low
 &lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)"&gt;jerk&lt;/a&gt; profile for smooth movements.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Swerve-drive-body-focussed-control</guid>
 			<pubDate>Fri, 09 Jun 2023 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;In my &lt;a href="posts/Swerve-drive-kinematics-simulation"&gt;first attempt&lt;/a&gt; to model a swerve drive I controlled
+			<content:encoded>&lt;p&gt;In my &lt;a href="/posts/Swerve-drive-kinematics-simulation"&gt;first attempt&lt;/a&gt; to model a swerve drive I controlled
 the movement of the robot by directly providing commands to the individual drive modules, i.e. by
 controlling the steering angle and the wheel velocity of each of the four drive modules. Additionally
 I assumed that the transition from one state (steering angle, wheel velocity) to another state would
@@ -930,11 +930,11 @@ follow a trajectory, it follows a path.&lt;/li&gt;
 		<item>
 			<title>Swerve drive - Verification of the kinematics solution</title>
 			<link>https://www.petrikvandervelde.nl/posts/Swerve-drive-kinematics-verification</link>
-			<description>&lt;p&gt;As I explained in an &lt;a href="posts/Swerve-drive-kinematics-simulation"&gt;earlier post&lt;/a&gt; I have written some
+			<description>&lt;p&gt;As I explained in an &lt;a href="/posts/Swerve-drive-kinematics-simulation"&gt;earlier post&lt;/a&gt; I have written some
 code to simulate the movement of a four wheel swerve drive.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Swerve-drive-kinematics-verification</guid>
 			<pubDate>Thu, 04 May 2023 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;As I explained in an &lt;a href="posts/Swerve-drive-kinematics-simulation"&gt;earlier post&lt;/a&gt; I have written some
+			<content:encoded>&lt;p&gt;As I explained in an &lt;a href="/posts/Swerve-drive-kinematics-simulation"&gt;earlier post&lt;/a&gt; I have written some
 code to simulate the movement of a four wheel swerve drive.&lt;/p&gt;
 &lt;figure style="float:left"&gt;
   &lt;a href="/assets/images/robotics/swerve/swerve-dof.png" target="_blank"&gt;
@@ -992,7 +992,7 @@ to another combination, is done by assuming that there is linear control for the
 i.e. wheel velocity and steering angle. While linear control profiles are not the best control
 method it does allow later on only changing the profile code to use a more suitable one, for
 instance a &lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)#In_motion_control"&gt;jerk limited&lt;/a&gt; profile.&lt;/p&gt;
-&lt;p&gt;The code I wrote gives me a graphs like the ones presented in my &lt;a href="posts/Swerve-drive-kinematics-simulation"&gt;previous post&lt;/a&gt;.
+&lt;p&gt;The code I wrote gives me a graphs like the ones presented in my &lt;a href="/posts/Swerve-drive-kinematics-simulation"&gt;previous post&lt;/a&gt;.
 However before I use this code to test new control algorithms I want to make sure my code is
 actually producing the correct results. The &lt;a href="https://en.wikipedia.org/wiki/Software_verification_and_validation"&gt;verification&lt;/a&gt;
 is done by running a bunch of simple simulations for which I am able to predict the behaviour using
@@ -1061,7 +1061,7 @@ robot in y-direction at 1.0 m/s. We just can't do both at the same time.&lt;/p&g
 		<item>
 			<title>Swerve drive - Kinematics simulation</title>
 			<link>https://www.petrikvandervelde.nl/posts/Swerve-drive-kinematics-simulation</link>
-			<description>&lt;p&gt;As &lt;a href="posts/Swerve-drive-introduction"&gt;mentioned&lt;/a&gt; I am designing and building four wheel steering
+			<description>&lt;p&gt;As &lt;a href="/posts/Swerve-drive-introduction"&gt;mentioned&lt;/a&gt; I am designing and building four wheel steering
 mobile robot for use in outdoor environments and rough terrain. In that post I mused that both
 the mechanical design and the software would be the most complicated parts of the drive system and
 thus the parts I should focus on first. At the moment I don't have good access to a workshop where I
@@ -1070,7 +1070,7 @@ software. Once I have the controller software working I can then use Gazebo to t
 virtually to ensure that the code will work in the actual robot.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Swerve-drive-kinematics-simulation</guid>
 			<pubDate>Fri, 10 Feb 2023 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;As &lt;a href="posts/Swerve-drive-introduction"&gt;mentioned&lt;/a&gt; I am designing and building four wheel steering
+			<content:encoded>&lt;p&gt;As &lt;a href="/posts/Swerve-drive-introduction"&gt;mentioned&lt;/a&gt; I am designing and building four wheel steering
 mobile robot for use in outdoor environments and rough terrain. In that post I mused that both
 the mechanical design and the software would be the most complicated parts of the drive system and
 thus the parts I should focus on first. At the moment I don't have good access to a workshop where I
@@ -1311,14 +1311,14 @@ journey.&lt;/p&gt;
 		<item>
 			<title>Starting robotics - Fixing the wheel encoders</title>
 			<link>https://www.petrikvandervelde.nl/posts/Robotics-fixing-scuttles-encoder</link>
-			<description>&lt;p&gt;While testing the &lt;a href="posts/Robotics-a-bumper-for-scuttle-electronics"&gt;bumper&lt;/a&gt; for SCUTTLE I noticed
+			<description>&lt;p&gt;While testing the &lt;a href="/posts/Robotics-a-bumper-for-scuttle-electronics"&gt;bumper&lt;/a&gt; for SCUTTLE I noticed
 that when reversing SCUTTLE would start a turn instead of driving straight backwards due to one
 motor turning faster than the other motor. There are a number of reasons this could be happening,
 for instance the driver code isn't properly commanding the motors, or the encoders are returning
 incorrect data, etc..&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Robotics-fixing-scuttles-encoder</guid>
 			<pubDate>Tue, 15 Nov 2022 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;While testing the &lt;a href="posts/Robotics-a-bumper-for-scuttle-electronics"&gt;bumper&lt;/a&gt; for SCUTTLE I noticed
+			<content:encoded>&lt;p&gt;While testing the &lt;a href="/posts/Robotics-a-bumper-for-scuttle-electronics"&gt;bumper&lt;/a&gt; for SCUTTLE I noticed
 that when reversing SCUTTLE would start a turn instead of driving straight backwards due to one
 motor turning faster than the other motor. There are a number of reasons this could be happening,
 for instance the driver code isn't properly commanding the motors, or the encoders are returning
@@ -1440,7 +1440,7 @@ wheels has rotated. I will discuss fixing the encoders in another post.&lt;/p&gt
 		<item>
 			<title>Starting robotics - Building a bumper for scuttle. The software</title>
 			<link>https://www.petrikvandervelde.nl/posts/Robotics-a-bumper-for-scuttle-software</link>
-			<description>&lt;p&gt;In my &lt;a href="posts/Robotics-a-bumper-for-scuttle-overview"&gt;previous post&lt;/a&gt; I talked about creating a bump
+			<description>&lt;p&gt;In my &lt;a href="/posts/Robotics-a-bumper-for-scuttle-overview"&gt;previous post&lt;/a&gt; I talked about creating a bump
 sensor for my SCUTTLE robot. After creating the mechanical design I started working on the software.
 There are two parts to the software, translating the state of the micro switches and turning the state
 changes into movement commands for the robot, i.e. if the robot runs into
@@ -1453,7 +1453,7 @@ test more of my code, but I lose a bit of performance because the two nodes comm
 messages which is slower than just using method calls.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Robotics-a-bumper-for-scuttle-software</guid>
 			<pubDate>Fri, 09 Sep 2022 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;In my &lt;a href="posts/Robotics-a-bumper-for-scuttle-overview"&gt;previous post&lt;/a&gt; I talked about creating a bump
+			<content:encoded>&lt;p&gt;In my &lt;a href="/posts/Robotics-a-bumper-for-scuttle-overview"&gt;previous post&lt;/a&gt; I talked about creating a bump
 sensor for my SCUTTLE robot. After creating the mechanical design I started working on the software.
 There are two parts to the software, translating the state of the micro switches and turning the state
 changes into movement commands for the robot, i.e. if the robot runs into
@@ -1655,7 +1655,7 @@ separate posts.&lt;/p&gt;
 		<item>
 			<title>Starting robotics - Driving scuttle with ROS - Gazebo simulation</title>
 			<link>https://www.petrikvandervelde.nl/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation</link>
-			<description>&lt;p&gt;After getting familiar with &lt;a href="posts/Robotics-learning-ros"&gt;ROS&lt;/a&gt;, the next step was to get the
+			<description>&lt;p&gt;After getting familiar with &lt;a href="/posts/Robotics-learning-ros"&gt;ROS&lt;/a&gt;, the next step was to get the
 navigation stack working in Gazebo for the SCUTTLE robot. Fortunately, the SCUTTLE developers
 had already created a number of ROS packages containing the
 &lt;a href="https://github.com/scuttlerobot/scuttle_description"&gt;scuttle model&lt;/a&gt;,
@@ -1664,7 +1664,7 @@ had already created a number of ROS packages containing the
 around using ROS.&lt;/p&gt;</description>
 			<guid>https://www.petrikvandervelde.nl/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation</guid>
 			<pubDate>Wed, 01 Jun 2022 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;After getting familiar with &lt;a href="posts/Robotics-learning-ros"&gt;ROS&lt;/a&gt;, the next step was to get the
+			<content:encoded>&lt;p&gt;After getting familiar with &lt;a href="/posts/Robotics-learning-ros"&gt;ROS&lt;/a&gt;, the next step was to get the
 navigation stack working in Gazebo for the SCUTTLE robot. Fortunately, the SCUTTLE developers
 had already created a number of ROS packages containing the
 &lt;a href="https://github.com/scuttlerobot/scuttle_description"&gt;scuttle model&lt;/a&gt;,

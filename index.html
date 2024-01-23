@@ -160,10 +160,10 @@
                                     <a role="button" href="/tags/nBuildKit" class="btn btn-default btn-sm"> nBuildKit (12)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
+                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Software-development-pipeline" class="btn btn-default btn-sm"> Software development pipeline (11)</a>
+                                    <a role="button" href="/tags/DevOps" class="btn btn-default btn-sm"> DevOps (11)</a>
                                 </li>
                                 <li>
                                     <a role="button" href="/tags/Delivering-software" class="btn btn-default btn-sm"> Delivering software (11)</a>
@@ -178,7 +178,7 @@
                                     <a role="button" href="/tags/Zinger" class="btn btn-default btn-sm"> Zinger (8)</a>
                                 </li>
                                 <li>
-                                    <a role="button" href="/tags/Omnidirectional" class="btn btn-default btn-sm"> Omnidirectional (7)</a>
+                                    <a role="button" href="/tags/Blog" class="btn btn-default btn-sm"> Blog (7)</a>
                                 </li>
                         </ul>
                     </div>
@@ -221,12 +221,12 @@ Wednesday, January 17, 2024
 
                 </div>
                 <div id="post-content">
-                    <p>The <a href="posts/Swerve-drive-introduction">goals for the development of my swerve drive robot</a> were to
+                    <p>The <a href="/posts/Swerve-drive-introduction">goals for the development of my swerve drive robot</a> were to
 develop an off-road capable robot that can navigate autonomously between different locations to
 execute tasks either by itself or in cooperation with other robots. So far I have implemented the
-first version of the <a href="posts/Swerve-drive-body-focussed-control">steering and drive controller</a>,
-added <a href="posts/Swerve-motion-profiles">motion profiles</a> for smoother changes in velocity and acceleration,
-and I have created the <a href="posts/Robotics-making-urdf-models">URDF files</a> that allow me to simulate the
+first version of the <a href="/posts/Swerve-drive-body-focussed-control">steering and drive controller</a>,
+added <a href="/posts/Swerve-motion-profiles">motion profiles</a> for smoother changes in velocity and acceleration,
+and I have created the <a href="/posts/Robotics-making-urdf-models">URDF files</a> that allow me to simulate the
 robot in Gazebo. The next part is to add the ability to navigate the robot, autonomously,
 to a goal location.</p>
 <p>So how does the navigation in general work? The first step is to figure out where the robot is, or
@@ -360,16 +360,16 @@ Saturday, December 23, 2023
 
                 </div>
                 <div id="post-content">
-                    <p>In a <a href="posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">previous post</a> I talked about simulating
+                    <p>In a <a href="/posts/Robotics-driving-scuttle-with-ros-gazebo-simulation">previous post</a> I talked about simulating
 the <a href="https://scuttlerobot.org">SCUTTLE robot</a> using ROS and Gazebo.  I used Gazebo to
 simulate the SCUTTLE robot so that I could learn more about ROS without needing to involve a real
 robot with all the setup and complications that come with that. Additionally when I was designing the
-<a href="posts/Robotics-a-bumper-for-scuttle-overview">bump sensor</a> for SCUTTLE using the simulation allowed
+<a href="/posts/Robotics-a-bumper-for-scuttle-overview">bump sensor</a> for SCUTTLE using the simulation allowed
 me to reduce the feedback time compared to testing the design on a physical robot. This speeds up
 the design iteration process and allowed me to quickly and verify the design and the code. In the end
 you always need to do the final testing on a real robot, but by using simulation you can quickly
 iterate to a solution that will most likely work without major issues.</p>
-<p>In order to progress my <a href="posts/Swerve-drive-introduction">swerve drive robot</a> I wanted to verify that
+<p>In order to progress my <a href="/posts/Swerve-drive-introduction">swerve drive robot</a> I wanted to verify that
 the control algorithms that I had developed would work for an actual robot. Ideally before spending
 money on the hardware. So I decided to use Gazebo to run some simulations that would enable me to
 verify the control algorithm.</p>
@@ -947,7 +947,7 @@ follow a path and prescribe the velocity at every point on the path. And theoret
 swerve drive it should even be possible for the robot to follow a trajectory while controlling
 the orientation of the robot body.</p>
 <p>Finally the path of progression is to take the controller code that I have written for this
-simulation and use it with my <a href="posts/Swerve-drive-introduction">ROS2 based swerve robot</a>.</p>
+simulation and use it with my <a href="/posts/Swerve-drive-introduction">ROS2 based swerve robot</a>.</p>
 
                 </div>
             </div>
@@ -1022,7 +1022,7 @@ It is good to keep in mind that even with this performance improvement the creat
 isn't very fast for our robot simulation because a large number of image frames need to be made. For
 the 6 second movement in the animation anywhere between 150 and 600 frames need to be created.</p>
 <p>The animation above shows how the robot behaves when using the
-<a href="posts/Swerve-drive-kinematics-simulation">direct module controller</a>. As you can see in the video different
+<a href="/posts/Swerve-drive-kinematics-simulation">direct module controller</a>. As you can see in the video different
 pairs of wheels have different rotation points, signified by the red dots. As the movement progresses
 these rotation points have quite a large range of motion. This indicates that the wheels are not
 synchronized and most likely some of the wheels are slipping.</p>
@@ -1037,7 +1037,7 @@ synchronized and most likely some of the wheels are slipping.</p>
     allowfullscreen>
 </iframe>
 <p>I created another animation for the same situation but with the
-<a href="posts/Swerve-drive-body-focussed-control">body oriented controller</a>. In this case the rotation points
+<a href="/posts/Swerve-drive-body-focussed-control">body oriented controller</a>. In this case the rotation points
 are all in a single location leading me to conclude that all the wheels are synchronized and little
 to no wheel slip is occurring.</p>
 <p>One other interesting thing you can see in the video is that the acceleration and
@@ -1082,7 +1082,7 @@ Friday, June 9, 2023
 
                 </div>
                 <div id="post-content">
-                    <p>In my <a href="posts/Swerve-drive-kinematics-simulation">first attempt</a> to model a swerve drive I controlled
+                    <p>In my <a href="/posts/Swerve-drive-kinematics-simulation">first attempt</a> to model a swerve drive I controlled
 the movement of the robot by directly providing commands to the individual drive modules, i.e. by
 controlling the steering angle and the wheel velocity of each of the four drive modules. Additionally
 I assumed that the transition from one state (steering angle, wheel velocity) to another state would
@@ -1225,9 +1225,9 @@ follow a trajectory, it follows a path.</li>
 <div id="copyright" class="container">
     <div>
         <p>
-            Generated by <a href="https://wyam.io">Wyam</a> on Wed, 17 Jan 2024 10:03:52 GMT
+            Generated by <a href="https://wyam.io">Wyam</a> on Tue, 23 Jan 2024 06:30:46 GMT
 
- from commit <a href="https://github.com/pvandervelde/mindvortex/tree/05dbee417d0231bfe88d46f743816596cab3224a">05dbee417d0231bfe88d46f743816596cab3224a</a> at version 3.19.0.        </p>
+ from commit <a href="https://github.com/pvandervelde/mindvortex/tree/7c31af1cc5fc96be8aab6ff4df92de7b0d33d855">7c31af1cc5fc96be8aab6ff4df92de7b0d33d855</a> at version 3.19.1.        </p>
     </div>
 
     <p>
