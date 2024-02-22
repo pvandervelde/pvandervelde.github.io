@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>Mind vortex - Starting robotics - Fixing the wheel encoders</title>
+        <title>Mind vortex - Swerve drive - Motor limitations</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -32,9 +32,9 @@
         <meta name="msapplication-tooltip" content="Mind vortex" />
         <meta name="msapplication-starturl" content="/" />
 
-        <meta property="og:title" content="Mind vortex - Starting robotics - Fixing the wheel encoders" />
+        <meta property="og:title" content="Mind vortex - Swerve drive - Motor limitations" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Robotics-fixing-scuttles-encoder" />
+        <meta property="og:url" content="https://www.petrikvandervelde.nl/posts/Swerve-drive-motor-limitations" />
         <!-- TODO: More social graph meta tags -->
 
         <script src="/assets/js/jquery.min.js"></script>
@@ -207,93 +207,196 @@
 
 
 <h2>
-Starting robotics - Fixing the wheel encoders</h2>
+Swerve drive - Motor limitations</h2>
 <div id="post-meta">
     <div class="meta-date">
-Tuesday, November 15, 2022
+Thursday, February 22, 2024
  |             Posted in     </div>
     <div class="meta-tags">
+                        <a id="post-category" role="button" href="/tags/Kinematics" class="btn btn-default btn-xs tag-no-wrap">Kinematics</a>
+                        <a id="post-category" role="button" href="/tags/Omnidirectional" class="btn btn-default btn-xs tag-no-wrap">Omnidirectional</a>
                         <a id="post-category" role="button" href="/tags/Robotics" class="btn btn-default btn-xs tag-no-wrap">Robotics</a>
-                        <a id="post-category" role="button" href="/tags/Scuttle" class="btn btn-default btn-xs tag-no-wrap">Scuttle</a>
-                        <a id="post-category" role="button" href="/tags/Sensors" class="btn btn-default btn-xs tag-no-wrap">Sensors</a>
-                        <a id="post-category" role="button" href="/tags/Wheel-encoders" class="btn btn-default btn-xs tag-no-wrap">Wheel&nbsp;encoders</a>
+                        <a id="post-category" role="button" href="/tags/Swerve" class="btn btn-default btn-xs tag-no-wrap">Swerve</a>
     </div>
 </div>
 
     </div>
 
     <div id="post-content">
-        <p>While testing the <a href="/posts/Robotics-a-bumper-for-scuttle-electronics">bumper</a> for SCUTTLE I noticed
-that when reversing SCUTTLE would start a turn instead of driving straight backwards due to one
-motor turning faster than the other motor. There are a number of reasons this could be happening,
-for instance the driver code isn't properly commanding the motors, or the encoders are returning
-incorrect data, etc..</p>
+        <p>The <a href="/posts/Swerve-drive-kinematics-simulation">swerve controller</a> I have implemented so far assumes
+that the robot is able to follow all the movement commands it has been given. This can lead to extreme
+velocity and acceleration for the drive and steering motors. The image below shows the result of a
+simulation where the robot is commanded to move in a straight line followed by a rotate in-place. The
+simulation used a s-curve <a href="/posts/Swerve-motion-profiles">motion profile</a> to generate a smooth body
+movement between different states. The graphs show that the drive velocity and acceleration are
+smooth and don't reach very high values. It is thus expected that these are well within the
+capabilities of the drive motors. The steering velocity and acceleration show significant peaks which
+are likely to tax the steering motors.</p>
 <figure style="float:left">
-<img alt="Encoder output for failing encode" src="/assets/images/robotics/scuttle/scuttle-encoder-fail.png" />
-<figcaption>Encoder output for failing encoder</figcaption>
+  <a href="/assets/images/robotics/control/inplace_rotation_from_0_fwd_unlimited.png" target="_blank">
+    <img
+        alt="The positions, velocities and accelerations of the robot and the drive modules as it moves in a straight line and then rotates in place with no limiters applied."
+        src="/assets/images/robotics/control/inplace_rotation_from_0_fwd_unlimited.png"
+        width="416"
+        height="200"/>
+  </a>
+  <figcaption>
+    The positions, velocities and accelerations of the robot and the drive modules as it moves in a
+    straight line and then rotates in place. No limitations were applied to the steering and drive
+    velocities and accelerations.
+  </figcaption>
 </figure>
-<p>The first thing I did for my investigation was to make sure my encoders provide sensible data. The
-non-ROS SCUTTLE code contains a useful <a href="https://github.com/scuttlerobot/SCUTTLE/blob/ce82a52ad025408a15f23f19c58add1321253783/software/python/basics/L1_encoder.py">Python script</a>
-to measure the current value of the wheel encoders in a loop. I ran this code for a few minutes
-while the wheels were stationary. In theory the results of this measurement should be two consistent
-values, one for the left encoder and one for the right encoder. As you can see in the graph
-it turns out that the angle measurement provided by the left encoder was very noisy.</p>
-<p>While a noisy encoder shouldn't by itself cause the incorrect reversing pattern, it will make it more
-difficult to find the actual cause of the problem. So before I address the bumper reversing behaviour
-I needed to fix the encoder noise. The two main reasons for noisy encoder data that I could think of
-were:</p>
+<p>In order to ensure that the motors are able to follow the movement commands while keeping the motions
+of the different drive modules <a href="/posts/Swerve-drive-body-focussed-control">synchronised</a>, we need to
+take into account the capabilities of the motors.</p>
+<p>Now there are many different motor characteristics that we could take into account. For instance:</p>
 <ul>
-<li>The encoder is broken in some way. SCUTTLE uses the
-<a href="https://nz.mouser.com/ProductDetail/ams-OSRAM/AS5048B-TS_EK_AB?qs=Rt6VE0PE%2FOduJIB%252BRfeBZQ%3D%3D">AS5048A position sensor</a>
-which is relatively robust, but can be broken if you send the I2c commands on the wrong pins. Which
-could happen if you say ... put the connector on the wrong way when assembling your SCUTTLE ...</li>
-<li>The distance between the encoder and the magnet on the motor shaft isn't correct. The specifications
-for the encoder state that the distance between the chip and the magnet on the motor shaft should
-be between 0.5mm and 2.5mm, assuming a magnet of the recommended size and strength is used.</li>
+<li>The maximum velocity the motor can achieve. This obviously limits how fast the drive module can steer
+or rotate the wheels.</li>
+<li>The maximum acceleration the motor can achieve. This limits how fast the drive module can change the
+drive or steering velocity and thus how quickly it can respond to command changes.</li>
+<li>The maximum jerk the motor can achieve. This limits how quickly the motor can achieve the desired
+acceleration.</li>
+<li>The existence of any motor <a href="https://en.wikipedia.org/wiki/Deadband">deadband</a>. This is the region
+around zero rotation speed where the motor doesn't have enough torque to overcome the static
+friction of the motor and attached systems. Once enough torque is applied the motor will start
+running at the rotation speed that it would normally have for that amount of torque. This means that
+there is a minimum rotation speed that the motor can achieve.</li>
+<li>The behaviour of the motor under load. For instance the motor may not be able to reach the desired
+rotation speed under load.</li>
+<li>The motor settling time, which is the time it takes the motor to reach the commanded speed.</li>
+<li>The behaviour of the motor when running &lsquo;forwards&rsquo; versus when running 'backwards'. For
+instance the motor may have a different maximum velocity in the &lsquo;forward&rsquo; direction than it does
+in the 'backwards' direction.</li>
 </ul>
-<p>I tried measuring the distance between the encoder and the magnet, but that isn't easy. There is no way
-to get a measuring tool near that space so I had to resort to indirect measurements. I measured the
-left and right brackets. They were about 0.5mm difference in size. That doesn't seem much but it
-would be enough to push the encoder out too far from the magnet.</p>
-<p>One solution would be to slightly sand the taller bracket so that both brackets are the size height.
-In doing that I would have to be very careful to ensure that I sand the bracket flat, i.e. with
-no change in angle in the face. A second solution is to remove the encoders from their brackets and
-swap the brackets over.</p>
-<figure style="float:right">
-<img alt="Encoder output for functioning encoders" src="/assets/images/robotics/scuttle/scuttle-encoder-fixed.png" />
-<figcaption>Encoder output for functioning encoders</figcaption>
+<p>At the moment I will only be looking at the maximum motor velocities and the accelerations. These two
+have a direct effect on the synchronisation between the drive modules. The other characteristics will
+be dealt at a later stage as they require more information and thought.</p>
+<p>In order to limit the steering and drive velocities I've implemented the following process</p>
+<ol>
+<li><a href="https://github.com/pvandervelde/basic-swerve-sim/blob/d6c8349b7f184c85ac77fa8b19298bb79e22cebf/swerve_controller/control_profile.py#L612">Determine</a>
+the body movement profile that allows the body to achieve the desired movement state in
+a smooth manner using <a href="/posts/Swerve-motion-profiles">s-curve motion profiles</a>.</li>
+<li>Divide the body movement profiles into N+1 points, dividing the profile into N sections of equal
+time. For each of these points
+<a href="https://github.com/pvandervelde/basic-swerve-sim/blob/d6c8349b7f184c85ac77fa8b19298bb79e22cebf/swerve_controller/control_profile.py#L635">calculate the velocity and steering angle</a>
+for the drive modules. These velocities and steering angles then form the motion profiles for each
+of the drive modules.</li>
+<li>For each point in time check the steering velocity for each module. Record the maximum velocity of
+all the profiles. If the maximum velocity is larger than what the motor can deliver then
+<a href="https://github.com/pvandervelde/basic-swerve-sim/blob/d6c8349b7f184c85ac77fa8b19298bb79e22cebf/swerve_controller/control_profile.py#L414">increase or decrease the current timestep</a>
+in order to limit the steering velocity to the maximum velocity of the motor. Changing the
+duration of the timestep will change the steering velocities of all the modules. Thus we limit
+the steering velocities while maintaining synchronisation between the modules.</li>
+<li>Repeat the previous step for the <a href="https://github.com/pvandervelde/basic-swerve-sim/blob/d6c8349b7f184c85ac77fa8b19298bb79e22cebf/swerve_controller/control_profile.py#L546">drive velocities</a>.</li>
+</ol>
+<p>The following video shows the result of the simulation using the new velocity limiter code. The video
+shows the robot moving in a straight line and then rotating in place. When the rotation starts the
+steering velocity for the different drive modules increases. As the steering velocity reaches 2 rad/s
+for the left front and left rear modules the limiter kicks in and maintains that steering velocity.
+In response the steering velocities of the other wheels reduces in order to keep the drive modules
+synchronised. The wheel velocities are slightly altered.</p>
+<iframe
+    style="float:none"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/H7HTa4b6f_0"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
+<p>With the steering and wheel velocities limited in a reasonable way I attempted to do the same for the
+steering acceleration. The results of this can be seen in the next images. The first image limits the
+steering acceleration to 15 rad/s^2. The second image limits the steering acceleration to 10 rad/s^2.</p>
+<figure style="float:left">
+  <a href="/assets/images/robotics/control/inplace_rotation_from_0_fwd_acc_limited_15_rad_s2.png" target="_blank">
+    <img
+        alt="The positions, velocities and accelerations of the robot and the drive modules as it moves in a straight line and then rotates in place. Limits are applied to the velocities and the steering acceleration."
+        src="/assets/images/robotics/control/inplace_rotation_from_0_fwd_acc_limited_15_rad_s2.png"
+        width="416"
+        height="200"/>
+  </a>
+  <figcaption>
+    The positions, velocities and accelerations of the robot and the drive modules as it moves in a
+    straight line and then rotates in place. The steering velocity is limited to 2 rad/s, the drive
+    velocity is limited to 1.0 m/s and the steering acceleration is limited to 15 rad/s^2.
+  </figcaption>
 </figure>
-<p>As the latter is relatively easy to do that is the first solution I tried. I took the encoders
-of their brackets and attached them to the other bracket. These brackets were put back on SCUTTLE and
-the test script was executed once again. And this time both encoders gave me consistent results. I was
-expecting the other encoder to go bad due to distance, but apparently both encoders are with in the
-distance specification with this new configuration.</p>
-<p>With the encoder issue fixed I can get back to diagnosing the issue with the bumper reverse action.
-My current suspicion is that the issue is caused by the fact that the the current SCUTTLE driver
-code is written as an <a href="https://en.wikipedia.org/wiki/Open-loop_controller">open loop</a>. This means
-that there is no feedback to the motor control software that indicates how fast the wheels are
-actually turning in response to a given motor input. And because even motors of the same type
-are all slightly different, they all react differently to the same motor input. In my case at
-low speeds one of my motors responds earlier than the other motor. In the end this means that
-at low speeds the bumper code thinks scuttle is driving backwards in a straight line while it
-is actually driving around in circles.</p>
+<figure style="float:left">
+  <a href="/assets/images/robotics/control/inplace_rotation_from_0_fwd_acc_limited_10_rad_s2.png" target="_blank">
+    <img
+        alt="The positions, velocities and accelerations of the robot and the drive modules as it moves in a straight line and then rotates in place. Limits are applied to the velocities and the steering acceleration."
+        src="/assets/images/robotics/control/inplace_rotation_from_0_fwd_acc_limited_10_rad_s2.png"
+        width="416"
+        height="200"/>
+  </a>
+  <figcaption>
+    The positions, velocities and accelerations of the robot and the drive modules as it moves in a
+    straight line and then rotates in place. The steering velocity is limited to 2 rad/s, the drive
+    velocity is limited to 1.0 m/s and the steering acceleration is limited to 10 rad/s^2.
+  </figcaption>
+</figure>
+<p>When comparing the two simulation results it becomes clear that something happens if we limit the
+steering acceleration to 10 rad/s^2. The velocities over all for both cases looks reasonable, except
+for the 10 rad/s^2 case where the steering velocity snaps to zero at the end of the transition from
+the straight line to the rotation. This is reflected in a momentary acceleration of over 100 rad/s^2.</p>
+<p>The acceleration is calculated based on the difference between the velocity at the current timestep
+and the velocity at the previous timestep. Additionally the algorithm has to ensure that the steering
+angle change between the previous and current timestep is controlled so that synchronisation of the
+drive modules is maintained. Generally to limit the velocity the duration of the timestep is increased.
+However for the acceleration, especially when decelerating from a positive velocity, there is a limit
+to how much the timestep can be increased. A larger time step increase decreases the velocity. This
+then increases the deceleration needed. So this means that you get very large timesteps, or very small
+timesteps. The current algorithm favours small timesteps.</p>
+<p>In either case the problem occurs when slowing down. At the end of the deceleration profile the desired
+position is achieved, but the velocity and acceleration are not zero. This is not realistic or physically
+possible. This behaviour is possibly due to the fact that the timesteps are individually calculated.
+This means that the algorithm doesn't know what the desired end states are and so those are not taken
+into account.</p>
+<p>Additionally if we look at this approach from a higher level we can see that there are two potential
+areas where improvements can be made in the control model. The first area is related to the fact that
+the steering velocity and acceleration are computed values, i.e. they are derived from the change in
+the steering position. This means that there is no direct control over the steering velocity and
+acceleration. A better algorithm would include these values directly and be able to apply boundary
+conditions on these values. This could be achieved by extending the current kinematic model with the
+body accelerations and <a href="https://en.wikipedia.org/wiki/Jerk_(physics)">jerks</a>.
+The second area is related tot the fact that the module states are derived from the body state. This
+is necessary to keep the modules synchronised with the body. However this means that the module states
+are not directly controlled. Which means that it is more difficult to include the module limitations
+in the control model.</p>
+<p>These issues will only become more pronounced if we want to start limiting the maximum jerk
+values for the steering and drive directions. Limiting the maximum jerk is required to prevent excessive
+forces on the drive module components.</p>
+<p>One possible solution to these issues is to switch to a dynamic model for the control of the robot,
+i.e. one that is based on the forces and accelerations observed by the robot as it moves.
+The current model is a kinematic model, i.e. based on the positions and velocities of the different
+components. Using a dynamic model would allow for the inclusion of the body accelerations and jerks.
+Additionally the dynamic model would allow for the inclusion of the behaviour of the steering modules
+more directly and thus lead to a more accurate control model. Finally a dynamic model would also allow
+for the inclusion of skid and slip conditions as well as three dimensional movement on uneven terrain.
+The drawback of a dynamic model is that it is more complex and thus requires more effort during
+implementation and at run time.</p>
+<p>At the moment I have not made any decisions on how to progress the swerve controller. It seems
+logical to implement a dynamic model, however which model should be used and how to implement it
+requires a bit more research. For the time being I'm planning my next step to be to design and
+build a single drive module in real life.</p>
 
     </div>
 
     <div id="post-footer">
         <div>
     <div class="navlinks">
-                <a href="/posts/Robotics-a-bumper-for-scuttle-electronics" title="Previous Post: Starting robotics - Building a bumper for scuttle. The electronics" class="navlinks-prev">« Starting robotics - Building a bumper for scuttle. The electronics</a>
-                <a href="/posts/Swerve-drive-introduction" title="Next Post: Swerve drive - Moving a robot in all directions, mostly" class="navlinks-next">Swerve drive - Moving a robot in all directions, mostly »</a>
+                <a href="/posts/Swerve-drive-ros2-nav" title="Previous Post: Swerve drive - Using Nav2" class="navlinks-prev">« Swerve drive - Using Nav2</a>
     </div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mindvortex'; // required: replace example with your forum shortname
-    var disqus_identifier = 'Robotics-fixing-scuttles-encoder';
-    var disqus_title = 'Starting robotics - Fixing the wheel encoders';
-    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Robotics-fixing-scuttles-encoder';
+    var disqus_identifier = 'Swerve-drive-motor-limitations';
+    var disqus_title = 'Swerve drive - Motor limitations';
+    var disqus_url = 'https://www.petrikvandervelde.nl/posts/Swerve-drive-motor-limitations';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

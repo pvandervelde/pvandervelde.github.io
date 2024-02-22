@@ -5,8 +5,182 @@
 		<link>https://www.petrikvandervelde.nl/</link>
 		<description>Welcome!</description>
 		<copyright>2024</copyright>
-		<pubDate>Tue, 23 Jan 2024 06:30:47 GMT</pubDate>
-		<lastBuildDate>Tue, 23 Jan 2024 06:30:47 GMT</lastBuildDate>
+		<pubDate>Thu, 22 Feb 2024 09:15:57 GMT</pubDate>
+		<lastBuildDate>Thu, 22 Feb 2024 09:15:57 GMT</lastBuildDate>
+		<item>
+			<title>Swerve drive - Motor limitations</title>
+			<link>https://www.petrikvandervelde.nl/posts/Swerve-drive-motor-limitations</link>
+			<description>&lt;p&gt;The &lt;a href="/posts/Swerve-drive-kinematics-simulation"&gt;swerve controller&lt;/a&gt; I have implemented so far assumes
+that the robot is able to follow all the movement commands it has been given. This can lead to extreme
+velocity and acceleration for the drive and steering motors. The image below shows the result of a
+simulation where the robot is commanded to move in a straight line followed by a rotate in-place. The
+simulation used a s-curve &lt;a href="/posts/Swerve-motion-profiles"&gt;motion profile&lt;/a&gt; to generate a smooth body
+movement between different states. The graphs show that the drive velocity and acceleration are
+smooth and don't reach very high values. It is thus expected that these are well within the
+capabilities of the drive motors. The steering velocity and acceleration show significant peaks which
+are likely to tax the steering motors.&lt;/p&gt;</description>
+			<guid>https://www.petrikvandervelde.nl/posts/Swerve-drive-motor-limitations</guid>
+			<pubDate>Thu, 22 Feb 2024 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;The &lt;a href="/posts/Swerve-drive-kinematics-simulation"&gt;swerve controller&lt;/a&gt; I have implemented so far assumes
+that the robot is able to follow all the movement commands it has been given. This can lead to extreme
+velocity and acceleration for the drive and steering motors. The image below shows the result of a
+simulation where the robot is commanded to move in a straight line followed by a rotate in-place. The
+simulation used a s-curve &lt;a href="/posts/Swerve-motion-profiles"&gt;motion profile&lt;/a&gt; to generate a smooth body
+movement between different states. The graphs show that the drive velocity and acceleration are
+smooth and don't reach very high values. It is thus expected that these are well within the
+capabilities of the drive motors. The steering velocity and acceleration show significant peaks which
+are likely to tax the steering motors.&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+  &lt;a href="/assets/images/robotics/control/inplace_rotation_from_0_fwd_unlimited.png" target="_blank"&gt;
+    &lt;img
+        alt="The positions, velocities and accelerations of the robot and the drive modules as it moves in a straight line and then rotates in place with no limiters applied."
+        src="/assets/images/robotics/control/inplace_rotation_from_0_fwd_unlimited.png"
+        width="416"
+        height="200"/&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;
+    The positions, velocities and accelerations of the robot and the drive modules as it moves in a
+    straight line and then rotates in place. No limitations were applied to the steering and drive
+    velocities and accelerations.
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;In order to ensure that the motors are able to follow the movement commands while keeping the motions
+of the different drive modules &lt;a href="/posts/Swerve-drive-body-focussed-control"&gt;synchronised&lt;/a&gt;, we need to
+take into account the capabilities of the motors.&lt;/p&gt;
+&lt;p&gt;Now there are many different motor characteristics that we could take into account. For instance:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The maximum velocity the motor can achieve. This obviously limits how fast the drive module can steer
+or rotate the wheels.&lt;/li&gt;
+&lt;li&gt;The maximum acceleration the motor can achieve. This limits how fast the drive module can change the
+drive or steering velocity and thus how quickly it can respond to command changes.&lt;/li&gt;
+&lt;li&gt;The maximum jerk the motor can achieve. This limits how quickly the motor can achieve the desired
+acceleration.&lt;/li&gt;
+&lt;li&gt;The existence of any motor &lt;a href="https://en.wikipedia.org/wiki/Deadband"&gt;deadband&lt;/a&gt;. This is the region
+around zero rotation speed where the motor doesn't have enough torque to overcome the static
+friction of the motor and attached systems. Once enough torque is applied the motor will start
+running at the rotation speed that it would normally have for that amount of torque. This means that
+there is a minimum rotation speed that the motor can achieve.&lt;/li&gt;
+&lt;li&gt;The behaviour of the motor under load. For instance the motor may not be able to reach the desired
+rotation speed under load.&lt;/li&gt;
+&lt;li&gt;The motor settling time, which is the time it takes the motor to reach the commanded speed.&lt;/li&gt;
+&lt;li&gt;The behaviour of the motor when running &amp;lsquo;forwards&amp;rsquo; versus when running 'backwards'. For
+instance the motor may have a different maximum velocity in the &amp;lsquo;forward&amp;rsquo; direction than it does
+in the 'backwards' direction.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;At the moment I will only be looking at the maximum motor velocities and the accelerations. These two
+have a direct effect on the synchronisation between the drive modules. The other characteristics will
+be dealt at a later stage as they require more information and thought.&lt;/p&gt;
+&lt;p&gt;In order to limit the steering and drive velocities I've implemented the following process&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://github.com/pvandervelde/basic-swerve-sim/blob/d6c8349b7f184c85ac77fa8b19298bb79e22cebf/swerve_controller/control_profile.py#L612"&gt;Determine&lt;/a&gt;
+the body movement profile that allows the body to achieve the desired movement state in
+a smooth manner using &lt;a href="/posts/Swerve-motion-profiles"&gt;s-curve motion profiles&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Divide the body movement profiles into N+1 points, dividing the profile into N sections of equal
+time. For each of these points
+&lt;a href="https://github.com/pvandervelde/basic-swerve-sim/blob/d6c8349b7f184c85ac77fa8b19298bb79e22cebf/swerve_controller/control_profile.py#L635"&gt;calculate the velocity and steering angle&lt;/a&gt;
+for the drive modules. These velocities and steering angles then form the motion profiles for each
+of the drive modules.&lt;/li&gt;
+&lt;li&gt;For each point in time check the steering velocity for each module. Record the maximum velocity of
+all the profiles. If the maximum velocity is larger than what the motor can deliver then
+&lt;a href="https://github.com/pvandervelde/basic-swerve-sim/blob/d6c8349b7f184c85ac77fa8b19298bb79e22cebf/swerve_controller/control_profile.py#L414"&gt;increase or decrease the current timestep&lt;/a&gt;
+in order to limit the steering velocity to the maximum velocity of the motor. Changing the
+duration of the timestep will change the steering velocities of all the modules. Thus we limit
+the steering velocities while maintaining synchronisation between the modules.&lt;/li&gt;
+&lt;li&gt;Repeat the previous step for the &lt;a href="https://github.com/pvandervelde/basic-swerve-sim/blob/d6c8349b7f184c85ac77fa8b19298bb79e22cebf/swerve_controller/control_profile.py#L546"&gt;drive velocities&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The following video shows the result of the simulation using the new velocity limiter code. The video
+shows the robot moving in a straight line and then rotating in place. When the rotation starts the
+steering velocity for the different drive modules increases. As the steering velocity reaches 2 rad/s
+for the left front and left rear modules the limiter kicks in and maintains that steering velocity.
+In response the steering velocities of the other wheels reduces in order to keep the drive modules
+synchronised. The wheel velocities are slightly altered.&lt;/p&gt;
+&lt;iframe
+    style="float:none"
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/H7HTa4b6f_0"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;p&gt;With the steering and wheel velocities limited in a reasonable way I attempted to do the same for the
+steering acceleration. The results of this can be seen in the next images. The first image limits the
+steering acceleration to 15 rad/s^2. The second image limits the steering acceleration to 10 rad/s^2.&lt;/p&gt;
+&lt;figure style="float:left"&gt;
+  &lt;a href="/assets/images/robotics/control/inplace_rotation_from_0_fwd_acc_limited_15_rad_s2.png" target="_blank"&gt;
+    &lt;img
+        alt="The positions, velocities and accelerations of the robot and the drive modules as it moves in a straight line and then rotates in place. Limits are applied to the velocities and the steering acceleration."
+        src="/assets/images/robotics/control/inplace_rotation_from_0_fwd_acc_limited_15_rad_s2.png"
+        width="416"
+        height="200"/&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;
+    The positions, velocities and accelerations of the robot and the drive modules as it moves in a
+    straight line and then rotates in place. The steering velocity is limited to 2 rad/s, the drive
+    velocity is limited to 1.0 m/s and the steering acceleration is limited to 15 rad/s^2.
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure style="float:left"&gt;
+  &lt;a href="/assets/images/robotics/control/inplace_rotation_from_0_fwd_acc_limited_10_rad_s2.png" target="_blank"&gt;
+    &lt;img
+        alt="The positions, velocities and accelerations of the robot and the drive modules as it moves in a straight line and then rotates in place. Limits are applied to the velocities and the steering acceleration."
+        src="/assets/images/robotics/control/inplace_rotation_from_0_fwd_acc_limited_10_rad_s2.png"
+        width="416"
+        height="200"/&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;
+    The positions, velocities and accelerations of the robot and the drive modules as it moves in a
+    straight line and then rotates in place. The steering velocity is limited to 2 rad/s, the drive
+    velocity is limited to 1.0 m/s and the steering acceleration is limited to 10 rad/s^2.
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;When comparing the two simulation results it becomes clear that something happens if we limit the
+steering acceleration to 10 rad/s^2. The velocities over all for both cases looks reasonable, except
+for the 10 rad/s^2 case where the steering velocity snaps to zero at the end of the transition from
+the straight line to the rotation. This is reflected in a momentary acceleration of over 100 rad/s^2.&lt;/p&gt;
+&lt;p&gt;The acceleration is calculated based on the difference between the velocity at the current timestep
+and the velocity at the previous timestep. Additionally the algorithm has to ensure that the steering
+angle change between the previous and current timestep is controlled so that synchronisation of the
+drive modules is maintained. Generally to limit the velocity the duration of the timestep is increased.
+However for the acceleration, especially when decelerating from a positive velocity, there is a limit
+to how much the timestep can be increased. A larger time step increase decreases the velocity. This
+then increases the deceleration needed. So this means that you get very large timesteps, or very small
+timesteps. The current algorithm favours small timesteps.&lt;/p&gt;
+&lt;p&gt;In either case the problem occurs when slowing down. At the end of the deceleration profile the desired
+position is achieved, but the velocity and acceleration are not zero. This is not realistic or physically
+possible. This behaviour is possibly due to the fact that the timesteps are individually calculated.
+This means that the algorithm doesn't know what the desired end states are and so those are not taken
+into account.&lt;/p&gt;
+&lt;p&gt;Additionally if we look at this approach from a higher level we can see that there are two potential
+areas where improvements can be made in the control model. The first area is related to the fact that
+the steering velocity and acceleration are computed values, i.e. they are derived from the change in
+the steering position. This means that there is no direct control over the steering velocity and
+acceleration. A better algorithm would include these values directly and be able to apply boundary
+conditions on these values. This could be achieved by extending the current kinematic model with the
+body accelerations and &lt;a href="https://en.wikipedia.org/wiki/Jerk_(physics)"&gt;jerks&lt;/a&gt;.
+The second area is related tot the fact that the module states are derived from the body state. This
+is necessary to keep the modules synchronised with the body. However this means that the module states
+are not directly controlled. Which means that it is more difficult to include the module limitations
+in the control model.&lt;/p&gt;
+&lt;p&gt;These issues will only become more pronounced if we want to start limiting the maximum jerk
+values for the steering and drive directions. Limiting the maximum jerk is required to prevent excessive
+forces on the drive module components.&lt;/p&gt;
+&lt;p&gt;One possible solution to these issues is to switch to a dynamic model for the control of the robot,
+i.e. one that is based on the forces and accelerations observed by the robot as it moves.
+The current model is a kinematic model, i.e. based on the positions and velocities of the different
+components. Using a dynamic model would allow for the inclusion of the body accelerations and jerks.
+Additionally the dynamic model would allow for the inclusion of the behaviour of the steering modules
+more directly and thus lead to a more accurate control model. Finally a dynamic model would also allow
+for the inclusion of skid and slip conditions as well as three dimensional movement on uneven terrain.
+The drawback of a dynamic model is that it is more complex and thus requires more effort during
+implementation and at run time.&lt;/p&gt;
+&lt;p&gt;At the moment I have not made any decisions on how to progress the swerve controller. It seems
+logical to implement a dynamic model, however which model should be used and how to implement it
+requires a bit more research. For the time being I'm planning my next step to be to design and
+build a single drive module in real life.&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Swerve drive - Using Nav2</title>
 			<link>https://www.petrikvandervelde.nl/posts/Swerve-drive-ros2-nav</link>
@@ -2212,89 +2386,6 @@ the resources might need some alterations to fit in with the work flow and proce
 followed. After all each company is different and applies different workflows. Additionally users
 might want to replace some of the resources with versions of their own, e.g. to replace Influx with
 &lt;a href="https://prometheus.io/"&gt;Prometheus&lt;/a&gt;.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Software development pipeline - On-prem or in the cloud?</title>
-			<link>https://www.petrikvandervelde.nl/posts/On-prem-vs-cloud-build-systems</link>
-			<description>&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Continuous_integration"&gt;Continuous integration (CI) systems&lt;/a&gt; originally and
-build pipelines recently have traditionally been available on-prem only with systems like &lt;a href="https://jenkins.io"&gt;Jenkins&lt;/a&gt;,
-&lt;a href="https://www.jetbrains.com/teamcity/"&gt;TeamCity&lt;/a&gt;, &lt;a href="https://www.atlassian.com/software/bamboo"&gt;Bamboo&lt;/a&gt; and
-&lt;a href="https://en.wikipedia.org/wiki/Team_Foundation_Server"&gt;TFS&lt;/a&gt;. This is possibly due to the fact that these
-systems needs relatively powerful hardware, mostly consisting of powerful CPU and fast IO, something
-which was not easily available in the cloud until the last few years.&lt;/p&gt;</description>
-			<guid>https://www.petrikvandervelde.nl/posts/On-prem-vs-cloud-build-systems</guid>
-			<pubDate>Thu, 27 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Continuous_integration"&gt;Continuous integration (CI) systems&lt;/a&gt; originally and
-build pipelines recently have traditionally been available on-prem only with systems like &lt;a href="https://jenkins.io"&gt;Jenkins&lt;/a&gt;,
-&lt;a href="https://www.jetbrains.com/teamcity/"&gt;TeamCity&lt;/a&gt;, &lt;a href="https://www.atlassian.com/software/bamboo"&gt;Bamboo&lt;/a&gt; and
-&lt;a href="https://en.wikipedia.org/wiki/Team_Foundation_Server"&gt;TFS&lt;/a&gt;. This is possibly due to the fact that these
-systems needs relatively powerful hardware, mostly consisting of powerful CPU and fast IO, something
-which was not easily available in the cloud until the last few years.&lt;/p&gt;
-&lt;p&gt;However in the last few years a number of cloud based CI systems have appeared e.g.
-&lt;a href="https://azure.microsoft.com/en-in/services/devops/"&gt;Azure DevOps&lt;/a&gt;, &lt;a href="https://www.appveyor.com/"&gt;AppVeyor&lt;/a&gt;,
-&lt;a href="https://circleci.com/"&gt;CircleCi&lt;/a&gt;), &lt;a href="https://codeship.com/"&gt;CloudShip&lt;/a&gt;,
-&lt;a href="https://cloud.google.com/cloud-build/"&gt;Google cloud build&lt;/a&gt; and &lt;a href="https://travis-ci.org/"&gt;Travis CI&lt;/a&gt;. This
-has lead to the question of where to locate a CI system? Should it be on-prem or in the cloud or potentially
-even a combination of the two. This post should provide some suggestions on how to make the selection
-between the different options.&lt;/p&gt;
-&lt;h3&gt;Cloud-based CI systems&lt;/h3&gt;
-&lt;p&gt;As with other cloud systems when using a cloud based CI system the user gets the benefits of not
-having to worry about the underlying infrastructure and resources and having the ability to scale
-the CI system to the size required, provided one pays for the additional resources.&lt;/p&gt;
-&lt;p&gt;The other side of the coin is that because the user has no influence on the infrastructure of the
-CI system there is also no direct control over the hardware or the controller software. Thus the user
-cannot increase the hardware specs for the controller or the agents and the user cannot determine
-which plugins or capabilities are available in the CI system.
-As a side effect this also means that the user does not have access to the logs, metrics and
-file system for the underlying system, which provide information that may be useful when issues
-arise. In general the controller specific logs and metrics are only useful if you have access to
-the controller, however the build specific information is useful either for diagnostics
-or future planning.&lt;/p&gt;
-&lt;p&gt;Besides the CI part of the system in some cases the entire pipeline will require other resources, e.g
-artefact storage or test systems. Some cloud systems provide these additional systems as well, for a price
-of course. Other systems require that these additional resources are provided in some other way.&lt;/p&gt;
-&lt;h3&gt;On-prem CI systems&lt;/h3&gt;
-&lt;p&gt;When running the CI system on-prem one has to both provide and maintain the infrastructure, hardware and networking etc.,
-and the controller and executor software. This increases the overhead for running a CI system. Additionally
-scaling the system either requires manual intervention or building the scaling capabilities.&lt;/p&gt;
-&lt;p&gt;On the other hand having control over the infrastructure means that the CI system can be configured
-so that it fits the use case for the development teams, the desired plugins installed, executors with
-all the right tools, full control over executor workspaces and with that the ability to lock down
-sensitive information. Additionally logs and metrics can be collected from everywhere which
-helps diagnostics, alerting and predictive capabilities on both the infrastructure side and the build
-capacity side.&lt;/p&gt;
-&lt;p&gt;Finally having full control over the CI system means that it is possible to extend the system if
-that is required with custom capabilities, either directly added to the CI system or as additional
-services. It should of course be noted that this requires resources and is thus not free.&lt;/p&gt;
-&lt;h3&gt;Selecting a location for your CI system&lt;/h3&gt;
-&lt;p&gt;So how does one select a location for a CI system. Both cloud and on-prem have pros and cons and in the
-end the location of the system depends very much on the situation of the development team. If the team works
-for a company where there is no on-prem server infrastructure then a cloud based system will be the
-only sensible approach. However there will also be cases where an on-prem system is the only sensible
-option.&lt;/p&gt;
-&lt;p&gt;In order to decide for one system or the other the first thing that should be done is a cost
-comparison, comparing the total cost of ownership, i.e. initial purchasing costs, running costs,
-staff costs, training costs etc.. As part of the cost comparison the costs for additional parts
-of the system should also be included, e.g. artefact storage or test systems. One should also note
-that while cloud systems reduce maintenance, they are not maintenance free. The maintenance of the
-infrastructure disappears but the maintenance of the builds and the workflow does not, after all no
-matter where the build pipeline is located it is still important that it delivers the
-&lt;a href="/posts/Software-development-pipeline-Design-accuracy"&gt;accuracy&lt;/a&gt;,
-&lt;a href="/posts/Software-development-pipeline-Design-performance.html"&gt;performance&lt;/a&gt;,
-&lt;a href="/posts/Software-development-pipeline-Design-resilience.html"&gt;resilience&lt;/a&gt; and
-&lt;a href="/posts/Software-development-pipeline-Design-flexibility.html"&gt;flexibility&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Once the cost comparison is done there are other things to bring into the decision process. Because
-while costs are important they are not the only reason to select one system or another. For instance
-other comparison elements could be related to regulations that specify how source needs to be treated
-or specific processes that should be followed, or the capabilities of the different CI systems for
-example is the ability to execute builds on a specific OS. Not all cloud CI systems provide
-executors for all the different OSes.&lt;/p&gt;
-&lt;p&gt;In the end the decision to select a cloud build system or a on-prem build system depends
-very strongly on the situation the company is in. It is even possible that as time progresses
-the best type of system may change from on-prem to cloud or visa versa. Both systems have their
-own advantages and disadvantages. In the end all that matters is that a system that fits the
-development process is selected, independent of what the different vendors say is the best thing.&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>
